@@ -3,8 +3,22 @@
 
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/env-profile-spring-boot/</loc>
-        <lastmod>2023-07-23T15:22:21.395Z</lastmod>
+        <loc>https://nowgnastack.github.io/tags/spring-boot/</loc>
+        <lastmod>2023-07-23T16:21:41.814Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/profile/</loc>
+        <lastmod>2023-07-23T16:21:41.814Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/env/</loc>
+        <lastmod>2023-07-23T16:21:41.814Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
