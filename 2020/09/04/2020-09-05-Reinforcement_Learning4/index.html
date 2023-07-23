@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="Leacture: Deep Learning for everyone  Outline CNN RNN CrossEntropyLoss  CNN CNN(Convolutional Neural Network)은 합성곱 신경망으로 필터링 기법을 인공신경망에 적용함으로써 이미지를 더욱 효과적으로 처리하기 위해 처음 소개되었다. 자율주행 자동차, 얼굴인식같은 분야에 많이">
+<meta property="og:type" content="article">
+<meta property="og:title" content="About CNN, RNN">
+<meta property="og:url" content="https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="Leacture: Deep Learning for everyone  Outline CNN RNN CrossEntropyLoss  CNN CNN(Convolutional Neural Network)은 합성곱 신경망으로 필터링 기법을 인공신경망에 적용함으로써 이미지를 더욱 효과적으로 처리하기 위해 처음 소개되었다. 자율주행 자동차, 얼굴인식같은 분야에 많이">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/convolution.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/padding.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/max.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/avg.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/Mnist.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/rnn.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/rnn2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/rnn3.png">
+<meta property="article:published_time" content="2020-09-03T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:15.833Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="tave">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/convolution.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>About CNN, RNN</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2020/09/04/2020-09-05-reinforcement_learning4/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/09/05/2020-09-05-Reinforcement_Learning5/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/08/31/2020-08-30-Reinforcement_Learning3/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&text=About CNN, RNN"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&is_video=false&description=About CNN, RNN"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=About CNN, RNN&body=Check out this article: https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&name=About CNN, RNN&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&t=About CNN, RNN"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Outline"><span class="toc-number">1.</span> <span class="toc-text">Outline</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CNN"><span class="toc-number">2.</span> <span class="toc-text">CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Convolution"><span class="toc-number">2.1.</span> <span class="toc-text">Convolution</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stride"><span class="toc-number">2.1.1.</span> <span class="toc-text">stride</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#padding"><span class="toc-number">2.1.2.</span> <span class="toc-text">padding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5%EC%9D%98-%ED%98%95%ED%83%9C"><span class="toc-number">2.2.</span> <span class="toc-text">입력의 형태</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Convolution-code"><span class="toc-number">2.3.</span> <span class="toc-text">Convolution code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pooling"><span class="toc-number">2.4.</span> <span class="toc-text">Pooling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Max-Pooling"><span class="toc-number">2.4.1.</span> <span class="toc-text">Max Pooling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Average-Pooling"><span class="toc-number">2.4.2.</span> <span class="toc-text">Average Pooling</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mnist-CNN"><span class="toc-number">2.5.</span> <span class="toc-text">Mnist CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%94%A5%EB%9F%AC%EB%8B%9D%EC%9D%84-%ED%95%99%EC%8A%B5%EC%8B%9C%ED%82%A4%EB%8A%94-%EB%8B%A8%EA%B3%84"><span class="toc-number">2.5.1.</span> <span class="toc-text">딥러닝을 학습시키는 단계</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MNIST%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-%EB%A7%8C%EB%93%A4-CNN-%EA%B5%AC%EC%A1%B0"><span class="toc-number">2.6.</span> <span class="toc-text">MNIST를 이용하여 만들 CNN 구조</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RNN"><span class="toc-number">3.</span> <span class="toc-text">RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RNN%EC%9D%98-%EB%8B%A4%EC%96%91%ED%95%9C-%EA%B5%AC%EC%A1%B0"><span class="toc-number">3.1.</span> <span class="toc-text">RNN의 다양한 구조</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#one-to-many"><span class="toc-number">3.1.0.1.</span> <span class="toc-text">one to many</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#many-to-one"><span class="toc-number">3.1.0.2.</span> <span class="toc-text">many to one</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#many-to-many"><span class="toc-number">3.1.0.3.</span> <span class="toc-text">many to many</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#many-to-many2"><span class="toc-number">3.1.0.4.</span> <span class="toc-text">many to many2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RNN-Pytorch-basics"><span class="toc-number">3.2.</span> <span class="toc-text">RNN Pytorch basics</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CrossEntropyLoss"><span class="toc-number">4.</span> <span class="toc-text">CrossEntropyLoss</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        About CNN, RNN
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-09-03T15:00:00.000Z" class="dt-published" itemprop="datePublished">2020-09-04</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/deep-learning/">deep learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/deep-learning/" rel="tag">deep learning</a>, <a class="p-category" href="/tags/tave/" rel="tag">tave</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>Leacture: <a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">Deep Learning for everyone</a></p>
+</blockquote>
+<h1 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h1><ol>
+<li>CNN</li>
+<li>RNN</li>
+<li>CrossEntropyLoss</li>
+</ol>
+<h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h1><ul>
+<li>CNN(Convolutional Neural Network)은 합성곱 신경망으로 필터링 기법을 인공신경망에 적용함으로써 이미지를 더욱 효과적으로 처리하기 위해 처음 소개되었다.</li>
+<li>자율주행 자동차, 얼굴인식같은 분야에 많이 이용된다.</li>
+</ul>
+<h2 id="Convolution"><a href="#Convolution" class="headerlink" title="Convolution"></a>Convolution</h2><ul>
+<li><p>이미지 위에서 stride값 만큼 filter를 이동시키면서 겹쳐지는 부분의 각 원소의 값을 곱해서 모두 더한 값을 출력으로 하는 연산이다.</p>
+<p><img src="/assets/img/RL_Study4/convolution.png" alt="convolution"></p>
+</li>
+<li><p>첫 번째 convolution 연산은 보라색 테두리와 필터의 연산이다.</p>
+</li>
+<li><p>같은 자리의 값고 곱한 후 그 값들의 합이 output의 1x1자리 값이 된다.</p>
+</li>
+<li><p>연산은 다음과 같다.</p>
+<p>(1x1) + (2x0) + (3x1) +</p>
+<p>(0x0) + (1x1) + (5x0) +</p>
+<p>(1x1) + (0x0) + (2x1) = 8</p></li>
+</ul>
+<h3 id="stride"><a href="#stride" class="headerlink" title="stride"></a>stride</h3><ul>
+<li>filter를 한번에 얼마나 이동할 것인가?</li>
+</ul>
+<h3 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h3><ul>
+<li>zero-padding(0이 들어간 패드가 이미지 각 면에 둘러진다.)<br><img src="/assets/img/RL_Study4/padding.png" alt="padding"></li>
+</ul>
+<h2 id="입력의-형태"><a href="#입력의-형태" class="headerlink" title="입력의 형태"></a>입력의 형태</h2><ul>
+<li>input type: torch.Tensor</li>
+<li>input shape: (N x C x H x W)<br>(batch_size, channel, height, width)</li>
+</ul>
+<h2 id="Convolution-code"><a href="#Convolution-code" class="headerlink" title="Convolution code"></a>Convolution code</h2><ul>
+<li>convolution연산에서 output의 크기를 구하는 식이다.<br><b>outputsize &#x3D; (input size - filter size + (2 * padding)) &#x2F; stride + 1</b></li>
+<li>227x227인 tensor를 11x11인 필터에 stride&#x3D;4, padding 0으로 convolution연산을 하였다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line">conv = nn.Conv2d(<span class="number">1</span>,<span class="number">1</span>,<span class="number">11</span>,stride=<span class="number">4</span>, padding=<span class="number">0</span>) <span class="comment"># Conv2d(input chanel, output chanel, filter size, stride, padding)</span></span><br><span class="line"><span class="built_in">input</span> = torch.Tensor(<span class="number">1</span>,<span class="number">1</span>,<span class="number">227</span>,<span class="number">227</span>)</span><br><span class="line">out = conv(<span class="built_in">input</span>)</span><br><span class="line">out.shape</span><br><span class="line"></span><br><span class="line"><span class="comment"># output size: torch.Size([1, 1, 55, 55])</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Pooling"><a href="#Pooling" class="headerlink" title="Pooling"></a>Pooling</h2><ul>
+<li>이미지의 크기를 줄이기 위한 연산이다.</li>
+<li>일정 크기의 블록을 통합하여 하나의 대푯갑으로 대체하는 연산이다.</li>
+<li>입력데이터의 차원 감소하여 신경망의 계산효율성이 좋아지고 메모리 요구량의 감소가 일어난다.</li>
+</ul>
+<h3 id="Max-Pooling"><a href="#Max-Pooling" class="headerlink" title="Max Pooling"></a>Max Pooling</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.MaxPool2d(kernel_size, stride=<span class="literal">None</span>, padding=<span class="number">0</span> ...)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>max pooling &#x3D; 2일때 2x2사이즈 안에서 가장 큰값을 출력한다.<br><img src="/assets/img/RL_Study4/max.png" alt="max"></li>
+</ul>
+<h3 id="Average-Pooling"><a href="#Average-Pooling" class="headerlink" title="Average Pooling"></a>Average Pooling</h3><ul>
+<li>average pooling &#x3D; 2일때 2x2사이즈 안에서 평균값을 출력한다.<br><img src="/assets/img/RL_Study4/avg.png" alt="max"></li>
+</ul>
+<h2 id="Mnist-CNN"><a href="#Mnist-CNN" class="headerlink" title="Mnist CNN"></a>Mnist CNN</h2><h3 id="딥러닝을-학습시키는-단계"><a href="#딥러닝을-학습시키는-단계" class="headerlink" title="딥러닝을 학습시키는 단계"></a>딥러닝을 학습시키는 단계</h3><ol>
+<li>라이브러리 가져오기</li>
+<li>GPU 사용설정</li>
+<li>데이터셋을 가져오고 로더 만들기</li>
+<li>Parameter 결정</li>
+<li>학습 모델 만들기</li>
+<li>Loss function &amp; Optimizer</li>
+<li>Training</li>
+<li>Test model Performance</li>
+</ol>
+<h2 id="MNIST를-이용하여-만들-CNN-구조"><a href="#MNIST를-이용하여-만들-CNN-구조" class="headerlink" title="MNIST를 이용하여 만들 CNN 구조"></a>MNIST를 이용하여 만들 CNN 구조</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/Marshmellowon/DeepLearning_with_Pytorch/blob/master/Mnist_CNN_jupyter.ipynb">CNN MNIST code</a></p>
+</blockquote>
+<p><img src="/assets/img/RL_Study4/Mnist.png" alt="mnist"></p>
+<h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><ul>
+<li><p>반복적이고 순차적인 데이터(Sequential data)학습에 특화된 인공신경망의 한 종류이다.</p>
+</li>
+<li><p>내부의 순환구조가 들어있으며 이를 이용하여 과거의 학습을 현재 학습에 반영한다.<br><img src="/assets/img/RL_Study4/rnn.png" alt="rnn"><br><img src="/assets/img/RL_Study4/rnn2.png" alt="rnn2"></p>
+</li>
+<li><p>h<sub>t-1</sub>: 이전 상태값</p>
+</li>
+<li><p>x<sub>t</sub>: 현재 입력값</p>
+</li>
+<li><p>f<sub>w</sub>: w(Weight) parameter를 가지고 계산하는 함수</p>
+</li>
+<li><p>h<sub>t</sub>: 새로운 상태값</p>
+</li>
+</ul>
+<h2 id="RNN의-다양한-구조"><a href="#RNN의-다양한-구조" class="headerlink" title="RNN의 다양한 구조"></a>RNN의 다양한 구조</h2><p><img src="/assets/img/RL_Study4/rnn3.png" alt="rnn3"></p>
+<h4 id="one-to-many"><a href="#one-to-many" class="headerlink" title="one to many"></a>one to many</h4><ul>
+<li>하나의 이미지가 들어가고 문장이 나온다.(자막)</li>
+</ul>
+<h4 id="many-to-one"><a href="#many-to-one" class="headerlink" title="many to one"></a>many to one</h4><ul>
+<li>문장이 입력, 하나의 값(감정에 대한 레이블)이 나온다.</li>
+</ul>
+<h4 id="many-to-many"><a href="#many-to-many" class="headerlink" title="many to many"></a>many to many</h4><ul>
+<li>문장이 들어가면 문장이 나온다.</li>
+<li>번역 텍스트에 가능하다.</li>
+<li>문장을 끝까지 보고 출력을한다.</li>
+</ul>
+<h4 id="many-to-many2"><a href="#many-to-many2" class="headerlink" title="many to many2"></a>many to many2</h4><ul>
+<li>비디오, 이미지 입력, 출력값은 변화된 값이다.</li>
+<li>이미지 캡셔닝</li>
+</ul>
+<h2 id="RNN-Pytorch-basics"><a href="#RNN-Pytorch-basics" class="headerlink" title="RNN Pytorch basics"></a>RNN Pytorch basics</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rnn = torch.nn.RNN(input_size, hidden_size)</span><br><span class="line">outputs, _status = rnn(input_data)</span><br></pre></td></tr></table></figure>
+
+<h1 id="CrossEntropyLoss"><a href="#CrossEntropyLoss" class="headerlink" title="CrossEntropyLoss"></a>CrossEntropyLoss</h1><ul>
+<li>정답 카테고리에서 최대한 올리는 것이다.</li>
+<li>criterion(모델의 output, 정답label)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">criterion = torch.nn.CrossEntropyLoss()</span><br><span class="line">...</span><br><span class="line">loss = criterion(outputs.view(-<span class="number">1</span>, input_size), Y.view(-<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Outline"><span class="toc-number">1.</span> <span class="toc-text">Outline</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CNN"><span class="toc-number">2.</span> <span class="toc-text">CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Convolution"><span class="toc-number">2.1.</span> <span class="toc-text">Convolution</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stride"><span class="toc-number">2.1.1.</span> <span class="toc-text">stride</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#padding"><span class="toc-number">2.1.2.</span> <span class="toc-text">padding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5%EC%9D%98-%ED%98%95%ED%83%9C"><span class="toc-number">2.2.</span> <span class="toc-text">입력의 형태</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Convolution-code"><span class="toc-number">2.3.</span> <span class="toc-text">Convolution code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pooling"><span class="toc-number">2.4.</span> <span class="toc-text">Pooling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Max-Pooling"><span class="toc-number">2.4.1.</span> <span class="toc-text">Max Pooling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Average-Pooling"><span class="toc-number">2.4.2.</span> <span class="toc-text">Average Pooling</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mnist-CNN"><span class="toc-number">2.5.</span> <span class="toc-text">Mnist CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%94%A5%EB%9F%AC%EB%8B%9D%EC%9D%84-%ED%95%99%EC%8A%B5%EC%8B%9C%ED%82%A4%EB%8A%94-%EB%8B%A8%EA%B3%84"><span class="toc-number">2.5.1.</span> <span class="toc-text">딥러닝을 학습시키는 단계</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MNIST%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-%EB%A7%8C%EB%93%A4-CNN-%EA%B5%AC%EC%A1%B0"><span class="toc-number">2.6.</span> <span class="toc-text">MNIST를 이용하여 만들 CNN 구조</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RNN"><span class="toc-number">3.</span> <span class="toc-text">RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RNN%EC%9D%98-%EB%8B%A4%EC%96%91%ED%95%9C-%EA%B5%AC%EC%A1%B0"><span class="toc-number">3.1.</span> <span class="toc-text">RNN의 다양한 구조</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#one-to-many"><span class="toc-number">3.1.0.1.</span> <span class="toc-text">one to many</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#many-to-one"><span class="toc-number">3.1.0.2.</span> <span class="toc-text">many to one</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#many-to-many"><span class="toc-number">3.1.0.3.</span> <span class="toc-text">many to many</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#many-to-many2"><span class="toc-number">3.1.0.4.</span> <span class="toc-text">many to many2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RNN-Pytorch-basics"><span class="toc-number">3.2.</span> <span class="toc-text">RNN Pytorch basics</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CrossEntropyLoss"><span class="toc-number">4.</span> <span class="toc-text">CrossEntropyLoss</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&text=About CNN, RNN"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&is_video=false&description=About CNN, RNN"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=About CNN, RNN&body=Check out this article: https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&title=About CNN, RNN"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&name=About CNN, RNN&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/09/04/2020-09-05-Reinforcement_Learning4/&t=About CNN, RNN"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

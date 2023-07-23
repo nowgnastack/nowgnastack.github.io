@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="elice git 강의 정리">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git을 사용해보자">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="elice git 강의 정리">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/Alice/post2/staging.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/Alice/post2/Untitled.png">
+<meta property="article:published_time" content="2022-01-24T06:20:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.120Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="elice">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/Alice/post2/staging.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Git을 사용해보자</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/01/28/2022-01-28-elice3/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/01/23/2022-01-23-usually1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&text=Git을 사용해보자"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&is_video=false&description=Git을 사용해보자"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git을 사용해보자&body=Check out this article: https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&name=Git을 사용해보자&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&t=Git을 사용해보자"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">Git 시작하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0"><span class="toc-number">1.1.</span> <span class="toc-text">사용자 정보 설정하기</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-%EC%A0%80%EC%9E%A5%EC%86%8C-%EC%83%9D%EC%84%B1%EA%B3%BC-github%EC%97%90-push%ED%95%98%EA%B8%B0"><span class="toc-number">2.</span> <span class="toc-text">Git 저장소 생성과 github에 push하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%80%EC%9E%A5%EC%86%8C-%EC%83%9D%EC%84%B1"><span class="toc-number">2.1.</span> <span class="toc-text">저장소 생성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Commit-%ED%95%98%EA%B8%B0"><span class="toc-number">2.2.</span> <span class="toc-text">Commit 하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gitghub-repository%EC%99%80-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0"><span class="toc-number">2.3.</span> <span class="toc-text">Gitghub repository와 연결하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Github-repository%EC%97%90-push%ED%95%98%EA%B8%B0"><span class="toc-number">2.4.</span> <span class="toc-text">Github repository에 push하기</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-%EC%83%81%ED%83%9C-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0"><span class="toc-number">3.</span> <span class="toc-text">Git 상태 확인하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gti-branch-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">Gti branch 사용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-branch-%EC%83%9D%EC%84%B1"><span class="toc-number">4.1.</span> <span class="toc-text">Git branch 생성</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-merge-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">5.</span> <span class="toc-text">Git merge 사용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-merge-conflict"><span class="toc-number">5.1.</span> <span class="toc-text">Git merge conflict</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Git을 사용해보자
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-24T06:20:00.000Z" class="dt-published" itemprop="datePublished">2022-01-24</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/git/">git</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/elice/" rel="tag">elice</a>, <a class="p-category" href="/tags/git/" rel="tag">git</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>이 포스트는 엘리스 AI 트랙 4기 강의를 듣고 정리한 내용입니다.</p>
+</blockquote>
+<p>git은 효율적인 협업을 위한 툴로 버전 관리가 쉽다. git의 특징으로는 작업의 종류를 나눌 수 있는 가지치기와 병합을 지원한다. 분산 작업이 가능하고 이전 과거와 현재의 변경사항을 확인할 수 있다.</p>
+<p>local 영역의 working directory와 staging area, repository로 구분되어 있다. Github나 gitlab 과 같은 git 호스팅 서비스에 올려 작업한 것을 공유할 수 있다.</p>
+<h1 id="Git-시작하기"><a href="#Git-시작하기" class="headerlink" title="Git 시작하기"></a>Git 시작하기</h1><p>Linux와 maxOS는 git이 기본으로 설치가 되어 있어 사용하면 되고 , windows 환경에서는 git을 설치해 줘야 한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<p>우선 위 명령어로 <code>git</code>의 버전을 확인해 준다.</p>
+<h2 id="사용자-정보-설정하기"><a href="#사용자-정보-설정하기" class="headerlink" title="사용자 정보 설정하기"></a>사용자 정보 설정하기</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">git config --global user.email useremail@gmail.com</span><br></pre></td></tr></table></figure>
+
+<p>위 명령어를 이용해 git에 사용자 정보를 설정해 준다. 프로젝트마다 사용자 정보를 다르게 설정하고 싶으면 <code>--global</code>옵션을 빼고 하면 된다.</p>
+<h1 id="Git-저장소-생성과-github에-push하기"><a href="#Git-저장소-생성과-github에-push하기" class="headerlink" title="Git 저장소 생성과 github에 push하기"></a>Git 저장소 생성과 github에 push하기</h1><h2 id="저장소-생성"><a href="#저장소-생성" class="headerlink" title="저장소 생성"></a>저장소 생성</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>위 명령어로 <code>git</code>저장소를 생성한다. 저장소를 생성하고 나면 해당 <code>working directory</code>에 <code>.git</code>이라는 숨김파일이 생긴다. <code>.git</code>폴더는 저장소의 정보, 커밋 등의 정보를 담고 있다.</p>
+<h2 id="Commit-하기"><a href="#Commit-하기" class="headerlink" title="Commit 하기"></a>Commit 하기</h2><p><img src="/assets/img/posts/Alice/post2/staging.png" alt="staging.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;initial commit&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>git add .</code>명령어로 <code>working directory</code>에 있는 모든 파일을 <code>staging area</code>로 올리게 된다. 특정 파일만 올리고 싶으면 <code>.</code>대신 파일 이름을 적어주면 된다.</p>
+<p><code>git commit</code>은 <code>staging</code>영역에 올라와 있는 파일들을 <code>repository</code>에 올리게 된다. Commit시에 <code>-m</code>옵션은 commit 메세지를 한 줄로 입력 가능하게 해준다. <code>-m</code>옵션이 없을 경우 <code>nano</code>나 <code>vi</code>같은 문서 편집기가 열리고 상세 내용을 적을 수 있다.</p>
+<h2 id="Gitghub-repository와-연결하기"><a href="#Gitghub-repository와-연결하기" class="headerlink" title="Gitghub repository와 연결하기"></a>Gitghub repository와 연결하기</h2><p>Git에 저장되어 있는 파일들을 github로 올리기 위해서 github의 repository와 연결이 필요하다. git 저장소와 github repository를 연결하려면 먼저 github에서 repository를 생성해 준다. clone할 때 복사하는 github 저장소 주소를 복사한다.</p>
+<p><img src="/assets/img/posts/Alice/post2/Untitled.png" alt="Untitled"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add &lt;<span class="built_in">local</span> 저장소 이름&gt; &lt;github repository 주소&gt;</span><br></pre></td></tr></table></figure>
+
+<p>복사한 주소를 터미널에서 위 명령어를 사용해 github repository 주소에 넣는다. local 저장소 이름은 다음으로 설명할 push에서 필요하기 때문에 해당 git 저장소를 어떤 이름으로 연결했는지 기억해야 한다.</p>
+<h2 id="Github-repository에-push하기"><a href="#Github-repository에-push하기" class="headerlink" title="Github repository에 push하기"></a>Github repository에 push하기</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push &lt;<span class="built_in">local</span> 저장소 이름&gt; &lt;branch name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Github repository와 연결한 후 push를 하는 명령어이다. local 저장소 이름이 <code>origin</code>이고 branch의 이름이 <code>master</code>일 때 명령어는 <code>git push origin master</code>가 된다.</p>
+<h1 id="Git-상태-확인하기"><a href="#Git-상태-확인하기" class="headerlink" title="Git 상태 확인하기"></a>Git 상태 확인하기</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+
+<p><code>status</code>명령어를 사용하면 <code>staging</code>영역에 있는 파일들의 상태를 확인할 수 있고, <code>log</code>명령어를 사용하면 <code>repository</code>에 존재하는 history를 확인할 수 있다.</p>
+<h1 id="Gti-branch-사용하기"><a href="#Gti-branch-사용하기" class="headerlink" title="Gti branch 사용하기"></a>Gti branch 사용하기</h1><h2 id="Git-branch-생성"><a href="#Git-branch-생성" class="headerlink" title="Git branch 생성"></a>Git branch 생성</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch branch_name</span><br><span class="line">git checkout branch_name</span><br></pre></td></tr></table></figure>
+
+<p><code>branch</code>명령으로 새로운 branch를 생성할 수 있다. <code>checkout</code>명령은 원하는 branch로 이동해서 작업할 수 있다.</p>
+<h1 id="Git-merge-사용하기"><a href="#Git-merge-사용하기" class="headerlink" title="Git merge 사용하기"></a>Git merge 사용하기</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;init&quot;</span></span><br><span class="line">git checkout master</span><br><span class="line">git merge branch_name</span><br><span class="line"></span><br><span class="line">git branch -d branch_name</span><br></pre></td></tr></table></figure>
+
+<p><code>merge</code>를 진행할 때는 작업을 마친 branch에서 commit을 한 후 merge하고 싶은 branch(예시에는 master branch)로 이동한 다음 <code>merge</code>명령으로 두 branch를 병합해 준다.</p>
+<p>각 branch는 다른 branch의 영향을 받지 않기 때문에 여러 작업을 동시에 진행할 수 있다.</p>
+<p><code>merge</code>가 완료된 branch는 더 이상 필요하지 않기 때문에 제거를 해줘야 한다. <code>branch -d</code>를 사용해 병합이 완료된 branch를 삭제해 준다.</p>
+<h2 id="Git-merge-conflict"><a href="#Git-merge-conflict" class="headerlink" title="Git merge conflict"></a>Git merge conflict</h2><p><code>merge</code>를 진행할 때 한 파일에 동일한 부분이 동시에 수정되면 병합이 불가능한 merge conflict가 발생한다. 이런 경우 충돌이 발생한 파일을 찾아 수정을 한 수 병합을 해주면 해결된다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">Git 시작하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EB%B3%B4-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0"><span class="toc-number">1.1.</span> <span class="toc-text">사용자 정보 설정하기</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-%EC%A0%80%EC%9E%A5%EC%86%8C-%EC%83%9D%EC%84%B1%EA%B3%BC-github%EC%97%90-push%ED%95%98%EA%B8%B0"><span class="toc-number">2.</span> <span class="toc-text">Git 저장소 생성과 github에 push하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%80%EC%9E%A5%EC%86%8C-%EC%83%9D%EC%84%B1"><span class="toc-number">2.1.</span> <span class="toc-text">저장소 생성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Commit-%ED%95%98%EA%B8%B0"><span class="toc-number">2.2.</span> <span class="toc-text">Commit 하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gitghub-repository%EC%99%80-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0"><span class="toc-number">2.3.</span> <span class="toc-text">Gitghub repository와 연결하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Github-repository%EC%97%90-push%ED%95%98%EA%B8%B0"><span class="toc-number">2.4.</span> <span class="toc-text">Github repository에 push하기</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-%EC%83%81%ED%83%9C-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0"><span class="toc-number">3.</span> <span class="toc-text">Git 상태 확인하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gti-branch-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">Gti branch 사용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-branch-%EC%83%9D%EC%84%B1"><span class="toc-number">4.1.</span> <span class="toc-text">Git branch 생성</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-merge-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">5.</span> <span class="toc-text">Git merge 사용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-merge-conflict"><span class="toc-number">5.1.</span> <span class="toc-text">Git merge conflict</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&text=Git을 사용해보자"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&is_video=false&description=Git을 사용해보자"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git을 사용해보자&body=Check out this article: https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&title=Git을 사용해보자"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&name=Git을 사용해보자&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/24/2022-01-24-elice2/&t=Git을 사용해보자"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

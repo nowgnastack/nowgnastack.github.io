@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="node js와 react js로 개발하는 웹 페이지 강의 정리 (inflearn 강의)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node Js 프로젝트 시작하기">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="node js와 react js로 개발하는 웹 페이지 강의 정리 (inflearn 강의)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/nodeReact/post1/Untitled.png">
+<meta property="article:published_time" content="2022-01-01T17:35:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.077Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="node js">
+<meta property="article:tag" content="react js">
+<meta property="article:tag" content="express">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/nodeReact/post1/Untitled.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Node Js 프로젝트 시작하기</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/01/04/2022-01-05-nodereact3/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/12/30/2021-12-30-nextjs1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&text=Node Js 프로젝트 시작하기"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&is_video=false&description=Node Js 프로젝트 시작하기"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Node Js 프로젝트 시작하기&body=Check out this article: https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&name=Node Js 프로젝트 시작하기&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&t=Node Js 프로젝트 시작하기"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Node-js-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">Node js 시작하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#package-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0"><span class="toc-number">2.</span> <span class="toc-text">package 설치하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Routing"><span class="toc-number">3.</span> <span class="toc-text">Routing</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DB-Schema-%EC%83%9D%EC%84%B1"><span class="toc-number">4.</span> <span class="toc-text">DB Schema 생성</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-number">5.</span> <span class="toc-text">회원가입 테스트</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#body-parser"><span class="toc-number">5.1.</span> <span class="toc-text">body-parser</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#postman"><span class="toc-number">5.2.</span> <span class="toc-text">postman</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Route"><span class="toc-number">5.3.</span> <span class="toc-text">Route</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#postman%EC%9C%BC%EB%A1%9C-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-number">5.4.</span> <span class="toc-text">postman으로 회원가입 테스트</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bcrypt%EB%A1%9C-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">6.</span> <span class="toc-text">Bcrypt로 비밀번호 암호화</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Node Js 프로젝트 시작하기
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-01T17:35:00.000Z" class="dt-published" itemprop="datePublished">2022-01-02</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/express/" rel="tag">express</a>, <a class="p-category" href="/tags/node-js/" rel="tag">node js</a>, <a class="p-category" href="/tags/react-js/" rel="tag">react js</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Node-js-시작하기"><a href="#Node-js-시작하기" class="headerlink" title="Node js 시작하기"></a>Node js 시작하기</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+
+<p><code>npm init</code>명령어로 node js 애플리케이션을 시작할 수 있다. 기본 정보를 입력하고 나면 <code>package.json</code>파일이 생성된다.</p>
+<h1 id="package-설치하기"><a href="#package-설치하기" class="headerlink" title="package 설치하기"></a>package 설치하기</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install &lt;package name&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>npm install</code>을 이용해 프로젝트에 필요한 패키지들을 설치 할 수 있다. 이 프로젝트에서는 <code>express</code>와 <code>mongoose</code>를 설치 했다. 패키지를 설치 하고 나면, <code>package.json</code>파일의 의존성 목록에 추가된다.</p>
+<h1 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h1><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// express 모듈 가져오기</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">5000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// root dir에 출력</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> res.<span class="title function_">send</span>(<span class="string">&quot;hello&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 앱을 실행</span></span><br><span class="line">app.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`example port <span class="subst">$&#123;port&#125;</span>!`</span>));</span><br></pre></td></tr></table></figure>
+
+<p><code>express</code>를 이용해 localhost 5000번 port에서 서버를 실행하려고 한다. 위 코드는 <code>app.get</code>을 이용해 root 페이지에 원하는 텍스트를 출력하는 코드이다.</p>
+<h1 id="DB-Schema-생성"><a href="#DB-Schema-생성" class="headerlink" title="DB Schema 생성"></a>DB Schema 생성</h1><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">&quot;mongoose&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// DB 스키마 만들기</span></span><br><span class="line"><span class="keyword">const</span> userSchema = mongoose.<span class="title class_">Schema</span>(&#123;</span><br><span class="line">  <span class="attr">name</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">maxlength</span>: <span class="number">50</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">	<span class="attr">email</span>: &#123;</span><br><span class="line">    <span class="attr">tyepe</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="comment">// todo: trim error 확인해보기</span></span><br><span class="line">    <span class="comment">// trim: true,</span></span><br><span class="line">    <span class="comment">// unique: 1,</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">password</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">maxlength</span>: <span class="number">50</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>회원들의 정보를 저장하기 위해 데이터베이스 스키마가 필요하다. MongoDB와 Express를 연결하기 위해 <code>Mongoose</code>라이브러리를 사용한다. 속성의 이름과 속성의 타입, 길이, 제약사항을 추가할 수 있다. 로그인 테스트에서 email의 trim에서 오류가 나 우선 지웠다. 해결되면 내용에 추가할 예정이다.</p>
+<h1 id="회원가입-테스트"><a href="#회원가입-테스트" class="headerlink" title="회원가입 테스트"></a>회원가입 테스트</h1><h2 id="body-parser"><a href="#body-parser" class="headerlink" title="body-parser"></a>body-parser</h2><p>body-parser는 client에서 정보(body)를 분석(parse)해서 <code>req.body</code>로 출력해주는 역할을 한다. <code>npm install body-parser --save</code>로 의존성을 설치해준다.</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// application/x-www-form-urlencoded</span></span><br><span class="line">app.<span class="title function_">use</span>(bodyParser.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br><span class="line"></span><br><span class="line"><span class="comment">// application/json</span></span><br><span class="line">app.<span class="title function_">use</span>(bodyParser.<span class="title function_">json</span>());</span><br></pre></td></tr></table></figure>
+
+<p><code>body-parser</code>의 옵션을 추가해 줘야 한다. <code>x-www-form-urlencoded</code>방식과 <code>json</code>방식을 받을 수 있게 해 준다.</p>
+<h2 id="postman"><a href="#postman" class="headerlink" title="postman"></a>postman</h2><p><code>postman</code>은 API 테스트를 할 수 있는 플랫폼이다. 회원가입 테스트를 위해 사용된다.</p>
+<h2 id="Route"><a href="#Route" class="headerlink" title="Route"></a>Route</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/register&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 회원 가입 할 때 필요한 정보들을 client에서 가져오면</span></span><br><span class="line">  <span class="comment">// 그것들을 DB에 넣어준다</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">new</span> <span class="title class_">User</span>(req.<span class="property">body</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// mongoDB method</span></span><br><span class="line">  user.<span class="title function_">save</span>(<span class="function">(<span class="params">err, userInfo</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> res.<span class="title function_">json</span>(&#123; <span class="attr">success</span>: <span class="literal">false</span>, err &#125;);</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">200</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">      <span class="attr">success</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>회원가입 시 데이터 전송은 <code>post</code>방식을 사용해 전달된다. <code>post</code>방식은 <code>body</code>에 데이터를 넣어 전송한다. 에러가 있으면 <code>false</code>를 출력하고 정상 동작이면 <code>true</code>를 반환한다.</p>
+<h2 id="postman으로-회원가입-테스트"><a href="#postman으로-회원가입-테스트" class="headerlink" title="postman으로 회원가입 테스트"></a>postman으로 회원가입 테스트</h2><p><img src="/assets/img/posts/nodeReact/post1/Untitled.png" alt="Untitled"><br><sub>postman(왼쪽) mongoDB(오른쪽)</sub></p>
+<p>postman에서 <code>json</code>방식으로 <code>localhost:5000/register</code>에 데이터를 보낸다. postman 사진 아래쪽에는 전달된 <code>Body</code>가 출력되며 현재 코드에서는 <code>json</code>형태로 성공 메세지를 출력하게 되어 있다. MongoDB의 Collections를 확인해 보면 사용자가 정상적으로 추가된 것을 확인할 수 있다.</p>
+<h1 id="Bcrypt로-비밀번호-암호화"><a href="#Bcrypt로-비밀번호-암호화" class="headerlink" title="Bcrypt로 비밀번호 암호화"></a>Bcrypt로 비밀번호 암호화</h1><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bcrypt = <span class="built_in">require</span>(<span class="string">&quot;bcrypt&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> saltRounds = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 유저 정보를 저장하기 전에 동작</span></span><br><span class="line">userSchema.<span class="title function_">pre</span>(<span class="string">&quot;save&quot;</span>, <span class="keyword">function</span> (<span class="params">next</span>) &#123;</span><br><span class="line">  <span class="comment">// const user는 위에 있는 userSchema를 가리킨다</span></span><br><span class="line">  <span class="keyword">var</span> user = <span class="variable language_">this</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 비밀번호를 바꿀 때만 암호화 하기</span></span><br><span class="line">  <span class="keyword">if</span> (user.<span class="title function_">isModified</span>(<span class="string">&quot;password&quot;</span>)) &#123;</span><br><span class="line">    <span class="comment">// 비밀번호 암호화 시키기</span></span><br><span class="line">    bcrypt.<span class="title function_">genSalt</span>(saltRounds, <span class="keyword">function</span> (<span class="params">err, salt</span>) &#123;</span><br><span class="line">      <span class="comment">// next()를 하면 바로 회원가입 route로 보낸다</span></span><br><span class="line">      <span class="keyword">if</span> (err) <span class="keyword">return</span> <span class="title function_">next</span>(<span class="string">&quot;gensalt&quot;</span>);</span><br><span class="line"></span><br><span class="line">      bcrypt.<span class="title function_">hash</span>(user.<span class="property">password</span>, salt, <span class="keyword">function</span> (<span class="params">err, hash</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> <span class="title function_">next</span>(<span class="string">&quot;hash&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// hash된 비밀번호로 변경해 준다</span></span><br><span class="line">        user.<span class="property">password</span> = hash;</span><br><span class="line">        <span class="title function_">next</span>();</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>회원가입 시 전달된 비밀번호는 암호화 된 상태로 저장되어야 한다. 암호화 된 상태로 저장하기 위해서 <code>bcrypt</code>를 사용한다. <code>npm</code>으로 <code>bcrypt</code>를 설치해 준다.</p>
+<p><code>userSchema.pre()</code>는 사용자 정보가 전달되고 데이터베이스로 전달되기 전 동작한다. 데이터베이스로 전달되기 전에 비밀번호를 암호화 해서 저장하려고 한다. 암호화를 위해서는 <code>salt</code>생성이 필요하다. 정상적으로 <code>salt</code>가 생성되면 <code>hash()</code>로 비밀번호를 암호화 한다. <code>hash()</code>의 파라미터로는 회원의 비밀번호, <code>salt</code>, 동작을 위한 함수가 들어간다.</p>
+<p>암호화된 비밀번호와 회원정보는 <code>next()</code>를 타고 데이터베이스로 넘어가게 된다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Node-js-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">Node js 시작하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#package-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0"><span class="toc-number">2.</span> <span class="toc-text">package 설치하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Routing"><span class="toc-number">3.</span> <span class="toc-text">Routing</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DB-Schema-%EC%83%9D%EC%84%B1"><span class="toc-number">4.</span> <span class="toc-text">DB Schema 생성</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-number">5.</span> <span class="toc-text">회원가입 테스트</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#body-parser"><span class="toc-number">5.1.</span> <span class="toc-text">body-parser</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#postman"><span class="toc-number">5.2.</span> <span class="toc-text">postman</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Route"><span class="toc-number">5.3.</span> <span class="toc-text">Route</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#postman%EC%9C%BC%EB%A1%9C-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-number">5.4.</span> <span class="toc-text">postman으로 회원가입 테스트</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bcrypt%EB%A1%9C-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">6.</span> <span class="toc-text">Bcrypt로 비밀번호 암호화</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&text=Node Js 프로젝트 시작하기"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&is_video=false&description=Node Js 프로젝트 시작하기"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Node Js 프로젝트 시작하기&body=Check out this article: https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&title=Node Js 프로젝트 시작하기"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&name=Node Js 프로젝트 시작하기&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/02/2022-01-02-nodereact1/&t=Node Js 프로젝트 시작하기"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

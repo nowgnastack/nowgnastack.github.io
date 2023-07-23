@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="typescript를 시작해보자">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Typescript 시작하기">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="typescript를 시작해보자">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-27T14:58:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.224Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="typesctipt">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Typescript 시작하기</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/03/28/2022-03-28-typescript2/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/03/21/2022-03-21-spring1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&text=Typescript 시작하기"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&is_video=false&description=Typescript 시작하기"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Typescript 시작하기&body=Check out this article: https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&name=Typescript 시작하기&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&t=Typescript 시작하기"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%83%80%EC%9E%85%EC%9D%B4-%ED%95%84%EC%9A%94%ED%95%9C-%EC%9D%B4%EC%9C%A0"><span class="toc-number">1.</span> <span class="toc-text">타입이 필요한 이유</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Typescript%EC%9D%98-%EA%B8%B0%EB%B3%B8-type"><span class="toc-number">2.</span> <span class="toc-text">Typescript의 기본 type</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#primitive-type"><span class="toc-number">2.1.</span> <span class="toc-text">primitive type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference-type"><span class="toc-number">2.2.</span> <span class="toc-text">reference type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%B6%94%EA%B0%80-%EC%A0%9C%EA%B3%B5%EB%90%98%EB%8A%94-%EC%9E%90%EB%A3%8C%ED%98%95"><span class="toc-number">2.3.</span> <span class="toc-text">추가 제공되는 자료형</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Utility-types"><span class="toc-number">3.</span> <span class="toc-text">Utility types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Partial"><span class="toc-number">3.0.1.</span> <span class="toc-text">Partial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReadOnly"><span class="toc-number">3.0.2.</span> <span class="toc-text">ReadOnly</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Record"><span class="toc-number">3.0.3.</span> <span class="toc-text">Record</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pick"><span class="toc-number">3.0.4.</span> <span class="toc-text">Pick&lt;T, K&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Omit"><span class="toc-number">3.0.5.</span> <span class="toc-text">Omit&lt;T, K&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exclude"><span class="toc-number">3.0.6.</span> <span class="toc-text">Exclude&lt;T, U&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Extract"><span class="toc-number">3.0.7.</span> <span class="toc-text">Extract&lt;T, U&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parameters"><span class="toc-number">3.0.8.</span> <span class="toc-text">Parameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstructorParameters"><span class="toc-number">3.0.9.</span> <span class="toc-text">ConstructorParameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReturnType"><span class="toc-number">3.0.10.</span> <span class="toc-text">ReturnType</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Required"><span class="toc-number">3.0.11.</span> <span class="toc-text">Required</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#function-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">function 사용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">4.1.</span> <span class="toc-text">매개변수</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%84%A0%ED%83%9D%EC%A0%81-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">4.2.</span> <span class="toc-text">선택적 매개변수</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%B4%88%EA%B8%B0%ED%99%94-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">4.2.1.</span> <span class="toc-text">초기화 매개변수</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%82%98%EB%A8%B8%EC%A7%80-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">4.2.2.</span> <span class="toc-text">나머지 매개변수</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Typescript 시작하기
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-27T14:58:00.000Z" class="dt-published" itemprop="datePublished">2022-03-27</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/typesctipt/" rel="tag">typesctipt</a>, <a class="p-category" href="/tags/web/" rel="tag">web</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="타입이-필요한-이유"><a href="#타입이-필요한-이유" class="headerlink" title="타입이 필요한 이유"></a>타입이 필요한 이유</h1><p>Javascript에서는 타입이 없기 때문에 타입에 의한 에러가 발생해도 코드를 실행시켜 보기 전까지 오류를 알기 힘들다. typescript는 타입에 대한 오류가 발생했을 때 미리 에러가 발생하는 부분을 알려준다. 타입을 정의하여 개발 단계에서 실수를 줄이고, 명시된 타입을 보고 자료형을 쉽게 파악할 수 있다.</p>
+<h1 id="Typescript의-기본-type"><a href="#Typescript의-기본-type" class="headerlink" title="Typescript의 기본 type"></a>Typescript의 기본 type</h1><p>Typescript는 javascript 코드에 변수나 함수의 type을 지정할 수 있다. Type을 나타내기 위해 annotaion을 사용한다.</p>
+<h2 id="primitive-type"><a href="#primitive-type" class="headerlink" title="primitive type"></a>primitive type</h2><p>object와 reference 형태가 아닌 실제 값을 저장하는 자료형이다. 기본 자료형은 아래와 같다.</p>
+<ul>
+<li>string</li>
+<li>boolean</li>
+<li>number</li>
+<li>null</li>
+<li>undefined</li>
+<li>symbol</li>
+</ul>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">str</span>: <span class="built_in">string</span> = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">isSucc</span>: <span class="built_in">boolean</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">nums</span>: <span class="built_in">number</span> = <span class="number">7</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="reference-type"><a href="#reference-type" class="headerlink" title="reference type"></a>reference type</h2><p>객체, 배열, 함수 등 Object 형식의 type이다. 메모리에 값을 주소로 저장하고, 출력 시 메모리 주소와 일치하는 값을 출력한다. 참조 자료형은 다음과 같다.</p>
+<ul>
+<li>object</li>
+<li>array</li>
+<li>function</li>
+</ul>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">funcName</span>(<span class="params">params: <span class="built_in">object</span></span>): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello this is function&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">arr</span>: <span class="built_in">number</span>[] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="comment">// generic을 사용한 타입 표기도 가능하다</span></span><br><span class="line"><span class="keyword">const</span> <span class="attr">arr2</span>: <span class="title class_">Array</span>&lt;<span class="built_in">number</span>&gt; = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+
+<h2 id="추가-제공되는-자료형"><a href="#추가-제공되는-자료형" class="headerlink" title="추가 제공되는 자료형"></a>추가 제공되는 자료형</h2><ul>
+<li>tuple</li>
+<li>enum</li>
+<li>any</li>
+<li>void</li>
+<li>never</li>
+</ul>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">arr3</span>: [<span class="built_in">string</span>, <span class="built_in">number</span>] = [<span class="string">&quot;hi&quot;</span>, <span class="number">8</span>];</span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Car</span> &#123;</span><br><span class="line">  bus = <span class="number">1</span>,</span><br><span class="line">  taxi = <span class="number">2</span>,</span><br><span class="line">  sun = <span class="number">3</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">bus</span>: <span class="title class_">Car</span> = <span class="title class_">Car</span>.<span class="property">bus</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">bus1</span>: <span class="title class_">String</span> = <span class="title class_">Car</span>[<span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+
+<p>배열 각 요소의 타입이 정해진 배열을 선언하는 것과 특정 값들의 집합을 저장하는 타입인 <code>enum</code>이다. <code>enum</code>은 인덱스로도 접근할 수 있다.</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Any</span>: <span class="built_in">any</span> = <span class="string">&quot;hi&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">unknown</span>: <span class="built_in">void</span> = <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">sayHi</span>(<span class="params">params: <span class="built_in">string</span></span>): <span class="built_in">void</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>any는 컴파일 시 type 검사를 하지 않으며 모든 타입을 저장 가능하다. void는 함수에서 반환 값이 없을 때 사용하고 변수에서는 undefined와 null만 할당한다.</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">newverEnd</span>(<span class="params">params: <span class="built_in">string</span></span>): <span class="built_in">never</span> &#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>never는 발생할 수 없는 type이며 항상 오류를 발생시키거나 절대 반환하지 않고 종료되지 않는 함수에 사용한다.</p>
+<hr>
+<h1 id="Utility-types"><a href="#Utility-types" class="headerlink" title="Utility types"></a>Utility types</h1><p>Typescript는 공통 타입 변환을 용이하게 하기 위해 utility type을 제공한다. utitity type은 전역으로 사용 가능하다. 아래는 typescript의 utility type이다</p>
+<ul>
+<li>Partial<T>, Readonly<T></li>
+<li>Record<T>, Pick<T></li>
+<li>Omit&lt;T,K&gt;, Exclude&lt;T,U&gt;, Extract&lt;T,U&gt;</li>
+<li>NonNullable<T>, Parameters<T>, ConstructorParameters<T></li>
+<li>ReturnType<T>, Required<T></li>
+</ul>
+<h3 id="Partial"><a href="#Partial" class="headerlink" title="Partial"></a>Partial<T></h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Todo</span> &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">description</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">updateTodo</span>(<span class="params">todo: Todo, fieldsToUpdate: Partial&lt;Todo&gt;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; ...todo, ...fieldsToUpdate &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> todo1 = &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&quot;title&quot;</span>,</span><br><span class="line">  <span class="attr">description</span>: <span class="string">&quot;helo&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> todo2 = <span class="title function_">updateTodo</span>(todo1, &#123;</span><br><span class="line">  <span class="attr">description</span>: <span class="string">&quot;world&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(todo2); <span class="comment">// &#123; title: &#x27;title&#x27;, description: &#x27;world&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>property를 선택적으로 만드는 type을 구성한다. 주어진 타입의 모든 하위 type 집합을 나타내는 type을 반환한다. 위 코드처럼 일부 property의 접근이 가능하다.</p>
+<h3 id="ReadOnly"><a href="#ReadOnly" class="headerlink" title="ReadOnly"></a>ReadOnly<T></h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">todoReadonly</span>: <span class="title class_">Readonly</span>&lt;<span class="title class_">Todo</span>&gt; = &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&quot;hello &quot;</span>,</span><br><span class="line">  <span class="attr">description</span>: <span class="string">&quot;des&quot;</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>ReadOnly로 지정되면 property에 재할당이 불가능하다.</p>
+<h3 id="Record"><a href="#Record" class="headerlink" title="Record"></a>Record<T></h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">PageInfo</span> &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Page</span> = <span class="string">&quot;home&quot;</span> | <span class="string">&quot;about&quot;</span> | <span class="string">&quot;contact&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">x</span>: <span class="title class_">Record</span>&lt;<span class="title class_">Page</span>, <span class="title class_">PageInfo</span>&gt; = &#123;</span><br><span class="line">  <span class="attr">about</span>: &#123; <span class="attr">title</span>: <span class="string">&quot;about&quot;</span> &#125;,</span><br><span class="line">  <span class="attr">contact</span>: &#123; <span class="attr">title</span>: <span class="string">&quot;contact&quot;</span> &#125;,</span><br><span class="line">  <span class="attr">home</span>: &#123; <span class="attr">title</span>: <span class="string">&quot;hone&quot;</span> &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>property의 집합 K로 type을 구성한다. Type의 property들을 다른 type에 매핑시키는데 사용한다.</p>
+<h3 id="Pick"><a href="#Pick" class="headerlink" title="Pick&lt;T, K&gt;"></a>Pick&lt;T, K&gt;</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Todos</span> &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">description</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">completed</span>: <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">TodoPreview</span> = <span class="title class_">Pick</span>&lt;<span class="title class_">Todos</span>, <span class="string">&quot;title&quot;</span> | <span class="string">&quot;completed&quot;</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">todos</span>: <span class="title class_">TodoPreview</span> = &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&quot;clean room&quot;</span>,</span><br><span class="line">  <span class="attr">completed</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">description</span>: <span class="string">&quot;description&quot;</span>, <span class="comment">// error: is not assignable to type &#x27;TodoPreview&#x27;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>property K의 집합을 선택해 type을 구성한다. 위 코드에서 todos의 description 부분에서 에러가 발생한다. <code>TodoPreview</code>에 description이 포함되어 있지 않기 때문이다. <code>TodoPreview</code>에 description을 추가해 주면 정상적으로 동작한다.</p>
+<h3 id="Omit"><a href="#Omit" class="headerlink" title="Omit&lt;T, K&gt;"></a>Omit&lt;T, K&gt;</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Todo</span> &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">description</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">completed</span>: <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">TodoPreview</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">Todo</span>, <span class="string">&quot;description&quot;</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">todo</span>: <span class="title class_">TodoPreview</span> = &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&quot;clean room&quot;</span>,</span><br><span class="line">  <span class="attr">completed</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">description</span>: <span class="string">&quot;description&quot;</span>, <span class="comment">//is not assignable to type &#x27;TodoPreview&#x27;.</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>모든 property를 선택한 다음 K를 제거한 type을 구성한다. <code>TodoPreview</code>에서 description이 제거 되었으므로 todo에서는 description부분에서 에러가 발생한다.</p>
+<h3 id="Exclude"><a href="#Exclude" class="headerlink" title="Exclude&lt;T, U&gt;"></a>Exclude&lt;T, U&gt;</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="variable constant_">T0</span> = <span class="title class_">Exclude</span>&lt;<span class="string">&quot;a&quot;</span> | <span class="string">&quot;b&quot;</span> | <span class="string">&quot;c&quot;</span>, <span class="string">&quot;a&quot;</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = <span class="title class_">Exclude</span>&lt;<span class="string">&quot;a&quot;</span> | <span class="string">&quot;b&quot;</span> | <span class="string">&quot;c&quot;</span>, <span class="string">&quot;a&quot;</span> | <span class="string">&quot;b&quot;</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T2</span> = <span class="title class_">Exclude</span>&lt;<span class="built_in">string</span> | <span class="built_in">number</span> | (<span class="function">() =&gt;</span> <span class="built_in">void</span>), <span class="title class_">Function</span>&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>T 중에서 U를 제외한 type을 구성한다</p>
+<h3 id="Extract"><a href="#Extract" class="headerlink" title="Extract&lt;T, U&gt;"></a>Extract&lt;T, U&gt;</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="variable constant_">T0</span> = <span class="title class_">Extract</span>&lt;<span class="string">&quot;a&quot;</span> | <span class="string">&quot;b&quot;</span> | <span class="string">&quot;c&quot;</span>, <span class="string">&quot;a&quot;</span> | <span class="string">&quot;f&quot;</span>&gt;; <span class="comment">// a</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = <span class="title class_">Extract</span>&lt;<span class="built_in">string</span> | <span class="built_in">number</span> | (<span class="function">() =&gt;</span> <span class="built_in">void</span>), <span class="title class_">Function</span>&gt;; <span class="comment">// () =&gt; void</span></span><br></pre></td></tr></table></figure>
+
+<p>T에서 U에 할당할 수 있는 모든 속성을 추출해서 type을 구성한다</p>
+<h3 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters<T></h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">f1</span>(<span class="params">arg: &#123; a: <span class="built_in">number</span>; b: <span class="built_in">string</span> &#125;</span>): <span class="built_in">void</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T0</span> = <span class="title class_">Parameters</span>&lt;<span class="function">() =&gt;</span> <span class="built_in">string</span>&gt;; <span class="comment">// []</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = <span class="title class_">Parameters</span>&lt;<span class="function">(<span class="params">s: <span class="built_in">string</span></span>) =&gt;</span> <span class="built_in">void</span>&gt;; <span class="comment">// [string]</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T2</span> = <span class="title class_">Parameters</span>&lt;&lt;T&gt;<span class="function">(<span class="params">arg: T</span>) =&gt;</span> T&gt;; <span class="comment">// [unknown]</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T4</span> = <span class="title class_">Parameters</span>&lt;<span class="keyword">typeof</span> f1&gt;; <span class="comment">// [&#123;a:number, b: string&#125;]</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T5</span> = <span class="title class_">Parameters</span>&lt;<span class="built_in">any</span>&gt;; <span class="comment">// unknown[]</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T6</span> = <span class="title class_">Parameters</span>&lt;<span class="built_in">never</span>&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>함수 type T의 매개 변수 type들의 튜플 type을 구성한다</p>
+<h3 id="ConstructorParameters"><a href="#ConstructorParameters" class="headerlink" title="ConstructorParameters"></a>ConstructorParameters<T></h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> error = <span class="title class_">ConstructorParameters</span>&lt;<span class="title class_">ErrorConstructor</span>&gt;; <span class="comment">// [(string | undefined)?]</span></span><br><span class="line"><span class="keyword">type</span> func = <span class="title class_">ConstructorParameters</span>&lt;<span class="title class_">FunctionConstructor</span>&gt;; <span class="comment">// string[]</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">RegEx</span> = <span class="title class_">ConstructorParameters</span>&lt;<span class="title class_">RegExpConstructor</span>&gt;; <span class="comment">// [string, (string | undefined)?]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> inter1 &#123;</span><br><span class="line">  <span class="keyword">new</span> (<span class="attr">args</span>: <span class="built_in">string</span>): <span class="title class_">Function</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> interType = <span class="title class_">ConstructorParameters</span>&lt;inter1&gt;; <span class="comment">// [string]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">f1</span>(<span class="params">a: interType</span>) &#123;</span><br><span class="line">  a[<span class="number">0</span>];</span><br><span class="line">  a[<span class="number">1</span>]; <span class="comment">// Tuple type &#x27;[args: string]&#x27; of length &#x27;1&#x27; has no element at index &#x27;1&#x27;.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>생성자 함수 type의 모든 매개변수 타입을 추출한다. 모든 매개변수 type을 가지는 튜플 type(T가 함수가 아닌 경우 never)을 생성한다.</p>
+<h3 id="ReturnType"><a href="#ReturnType" class="headerlink" title="ReturnType"></a>ReturnType<T></h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="keyword">function</span> <span class="title function_">f1</span>(<span class="params"></span>): &#123; <span class="attr">a</span>: <span class="built_in">number</span>; <span class="attr">b</span>: <span class="built_in">string</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> t1 = <span class="title class_">ReturnType</span>&lt;<span class="function">() =&gt;</span> <span class="built_in">string</span>&gt;; <span class="comment">//string</span></span><br><span class="line"><span class="keyword">type</span> t2 = <span class="title class_">ReturnType</span>&lt;<span class="function">(<span class="params">s: <span class="built_in">string</span></span>) =&gt;</span> <span class="built_in">void</span>&gt;; <span class="comment">// void</span></span><br><span class="line"><span class="keyword">type</span> t3 = <span class="title class_">ReturnType</span>&lt;&lt;T&gt;<span class="function">() =&gt;</span> T&gt;; <span class="comment">// &#123;&#125;</span></span><br><span class="line"><span class="keyword">type</span> t4 = <span class="title class_">ReturnType</span>&lt;&lt;T <span class="keyword">extends</span> U, U <span class="keyword">extends</span> <span class="built_in">number</span>[]&gt;<span class="function">() =&gt;</span> T&gt;; <span class="comment">// number[]</span></span><br><span class="line"><span class="keyword">type</span> t5 = <span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> f1&gt;; <span class="comment">// &#123;a:number, b:string&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>type의 구성을 함수 T의 반환되는 type으로 지정한다.</p>
+<h3 id="Required"><a href="#Required" class="headerlink" title="Required"></a>Required<T></h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Props</span> &#123;</span><br><span class="line">  a?: <span class="built_in">number</span>;</span><br><span class="line">  b?: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">obj</span>: <span class="title class_">Props</span> = &#123; <span class="attr">a</span>: <span class="number">5</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">obj2</span>: <span class="title class_">Required</span>&lt;<span class="title class_">Props</span>&gt; = &#123; <span class="attr">a</span>: <span class="number">5</span> &#125;; <span class="comment">// Property &#x27;b&#x27; is missing in type &#x27;&#123; a: number; &#125;&#x27; but required in type</span></span><br></pre></td></tr></table></figure>
+
+<p>T의 모든 property가 필수로 설정된 type을 구성한다.</p>
+<h1 id="function-사용하기"><a href="#function-사용하기" class="headerlink" title="function 사용하기"></a>function 사용하기</h1><h2 id="매개변수"><a href="#매개변수" class="headerlink" title="매개변수"></a>매개변수</h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">person</span>(<span class="params">name: <span class="built_in">string</span>, age: <span class="built_in">number</span>, gender: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`hello <span class="subst">$&#123;name&#125;</span> age is <span class="subst">$&#123;age&#125;</span> gender is <span class="subst">$&#123;gender&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> lee = <span class="title function_">person</span>(<span class="string">&quot;lee&quot;</span>, <span class="number">20</span>, <span class="string">&quot;male &quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>기본적으로 함수에 주어진 인자의 수는 함수가 기대하는 매개변수의 수와 같아야 한다.</p>
+<h2 id="선택적-매개변수"><a href="#선택적-매개변수" class="headerlink" title="선택적 매개변수"></a>선택적 매개변수</h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">person</span>(<span class="params">name: <span class="built_in">string</span>, age: <span class="built_in">number</span>, gender?: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`hello <span class="subst">$&#123;name&#125;</span> age is <span class="subst">$&#123;age&#125;</span> gender is <span class="subst">$&#123;gender&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> lee = <span class="title function_">person</span>(<span class="string">&quot;lee&quot;</span>, <span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+
+<p>함수의 매개변수에 <code>?</code>를 붙여 선택적으로 매개변수를 사용할 수 있다. 값을 넣지 않아도 에러가 발생하지 않는다.</p>
+<h3 id="초기화-매개변수"><a href="#초기화-매개변수" class="headerlink" title="초기화 매개변수"></a>초기화 매개변수</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">person</span>(<span class="params">name: <span class="built_in">string</span>, age = <span class="number">20</span>, gender: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`hello <span class="subst">$&#123;name&#125;</span> age is <span class="subst">$&#123;age&#125;</span> gender is <span class="subst">$&#123;gender&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> lee = <span class="title function_">person</span>(<span class="string">&quot;lee&quot;</span>, <span class="literal">undefined</span>, <span class="string">&quot;male &quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>매개변수에 값을 할당하게되면 함수의 인자가 <code>undefined</code>인 경우 할당된 값으로 함수가 동작하게 된다.</p>
+<h3 id="나머지-매개변수"><a href="#나머지-매개변수" class="headerlink" title="나머지 매개변수"></a>나머지 매개변수</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">person</span>(<span class="params">name: <span class="built_in">string</span>, age = <span class="number">20</span>, ...remain: <span class="built_in">string</span>[]</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`hello <span class="subst">$&#123;name&#125;</span> age is <span class="subst">$&#123;age&#125;</span> remain <span class="subst">$&#123;remain&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> lee = <span class="title function_">person</span>(<span class="string">&quot;lee&quot;</span>, <span class="literal">undefined</span>, <span class="string">&quot;hello&quot;</span>, <span class="string">&quot;world&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>spread 연산자를 사용해서 <code>...</code> 뒤의 인자 배열을 사용할 수 있다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%83%80%EC%9E%85%EC%9D%B4-%ED%95%84%EC%9A%94%ED%95%9C-%EC%9D%B4%EC%9C%A0"><span class="toc-number">1.</span> <span class="toc-text">타입이 필요한 이유</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Typescript%EC%9D%98-%EA%B8%B0%EB%B3%B8-type"><span class="toc-number">2.</span> <span class="toc-text">Typescript의 기본 type</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#primitive-type"><span class="toc-number">2.1.</span> <span class="toc-text">primitive type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference-type"><span class="toc-number">2.2.</span> <span class="toc-text">reference type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%B6%94%EA%B0%80-%EC%A0%9C%EA%B3%B5%EB%90%98%EB%8A%94-%EC%9E%90%EB%A3%8C%ED%98%95"><span class="toc-number">2.3.</span> <span class="toc-text">추가 제공되는 자료형</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Utility-types"><span class="toc-number">3.</span> <span class="toc-text">Utility types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Partial"><span class="toc-number">3.0.1.</span> <span class="toc-text">Partial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReadOnly"><span class="toc-number">3.0.2.</span> <span class="toc-text">ReadOnly</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Record"><span class="toc-number">3.0.3.</span> <span class="toc-text">Record</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pick"><span class="toc-number">3.0.4.</span> <span class="toc-text">Pick&lt;T, K&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Omit"><span class="toc-number">3.0.5.</span> <span class="toc-text">Omit&lt;T, K&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exclude"><span class="toc-number">3.0.6.</span> <span class="toc-text">Exclude&lt;T, U&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Extract"><span class="toc-number">3.0.7.</span> <span class="toc-text">Extract&lt;T, U&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Parameters"><span class="toc-number">3.0.8.</span> <span class="toc-text">Parameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ConstructorParameters"><span class="toc-number">3.0.9.</span> <span class="toc-text">ConstructorParameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReturnType"><span class="toc-number">3.0.10.</span> <span class="toc-text">ReturnType</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Required"><span class="toc-number">3.0.11.</span> <span class="toc-text">Required</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#function-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">function 사용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">4.1.</span> <span class="toc-text">매개변수</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%84%A0%ED%83%9D%EC%A0%81-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">4.2.</span> <span class="toc-text">선택적 매개변수</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%B4%88%EA%B8%B0%ED%99%94-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">4.2.1.</span> <span class="toc-text">초기화 매개변수</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%82%98%EB%A8%B8%EC%A7%80-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">4.2.2.</span> <span class="toc-text">나머지 매개변수</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&text=Typescript 시작하기"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&is_video=false&description=Typescript 시작하기"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Typescript 시작하기&body=Check out this article: https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&title=Typescript 시작하기"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&name=Typescript 시작하기&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/27/2022-03-27-typescript1/&t=Typescript 시작하기"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

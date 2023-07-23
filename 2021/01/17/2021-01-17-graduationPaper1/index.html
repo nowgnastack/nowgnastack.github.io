@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="Variational Auto Encoder Variational auto encoder 는 Generative model 이다.  Training data의 distribution을 근사하는 특징을 가지고 있다.     z : latent variablex : target data   z~p(z) : random variable $g_\theta$(.)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Variational Auto Encoder(VAE)">
+<meta property="og:url" content="https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="Variational Auto Encoder Variational auto encoder 는 Generative model 이다.  Training data의 distribution을 근사하는 특징을 가지고 있다.     z : latent variablex : target data   z~p(z) : random variable $g_\theta$(.)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/generator.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/model.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/derivation1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/derivation2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/fullmodel.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/KL.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/regular.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/reparameterization.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/decoder.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/reconstruction.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/reconstruction2.png">
+<meta property="article:published_time" content="2021-01-16T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:15.881Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="deep learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/generator.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Variational Auto Encoder(VAE)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationpaper1/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/01/30/2021-01-30-TAVE_Research6/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/01/13/2021-01-13-TAVE_Research5/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&text=Variational Auto Encoder(VAE)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&is_video=false&description=Variational Auto Encoder(VAE)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Variational Auto Encoder(VAE)&body=Check out this article: https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&name=Variational Auto Encoder(VAE)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&t=Variational Auto Encoder(VAE)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Variational-Auto-Encoder"><span class="toc-number">1.</span> <span class="toc-text">Variational Auto Encoder</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Intractable-calculation-issue"><span class="toc-number">2.</span> <span class="toc-text">Intractable calculation issue</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Derivation-1"><span class="toc-number">2.1.</span> <span class="toc-text">Derivation 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Derivation-2"><span class="toc-number">2.2.</span> <span class="toc-text">Derivation 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LOSS-Function"><span class="toc-number">2.3.</span> <span class="toc-text">LOSS Function</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Variational-Inference-phi"><span class="toc-number">2.3.1.</span> <span class="toc-text">Variational Inference ($\phi$)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maximum-Likelihood-theta"><span class="toc-number">2.3.2.</span> <span class="toc-text">Maximum Likelihood ($\theta$)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimization"><span class="toc-number">2.3.3.</span> <span class="toc-text">Optimization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Regularization-Encoder"><span class="toc-number">2.3.4.</span> <span class="toc-text">Regularization (Encoder)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reparameterization-Trick"><span class="toc-number">2.3.5.</span> <span class="toc-text">Reparameterization Trick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reconstruction-Error-Decoder"><span class="toc-number">2.3.6.</span> <span class="toc-text">Reconstruction Error (Decoder)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#References"><span class="toc-number">2.3.6.0.0.1.</span> <span class="toc-text">References</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Variational Auto Encoder(VAE)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-01-16T15:00:00.000Z" class="dt-published" itemprop="datePublished">2021-01-17</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/deep-learning/">deep learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/deep-learning/" rel="tag">deep learning</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Variational-Auto-Encoder"><a href="#Variational-Auto-Encoder" class="headerlink" title="Variational Auto Encoder"></a>Variational Auto Encoder</h1><ul>
+<li><p>Variational auto encoder 는 Generative model 이다.</p>
+</li>
+<li><p>Training data의 distribution을 근사하는 특징을 가지고 있다.</p>
+<p><img src="/assets/img/posts/GraduationPaper/vae/generator.png" alt="/assets/img/posts/GraduationPaper/vae/generator.png"></p>
+</li>
+</ul>
+<blockquote>
+<p>z : latent variable<br>x : target data</p>
+</blockquote>
+<ul>
+<li><strong>z~p(z) : random variable</strong></li>
+<li><strong>$g_\theta$(.) : Deterministic function parameterized by $\theta$</strong></li>
+<li><strong>x &#x3D; g(x) : random variable</strong></li>
+<li>z vector는 controller 역할을 한다. (ex. 사람 얼굴에 화난 얼굴, 기쁜얼굴, 당황한 얼굴 조절 가능)</li>
+</ul>
+<hr>
+<h1 id="Intractable-calculation-issue"><a href="#Intractable-calculation-issue" class="headerlink" title="Intractable calculation issue"></a>Intractable calculation issue</h1><p><img src="/assets/img/posts/GraduationPaper/vae/model.png" alt="/assets/img/posts/GraduationPaper/vae/model.png"></p>
+<ul>
+<li>실선이 generative model 인 $p_\theta(z)p_\theta(x|z)$이고, 점선은 $q_\theta(z|x)$를 이용해 근사할 $p_\theta(z|x)$이다.</li>
+<li>$p(z|x)$를 계산하기 위한 $p_\theta(x) &#x3D; \int_z(p_\theta(x|z)p_\theta(z)dz$가 모든 z에 대해 적분 할 수 없기때문에 $q_\theta(z|x)$(입력 x)를 도입하여 계산한다.</li>
+</ul>
+<h2 id="Derivation-1"><a href="#Derivation-1" class="headerlink" title="Derivation 1"></a>Derivation 1</h2><p><img src="/assets/img/posts/GraduationPaper/vae/derivation1.png" alt="/assets/img/posts/GraduationPaper/vae/derivation1.png"></p>
+<ul>
+<li>Concave 함수로 변환하기 위해 log를 씌운다.</li>
+<li>Jensen’s Inequality 를 사용하여 log를 안으로 넣어준다. ($f[E(x)] \ge E[f(x)]$)</li>
+<li>$q{_\phi}(z|x)$를 추가해 준다.</li>
+<li>최종적으로 정리한 식은 $\log(p(x)$ 보다 작거나 같기 때문에 ELBO(evidence lower bound)라고 한다.</li>
+</ul>
+<h2 id="Derivation-2"><a href="#Derivation-2" class="headerlink" title="Derivation 2"></a>Derivation 2</h2><p><img src="/assets/img/posts/GraduationPaper/vae/derivation2.png" alt="/assets/img/posts/GraduationPaper/vae/derivation2.png"></p>
+<ul>
+<li>2번째 증명 공식은 $p(x) &#x3D; p(x)$으로 시작 한다.</li>
+<li>z에 대한 확률분포의 모든 합이 1인 것을 이용하여 $p(x)$에 곱해준다.</li>
+<li>조건부확률의 정의에 따라 $p(x)$를 바꿔준다.</li>
+<li>증명 1과 같이 $q_\phi (z|x)$를 도입한다.</li>
+<li>정리된 식의 앞부분은 ELBO와 같고 뒤에 있는 식은 KLD로 나타낼 수 있다.</li>
+<li>KL을 최소화 하는 $q_\theta(z|x)$를 찾으면 되지만 $p(z|x)$를 모르기 때문에 ELBO를 최대화 하는 $\phi$ 값을 찾아야 한다.</li>
+</ul>
+<hr>
+<h2 id="LOSS-Function"><a href="#LOSS-Function" class="headerlink" title="LOSS Function"></a>LOSS Function</h2><p><img src="/assets/img/posts/GraduationPaper/vae/fullmodel.png" alt="/assets/img/posts/GraduationPaper/vae/fullmodel.png"></p>
+<h3 id="Variational-Inference-phi"><a href="#Variational-Inference-phi" class="headerlink" title="Variational Inference ($\phi$)"></a>Variational Inference ($\phi$)</h3><p>\begin{align}<br>\log(p(x)) \ge E_{q{_\phi} (z|x)} [ \log (p(x|z))] - KL(q_\phi(z|x) |p(z)) &#x3D; ELBO(\phi)<br>\end{align}</p>
+<h3 id="Maximum-Likelihood-theta"><a href="#Maximum-Likelihood-theta" class="headerlink" title="Maximum Likelihood ($\theta$)"></a>Maximum Likelihood ($\theta$)</h3><p>\begin{align}<br>-{\sum}_i {\log(p(x_i))} \le -{\sum}_i { E_{q{_\phi} (z|x_i)} [ \log (p(x_i|g_\theta(z)))] - KL(q_\phi(z|x) |p(z))}<br>\end{align}</p>
+<h3 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h3><p>\begin{align}<br>argmax_({\phi, \theta}) {\sum}_i -{E_{q{_\phi} (z|x_i)} [ \log (p(x_i|g_\theta(z)))] + KL(q_\phi(z|x_i) |p(z))}<br>\end{align}</p>
+<ul>
+<li>ELBO를 maximize 하는 $\phi, \theta$를 찾는 것이 목표이다.</li>
+<li>$q_\theta(z|x)$는 Encoder이고, $g_\theta(x|z)$는 Decoder이다.</li>
+<li>Decoder를 학습시키기위해 Encoder를 도입하였다.</li>
+</ul>
+<h3 id="Regularization-Encoder"><a href="#Regularization-Encoder" class="headerlink" title="Regularization (Encoder)"></a>Regularization (Encoder)</h3><p><img src="/assets/img/posts/GraduationPaper/vae/KL.png" alt="/assets/img/posts/GraduationPaper/vae/KL.png"></p>
+<ul>
+<li><p>$q_\phi (z|x_i)$는 $N(\mu_i, {\sigma{_i}}^2I)$, $p(z)$는 $N(0,1)$으로 가정한다.</p>
+<p><img src="/assets/img/posts/GraduationPaper/vae/regular.png" alt="/assets/img/posts/GraduationPaper/vae/regular.png"></p>
+</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mr-easy.github.io/2020-04-16-kl-divergence-between-2-gaussian-distributions/">두 normal distribution 사이의 KL divergence</a></p>
+</blockquote>
+<ul>
+<li>Encoder부분의 계산은 위 식처럼 계산 가능하다.</li>
+</ul>
+<h3 id="Reparameterization-Trick"><a href="#Reparameterization-Trick" class="headerlink" title="Reparameterization Trick"></a>Reparameterization Trick</h3><p><img src="/assets/img/posts/GraduationPaper/vae/reparameterization.png" alt="/assets/img/posts/GraduationPaper/vae/reparameterization.png"></p>
+<p>KLD까지 통과를 하고 이제 Decoder 부분으로 넘어가면 되는데 문제가 있다. $q_\theta ()$에서는 sampling을 진행하게 되며, z는 Gaussian distribution이므로 Backpropagation이 불가능하다.</p>
+<p>\begin{align}<br>z^{i,j} &#x3D; \mu_i +{\sigma{_i}}^2 \odot \epsilon<br>\end{align}</p>
+<ul>
+<li>Gaussian distribution인 $z^{i,j}$에 약간의 변형을 준다.</li>
+<li>$\epsilon \sim N(0,I)$이기 때문에 같은 분포지만 Backpropagation이 가능하다.</li>
+</ul>
+<h3 id="Reconstruction-Error-Decoder"><a href="#Reconstruction-Error-Decoder" class="headerlink" title="Reconstruction Error (Decoder)"></a>Reconstruction Error (Decoder)</h3><p><img src="/assets/img/posts/GraduationPaper/vae/decoder.png" alt="/assets/img/posts/GraduationPaper/vae/decoder.png"></p>
+<p><img src="/assets/img/posts/GraduationPaper/vae/reconstruction.png" alt="/assets/img/posts/GraduationPaper/vae/reconstruction.png"></p>
+<ul>
+<li>$L&#x3D;1$인 경우의 식을 전개하면 아래와 같다.</li>
+</ul>
+<p><img src="/assets/img/posts/GraduationPaper/vae/reconstruction2.png" alt="/assets/img/posts/GraduationPaper/vae/reconstruction2.png"></p>
+<ul>
+<li>입력 x와 출력 $p_{i,j}$ 사이의 cross-entropy가 되는것을 볼 수 있다.</li>
+</ul>
+<h6 id="References"><a href="#References" class="headerlink" title="References"></a>References</h6><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=rNh2CrTFpm4&t=1837s">오토인코더의 모든 것 - 2&#x2F;3</a><br><a target="_blank" rel="noopener" href="https://ratsgo.github.io/generative%20model/2018/01/27/VAE/">ratsgo’s blog</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Variational-Auto-Encoder"><span class="toc-number">1.</span> <span class="toc-text">Variational Auto Encoder</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Intractable-calculation-issue"><span class="toc-number">2.</span> <span class="toc-text">Intractable calculation issue</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Derivation-1"><span class="toc-number">2.1.</span> <span class="toc-text">Derivation 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Derivation-2"><span class="toc-number">2.2.</span> <span class="toc-text">Derivation 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LOSS-Function"><span class="toc-number">2.3.</span> <span class="toc-text">LOSS Function</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Variational-Inference-phi"><span class="toc-number">2.3.1.</span> <span class="toc-text">Variational Inference ($\phi$)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maximum-Likelihood-theta"><span class="toc-number">2.3.2.</span> <span class="toc-text">Maximum Likelihood ($\theta$)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimization"><span class="toc-number">2.3.3.</span> <span class="toc-text">Optimization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Regularization-Encoder"><span class="toc-number">2.3.4.</span> <span class="toc-text">Regularization (Encoder)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reparameterization-Trick"><span class="toc-number">2.3.5.</span> <span class="toc-text">Reparameterization Trick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reconstruction-Error-Decoder"><span class="toc-number">2.3.6.</span> <span class="toc-text">Reconstruction Error (Decoder)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#References"><span class="toc-number">2.3.6.0.0.1.</span> <span class="toc-text">References</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&text=Variational Auto Encoder(VAE)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&is_video=false&description=Variational Auto Encoder(VAE)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Variational Auto Encoder(VAE)&body=Check out this article: https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&title=Variational Auto Encoder(VAE)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&name=Variational Auto Encoder(VAE)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/01/17/2021-01-17-graduationPaper1/&t=Variational Auto Encoder(VAE)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

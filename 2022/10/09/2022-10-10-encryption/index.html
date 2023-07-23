@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="자바에서 암호화 알고리즘 사용에 대해 알아본다">
+<meta property="og:type" content="article">
+<meta property="og:title" content="사용자 정보 암호화 하기 (With Java)">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="자바에서 암호화 알고리즘 사용에 대해 알아본다">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-10-09T07:21:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.330Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="SHA256 encrypt AES128 decrypt java">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>사용자 정보 암호화 하기 (With Java)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/10/17/2022-10-17-springbean/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/09/26/2022-09-26-oosd/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&text=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&is_video=false&description=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=사용자 정보 암호화 하기 (With Java)&body=Check out this article: https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&name=사용자 정보 암호화 하기 (With Java)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&t=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#User-Security-VO-Value-Object"><span class="toc-number">1.</span> <span class="toc-text">User Security VO(Value Object)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%95%94%ED%98%B8%ED%99%94-Encryption"><span class="toc-number">2.</span> <span class="toc-text">암호화 (Encryption)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%96%91%EB%B0%A9%ED%96%A5-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">2.1.</span> <span class="toc-text">양방향 암호화</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8B%A8%EB%B0%A9%ED%96%A5-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">2.2.</span> <span class="toc-text">단방향 암호화</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EB%B3%B4-%EC%95%94%ED%98%B8%ED%99%94-%ED%95%98%EA%B8%B0"><span class="toc-number">3.</span> <span class="toc-text">사용자 정보 암호화 하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Generate-key"><span class="toc-number">3.0.1.</span> <span class="toc-text">1. Generate key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%9D%B4%EB%A6%84-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">3.0.2.</span> <span class="toc-text">2. 사용자 이름 암호화</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%EC%82%AC%EC%9A%A9%EC%9E%90-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">3.0.3.</span> <span class="toc-text">3. 사용자 비밀번호 암호화</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EB%B3%B4-%EB%B3%B5%ED%98%B8%ED%99%94-%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">사용자 정보 복호화 하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%94%ED%98%B8%ED%99%94%EB%90%9C-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%82%AC%EC%9A%A9%ED%95%A0%EA%B9%8C"><span class="toc-number">4.1.</span> <span class="toc-text">암호화된 비밀번호는 어떻게 사용할까?</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        사용자 정보 암호화 하기 (With Java)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-10-09T07:21:00.000Z" class="dt-published" itemprop="datePublished">2022-10-09</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/java/">java</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/SHA256-encrypt-AES128-decrypt-java/" rel="tag">SHA256 encrypt AES128 decrypt java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="User-Security-VO-Value-Object"><a href="#User-Security-VO-Value-Object" class="headerlink" title="User Security VO(Value Object)"></a>User Security VO(Value Object)</h1><p>사용자가 회원가입 시 저장되는 비밀번호는 암호화 되어야 한다. 사용자 비밀번호 암호화를 위한 security VO를 이용해 사용자 id, salt, secret key를 저장한다.</p>
+<h1 id="암호화-Encryption"><a href="#암호화-Encryption" class="headerlink" title="암호화 (Encryption)"></a>암호화 (Encryption)</h1><p>사용자 비밀번호 암호화를 하기 전 암호화에 대해 간단히 알아본다.</p>
+<p>암호화는 크게 양방향 암호화, 단방향 암호화가 있다. 양방향은 키를 이용한 복호화가 가능하다는 차이점이 있다.</p>
+<h2 id="양방향-암호화"><a href="#양방향-암호화" class="headerlink" title="양방향 암호화"></a>양방향 암호화</h2><p>양방향 암호화에는 대칭키 방식과 비대칭키 방식으로 나눌 수 있다. 대칭 키 방식은 암호화와 복호화에 사용하는 키가 같은 것이고, 비대칭키 방식은 암호화 하는 키와 복호화 하는 키가 다른 것이다.</p>
+<p>대칭키 방식에는 AES, DES, SEED 등이 있다. 이번 포스팅에서는 AES128 방식을 사용할 것이다.</p>
+<p>비대칭키 방식에는 DAS, RSA가 있다. 대칭키에 비해 느리지만, 키 생성 시 private key와 public key가 생성된다.</p>
+<h2 id="단방향-암호화"><a href="#단방향-암호화" class="headerlink" title="단방향 암호화"></a>단방향 암호화</h2><p>단방향 암호화는 hash를 이용해서 암호화 하는 방법이다. 평문을 암호화 할 수 있지만, 복호화는 불가능하다.</p>
+<p>단방향 암호화는 사용자 인증, 인가에 사용되는 JWT(json web token)에 사용되는 방식이다.</p>
+<h1 id="사용자-정보-암호화-하기"><a href="#사용자-정보-암호화-하기" class="headerlink" title="사용자 정보 암호화 하기"></a>사용자 정보 암호화 하기</h1><p>이번 예시에서는 <code>AES128</code> 방식으로 평문을 암호화 해볼 것이다. 암호화가 사용되는 시점은 사용자 회원가입 시 발생하게 된다.</p>
+<p>비밀번호는 단방향 해시 알고리즘인 <code>SHA256</code>을 사용해 암호화 할 것이다. 단방향 암호화 알고리즘을 사용해 복호화가 불가능하게 한다.</p>
+<p><code>java.security</code>와 <code>javax.crypto</code> 클래스에서 import 하여 사용한다.</p>
+<h3 id="1-Generate-key"><a href="#1-Generate-key" class="headerlink" title="1. Generate key"></a>1. Generate key</h3><p>AES 128 방식으로 secret key를 발급한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.crypto.KeyGenerator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Encrypt</span>&#123;</span><br><span class="line">...</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] generateKey(String algorithm, <span class="type">int</span> keySize) <span class="keyword">throws</span></span><br><span class="line">            NoSuchAlgorithmException &#123;</span><br><span class="line">        <span class="type">KeyGenerator</span> <span class="variable">keyGenerator</span> <span class="operator">=</span> KeyGenerator.getInstance(algorithm);</span><br><span class="line">        keyGenerator.init(keySize);</span><br><span class="line">        <span class="type">SecretKey</span> <span class="variable">key</span> <span class="operator">=</span> keyGenerator.generateKey();</span><br><span class="line">        <span class="keyword">return</span> key.getEncoded();</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>generateKey</code> 메서드에 <code>algorithm</code>에는 암호화의 방식, <code>keySize</code>는 키의 크기가 들어간다. <code>algorithm</code>은 AES, <code>keySize</code>는 128로 한다.</p>
+<p>javax.crypto의 KeyGenerator를 사용해 알고리즘 종류와 키의 크기로 초기화 해준다. KeyGenerator의 generateKey()를 이용해 키를 생성한 후 getEncoded()로 키를 반환한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">byteArrayToHex</span><span class="params">(<span class="type">byte</span>[] ba)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (ba == <span class="literal">null</span> || ba.length == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">StringBuffer</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>(ba.length * <span class="number">2</span>);</span><br><span class="line">    String hexNumber;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">0</span>; x &lt; ba.length; x++) &#123;</span><br><span class="line">        hexNumber = <span class="string">&quot;0&quot;</span> + Integer.toHexString(<span class="number">0xff</span> &amp; ba[x]);</span><br><span class="line">        sb.append(hexNumber.substring(hexNumber.length() - <span class="number">2</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sb.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>generateKey()</code>메서드에서 얻어진 byte 배열을 16진수의 문자열로 변환하는 <code>byteArrayToHex</code> 메서드이다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">byte</span>[] key = generateKey(<span class="string">&quot;AES&quot;</span>, <span class="number">128</span>);</span><br><span class="line">System.out.println(<span class="string">&quot;key length: &quot;</span> + key.length);</span><br><span class="line"><span class="type">String</span> <span class="variable">hexKey</span> <span class="operator">=</span> byteArrayToHex(key);</span><br><span class="line">System.out.println(hexKey);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">key length: 16</span></span><br><span class="line"><span class="comment">9880ac1ecc316c9929b700a95b38b372</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p><code>byteArrayToHex</code>를 사용하여 secret key를 출력해 보았다. 키의 길이는 16, 아래는 키를 16진수로 변환한 것이다.</p>
+<p>이제 암호화에 사용할 secret key는 발급되었다. security VO 모델에 사용자 id와 salt에 저장될 UUID, 발급된 AES 128 16진수 키를 저장한다.</p>
+<h3 id="2-사용자-이름-암호화"><a href="#2-사용자-이름-암호화" class="headerlink" title="2. 사용자 이름 암호화"></a>2. 사용자 이름 암호화</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">aesEncrypt</span><span class="params">(String msg, <span class="type">byte</span>[] key)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">SecretKeySpec</span> <span class="variable">skeySpec</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, <span class="string">&quot;AES&quot;</span>);</span><br><span class="line">    <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(<span class="string">&quot;AES/CBC/PKCS5Padding&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">iv</span> <span class="operator">=</span> <span class="string">&quot;AAAAAAAAAAAAAAAA&quot;</span>;</span><br><span class="line">    cipher.init(Cipher.ENCRYPT_MODE,</span><br><span class="line">            skeySpec,</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">IvParameterSpec</span>(iv.getBytes()));</span><br><span class="line">    <span class="type">byte</span>[] encrypted = cipher.doFinal(msg.getBytes());</span><br><span class="line">    <span class="keyword">return</span> byteArrayToHex(encrypted);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">평문: lee</span></span><br><span class="line"><span class="comment">encrypt: 91f0742622d1defa32ca78f399cd62e7</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>데이터베이스에 저장되는 사용자의 정보는 마스킹한 후 저장되어야 한다. 키를 사용해 암호화와 복호화가 가능한 Cipher 클래스를 사용해 인스턴스를 생성하고, Cipher mode, secret key, 복호화에 사용할 키를 넣어 초기화해 준다. 초기화한 Cipher에 평문을 byte로 넣어 암호화 한 후 16진수로 변환해 반환한다. 반환된 16진수 문자열은 데이터베이스에 저장된다.</p>
+<h3 id="3-사용자-비밀번호-암호화"><a href="#3-사용자-비밀번호-암호화" class="headerlink" title="3. 사용자 비밀번호 암호화"></a>3. 사용자 비밀번호 암호화</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] getSHA256(String source, String salt) &#123;</span><br><span class="line">    <span class="type">byte</span> byteData[] = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">MessageDigest</span> <span class="variable">md</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;SHA-256&quot;</span>);</span><br><span class="line">        md.update(source.getBytes());</span><br><span class="line">        md.update(salt.getBytes());</span><br><span class="line">        byteData = md.digest();</span><br><span class="line">        System.out.println(<span class="string">&quot;원문: &quot;</span> + source + <span class="string">&quot; SHA-256: &quot;</span> +</span><br><span class="line">                byteData.length + <span class="string">&quot;,&quot;</span> + byteArrayToHex(byteData));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> byteData;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">원문: 1234</span></span><br><span class="line"><span class="comment">SHA-256: 4b3bed8af7b7612e8c1e25f63ba24496f5b16b2df44efb2db7ce3cb24b7e96f7</span></span><br><span class="line"><span class="comment">pw encrypt: K;���a.�%�;�D���k-�N�-��&lt;�K~��</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>비밀번호는 단방향 암호화 알고리즘인 SHA256 방식으로 암호화 되어 저장된다. 복호화 가능한 키가 없는 해시 알고리즘이다. <code>getSHA256</code>메서드의 두 번째 인자인 <code>salt</code>는 위에서 security VO 모델에 저장한 salt를 사용하게 된다.</p>
+<p>MessageDigest 클래스를 사용하여 인스턴스를 생성해 준다. 평문과 salt를 byte로 변환해 추가한다. 데이터베이스에 암호화된 byte 데이터가 저장된다.</p>
+<h1 id="사용자-정보-복호화-하기"><a href="#사용자-정보-복호화-하기" class="headerlink" title="사용자 정보 복호화 하기"></a>사용자 정보 복호화 하기</h1><p>마스킹되어 저장된 사용자 이름을 복호화 해 볼 것이다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">aesDecrypt</span><span class="params">(String msg, <span class="type">byte</span>[] key)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">SecretKeySpec</span> <span class="variable">skeySpec</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, <span class="string">&quot;AES&quot;</span>);</span><br><span class="line">    <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(<span class="string">&quot;AES/CBC/PKCS5Padding&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">iv</span> <span class="operator">=</span> <span class="string">&quot;AAAAAAAAAAAAAAAA&quot;</span>;</span><br><span class="line">    cipher.init(Cipher.DECRYPT_MODE,</span><br><span class="line">            skeySpec,</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">IvParameterSpec</span>(iv.getBytes()));</span><br><span class="line">    <span class="type">byte</span>[] encrypted = hexToByteArray(msg);</span><br><span class="line">    <span class="type">byte</span>[] original = cipher.doFinal(encrypted);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">String</span>(original);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>데이터베이스에 있는 사용자 정보를 복호화 하기 위해서 암호화에 사용된 secret key와 ivParameter가 필요하다. Cipher 초기화 부분에 mode 만 <code>DECRYPT_MODE</code>로 변경해 주면 된다. 암호화된 msg를 다시 byte 배열로 변환해 준 후 복호화를 진행한다. 복호화를 하게 되면 암호화 시 넣었던 평문이 반환된다.</p>
+<hr>
+<h2 id="암호화된-비밀번호는-어떻게-사용할까"><a href="#암호화된-비밀번호는-어떻게-사용할까" class="headerlink" title="암호화된 비밀번호는 어떻게 사용할까?"></a>암호화된 비밀번호는 어떻게 사용할까?</h2><p>데이터베이스에 사용자 비밀번호는 해시 함수를 사용하여 암호화 되어 있다. 사용자가 정보를 변경하거나 어떤 동작에서 비밀번호를 입력 하는 행위가 필요한 경우 사용자가 입력한 비밀번호를 동일한 방식으로 해시화 해서 데이터베이스에 저장된 값과 비교한다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#User-Security-VO-Value-Object"><span class="toc-number">1.</span> <span class="toc-text">User Security VO(Value Object)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%95%94%ED%98%B8%ED%99%94-Encryption"><span class="toc-number">2.</span> <span class="toc-text">암호화 (Encryption)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%96%91%EB%B0%A9%ED%96%A5-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">2.1.</span> <span class="toc-text">양방향 암호화</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8B%A8%EB%B0%A9%ED%96%A5-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">2.2.</span> <span class="toc-text">단방향 암호화</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EB%B3%B4-%EC%95%94%ED%98%B8%ED%99%94-%ED%95%98%EA%B8%B0"><span class="toc-number">3.</span> <span class="toc-text">사용자 정보 암호화 하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Generate-key"><span class="toc-number">3.0.1.</span> <span class="toc-text">1. Generate key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%9D%B4%EB%A6%84-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">3.0.2.</span> <span class="toc-text">2. 사용자 이름 암호화</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%EC%82%AC%EC%9A%A9%EC%9E%90-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8-%EC%95%94%ED%98%B8%ED%99%94"><span class="toc-number">3.0.3.</span> <span class="toc-text">3. 사용자 비밀번호 암호화</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A0%95%EB%B3%B4-%EB%B3%B5%ED%98%B8%ED%99%94-%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">사용자 정보 복호화 하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%94%ED%98%B8%ED%99%94%EB%90%9C-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%82%AC%EC%9A%A9%ED%95%A0%EA%B9%8C"><span class="toc-number">4.1.</span> <span class="toc-text">암호화된 비밀번호는 어떻게 사용할까?</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&text=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&is_video=false&description=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=사용자 정보 암호화 하기 (With Java)&body=Check out this article: https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&title=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&name=사용자 정보 암호화 하기 (With Java)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/10/09/2022-10-10-encryption/&t=사용자 정보 암호화 하기 (With Java)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

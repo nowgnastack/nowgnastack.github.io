@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="머신러닝 프로젝트의 형태 데이터 분석 모델 선택 훈련 데이터로 모델을 훈련시킨다 (비용 함수를 최소화 하는 모델 파라미터를 찾는다) 새로운 데이터에 모델을 적용해 예측(추론)하고 일반화가 잘 되길 기다린다  사이킷런을 이용한 선형 모델의 훈련과 실행123456789101112131415161718192021222324252627282930import num">
+<meta property="og:type" content="article">
+<meta property="og:title" content="머신러닝 프로젝트 (Hands-on Machine Learning Part1)">
+<meta property="og:url" content="https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="머신러닝 프로젝트의 형태 데이터 분석 모델 선택 훈련 데이터로 모델을 훈련시킨다 (비용 함수를 최소화 하는 모델 파라미터를 찾는다) 새로운 데이터에 모델을 적용해 예측(추론)하고 일반화가 잘 되길 기다린다  사이킷런을 이용한 선형 모델의 훈련과 실행123456789101112131415161718192021222324252627282930import num">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-10T17:26:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:15.997Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>머신러닝 프로젝트 (Hands-on Machine Learning Part1)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/09/14/2021-09-14-django1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/09/09/2021-09-09-pandas5/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&text=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&is_video=false&description=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=머신러닝 프로젝트 (Hands-on Machine Learning Part1)&body=Check out this article: https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&name=머신러닝 프로젝트 (Hands-on Machine Learning Part1)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&t=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%9D%98-%ED%98%95%ED%83%9C"><span class="toc-number">1.</span> <span class="toc-text">머신러닝 프로젝트의 형태</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%82%AC%EC%9D%B4%ED%82%B7%EB%9F%B0%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%84%A0%ED%98%95-%EB%AA%A8%EB%8D%B8%EC%9D%98-%ED%9B%88%EB%A0%A8%EA%B3%BC-%EC%8B%A4%ED%96%89"><span class="toc-number">2.</span> <span class="toc-text">사이킷런을 이용한 선형 모델의 훈련과 실행</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%EC%9D%98-%EC%A3%BC%EC%9A%94-%EB%8F%84%EC%A0%84-%EA%B3%BC%EC%A0%9C"><span class="toc-number">3.</span> <span class="toc-text">머신러닝의 주요 도전 과제</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%82%98%EC%81%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%9D%98-%EC%A2%85%EB%A5%98%EB%8A%94-%EB%8B%A4%EC%9D%8C%EA%B3%BC-%EA%B0%99%EB%8B%A4"><span class="toc-number">3.1.</span> <span class="toc-text">나쁜 데이터의 종류는 다음과 같다</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EC%B6%A9%EB%B6%84%ED%95%98%EC%A7%80-%EC%95%8A%EC%9D%80-%EC%96%91%EC%9D%98-%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0"><span class="toc-number">3.1.1.</span> <span class="toc-text">충분하지 않은 양의 훈련 데이터</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EB%8C%80%ED%91%9C%EC%84%B1-%EC%97%86%EB%8A%94-%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0"><span class="toc-number">3.1.2.</span> <span class="toc-text">대표성 없는 훈련 데이터</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EB%82%AE%EC%9D%80-%ED%92%88%EC%A7%88%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0"><span class="toc-number">3.1.3.</span> <span class="toc-text">낮은 품질의 데이터</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%95%EC%A0%9C%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%9C-%EA%B2%BD%EC%9A%B0"><span class="toc-number">3.1.3.0.1.</span> <span class="toc-text">훈련 데이터 정제가 필요한 경우</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EA%B4%80%EB%A0%A8-%EC%97%86%EB%8A%94-%ED%8A%B9%EC%84%B1"><span class="toc-number">3.1.4.</span> <span class="toc-text">관련 없는 특성</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B3%BC%EB%8C%80%EC%A0%81%ED%95%A9"><span class="toc-number">3.1.5.</span> <span class="toc-text">훈련 데이터 과대적합</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%EA%B3%BC%EB%8C%80%EC%A0%81%ED%95%A9%EC%9D%84-%ED%94%BC%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EB%B0%A9%EB%B2%95"><span class="toc-number">3.1.5.0.1.</span> <span class="toc-text">과대적합을 피하기 위한 방법</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B3%BC%EC%86%8C%EC%A0%81%ED%95%A9"><span class="toc-number">3.1.6.</span> <span class="toc-text">훈련 데이터 과소적합</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%EA%B3%BC%EC%86%8C%EC%A0%81%ED%95%A9%EC%9D%84-%ED%94%BC%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EB%B0%A9%EB%B2%95"><span class="toc-number">3.1.6.0.1.</span> <span class="toc-text">과소적합을 피하기 위한 방법</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%99%80-%EA%B2%80%EC%A6%9D"><span class="toc-number">4.</span> <span class="toc-text">테스트와 검증</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%95%98%EC%9D%B4%ED%8D%BC-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%ED%8A%9C%EB%8B%9D%EA%B3%BC-%EB%AA%A8%EB%8D%B8-%EC%84%A0%ED%83%9D"><span class="toc-number">4.1.</span> <span class="toc-text">하이퍼 파라미터 튜닝과 모델 선택</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%ED%99%80%EB%93%9C-%EC%95%84%EC%9B%83-%EA%B2%80%EC%A6%9D"><span class="toc-number">4.1.1.</span> <span class="toc-text">홀드 아웃 검증</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EA%B5%90%EC%B0%A8-%EA%B2%80%EC%A6%9D"><span class="toc-number">4.1.2.</span> <span class="toc-text">교차 검증</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        머신러닝 프로젝트 (Hands-on Machine Learning Part1)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-09-10T17:26:00.000Z" class="dt-published" itemprop="datePublished">2021-09-11</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/machine-learning/">machine learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/machine-learning/" rel="tag">machine learning</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="머신러닝-프로젝트의-형태"><a href="#머신러닝-프로젝트의-형태" class="headerlink" title="머신러닝 프로젝트의 형태"></a>머신러닝 프로젝트의 형태</h2><ul>
+<li>데이터 분석</li>
+<li>모델 선택</li>
+<li>훈련 데이터로 모델을 훈련시킨다 (비용 함수를 최소화 하는 모델 파라미터를 찾는다)</li>
+<li>새로운 데이터에 모델을 적용해 예측(추론)하고 일반화가 잘 되길 기다린다</li>
+</ul>
+<h2 id="사이킷런을-이용한-선형-모델의-훈련과-실행"><a href="#사이킷런을-이용한-선형-모델의-훈련과-실행" class="headerlink" title="사이킷런을 이용한 선형 모델의 훈련과 실행"></a>사이킷런을 이용한 선형 모델의 훈련과 실행</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> sklearn.linear_model</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pkg <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">oecd_bli = pd.read_csv(<span class="string">&#x27;../handson-ml2/datasets/lifesat/oecd_bli_2015.csv&#x27;</span>,</span><br><span class="line">                       thousands=<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">gdp_per_capita = pd.read_csv(<span class="string">&#x27;../handson-ml2/datasets/lifesat/gdp_per_capita.csv&#x27;</span>,</span><br><span class="line">                             thousands=<span class="string">&#x27;,&#x27;</span>, delimiter=<span class="string">&#x27;\t&#x27;</span>, encoding=<span class="string">&#x27;latin1&#x27;</span>,</span><br><span class="line">                             na_values=<span class="string">&#x27;n/a&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 데이터 준비</span></span><br><span class="line">country_status = prepare_country_stats(oecd_bli, gdp_per_capita)</span><br><span class="line">X = np.c_[country_status[<span class="string">&quot;GDP per capita&quot;</span>]]</span><br><span class="line">y = np.c_[country_status[<span class="string">&quot;Life satisfaction&quot;</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 데이터 시각화</span></span><br><span class="line">country_status.plot(kind=<span class="string">&#x27;scatter&#x27;</span>, x=<span class="string">&#x27;GDP per capita&#x27;</span>, y=<span class="string">&#x27;Life satisfaction&#x27;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 선형 모델 선택</span></span><br><span class="line">model = sklearn.linear_model.LinearRegression()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 훈련</span></span><br><span class="line">model.fit(X, y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 키프로스에 대한 예측</span></span><br><span class="line">X_new = [[<span class="number">22587</span>]]</span><br><span class="line"><span class="built_in">print</span>(model.predict(X_new))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>LinearRegression()</code>을 사용하여 모델을 훈련시킨 후 키프로스에 대한 예측을 했다</li>
+<li>사례기반의 학습 알고리즘을 사용하면 1인당 GDP가 키프로스와 가까운 슬로베니아를 찾는다</li>
+<li>더 나아가 그 다음으로 가까운 두 나라를 고려해 세 나라의 평균으로 GDP를 예측할 수 있으며 이러한 방법을 “k-최근접 이웃” 회귀라고 한다</li>
+<li><code>np.c_</code>는 두 개의 1차원 배열을 column으로 세로로 붙여서 2차원 배열을 만들어 준다</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">b = np.array([<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(np.c_[a, b])</span><br><span class="line">----------------------------</span><br><span class="line">[[<span class="number">1</span> <span class="number">6</span>]</span><br><span class="line"> [<span class="number">2</span> <span class="number">7</span>]</span><br><span class="line"> [<span class="number">3</span> <span class="number">8</span>]</span><br><span class="line"> [<span class="number">4</span> <span class="number">9</span>]]</span><br></pre></td></tr></table></figure>
+
+<h2 id="머신러닝의-주요-도전-과제"><a href="#머신러닝의-주요-도전-과제" class="headerlink" title="머신러닝의 주요 도전 과제"></a>머신러닝의 주요 도전 과제</h2><h3 id="나쁜-데이터의-종류는-다음과-같다"><a href="#나쁜-데이터의-종류는-다음과-같다" class="headerlink" title="나쁜 데이터의 종류는 다음과 같다"></a>나쁜 데이터의 종류는 다음과 같다</h3><h4 id="충분하지-않은-양의-훈련-데이터"><a href="#충분하지-않은-양의-훈련-데이터" class="headerlink" title="충분하지 않은 양의 훈련 데이터"></a>충분하지 않은 양의 훈련 데이터</h4><h4 id="대표성-없는-훈련-데이터"><a href="#대표성-없는-훈련-데이터" class="headerlink" title="대표성 없는 훈련 데이터"></a>대표성 없는 훈련 데이터</h4><ul>
+<li>일반화가 잘되려면 우리가 일반화하기 원하는 새로운 사례를 훈련 데이터가 잘 대표하는 것이 중요하다</li>
+<li>샘플이 작으면 sampling noise가 생기고 매우 큰 샘플도 표본 추출 방법이 잘못되면 대표성을 띠지 못할 수 있다 이것을 sampling bias(샘플링 편형)라고 한다</li>
+</ul>
+<h4 id="낮은-품질의-데이터"><a href="#낮은-품질의-데이터" class="headerlink" title="낮은 품질의 데이터"></a>낮은 품질의 데이터</h4><ul>
+<li>훈련 데이터가 에러, 이상치, 잡음으로 가득하면 머신러닝 시스템이 내재된 패턴을 찾기 어려워 작동하지 않을것이다</li>
+</ul>
+<h6 id="훈련-데이터-정제가-필요한-경우"><a href="#훈련-데이터-정제가-필요한-경우" class="headerlink" title="훈련 데이터 정제가 필요한 경우"></a>훈련 데이터 정제가 필요한 경우</h6><ul>
+<li>일부 샘플이 이상치라는게 명확하다면 간단히 그것들을 무시하거나 수동으로 잘못된 것을 고치는 것이 좋다</li>
+<li>일부 샘플에 특성 몇개가 빠져있다면 이 특성 모두 무시할지, 이 샘플을 무시할지, 빠진 값을 채울지 또는 이 특성을 넣은 모델과 제외한 모델을 따로 훈련시킬 것인지 결정해야 한다</li>
+</ul>
+<h4 id="관련-없는-특성"><a href="#관련-없는-특성" class="headerlink" title="관련 없는 특성"></a>관련 없는 특성</h4><ul>
+<li>성공적인 머신러닝 프로젝트의 핵심 요소는 훈련에 사용할 좋은 특성들을 찾는 것이다</li>
+<li><strong>특성 선택:</strong> 가지고 있는 특성 중에서 훈련에 가장 유용한 특성을 선택한다</li>
+<li><strong>특성 추출:</strong> 특성을 결합하여 더 유용한 특성을 만든다. 앞서 본 것처럼 차원 축소 알고리즘이 도움이 될 수 있다</li>
+<li>새로운 데이터를 수집해 새로운 특성을 만든다</li>
+</ul>
+<h4 id="훈련-데이터-과대적합"><a href="#훈련-데이터-과대적합" class="headerlink" title="훈련 데이터 과대적합"></a>훈련 데이터 과대적합</h4><ul>
+<li>모델이 훈련 데이터에 너무 잘 맞지만 일반성이 떨어지게 되고 과대적합이 된다</li>
+</ul>
+<h6 id="과대적합을-피하기-위한-방법"><a href="#과대적합을-피하기-위한-방법" class="headerlink" title="과대적합을 피하기 위한 방법"></a>과대적합을 피하기 위한 방법</h6><ul>
+<li>파라미터 수가 적은 모델을 선택하거나 훈련 데이터에 있는 특성 수를 줄이거나 모델에 제약을 가하여 단순화시킨다</li>
+<li>훈련 데이터를 더 많이 모은다</li>
+<li>훈련 데이터의 잡음을 줄인다 (오류 데이터 수정과 이상치 제거)</li>
+</ul>
+<h4 id="훈련-데이터-과소적합"><a href="#훈련-데이터-과소적합" class="headerlink" title="훈련 데이터 과소적합"></a>훈련 데이터 과소적합</h4><ul>
+<li>모델이 너무 단순해서 데이터의 내재된 구조를 학습하지 못할 때 일어난다</li>
+</ul>
+<h6 id="과소적합을-피하기-위한-방법"><a href="#과소적합을-피하기-위한-방법" class="headerlink" title="과소적합을 피하기 위한 방법"></a>과소적합을 피하기 위한 방법</h6><ul>
+<li>모델 파라미터가 더 많은 강력한 모델을 선택한다</li>
+<li>학습 알고리즘에 더 좋은 특성을 제공한다</li>
+<li>모델의 제약을 줄인다 (규제 하이퍼파라미터를 감소시킨다)</li>
+</ul>
+<h2 id="테스트와-검증"><a href="#테스트와-검증" class="headerlink" title="테스트와 검증"></a>테스트와 검증</h2><ul>
+<li>새로운 샘플에 모델을 실제로 적용해보면 모델이 얼마나 잘 일반화가 되었는지 알 수 있다</li>
+<li>훈련 세트와 테스트 세트 두 개로 나누는 것이 좋다</li>
+<li>새로운 샘플에 대한 오류 비율을 <code>일반화 오차</code>또는 <code>외부 샘플 오차</code>라고 한다</li>
+<li>테스트 세트에서 모델을 평가함으로써 오차에 대한 추정값을 얻는다</li>
+</ul>
+<h3 id="하이퍼-파라미터-튜닝과-모델-선택"><a href="#하이퍼-파라미터-튜닝과-모델-선택" class="headerlink" title="하이퍼 파라미터 튜닝과 모델 선택"></a>하이퍼 파라미터 튜닝과 모델 선택</h3><ul>
+<li>일반화 오차를 테스트 세트에서 여러번 측정해서 테스트 세트에 최적화된 모델이 만들어지면 다른 새로운 데이터에는 잘 작동하지 않을 수 있다 해결방법은 <code>홀드아웃 검증</code>과 <code>교차 검증</code>이 있다</li>
+</ul>
+<h4 id="홀드-아웃-검증"><a href="#홀드-아웃-검증" class="headerlink" title="홀드 아웃 검증"></a>홀드 아웃 검증</h4><ul>
+<li>훈련 세트의 일부를 떼어내어 여러 후보 모델을 평가하고 가장 좋은 하나를 선택한다</li>
+<li>새로운 홀드 아웃 세트를 <code>검증 세트</code>라고 한다</li>
+<li>줄어든 훈련 세트에서 다양한 하이퍼파라미터 값을 가진 여러 모델을 훈련하고 그 다음 검증 세트에서 가장 높은 성능을 내는 모델을 선택한다</li>
+<li>홀드아웃 검증 과정이 끝나면 최선의 모델을 전체 훈련 세트에서 다시 훈련하여 최종 모델을 만든다</li>
+<li>검증 세트가 너무 작으면 모델이 정확하게 평가되지 않고 검증 세트가 너무 크면 남은 훈련 세트가 너무 작아진다 이것을 해결하기 위해 <code>교차 검증</code>을 사용한다</li>
+</ul>
+<h4 id="교차-검증"><a href="#교차-검증" class="headerlink" title="교차 검증"></a>교차 검증</h4><ul>
+<li>검증 세트마다 나머지 데이터에서 훈련한 모델을 해당 검증 세트에 평가한다</li>
+<li>모든 모델의 평가를 평균하면 훨씬 정확한 성능을 측정할 수 있다</li>
+<li>훈련 시간이 검증 세트의 개수에 비례해 늘어나는 단점이 있다</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%9D%98-%ED%98%95%ED%83%9C"><span class="toc-number">1.</span> <span class="toc-text">머신러닝 프로젝트의 형태</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%82%AC%EC%9D%B4%ED%82%B7%EB%9F%B0%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%84%A0%ED%98%95-%EB%AA%A8%EB%8D%B8%EC%9D%98-%ED%9B%88%EB%A0%A8%EA%B3%BC-%EC%8B%A4%ED%96%89"><span class="toc-number">2.</span> <span class="toc-text">사이킷런을 이용한 선형 모델의 훈련과 실행</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D%EC%9D%98-%EC%A3%BC%EC%9A%94-%EB%8F%84%EC%A0%84-%EA%B3%BC%EC%A0%9C"><span class="toc-number">3.</span> <span class="toc-text">머신러닝의 주요 도전 과제</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%82%98%EC%81%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%9D%98-%EC%A2%85%EB%A5%98%EB%8A%94-%EB%8B%A4%EC%9D%8C%EA%B3%BC-%EA%B0%99%EB%8B%A4"><span class="toc-number">3.1.</span> <span class="toc-text">나쁜 데이터의 종류는 다음과 같다</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EC%B6%A9%EB%B6%84%ED%95%98%EC%A7%80-%EC%95%8A%EC%9D%80-%EC%96%91%EC%9D%98-%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0"><span class="toc-number">3.1.1.</span> <span class="toc-text">충분하지 않은 양의 훈련 데이터</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EB%8C%80%ED%91%9C%EC%84%B1-%EC%97%86%EB%8A%94-%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0"><span class="toc-number">3.1.2.</span> <span class="toc-text">대표성 없는 훈련 데이터</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EB%82%AE%EC%9D%80-%ED%92%88%EC%A7%88%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0"><span class="toc-number">3.1.3.</span> <span class="toc-text">낮은 품질의 데이터</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%95%EC%A0%9C%EA%B0%80-%ED%95%84%EC%9A%94%ED%95%9C-%EA%B2%BD%EC%9A%B0"><span class="toc-number">3.1.3.0.1.</span> <span class="toc-text">훈련 데이터 정제가 필요한 경우</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EA%B4%80%EB%A0%A8-%EC%97%86%EB%8A%94-%ED%8A%B9%EC%84%B1"><span class="toc-number">3.1.4.</span> <span class="toc-text">관련 없는 특성</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B3%BC%EB%8C%80%EC%A0%81%ED%95%A9"><span class="toc-number">3.1.5.</span> <span class="toc-text">훈련 데이터 과대적합</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%EA%B3%BC%EB%8C%80%EC%A0%81%ED%95%A9%EC%9D%84-%ED%94%BC%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EB%B0%A9%EB%B2%95"><span class="toc-number">3.1.5.0.1.</span> <span class="toc-text">과대적합을 피하기 위한 방법</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%ED%9B%88%EB%A0%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B3%BC%EC%86%8C%EC%A0%81%ED%95%A9"><span class="toc-number">3.1.6.</span> <span class="toc-text">훈련 데이터 과소적합</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%EA%B3%BC%EC%86%8C%EC%A0%81%ED%95%A9%EC%9D%84-%ED%94%BC%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EB%B0%A9%EB%B2%95"><span class="toc-number">3.1.6.0.1.</span> <span class="toc-text">과소적합을 피하기 위한 방법</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%99%80-%EA%B2%80%EC%A6%9D"><span class="toc-number">4.</span> <span class="toc-text">테스트와 검증</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%95%98%EC%9D%B4%ED%8D%BC-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%ED%8A%9C%EB%8B%9D%EA%B3%BC-%EB%AA%A8%EB%8D%B8-%EC%84%A0%ED%83%9D"><span class="toc-number">4.1.</span> <span class="toc-text">하이퍼 파라미터 튜닝과 모델 선택</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%ED%99%80%EB%93%9C-%EC%95%84%EC%9B%83-%EA%B2%80%EC%A6%9D"><span class="toc-number">4.1.1.</span> <span class="toc-text">홀드 아웃 검증</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EA%B5%90%EC%B0%A8-%EA%B2%80%EC%A6%9D"><span class="toc-number">4.1.2.</span> <span class="toc-text">교차 검증</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&text=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&is_video=false&description=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=머신러닝 프로젝트 (Hands-on Machine Learning Part1)&body=Check out this article: https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&title=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&name=머신러닝 프로젝트 (Hands-on Machine Learning Part1)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/09/11/2021-09-11-handson1/&t=머신러닝 프로젝트 (Hands-on Machine Learning Part1)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="Leacture: Deep Learning for everyone  Deep LearningPerceptron 뉴런의 원리이용 : 입력 신호들이 들어왔을 때 임계값을 넘어서면 신호를 전달한다.{:.width-80}  AND, OR과 같은 문제에서 하나의 Line으로 이용가능  하지만 XOR(두 입력이 같으면 0, 다르면 1.의 경우에는 하나의 Linear">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning With Pytorch">
+<meta property="og:url" content="https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="Leacture: Deep Learning for everyone  Deep LearningPerceptron 뉴런의 원리이용 : 입력 신호들이 들어왔을 때 임계값을 넘어서면 신호를 전달한다.{:.width-80}  AND, OR과 같은 문제에서 하나의 Line으로 이용가능  하지만 XOR(두 입력이 같으면 0, 다르면 1.의 경우에는 하나의 Linear">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/preceptron.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/XOR.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/loss.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/sigmoid.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/relu.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/optimizer.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/initialization.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/dropout.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/covariate.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/batch.png">
+<meta property="article:published_time" content="2020-08-30T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:15.830Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="tave">
+<meta property="article:tag" content="pytorch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/RL_Study3/preceptron.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Deep Learning With Pytorch</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2020/08/31/2020-08-30-reinforcement_learning3/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/09/04/2020-09-05-Reinforcement_Learning4/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/08/26/2020-08-26-Reinforcement_Learning2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&text=Deep Learning With Pytorch"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&is_video=false&description=Deep Learning With Pytorch"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Deep Learning With Pytorch&body=Check out this article: https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&name=Deep Learning With Pytorch&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&t=Deep Learning With Pytorch"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Deep-Learning"><span class="toc-number">1.</span> <span class="toc-text">Deep Learning</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Perceptron"><span class="toc-number">2.</span> <span class="toc-text">Perceptron</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi-Layer-Perceptron"><span class="toc-number">3.</span> <span class="toc-text">Multi Layer Perceptron</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Backpropagation"><span class="toc-number">3.0.1.</span> <span class="toc-text">Backpropagation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-Cross-Entropy"><span class="toc-number">3.0.2.</span> <span class="toc-text">Binary Cross Entropy</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ReLU"><span class="toc-number">4.</span> <span class="toc-text">ReLU</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sigmoid"><span class="toc-number">4.0.1.</span> <span class="toc-text">Sigmoid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReLU-1"><span class="toc-number">4.0.2.</span> <span class="toc-text">ReLU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimizer"><span class="toc-number">4.0.3.</span> <span class="toc-text">Optimizer</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Weight-Initialization"><span class="toc-number">5.</span> <span class="toc-text">Weight Initialization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Restricted-Boltzmann-Machine"><span class="toc-number">5.0.1.</span> <span class="toc-text">Restricted Boltzmann Machine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xavier-He-initialization"><span class="toc-number">5.0.2.</span> <span class="toc-text">Xavier &#x2F; He initialization</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dropout"><span class="toc-number">6.</span> <span class="toc-text">Dropout</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Overfitting%EC%9D%84-%ED%94%BC%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EB%B0%A9%EB%B2%95%EB%93%A4"><span class="toc-number">6.1.</span> <span class="toc-text">Overfitting을 피하기 위한 방법들</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Batch-Normalization"><span class="toc-number">7.</span> <span class="toc-text">Batch Normalization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient-Vanishing"><span class="toc-number">7.0.1.</span> <span class="toc-text">Gradient Vanishing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient-Exploding"><span class="toc-number">7.0.2.</span> <span class="toc-text">Gradient Exploding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9C%84%EC%9D%98-%EB%AC%B8%EC%A0%9C%EC%97%90-%EB%8C%80%ED%95%9C-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95"><span class="toc-number">7.0.3.</span> <span class="toc-text">위의 문제에 대한 해결방법</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Internal-Covariate-Shift"><span class="toc-number">7.0.4.</span> <span class="toc-text">Internal Covariate Shift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Normalization-1"><span class="toc-number">7.0.5.</span> <span class="toc-text">Batch Normalization</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Deep Learning With Pytorch
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-08-30T15:00:00.000Z" class="dt-published" itemprop="datePublished">2020-08-31</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/deep-learning/">deep learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/deep-learning/" rel="tag">deep learning</a>, <a class="p-category" href="/tags/pytorch/" rel="tag">pytorch</a>, <a class="p-category" href="/tags/tave/" rel="tag">tave</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>Leacture: <a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">Deep Learning for everyone</a></p>
+</blockquote>
+<h1 id="Deep-Learning"><a href="#Deep-Learning" class="headerlink" title="Deep Learning"></a>Deep Learning</h1><h1 id="Perceptron"><a href="#Perceptron" class="headerlink" title="Perceptron"></a>Perceptron</h1><ol>
+<li><p>뉴런의 원리이용 : 입력 신호들이 들어왔을 때 임계값을 넘어서면 신호를 전달한다.<br><img src="/assets/img/RL_Study3/preceptron.png" alt="perceptron">{:.width-80}</p>
+</li>
+<li><p>AND, OR과 같은 문제에서 하나의 Line으로 이용가능</p>
+</li>
+<li><p>하지만 XOR(두 입력이 같으면 0, 다르면 1.의 경우에는 하나의 Linear line으로 구분 불가능하다.<br><img src="/assets/img/RL_Study3/XOR.png" alt="XOR">{:.width-80}</p>
+<ul>
+<li>이후로 한동안 딥러닝 분야에서 발전이 없었다.</li>
+</ul>
+</li>
+</ol>
+<h1 id="Multi-Layer-Perceptron"><a href="#Multi-Layer-Perceptron" class="headerlink" title="Multi Layer Perceptron"></a>Multi Layer Perceptron</h1><ul>
+<li>위의 XOR문제 해결을 위한 방법(선을 2개 이상 긋는다.)</li>
+</ul>
+<h3 id="Backpropagation"><a href="#Backpropagation" class="headerlink" title="Backpropagation"></a>Backpropagation</h3><ul>
+<li>Loss를 없애는 방향으로 Weight를 업데이트해나간다.</li>
+<li>dE&#x2F;dw를 계산한다 -&gt; dE&#x2F;dw의 반대 방향으로 w를 업데이트 해나간다.<br>-&gt; E가 줄어든다(Learning Rate를 활용한다)</li>
+<li>Chain Rule 이용: g는 활성함수 -&gt; dE&#x2F;dw &#x3D; dE&#x2F;dg * dg&#x2F;dw<br><img src="/assets/img/RL_Study3/loss.png" alt="loss">{:.width-80}</li>
+</ul>
+<h3 id="Binary-Cross-Entropy"><a href="#Binary-Cross-Entropy" class="headerlink" title="Binary Cross Entropy"></a>Binary Cross Entropy</h3><ul>
+<li>이진분류에서 사용되는 Loss Function</li>
+<li>추론값과 그에 대한 정답값들의 괴리(손실)을 합한 값</li>
+<li>Y -&gt; 정답 &#x2F; Y_pred -&gt; 추론값</li>
+<li>L &#x3D; -(Ylog(Y_pred) + (1 - Y_pred)) (Y와 (1-Y)는 0,1 둘 중 하나)</li>
+</ul>
+<h1 id="ReLU"><a href="#ReLU" class="headerlink" title="ReLU"></a>ReLU</h1><h3 id="Sigmoid"><a href="#Sigmoid" class="headerlink" title="Sigmoid"></a>Sigmoid</h3><ul>
+<li>양 끝부분에서 gradient를 구하면 너무 작은 값이 나온다.</li>
+<li>Loss로부터 전파되는 Gradient가 소멸되는 효과 (Vanishing Gradient)<br><img src="/assets/img/RL_Study3/sigmoid.png" alt="sigmoid">{:.width-80}</li>
+</ul>
+<h3 id="ReLU-1"><a href="#ReLU-1" class="headerlink" title="ReLU"></a>ReLU</h3><ul>
+<li>f(x) &#x3D; max(0, x)</li>
+<li>음수의 경우에는 Gradient가 아예 소멸되는 문제점이 있다.</li>
+<li>이외에 tanh, leaky_relu등이 있다.<br><img src="/assets/img/RL_Study3/relu.png" alt="sigmoid">{:.width-80}</li>
+</ul>
+<h3 id="Optimizer"><a href="#Optimizer" class="headerlink" title="Optimizer"></a>Optimizer</h3><ul>
+<li>여러가지 optimizer가 있지만 adam을 많이 사용한다.<br><img src="/assets/img/RL_Study3/optimizer.png" alt="optimizer">{:.width-80}</li>
+</ul>
+<h1 id="Weight-Initialization"><a href="#Weight-Initialization" class="headerlink" title="Weight Initialization"></a>Weight Initialization</h1><ul>
+<li>initialization을 잘 한 모델이 에러 최솟값에 수렴을 잘한다.</li>
+<li>가장 피해야할 초기화: 모든 값을 0으로 하는것.</li>
+</ul>
+<h3 id="Restricted-Boltzmann-Machine"><a href="#Restricted-Boltzmann-Machine" class="headerlink" title="Restricted Boltzmann Machine"></a>Restricted Boltzmann Machine</h3><ul>
+<li>이미 모델을 몇번 돌린 weight를 가지고 training을 한다.</li>
+</ul>
+<h3 id="Xavier-He-initialization"><a href="#Xavier-He-initialization" class="headerlink" title="Xavier &#x2F; He initialization"></a>Xavier &#x2F; He initialization</h3><ul>
+<li>최근에는 He initialization을 쓴다고 한다.<br><img src="/assets/img/RL_Study3/initialization.png" alt="initialization">{:.width-80}</li>
+</ul>
+<h1 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h1><ul>
+<li>너무 Train Set에만 잘 맞추어 훈련되는 Overfitting을 피하기 위한 방법이다.</li>
+<li>layer마다 일부 node만 이용한다. -&gt; 사용하는 node끼리는 모두 연결</li>
+<li>네트워크 앙상블 효과를 낼 수 있다.(같은 모델을 여러개 만든 것과 같은 효과)</li>
+<li>Train에서는 사용하지만, Evaluation에서는 사용하지 않는다.<br><img src="/assets/img/RL_Study3/dropout.png" alt="dropout">{:.width-80}</li>
+</ul>
+<h2 id="Overfitting을-피하기-위한-방법들"><a href="#Overfitting을-피하기-위한-방법들" class="headerlink" title="Overfitting을 피하기 위한 방법들"></a>Overfitting을 피하기 위한 방법들</h2><ul>
+<li>더 많은 데이터를 사용한다.</li>
+<li>특성의 개수를 줄인다.</li>
+<li>Regularization을 시행한다.</li>
+<li>하지만 Dropout이 제일 낮다.</li>
+</ul>
+<h1 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h1><h3 id="Gradient-Vanishing"><a href="#Gradient-Vanishing" class="headerlink" title="Gradient Vanishing"></a>Gradient Vanishing</h3><ul>
+<li>gradient가 소멸되어서 생기는 문제다.</li>
+</ul>
+<h3 id="Gradient-Exploding"><a href="#Gradient-Exploding" class="headerlink" title="Gradient Exploding"></a>Gradient Exploding</h3><ul>
+<li>gradient가 너무 커져서 생기는 문제다.(coverage 되지 않는다)</li>
+</ul>
+<h3 id="위의-문제에-대한-해결방법"><a href="#위의-문제에-대한-해결방법" class="headerlink" title="위의 문제에 대한 해결방법"></a>위의 문제에 대한 해결방법</h3><ul>
+<li>Activation Function을 바꾼다.(ex. 시그모이드가 아닌 ReLU를 이용한다.)</li>
+<li>Weight Initialization을 잘한다.</li>
+<li>Learning Rate를 작게한다.</li>
+<li>Batch Normalization을 시행한다.</li>
+</ul>
+<h3 id="Internal-Covariate-Shift"><a href="#Internal-Covariate-Shift" class="headerlink" title="Internal Covariate Shift"></a>Internal Covariate Shift</h3><ul>
+<li>레이어가 올라갈수록 학습 데이터 분포가 쏠린다.</li>
+<li>공분산이 바뀌어서 같은 출력이 나와야 할 데이터 인풋 하나하나마다 다른 분석이 된다.<br><img src="/assets/img/RL_Study3/covariate.png" alt="covariate">{:.width-80}</li>
+</ul>
+<h3 id="Batch-Normalization-1"><a href="#Batch-Normalization-1" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h3><ul>
+<li>한 Batch 내에서 feature 각각에 대해 Normalization을 시행한다.<br><img src="/assets/img/RL_Study3/batch.png" alt="batch">{:.width-80}</li>
+<li>시그모이드 함수에 들어갈 x는 -1에서 1사이이다.</li>
+<li>그대로 들어가면 y값은 그냥 선형함수 모양으로 나오는 y이다.</li>
+<li>그래서 rx + b를 해서 시그모이드함수에서 넓게, 그리고 살짝 편향되게 한다.</li>
+<li>평가할 때에는 평가 데이터의 sample mean, variance를 이용하는 것이 아니라, learnging mean, learning variance를 이용한다.</li>
+<li>batch마다 혹은 구성마다 output이 달라질 수 있는 것을 방지한다.<br>(혹은 Train과 Test간의 데이터 구성 차이에 따른 결과 차이를 극복한다.)</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Deep-Learning"><span class="toc-number">1.</span> <span class="toc-text">Deep Learning</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Perceptron"><span class="toc-number">2.</span> <span class="toc-text">Perceptron</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi-Layer-Perceptron"><span class="toc-number">3.</span> <span class="toc-text">Multi Layer Perceptron</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Backpropagation"><span class="toc-number">3.0.1.</span> <span class="toc-text">Backpropagation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-Cross-Entropy"><span class="toc-number">3.0.2.</span> <span class="toc-text">Binary Cross Entropy</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ReLU"><span class="toc-number">4.</span> <span class="toc-text">ReLU</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sigmoid"><span class="toc-number">4.0.1.</span> <span class="toc-text">Sigmoid</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReLU-1"><span class="toc-number">4.0.2.</span> <span class="toc-text">ReLU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimizer"><span class="toc-number">4.0.3.</span> <span class="toc-text">Optimizer</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Weight-Initialization"><span class="toc-number">5.</span> <span class="toc-text">Weight Initialization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Restricted-Boltzmann-Machine"><span class="toc-number">5.0.1.</span> <span class="toc-text">Restricted Boltzmann Machine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xavier-He-initialization"><span class="toc-number">5.0.2.</span> <span class="toc-text">Xavier &#x2F; He initialization</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dropout"><span class="toc-number">6.</span> <span class="toc-text">Dropout</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Overfitting%EC%9D%84-%ED%94%BC%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%EB%B0%A9%EB%B2%95%EB%93%A4"><span class="toc-number">6.1.</span> <span class="toc-text">Overfitting을 피하기 위한 방법들</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Batch-Normalization"><span class="toc-number">7.</span> <span class="toc-text">Batch Normalization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient-Vanishing"><span class="toc-number">7.0.1.</span> <span class="toc-text">Gradient Vanishing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient-Exploding"><span class="toc-number">7.0.2.</span> <span class="toc-text">Gradient Exploding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9C%84%EC%9D%98-%EB%AC%B8%EC%A0%9C%EC%97%90-%EB%8C%80%ED%95%9C-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95"><span class="toc-number">7.0.3.</span> <span class="toc-text">위의 문제에 대한 해결방법</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Internal-Covariate-Shift"><span class="toc-number">7.0.4.</span> <span class="toc-text">Internal Covariate Shift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Normalization-1"><span class="toc-number">7.0.5.</span> <span class="toc-text">Batch Normalization</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&text=Deep Learning With Pytorch"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&is_video=false&description=Deep Learning With Pytorch"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Deep Learning With Pytorch&body=Check out this article: https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&title=Deep Learning With Pytorch"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&name=Deep Learning With Pytorch&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/08/31/2020-08-30-Reinforcement_Learning3/&t=Deep Learning With Pytorch"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

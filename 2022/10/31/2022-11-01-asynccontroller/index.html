@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="spring boot로 웹 페이지의 동기와 비동기 동작의 차이를 알아본다">
+<meta property="og:type" content="article">
+<meta property="og:title" content="너무 헷갈리는 동기와 비동기 알아보기">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="spring boot로 웹 페이지의 동기와 비동기 동작의 차이를 알아본다">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/spring/async/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/spring/async/pic2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/spring/async/pic3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/spring/async/pic4.png">
+<meta property="article:published_time" content="2022-10-31T14:50:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.363Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="web async spring-boot sync">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/assets/posting/spring/async/pic1.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>너무 헷갈리는 동기와 비동기 알아보기</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/11/09/2022-11-09-tcpudp/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/10/26/2022-10-26-aopexception/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&text=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&is_video=false&description=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=너무 헷갈리는 동기와 비동기 알아보기&body=Check out this article: https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&name=너무 헷갈리는 동기와 비동기 알아보기&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&t=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Synchronous"><span class="toc-number">1.</span> <span class="toc-text">Synchronous</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Asynchronous"><span class="toc-number">2.</span> <span class="toc-text">Asynchronous</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Synchronous-request"><span class="toc-number">3.</span> <span class="toc-text">Synchronous request</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Controller%EB%A1%9C-%EC%9A%94%EC%B2%AD%ED%95%98%EA%B8%B0"><span class="toc-number">3.1.</span> <span class="toc-text">Controller로 요청하기</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RestController%EB%A1%9C-%EC%9A%94%EC%B2%AD%ED%95%98%EA%B8%B0"><span class="toc-number">3.2.</span> <span class="toc-text">RestController로 요청하기</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Asynchronous-request"><span class="toc-number">4.</span> <span class="toc-text">Asynchronous request</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Controller%EB%A1%9C-%EC%9A%94%EC%B2%AD%ED%95%98%EA%B8%B0-1"><span class="toc-number">4.1.</span> <span class="toc-text">Controller로 요청하기</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RestController%EB%A1%9C-%EC%9A%94%EC%B2%AD%ED%95%98%EA%B8%B0-1"><span class="toc-number">4.2.</span> <span class="toc-text">RestController로 요청하기</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        너무 헷갈리는 동기와 비동기 알아보기
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-10-31T14:50:00.000Z" class="dt-published" itemprop="datePublished">2022-10-31</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/spring-boot/">spring-boot</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/web-async-spring-boot-sync/" rel="tag">web async spring-boot sync</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>웹 페이지에서는 동기적 동작과 비동기적 동작이 발생할 수 있다. 이번 포스팅에서는 spring boot를 이용해 동기와 비동기 동작에 대해 알아본다.</p>
+<h2 id="Synchronous"><a href="#Synchronous" class="headerlink" title="Synchronous"></a>Synchronous</h2><p>동기적 방식은 하나의 요청이 발생하고 해당 요청이 끝나기 전까지 다른 작업을 할 수 없는 방식이다. 하나의 요청에서 응답이 온 후 다음 요청을 보낼 수 있다.</p>
+<h2 id="Asynchronous"><a href="#Asynchronous" class="headerlink" title="Asynchronous"></a>Asynchronous</h2><p>비동기적 방식은 여러개의 요청을 동시에 처리가 가능하다. 하나의 요청이 끝나기 전 다른 요청을 할 수 있다. 요청이 발생한 후 다른 작업을 하다가 요청한 작업이 종료되면 이후의 작업을 진행하게 된다.</p>
+<p>이제 spring boot에서 동기와 비동기 동작을 간단하게 알아본다. 요청에서 동기와 비동기를 나누는 기준은 client가 요청하는 방식에 따라 나눠진다. Form을 사용한 요청은 동기적 방식이며, fetch나 axios를 사용하여 요청하는 방식은 비동기적 방식이다. 아래 예제에서는 form과 fetch를 사용해서 Controller와 RestController로 요청하여 응답이 어떻게 이뤄지는지 확인한다.</p>
+<h2 id="Synchronous-request"><a href="#Synchronous-request" class="headerlink" title="Synchronous request"></a>Synchronous request</h2><h3 id="Controller로-요청하기"><a href="#Controller로-요청하기" class="headerlink" title="Controller로 요청하기"></a>Controller로 요청하기</h3><p>Form으로 요청하는 방식이 동기적 방식이다. Form 태그는 Http 메소드를 명시하여 요청한다. GET과 POST 방식으로 설정하여 요청할 수 있다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--동기 동작 Controller --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/hello&quot;</span> <span class="attr">method</span>=<span class="string">&quot;get&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>sync form controller jsp로 넘어감<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  id <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;id&quot;</span> /&gt;</span> pw <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;pw&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;sync action&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;hello&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(<span class="meta">@RequestParam</span> Map&lt;String, String&gt; map)</span> &#123;</span><br><span class="line">    System.out.println(map.get(<span class="string">&quot;id&quot;</span>));</span><br><span class="line">    System.out.println(map.get(<span class="string">&quot;pw&quot;</span>));</span><br><span class="line">    System.out.println(<span class="string">&quot;hello controller&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>먼저 Controller로 요청하는 동기적 방식이다. Controller 클래스에는 @Controller 어노테이션이 붙어있다. Form에서 “&#x2F;hello”로 요청을 하게되면 Map에 id와 pw가 담겨 @RequestParam으로 넘어온다. 시스템 출력을 확인해보면 다음과 같다. Form에는 id에 id, pw에 1234를 넣어줬다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">id</span><br><span class="line">1234</span><br><span class="line">hello controller</span><br></pre></td></tr></table></figure>
+
+<p><img src="/assets/posting/spring/async/pic1.png" alt="스크린샷 2022-11-01 오전 1.11.31.png"></p>
+<p>시스템 출력에는 위와 같이 출력되며 출력된 후 <code>return “hello”</code>를 통해 <code>webapp/WEB-INF/views</code>에 있는 hello.jsp가 호출된다. 개발자 도구를 확인해보면 hello.jsp와 동일한 구조를 가진 페이지가 보여지게 된다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;%--hell.jsp--%&gt; &lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot;</span><br><span class="line">%&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    hello world</span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="RestController로-요청하기"><a href="#RestController로-요청하기" class="headerlink" title="RestController로 요청하기"></a>RestController로 요청하기</h3><p>동기적 방식에서 RestController로 요청하는 경우를 알아본다. POST 방식으로 요청하여 확인해 본다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--동기 동작 RestController --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/syncrest&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>sync form restcontroller 문자열만 화면에 나옴<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  id <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;id&quot;</span> /&gt;</span> pw <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">&quot;pw&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;sync action&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;syncrest&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">resthello</span><span class="params">(<span class="meta">@RequestParam</span> Map&lt;String, String&gt; map)</span> &#123;</span><br><span class="line">    System.out.println(map.get(<span class="string">&quot;id&quot;</span>));</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;hello rest controller&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello REST&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>RestController로 요청하는 동기적 방식이다. Controller 클래스에는 @RestController 어노테이션이 붙어 있다. RestController는 Controller와 ResponseBody가 포함되어 있는 어노테이션이다.</p>
+<p>Form에서 “&#x2F;syncrest”로 post요청을 하게되면 @RequestParam으로 map 형태로 받아온다. 시스템 출력을 확인해보면 아래와 같다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id</span><br><span class="line">hello rest controller</span><br></pre></td></tr></table></figure>
+
+<p><img src="/assets/posting/spring/async/pic2.png" alt="스크린샷 2022-11-01 오전 1.31.41.png"></p>
+<p>RestController형태이므로 반환되는 형태는 html body가 반환된다. 개발자 도구를 확인해 보면 body 태그 안에 반환되는 문자열이 출력된다.</p>
+<p>동기적 방식으로 Controller와 RestController로 요청한 결과를 알아보았다.</p>
+<h2 id="Asynchronous-request"><a href="#Asynchronous-request" class="headerlink" title="Asynchronous request"></a>Asynchronous request</h2><h3 id="Controller로-요청하기-1"><a href="#Controller로-요청하기-1" class="headerlink" title="Controller로 요청하기"></a>Controller로 요청하기</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>controller async<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">async id<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;asyncid&quot;</span> /&gt;</span> async pw<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;asyncpw&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">id</span>=<span class="string">&quot;asyncBtn&quot;</span> <span class="attr">value</span>=<span class="string">&quot;async&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#asyncBtn&quot;</span>).<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> id = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#asynccontrollerid&quot;</span>).<span class="property">value</span>;</span><br><span class="line">  <span class="keyword">let</span> pw = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#asynccontrollerpw&quot;</span>).<span class="property">value</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> data = &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&quot;post&quot;</span>,</span><br><span class="line">    <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; id, pw &#125;),</span><br><span class="line">    <span class="attr">headers</span>: &#123; <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span> &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  data = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;asynccontroller&quot;</span>, data);</span><br><span class="line">  data = <span class="keyword">await</span> data.<span class="title function_">text</span>();</span><br><span class="line">  <span class="title function_">alert</span>(data); <span class="comment">// return 값은 &quot;hello&quot;이고 alert 창에 hello.jsp가 보이게 된다.</span></span><br><span class="line">  data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(data);</span><br><span class="line">  <span class="comment">// alert(data);</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;asynccontroller&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">helloworld</span><span class="params">(<span class="meta">@RequestBody</span> Map&lt;String, String&gt; map)</span> &#123;</span><br><span class="line">    System.out.println(map.get(<span class="string">&quot;id&quot;</span>));</span><br><span class="line">    System.out.println(map.get(<span class="string">&quot;pw&quot;</span>));</span><br><span class="line">    System.out.println(<span class="string">&quot;hello controller&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>비동기 동작은 fetch나 axios를 사용하여 요청한다. 위 코드는 비동기 방식으로 Controller로 요청하는 경우이다. fetch를 사용해 post 방식으로 요청을 보낸다. Fetch 요청을 한 후 응답을 alert에 띄우기 위해 async 함수를 사용하고 요청에 await을 붙여준다. await을 붙여줘 fetch가 끝날 때 까지 기다린다. await가 붙지 않으면 fetch 요청이 끝나기 전에 다음 줄이 수행되므로 data에 값이 없게 된다.</p>
+<p>Java코드를 보게되면 요청을 받은 후 반환하는 값이 문자열이다. Controller에서 반환되는 값은 jsp의 파일 이름인 것을 위에서 보았다. Controller로 요청되는 비동기 동작에서 fetch가 요청한 후 받게되는 응답은 hello.jsp를 html 텍스트로 받게 된다.</p>
+<p>위 javascript 코드에서 alert 창에 띄워지는 데이터는 hello.jsp가 띄워진다. (hello.jsp 코드는 동기적 방식에 있다.)</p>
+<p><img src="/assets/posting/spring/async/pic3.png" alt="스크린샷 2022-11-01 오전 2.02.18.png"></p>
+<h3 id="RestController로-요청하기-1"><a href="#RestController로-요청하기-1" class="headerlink" title="RestController로 요청하기"></a>RestController로 요청하기</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>restcontroller async<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">async id<span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;asynccontrollerid&quot;</span> /&gt;</span> async pw<span class="tag">&lt;<span class="name">input</span></span></span><br><span class="line"><span class="tag">  <span class="attr">id</span>=<span class="string">&quot;asynccontrollerpw&quot;</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">id</span>=<span class="string">&quot;asyncControllerBtn&quot;</span> <span class="attr">value</span>=<span class="string">&quot;async&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span></span><br><span class="line">  .<span class="title function_">querySelector</span>(<span class="string">&quot;#asyncControllerBtn&quot;</span>)</span><br><span class="line">  .<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> id = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#asynccontrollerid&quot;</span>).<span class="property">value</span>;</span><br><span class="line">    <span class="keyword">let</span> pw = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&quot;#asynccontrollerpw&quot;</span>).<span class="property">value</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> data = &#123;</span><br><span class="line">      <span class="attr">method</span>: <span class="string">&quot;post&quot;</span>,</span><br><span class="line">      <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; id, pw &#125;),</span><br><span class="line">      <span class="attr">headers</span>: &#123; <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span> &#125;,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    data = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;resthello&quot;</span>, data);</span><br><span class="line">    data = <span class="keyword">await</span> data.<span class="title function_">text</span>();</span><br><span class="line">    <span class="title function_">alert</span>(data); <span class="comment">// return 값인 hello가 온다</span></span><br><span class="line">    data = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(data);</span><br><span class="line">    <span class="comment">// alert(data);</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;resthello&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(<span class="meta">@RequestBody</span> Map&lt;String, String&gt; map)</span> &#123;</span><br><span class="line">    System.out.println(map.get(<span class="string">&quot;id&quot;</span>));</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;hello rest controller&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>비동기 동작으로 RestController에 요청하는 방식을 알아보자. Fetch 동작은 Controller에 요청하는 것과 같다.</p>
+<p>RestController의 “&#x2F;resthello”로 요청이 들어오게되고, 반환되는 값은 hello이다. RestController는 html body를 반환하기 때문에 아래와 같은 결과가 나오게 된다.</p>
+<p><img src="/assets/posting/spring/async/pic4.png" alt="스크린샷 2022-11-01 오전 2.07.32.png"></p>
+<p>Fetch 동작이 끝난 후 alert 창에 data를 띄워보면 RestController에서 반환된 “hello”가 출력되는 것을 알 수 있다.</p>
+<p>다시한번 정리하면 동기와 비동기 동작을 나눌 수 있는 것은 client의 요청 방식에 따라 달라지게 되고, Controller와 RestController의 반환되는 타입에 따라 jsp페이지가 넘어가거나 html body가 응답으로 넘어가게 된다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Synchronous"><span class="toc-number">1.</span> <span class="toc-text">Synchronous</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Asynchronous"><span class="toc-number">2.</span> <span class="toc-text">Asynchronous</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Synchronous-request"><span class="toc-number">3.</span> <span class="toc-text">Synchronous request</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Controller%EB%A1%9C-%EC%9A%94%EC%B2%AD%ED%95%98%EA%B8%B0"><span class="toc-number">3.1.</span> <span class="toc-text">Controller로 요청하기</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RestController%EB%A1%9C-%EC%9A%94%EC%B2%AD%ED%95%98%EA%B8%B0"><span class="toc-number">3.2.</span> <span class="toc-text">RestController로 요청하기</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Asynchronous-request"><span class="toc-number">4.</span> <span class="toc-text">Asynchronous request</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Controller%EB%A1%9C-%EC%9A%94%EC%B2%AD%ED%95%98%EA%B8%B0-1"><span class="toc-number">4.1.</span> <span class="toc-text">Controller로 요청하기</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RestController%EB%A1%9C-%EC%9A%94%EC%B2%AD%ED%95%98%EA%B8%B0-1"><span class="toc-number">4.2.</span> <span class="toc-text">RestController로 요청하기</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&text=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&is_video=false&description=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=너무 헷갈리는 동기와 비동기 알아보기&body=Check out this article: https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&title=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&name=너무 헷갈리는 동기와 비동기 알아보기&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/10/31/2022-11-01-asynccontroller/&t=너무 헷갈리는 동기와 비동기 알아보기"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

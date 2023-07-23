@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="파이썬 알고리즘 인터뷰 23장을 정리한 내용입니다.  다이나믹프로그래밍 다이나믹프로그래밍 알고리즘은 문제를 각각의 작은 문제로 나누어 해결한 결과를 저장해뒀다가 나중에 큰 문제의 결과와 합하여 풀이하는 알고리즘이다 다이나믹 프로그래밍을 이용해 문제의 최적 해결 방법이 부분 문제에 대한 최적 해결 방법으로 구성되는 경우의 문제를 풀이할 수 있다 순간 최적을">
+<meta property="og:type" content="article">
+<meta property="og:title" content="다이나믹 프로그래밍 (Python Algorithm Interview 23장)">
+<meta property="og:url" content="https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="파이썬 알고리즘 인터뷰 23장을 정리한 내용입니다.  다이나믹프로그래밍 다이나믹프로그래밍 알고리즘은 문제를 각각의 작은 문제로 나누어 해결한 결과를 저장해뒀다가 나중에 큰 문제의 결과와 합하여 풀이하는 알고리즘이다 다이나믹 프로그래밍을 이용해 문제의 최적 해결 방법이 부분 문제에 대한 최적 해결 방법으로 구성되는 경우의 문제를 풀이할 수 있다 순간 최적을">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter23/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter23/pic2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter23/pic3.png">
+<meta property="article:published_time" content="2021-09-30T08:31:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.023Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter23/pic1.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>다이나믹 프로그래밍 (Python Algorithm Interview 23장)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/11/15/2021-11-15-handson3/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/09/26/2021-09-26-handson2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&text=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&is_video=false&description=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=다이나믹 프로그래밍 (Python Algorithm Interview 23장)&body=Check out this article: https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&name=다이나믹 프로그래밍 (Python Algorithm Interview 23장)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&t=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D"><span class="toc-number">1.</span> <span class="toc-text">다이나믹프로그래밍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B5%9C%EC%A0%81-%EB%B6%80%EB%B6%84-%EA%B5%AC%EC%A1%B0"><span class="toc-number">2.</span> <span class="toc-text">최적 부분 구조</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%B0%A9%EB%B2%95%EB%A1%A0"><span class="toc-number">3.</span> <span class="toc-text">다이나믹 프로그래밍 방법론</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%83%81%ED%96%A5%EC%8B%9D"><span class="toc-number">3.0.1.</span> <span class="toc-text">상향식</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%95%98%ED%96%A5%EC%8B%9D"><span class="toc-number">3.0.2.</span> <span class="toc-text">하향식</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0-1-%EB%B0%B0%EB%82%AD-%EB%AC%B8%EC%A0%9C"><span class="toc-number">4.</span> <span class="toc-text">0-1 배낭 문제</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#86-%EC%B5%9C%EB%8C%80-%EC%84%9C%EB%B8%8C-%EB%B0%B0%EC%97%B4"><span class="toc-number">5.</span> <span class="toc-text">#86 최대 서브 배열</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%A9%94%EB%AA%A8%EC%9D%B4%EC%A0%9C%EC%9D%B4%EC%85%98"><span class="toc-number">5.0.1.</span> <span class="toc-text">다이나믹 프로그래밍(메모이제이션)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%B9%B4%EB%8D%B0%EC%9D%B8-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-number">5.0.2.</span> <span class="toc-text">카데인 알고리즘</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        다이나믹 프로그래밍 (Python Algorithm Interview 23장)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-09-30T08:31:00.000Z" class="dt-published" itemprop="datePublished">2021-09-30</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/algorithm/">algorithm</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/algorithm/" rel="tag">algorithm</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>파이썬 알고리즘 인터뷰 23장을 정리한 내용입니다.</p>
+</blockquote>
+<h1 id="다이나믹프로그래밍"><a href="#다이나믹프로그래밍" class="headerlink" title="다이나믹프로그래밍"></a>다이나믹프로그래밍</h1><ul>
+<li>다이나믹프로그래밍 알고리즘은 문제를 각각의 작은 문제로 나누어 해결한 결과를 저장해뒀다가 나중에 큰 문제의 결과와 합하여 풀이하는 알고리즘이다</li>
+<li>다이나믹 프로그래밍을 이용해 문제의 최적 해결 방법이 부분 문제에 대한 최적 해결 방법으로 구성되는 경우의 문제를 풀이할 수 있다</li>
+<li>순간 최적을 선택하는 그리디 알고리즘과 많이 비교되며 다이타믹 프로그래밍은 중복된 하위 문제들의 결과를 저장했다가 풀이한다는 차이가 있다</li>
+</ul>
+<h1 id="최적-부분-구조"><a href="#최적-부분-구조" class="headerlink" title="최적 부분 구조"></a>최적 부분 구조</h1><p><img src="/assets/img/posts/pyAlgo/chapter23/pic1.png" alt="스크린샷, 2021-09-29 17-58-34.png"></p>
+<ul>
+<li>서울에서 부산까지 가는 최단 경로를 찾는 간단한 예이다</li>
+<li>서울에서 대구까지는 3가지의 경로가 있고 부산까지도 3가지의 경로를 가지고 있다</li>
+<li>서울에서 부산까지의 최단 경로는 $200km + 80km&#x3D;280km$이다</li>
+<li>위 경로는 서울에서 대구까지 가는 최단경로(200km)와 대구에서 부산까지 가는 최단 경로(80km)로 구성된다</li>
+<li>서울에서 부산까지의 최단 경로는 (1)서울에서 대구까지 최단경로 (2)대구에서 부산까지 최단경로 두가지 부분 문제의 해답의 합이된다 </li>
+<li>이런 구조는 부분 문제에 대한 최적 해결 방법으로 구성되는 다이나믹 프로그래밍이다</li>
+</ul>
+<h1 id="다이나믹-프로그래밍-방법론"><a href="#다이나믹-프로그래밍-방법론" class="headerlink" title="다이나믹 프로그래밍 방법론"></a>다이나믹 프로그래밍 방법론</h1><p><img src="/assets/img/posts/pyAlgo/chapter23/pic2.png" alt="스크린샷, 2021-09-29 18-18-23.png"></p>
+<ul>
+<li>상향식과 하향식으로 나뉜다 상향식을 타블레이션, 하향식을 메모이제이션이라고도 한다</li>
+</ul>
+<h3 id="상향식"><a href="#상향식" class="headerlink" title="상향식"></a>상향식</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fib</span>(<span class="params">n</span>):</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">    dp[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n + <span class="number">1</span>):</span><br><span class="line">        dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>]</span><br><span class="line">    <span class="keyword">return</span> dp[n]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>더 작은 하위 문제부터 살핀다음 작은 문제의 정답을 이용해 큰 문제의 정답을 풀어나간다</li>
+<li>데이터를 테이블 형태로 만들면서 문제를 풀이한다</li>
+</ul>
+<h3 id="하향식"><a href="#하향식" class="headerlink" title="하향식"></a>하향식</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fib_</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> dp[n]:</span><br><span class="line">        <span class="keyword">return</span> dp[n]</span><br><span class="line">    dp[n] = fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> dp[n]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>하위 문제에 대한 정답을 계산했는지 확인해가며 문제를 자연스러운 방식으로 풀어나간다</li>
+<li>재귀와 비슷하며 이미 풀어봤는지 확인하여 재활용하는 효율적인 방법이다</li>
+</ul>
+<hr>
+<h1 id="0-1-배낭-문제"><a href="#0-1-배낭-문제" class="headerlink" title="0-1 배낭 문제"></a>0-1 배낭 문제</h1><p>쪼갤수 없는 배낭문제를 다이나믹 프로그래밍으로 푼다</p>
+<ul>
+<li>모든 경우의 수를 계산해야 한다</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">zero_one_knapsack</span>(<span class="params">cargo</span>):</span><br><span class="line">    capacity = <span class="number">15</span></span><br><span class="line">    pack = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cargo) + <span class="number">1</span>):</span><br><span class="line">        pack.append([])</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> <span class="built_in">range</span>(capacity + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">or</span> c == <span class="number">0</span>:</span><br><span class="line">                pack[i].append(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">elif</span> cargo[i - <span class="number">1</span>][<span class="number">1</span>] &lt;= c:</span><br><span class="line">                pack[i].append(</span><br><span class="line">                    <span class="built_in">max</span>(</span><br><span class="line">                        cargo[i - <span class="number">1</span>][<span class="number">0</span>] + pack[i - <span class="number">1</span>][c - cargo[i - <span class="number">1</span>][<span class="number">1</span>]],</span><br><span class="line">                        pack[i - <span class="number">1</span>][c]</span><br><span class="line">                    ))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                pack[i].append(pack[i - <span class="number">1</span>][c])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> pack[-<span class="number">1</span>][-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pack</code>에 중간 결과 테이블을 생성한다</li>
+<li>테이블 크기의 기준은 짐의 최대 개수 +1, 배낭의 최대 용량 +1로 6X16이다</li>
+<li>각 셀에는 위치까지의 짐의 개수와 배낭에 용량에 따른 최댓값이 담긴다<br><img src="/assets/img/posts/pyAlgo/chapter23/pic3.png" alt="스크린샷, 2021-09-30 12-51-41.png"></li>
+<li>세로축은 짐의 개수, 가로축은 배낭의 용량이다</li>
+<li>0-1 배낭문제를 타뷸레이션으로 풀었다</li>
+</ul>
+<hr>
+<h1 id="86-최대-서브-배열"><a href="#86-최대-서브-배열" class="headerlink" title="#86 최대 서브 배열"></a>#86 최대 서브 배열</h1><p>합이 최대가 되는 연속 서브 배열을 찾아 합을 리턴하라</p>
+<h3 id="다이나믹-프로그래밍-메모이제이션"><a href="#다이나믹-프로그래밍-메모이제이션" class="headerlink" title="다이나믹 프로그래밍(메모이제이션)"></a>다이나믹 프로그래밍(메모이제이션)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">maxSubArray</span>(<span class="params">nums: <span class="built_in">list</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(nums)):</span><br><span class="line">        <span class="built_in">print</span>(nums)</span><br><span class="line">        nums[i] += nums[i - <span class="number">1</span>] <span class="keyword">if</span> nums[i - <span class="number">1</span>] &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">max</span>(nums)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>메모이제이션 풀이이다</li>
+<li>앞에서부터 값을 계산하면서 누적 합을 계산한다</li>
+<li>더해가면서 0이하일 경우에는 버린다</li>
+<li>메모이제이션으로 더한 값들 중 최댓값을 반환하면 최대 합을 알 수 있다</li>
+</ul>
+<h3 id="카데인-알고리즘"><a href="#카데인-알고리즘" class="headerlink" title="카데인 알고리즘"></a>카데인 알고리즘</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">kadane</span>(<span class="params">nums: <span class="built_in">list</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    best_sum = -sys.maxsize</span><br><span class="line">    current_sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;num <span class="subst">&#123;num&#125;</span> current num <span class="subst">&#123;current_sum&#125;</span> best sum <span class="subst">&#123;best_sum&#125;</span>&#x27;</span>)</span><br><span class="line">        current_sum = <span class="built_in">max</span>(num, current_sum + num)</span><br><span class="line">        best_sum = <span class="built_in">max</span>(best_sum, current_sum)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> best_sum</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>리스트의 숫자를 돌면서 매번 <code>best_sum</code>을 계산하여 반환한다</li>
+<li>메모이제이션과 비슷하지만 개인적으로 카데인 알고리즘이 이해하기 편했다</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D"><span class="toc-number">1.</span> <span class="toc-text">다이나믹프로그래밍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B5%9C%EC%A0%81-%EB%B6%80%EB%B6%84-%EA%B5%AC%EC%A1%B0"><span class="toc-number">2.</span> <span class="toc-text">최적 부분 구조</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%B0%A9%EB%B2%95%EB%A1%A0"><span class="toc-number">3.</span> <span class="toc-text">다이나믹 프로그래밍 방법론</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%83%81%ED%96%A5%EC%8B%9D"><span class="toc-number">3.0.1.</span> <span class="toc-text">상향식</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%95%98%ED%96%A5%EC%8B%9D"><span class="toc-number">3.0.2.</span> <span class="toc-text">하향식</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0-1-%EB%B0%B0%EB%82%AD-%EB%AC%B8%EC%A0%9C"><span class="toc-number">4.</span> <span class="toc-text">0-1 배낭 문제</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#86-%EC%B5%9C%EB%8C%80-%EC%84%9C%EB%B8%8C-%EB%B0%B0%EC%97%B4"><span class="toc-number">5.</span> <span class="toc-text">#86 최대 서브 배열</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EB%A9%94%EB%AA%A8%EC%9D%B4%EC%A0%9C%EC%9D%B4%EC%85%98"><span class="toc-number">5.0.1.</span> <span class="toc-text">다이나믹 프로그래밍(메모이제이션)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%B9%B4%EB%8D%B0%EC%9D%B8-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-number">5.0.2.</span> <span class="toc-text">카데인 알고리즘</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&text=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&is_video=false&description=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=다이나믹 프로그래밍 (Python Algorithm Interview 23장)&body=Check out this article: https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&title=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&name=다이나믹 프로그래밍 (Python Algorithm Interview 23장)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/09/30/2021-09-30-algo7/&t=다이나믹 프로그래밍 (Python Algorithm Interview 23장)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

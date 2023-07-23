@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="SOLID원칙에 대해 알아본다">
+<meta property="og:type" content="article">
+<meta property="og:title" content="좋은 객체 지향 프로그래밍을 위한 방법: SOLID">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="SOLID원칙에 대해 알아본다">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-12-16T04:46:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.381Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="SOLID java oop spring">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>좋은 객체 지향 프로그래밍을 위한 방법: SOLID</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/12/29/2022-12-29-event_scheduler/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/11/10/2022-11-10-vuetodo/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&text=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&is_video=false&description=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=좋은 객체 지향 프로그래밍을 위한 방법: SOLID&body=Check out this article: https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&name=좋은 객체 지향 프로그래밍을 위한 방법: SOLID&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&t=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SRP-Single-Responsibility-Principle"><span class="toc-number">1.</span> <span class="toc-text">SRP(Single Responsibility Principle)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OCP-Open-Closed-Principle"><span class="toc-number">2.</span> <span class="toc-text">OCP(Open&#x2F;Closed Principle)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LSP-Liskov-Substitution-Principle"><span class="toc-number">3.</span> <span class="toc-text">LSP(Liskov Substitution Principle)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ISP-Interface-Segregation-Principle"><span class="toc-number">4.</span> <span class="toc-text">ISP(Interface Segregation Principle)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DIP-Dependency-Inversion-Principle"><span class="toc-number">5.</span> <span class="toc-text">DIP(Dependency Inversion Principle)</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        좋은 객체 지향 프로그래밍을 위한 방법: SOLID
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-12-16T04:46:00.000Z" class="dt-published" itemprop="datePublished">2022-12-16</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/spring/">spring</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/SOLID-java-oop-spring/" rel="tag">SOLID java oop spring</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>클린 코드로 유명한 로버트 마틴의 SOLID 5가지 원칙을 알아보자</p>
+<h1 id="SRP-Single-Responsibility-Principle"><a href="#SRP-Single-Responsibility-Principle" class="headerlink" title="SRP(Single Responsibility Principle)"></a>SRP(Single Responsibility Principle)</h1><p>첫 번째는 단일 책임 원칙이다. 간단하게 말하면 하나의 클래스는 하나의 책임을 가져야 한다는 원칙이다. 하나의 책임이라는 말은 규모가 클 수도 있고 작을 수도 있다. 상황에 따라 다를 것이고, 중요한 기준은 <strong>“변경”</strong>이다. 코드에서 변경이 발생했을 때 파급효과가 적다면 SRP원칙을 잘 따랐다고 볼 수 있다.</p>
+<p>SRP원칙의 예시로는 UI가 변경되거나 객체의 생성과 사용을 분리하는 경우이다.</p>
+<h1 id="OCP-Open-Closed-Principle"><a href="#OCP-Open-Closed-Principle" class="headerlink" title="OCP(Open&#x2F;Closed Principle)"></a>OCP(Open&#x2F;Closed Principle)</h1><p>개방-폐쇄 원칙은 소프트웨어 요소는 확장에는 개방되어 있어야 하고 변경에는 닫혀 있어야 한다는 의미이다. 요구사항의 변경이나 추가 사항이 발생해도 기존 구성요소는 수정이 일어나지 않도록 해야 한다는 의미이다. OCP 원칙을 만족하기 위해 추상화와 다형성의 특징을 사용할 수 있다.</p>
+<p>구현 객체를 변경하려면 클라이언트 코드 변경이 필요하다. 이는 OCP 원칙을 따르지 못하기 때문에 객체를 생성하고, 연관 관계를 맺어주는 별도의 조립 설정자가 필요하다.</p>
+<p>OCP원칙을 만족하기 위해 변경될 것과 변경되지 않을 것을 명확히 해야 한다.</p>
+<h1 id="LSP-Liskov-Substitution-Principle"><a href="#LSP-Liskov-Substitution-Principle" class="headerlink" title="LSP(Liskov Substitution Principle)"></a>LSP(Liskov Substitution Principle)</h1><p>리스코프 치환 원칙은 객체는 프로그램의 정확성을 깨뜨리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다는 의미이다. 또한 자식 클래스의 상세 구현체를 부모 클래스는 알 필요가 없다는 뜻이다. 서브 클래스가 확장에 대한 인터페이스를 준수해야 하는 것을 의미한다. 자식 클래스가 부모 클래스 메소드가 가진 의미를 해치지 않는 선에서 재정의가 가능하다.</p>
+<h1 id="ISP-Interface-Segregation-Principle"><a href="#ISP-Interface-Segregation-Principle" class="headerlink" title="ISP(Interface Segregation Principle)"></a>ISP(Interface Segregation Principle)</h1><p>인터페이스 분리 원칙은 자신이 사용하지 않는 인터페이스는 구현하지 말아야 한다는 원칙이다. 특정 클라이언트를 위한 인터페이스 여러개가 범용 인터페이스보다 낫다는 의미이다. 이렇게 구현하게 되면 인터페이스가 명확해지고, 대체 가능성이 높아진다.</p>
+<p>하나의 큰 인터페이스를 만들기보다 구체적인 작은 단위로 분리하여 필요한 인터페이스만 상속하여 ISP 원칙을 만족하게 된다. 인터페이스의 크기가 크다는 것은 한번에 지켜야할 약속이 많아지는것을 의미하므로 분리하는 것이 좋다.</p>
+<h1 id="DIP-Dependency-Inversion-Principle"><a href="#DIP-Dependency-Inversion-Principle" class="headerlink" title="DIP(Dependency Inversion Principle)"></a>DIP(Dependency Inversion Principle)</h1><p>의존 관계 역전 원칙은 클라이언트 코드가 구현 클래스에 의존하지 않고 인터페이스에 의존하게 하는 것이다. 프로그래머는 구체적인 클래스에 의존하지 말고 추상화된 클래스에 의존해야 한다는 뜻이다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SRP-Single-Responsibility-Principle"><span class="toc-number">1.</span> <span class="toc-text">SRP(Single Responsibility Principle)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OCP-Open-Closed-Principle"><span class="toc-number">2.</span> <span class="toc-text">OCP(Open&#x2F;Closed Principle)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LSP-Liskov-Substitution-Principle"><span class="toc-number">3.</span> <span class="toc-text">LSP(Liskov Substitution Principle)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ISP-Interface-Segregation-Principle"><span class="toc-number">4.</span> <span class="toc-text">ISP(Interface Segregation Principle)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DIP-Dependency-Inversion-Principle"><span class="toc-number">5.</span> <span class="toc-text">DIP(Dependency Inversion Principle)</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&text=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&is_video=false&description=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=좋은 객체 지향 프로그래밍을 위한 방법: SOLID&body=Check out this article: https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&title=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&name=좋은 객체 지향 프로그래밍을 위한 방법: SOLID&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/12/16/2022-12-17-solid/&t=좋은 객체 지향 프로그래밍을 위한 방법: SOLID"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

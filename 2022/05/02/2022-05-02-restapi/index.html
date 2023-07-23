@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="REST API를 만족하는 request에 대한 내용입니다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="REST API, Path Parameter와 Query String의 이해">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="REST API를 만족하는 request에 대한 내용입니다.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-02T05:08:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.249Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="REST API">
+<meta property="article:tag" content="path parameter">
+<meta property="article:tag" content="query string">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>REST API, Path Parameter와 Query String의 이해</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/05/13/2022-05-13-swagger/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/04/23/2022-04-23-refreshtoken/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&text=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&is_video=false&description=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=REST API, Path Parameter와 Query String의 이해&body=Check out this article: https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&name=REST API, Path Parameter와 Query String의 이해&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&t=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#REST"><span class="toc-number">1.</span> <span class="toc-text">REST</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Resource"><span class="toc-number">1.1.</span> <span class="toc-text">Resource</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Verb"><span class="toc-number">1.2.</span> <span class="toc-text">Verb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Representation-of-Resource"><span class="toc-number">1.3.</span> <span class="toc-text">Representation of Resource</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RESTful-API"><span class="toc-number">2.</span> <span class="toc-text">RESTful API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cliient-server-architecture"><span class="toc-number">2.0.1.</span> <span class="toc-text">cliient-server architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stateless"><span class="toc-number">2.0.2.</span> <span class="toc-text">stateless</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cashable"><span class="toc-number">2.0.3.</span> <span class="toc-text">cashable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#layered-system"><span class="toc-number">2.0.4.</span> <span class="toc-text">layered system</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uniform-interface"><span class="toc-number">2.0.5.</span> <span class="toc-text">uniform interface</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#code-on-demand-optional"><span class="toc-number">2.0.6.</span> <span class="toc-text">code on demand(optional)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#REST-API-%EC%84%A4%EA%B3%84"><span class="toc-number">3.</span> <span class="toc-text">REST API 설계</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#path-parameter%EC%99%80-query-string"><span class="toc-number">4.</span> <span class="toc-text">path parameter와 query string</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Path-parameter"><span class="toc-number">5.</span> <span class="toc-text">Path parameter</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Query-string"><span class="toc-number">6.</span> <span class="toc-text">Query string</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        REST API, Path Parameter와 Query String의 이해
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-02T05:08:00.000Z" class="dt-published" itemprop="datePublished">2022-05-02</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/REST-API/" rel="tag">REST API</a>, <a class="p-category" href="/tags/path-parameter/" rel="tag">path parameter</a>, <a class="p-category" href="/tags/query-string/" rel="tag">query string</a>, <a class="p-category" href="/tags/web/" rel="tag">web</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h1><p><code>REST</code>는 자원을 이름으로 구분해서 자원의 상태를 주고 받는 것을 의미한다. REST의 구성 요소는 <code>Resource(자원)</code>, <code>Verb(행위)</code>, <code>Representation of Resource(표현)</code>이 있다.</p>
+<h2 id="Resource"><a href="#Resource" class="headerlink" title="Resource"></a>Resource</h2><p>모든 자원에는 고유한 id가 존재하고, 자원은 서버에 존재한다. Client는 URI를 이용해서 자원을 지정하고, 자원의 상태(정보)에 대한 동작을 서버에 요청하게 된다.</p>
+<h2 id="Verb"><a href="#Verb" class="headerlink" title="Verb"></a>Verb</h2><p>HTTP 프로토콜의 메소드를 사용한다. HTTP 프로토콜의 메소드는 <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>가 있다. 모두 client에서 서버로 요청할 때 사용된다.</p>
+<table>
+<thead>
+<tr>
+<th>METHOD</th>
+<th>DETAIL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td>URI가 가진 정보 조회를 요청한다.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>client에서 서버로 정보를 전송한다.</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>client에서 정보 수정을 요청한다.</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>PUT과 동일하게 정보 수정을 요청한다.</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>정보 삭제를 요청한다</td>
+</tr>
+</tbody></table>
+<h2 id="Representation-of-Resource"><a href="#Representation-of-Resource" class="headerlink" title="Representation of Resource"></a><strong>Representation of Resource</strong></h2><p>client와 server가 데이터를 주고받는 형태로 json, xml 형식을 많이 사용한다고 한다.</p>
+<h1 id="RESTful-API"><a href="#RESTful-API" class="headerlink" title="RESTful API"></a>RESTful API</h1><p>RESTful은 <code>Representational State Transfer</code>의 약자로 소프트웨어 아키텍처의 한 형식이다. 네트워크 아키텍처 원리는 자원을 정의하고 자원에 대한 주소를 지정하는 방법이라고 한다. API가 RESTful의 조건을 만족하기 위해서는 6가지 조건이 있다.</p>
+<h3 id="cliient-server-architecture"><a href="#cliient-server-architecture" class="headerlink" title="cliient-server architecture"></a>cliient-server architecture</h3><p>자원(정보)를 가지고 있는 부분이 server이고, 자원을 요청하는 부분이 client이다. server는 API 제공, 비즈니스 로직을 처리하고, client는 사용자 인증이나 세션, 로그인 정보 등을 직접 관리하고 책임진다. server와 client 사이의 의존성이 줄어들게 된다.</p>
+<h3 id="stateless"><a href="#stateless" class="headerlink" title="stateless"></a>stateless</h3><p>stateless(무상태) 특징은 HTTP의 특성을 이용하기 때문이다. 서버에서 작업을 하기 위해 상태 정보를 기억할 필요가 없고 client의 요청에 대해서만 처리해 주면 되기 때문에 단순한 구현이 가능해진다. server는 client의 요청을 독립적으로 인식하고 처리하기 때문에 server 처리의 일관성을 부여하고 부담이 줄어들게 된다.</p>
+<h3 id="cashable"><a href="#cashable" class="headerlink" title="cashable"></a>cashable</h3><p>cashable(캐시 처리 가능) 특징은 HTTP의 특징인 캐싱 기능을 사용할 수 있다. 대량의 요청을 효율적으로 관리 가능하며, 캐시 사용으로 응답 시간이 빨라진다.</p>
+<h3 id="layered-system"><a href="#layered-system" class="headerlink" title="layered system"></a>layered system</h3><p>layered system(계층화) 특징은 client와 server의 통신 사이에 프록시 서버나 암호화 계층 등 중간 매체를 둘 수 있다. 또한 중간 매체와 통신 여부를 client나 server는 알 수 없도록 설계 되어야 한다.</p>
+<h3 id="uniform-interface"><a href="#uniform-interface" class="headerlink" title="uniform interface"></a>uniform interface</h3><p>uniform interface(인터페이스 일관성) 특징은 URI로 지정한 resource에 대한 동작이 통일되어야 하고, 사용자의 정보가 하나의 URI에 속함을 보장해야 한다. 특정 언어나 기술에 종속적이지 않고 HTTP 프로토콜을 따르는 플랫폼에서 모두 사용 가능하다.</p>
+<h3 id="code-on-demand-optional"><a href="#code-on-demand-optional" class="headerlink" title="code on demand(optional)"></a>code on demand(optional)</h3><p>REST API는 일반적으로 static resource를 전송하지만, 응답에 실행 코드가 포함될 수 있다. 이러한 경우 코드는 요청 시에만 실행되어야 한다.</p>
+<h1 id="REST-API-설계"><a href="#REST-API-설계" class="headerlink" title="REST API 설계"></a>REST API 설계</h1><p>REST를 만족하는 API를 설계하기 위해서는 세부적인 규칙이 필요하다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://example.com/post   (O)</span><br><span class="line"></span><br><span class="line">http://example.com/post/  (X)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>URI는 명사를 사용하고 소문자로 작성되어야 한다.</li>
+<li>URI의 마지막에는 <code>/</code>를 포함하지 않는다.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://example.com/post-list  (O)</span><br><span class="line"></span><br><span class="line">http://example.com/post_list  (X)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>URI에는 언더바가 아닌 하이픈을 사용한다.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://example.com/post/assets/example  (O)</span><br><span class="line"></span><br><span class="line">http://example.com/post/assets/example.png  (X)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>URI에는 파일의 확장자를 표시하지 않는다.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://example.com/post/:post-id</span><br><span class="line"></span><br><span class="line">http://example.com/post/&#123;post-id&#125;  (O)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>resource 간에 연관 관계가 있는경우 위와 같이 사용한다.</li>
+</ul>
+<h1 id="path-parameter와-query-string"><a href="#path-parameter와-query-string" class="headerlink" title="path parameter와 query string"></a>path parameter와 query string</h1><p>프로젝트를 진행하면서 게시글이나 사용자 정보에 대한 상세 페이지로 넘어갈 때 <code>path parameter</code>를 사용했다. Path parameter는 <code>/post/:postId</code>로 라우팅이 되고 백엔드에서는 <code>req.params.postId</code>로 받아와 사용한다.</p>
+<p>이번 프로젝트를 진행하면서 조건에 따라 조회되는 결과가 다르게 나오는 동작을 구현해야 했는데, query string방식을 몰라서 body로 넘겨서 값을 받았다. 코치님이 Query string을 사용하는게 좋을것 같다고 하셔서 바로 적용해 보았다. Path parameter와 query string의 차이를 알아보자.</p>
+<h1 id="Path-parameter"><a href="#Path-parameter" class="headerlink" title="Path parameter"></a>Path parameter</h1><p>Path parameter는 client 에서 <code>request</code>에 값을 붙여서 요청하는 방식이다. 예를 들어 게시글의 ID가 <code>expost1</code>이라고 할 때 해당 게시글을 클릭하면 라우팅되는 URI는 <code>/post/expost1</code>이 된다. 백엔드에서는 <code>req.params.postId</code>로 받아서 ID를 가지고 데이터 베이스에 요청하여 게시글을 찾게 된다.</p>
+<p>이렇게 단일 데이터를 찾는 경우 path parameter를 사용하게되면 REST API의 조건에 맞는 resource의 연관 관계를 보여줄 수 있다.</p>
+<h1 id="Query-string"><a href="#Query-string" class="headerlink" title="Query string"></a>Query string</h1><p>이번 프로젝트에서 query string을 사용한 부분은 pagination과 게시글을 찾는 조건을 붙이기 위해 사용했다. 프론트에서 axios get요청으로 endpoint와 params에 필요한 정보를 붙여 요청을 하게되고, 백에서는 <code>req.query</code>로 정보를 받아온다.</p>
+<p>프론트에서 query string으로 요청하게 되면 URI는 <code>/post?category=player&amp;val1=5</code>와 같이 된다. 게시글이 많아 pagination을 해야하는데 query 정보에 현재 페이지와 한 페이지에 몇개를 보여주고 싶은지(perPage)를 넘겨주면 게시글 조건 검색과 페이징이 동시에 가능하다.</p>
+<p>Query string은 정보 검색, 정렬, 필터링 등의 동작에 사용되면 좋을것 같다는 생각이 들었다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#REST"><span class="toc-number">1.</span> <span class="toc-text">REST</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Resource"><span class="toc-number">1.1.</span> <span class="toc-text">Resource</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Verb"><span class="toc-number">1.2.</span> <span class="toc-text">Verb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Representation-of-Resource"><span class="toc-number">1.3.</span> <span class="toc-text">Representation of Resource</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RESTful-API"><span class="toc-number">2.</span> <span class="toc-text">RESTful API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cliient-server-architecture"><span class="toc-number">2.0.1.</span> <span class="toc-text">cliient-server architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stateless"><span class="toc-number">2.0.2.</span> <span class="toc-text">stateless</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cashable"><span class="toc-number">2.0.3.</span> <span class="toc-text">cashable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#layered-system"><span class="toc-number">2.0.4.</span> <span class="toc-text">layered system</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uniform-interface"><span class="toc-number">2.0.5.</span> <span class="toc-text">uniform interface</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#code-on-demand-optional"><span class="toc-number">2.0.6.</span> <span class="toc-text">code on demand(optional)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#REST-API-%EC%84%A4%EA%B3%84"><span class="toc-number">3.</span> <span class="toc-text">REST API 설계</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#path-parameter%EC%99%80-query-string"><span class="toc-number">4.</span> <span class="toc-text">path parameter와 query string</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Path-parameter"><span class="toc-number">5.</span> <span class="toc-text">Path parameter</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Query-string"><span class="toc-number">6.</span> <span class="toc-text">Query string</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&text=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&is_video=false&description=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=REST API, Path Parameter와 Query String의 이해&body=Check out this article: https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&title=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&name=REST API, Path Parameter와 Query String의 이해&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/05/02/2022-05-02-restapi/&t=REST API, Path Parameter와 Query String의 이해"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

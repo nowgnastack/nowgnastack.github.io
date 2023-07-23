@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="Update ParameterOptimization 신경망 학습의 목적은 손실 함수의 값을 가능한 낮추는 매개변수를 찾는 것이다.  SGD(확률적 경사 하강법)\begin{align}W \leftarrow W-\eta ({\partial L &#x2F; \partial W})\end{align} 1234567class SGD:    def __init__(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neural Network V">
+<meta property="og:url" content="https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="Update ParameterOptimization 신경망 학습의 목적은 손실 함수의 값을 가능한 낮추는 매개변수를 찾는 것이다.  SGD(확률적 경사 하강법)\begin{align}W \leftarrow W-\eta ({\partial L &#x2F; \partial W})\end{align} 1234567class SGD:    def __init__(">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/batchN.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/covariate.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay%201.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/dropout.png">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/dropout2.png">
+<meta property="article:published_time" content="2021-01-12T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:15.873Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="tave">
+<meta property="article:tag" content="tave research">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/batchN.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Neural Network V</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2021/01/13/2021-01-13-tave_research5/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/01/17/2021-01-17-graduationPaper1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/01/09/2021-01-09-TAVE_Research4/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&text=Neural Network V"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&is_video=false&description=Neural Network V"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Neural Network V&body=Check out this article: https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&name=Neural Network V&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&t=Neural Network V"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Update-Parameter"><span class="toc-number">1.</span> <span class="toc-text">Update Parameter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimization"><span class="toc-number">1.1.</span> <span class="toc-text">Optimization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SGD-%ED%99%95%EB%A5%A0%EC%A0%81-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95"><span class="toc-number">1.2.</span> <span class="toc-text">SGD(확률적 경사 하강법)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Momentum"><span class="toc-number">1.3.</span> <span class="toc-text">Momentum</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AdaGrad"><span class="toc-number">1.4.</span> <span class="toc-text">AdaGrad</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RMSProp"><span class="toc-number">1.5.</span> <span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adam"><span class="toc-number">1.6.</span> <span class="toc-text">Adam</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Batch-Normalization"><span class="toc-number">2.</span> <span class="toc-text">Batch Normalization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient-vanishing-Exploding-problem"><span class="toc-number">2.1.</span> <span class="toc-text">Gradient vanishing, Exploding problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Normalization-1"><span class="toc-number">2.2.</span> <span class="toc-text">Batch Normalization</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#For-right-learning"><span class="toc-number">3.</span> <span class="toc-text">For right learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Overfitting"><span class="toc-number">3.1.</span> <span class="toc-text">Overfitting</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Weight-decay"><span class="toc-number">3.2.</span> <span class="toc-text">Weight decay</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropout"><span class="toc-number">3.3.</span> <span class="toc-text">Dropout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Find-the-value-of-the-appropriate-hyperparameter"><span class="toc-number">4.</span> <span class="toc-text">Find the value of the appropriate hyperparameter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Validation-data"><span class="toc-number">4.1.</span> <span class="toc-text">Validation data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hyperparameter-optimization"><span class="toc-number">4.2.</span> <span class="toc-text">Hyperparameter optimization</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#References"><span class="toc-number">4.2.0.0.1.</span> <span class="toc-text">References</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Neural Network V
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-01-12T15:00:00.000Z" class="dt-published" itemprop="datePublished">2021-01-13</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/deep-learning/">deep learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/deep-learning/" rel="tag">deep learning</a>, <a class="p-category" href="/tags/tave/" rel="tag">tave</a>, <a class="p-category" href="/tags/tave-research/" rel="tag">tave research</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Update-Parameter"><a href="#Update-Parameter" class="headerlink" title="Update Parameter"></a>Update Parameter</h2><h3 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h3><ul>
+<li>신경망 학습의 목적은 손실 함수의 값을 가능한 낮추는 매개변수를 찾는 것이다.</li>
+</ul>
+<h3 id="SGD-확률적-경사-하강법"><a href="#SGD-확률적-경사-하강법" class="headerlink" title="SGD(확률적 경사 하강법)"></a>SGD(확률적 경사 하강법)</h3><p>\begin{align}<br>W \leftarrow W-\eta ({\partial L &#x2F; \partial W})<br>\end{align}</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SGD</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, lr=<span class="number">0.01</span></span>):</span><br><span class="line">        self.lr = lr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, params, grads</span>):</span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> params, grads:</span><br><span class="line">            params[key] -= self.lr * grads[key]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$\eta$는 learning rate이고, 실제로는 0.01이나 0.001과 같은 값을 정해서 사용한다.</li>
+<li>W는 가중치 매개변수이고, $\partial L &#x2F; \partial W$는 가중치에 대한 손실함수(LOSS)의 기울기다.</li>
+<li>params와 grads는 딕셔너리 변수이다.</li>
+<li>params[‘W’], grads[‘W’]와 같이 각각의 가중치 매개변수와 기울기를 저장하고 있다.</li>
+</ul>
+<h3 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h3><p>\begin{align}<br>v \leftarrow \alpha v - \eta ({\partial L &#x2F; \partial W})<br>\end{align}</p>
+<p>\begin{align}<br>W \leftarrow W+v<br>\end{align}</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Momentum</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, lr=<span class="number">0.01</span>, momentum=<span class="number">0.9</span></span>):</span><br><span class="line">        self.lr = lr</span><br><span class="line">        self.momentum = momentum</span><br><span class="line">        self.v = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, params, grads</span>):</span><br><span class="line">        <span class="keyword">if</span> self.v <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.v = &#123;&#125;</span><br><span class="line">            <span class="keyword">for</span> key, val <span class="keyword">in</span> params.items():</span><br><span class="line">                self.v[key] = np.zeros_like(val)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> params.keys():</span><br><span class="line">            self.v[key] = self.momentum * self.v[key] - self.lr * grads[key]</span><br><span class="line">            params[key] += self.v[key]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>초기화에서 v는 값이 없다.</li>
+<li>momentum은 변수 v가 추가되는데 v는 이전 학습결과도 반영한다.</li>
+<li>$\alpha$를 0.9로 설정한다면, 이전 학습결과를 0.9를 반영하고 현재 batch는 0.1을 반영하여 가중치를 업데이트 한다.</li>
+</ul>
+<h3 id="AdaGrad"><a href="#AdaGrad" class="headerlink" title="AdaGrad"></a>AdaGrad</h3><p>\begin{align}<br>h \leftarrow h+{\partial L &#x2F; \partial W} \odot {\partial L &#x2F; \partial W}<br>\end{align}</p>
+<p>\begin{align}<br>W \leftarrow W-\eta ({1 &#x2F; {\sqrt {h}}})*({\partial L &#x2F; \partial W})<br>\end{align}</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AdaGrad</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, lr=<span class="number">0.01</span></span>):</span><br><span class="line">        self.lr = lr</span><br><span class="line">        self.h = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, params, grads</span>):</span><br><span class="line">        <span class="keyword">if</span> self.h <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.h = &#123;&#125;</span><br><span class="line">            <span class="keyword">for</span> key, val <span class="keyword">in</span> params.items():</span><br><span class="line">                self.h[key] = np.zeros_like(val)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> params.keys():</span><br><span class="line">            self.h[key] += grads[key] * grads[key]</span><br><span class="line">            params[key] -= self.lr * grads[key] / (np.sqrt(self.h[key]) + <span class="number">1e-7</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>h는 기존 기울기 값을 제곱해서 더해준다.</li>
+<li>매개변수를 갱신할 때 $1 &#x2F; \sqrt h$을 곱해 학습률을 조정한다.</li>
+<li>학습률 감소가 매개변수의 원소마다 다르게 적용된다.</li>
+<li>학습을 진행할 수록 갱신 강도가 약해지며, 무한히 학습하면 갱신량이 0이되어 갱신이 이루어지지 않는다.</li>
+<li>이러한 갱신 문제는 RMSProp에서 해결한다.</li>
+<li>코드에서는 1e-7을 더해주는데 0으로 나누는 일이 없도록 해준다.</li>
+</ul>
+<h3 id="RMSProp"><a href="#RMSProp" class="headerlink" title="RMSProp"></a>RMSProp</h3><p>\begin{align}<br>E[{\partial {_w}}^{2} D]_k &#x3D; \gamma E[{\partial {_w}}^{2} D]_{k-1} +(1-\gamma)({\partial {_w}}^{2} D)_k<br>\end{align}</p>
+<p>\begin{align}<br>w_{k+1} &#x3D; w_k - ({\eta &#x2F; \sqrt{E[{\partial {_w}}^{2} D]_{k+\epsilon}}}) * \partial_wD<br>\end{align}</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">RMSprop</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, lr=<span class="number">0.01</span>, decay_rate=<span class="number">0.99</span></span>):</span><br><span class="line">        self.lr = lr</span><br><span class="line">        self.decay_rate = decay_rate</span><br><span class="line">        self.h = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, params, grads</span>):</span><br><span class="line">        <span class="keyword">if</span> self.h <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.h = &#123;&#125;</span><br><span class="line">            <span class="keyword">for</span> key, val <span class="keyword">in</span> params.items():</span><br><span class="line">                self.h[key] = np.zeros_like(val)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> params.keys():</span><br><span class="line">            self.h[key] *= self.decay_rate</span><br><span class="line">            self.h[key] += (<span class="number">1</span> - self.decay_rate) * grads[key] * grads[key]</span><br><span class="line">            params[key] -= self.lr * grads[key] / (np.sqrt(self.h[key]) + <span class="number">1e-7</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이 코드에서는 decay rate를 0.9로 설정했다.</li>
+<li>Adagrad의 learning rate가 0으로 수렴하는 것을 개선하기 위해 기울기를 단순 누적하지 않고 지수 가중 이동 평균을 사용하여 최신 기울기가 더 크게 반영되도록 했다.</li>
+</ul>
+<h3 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h3><p>\begin{align}<br>{m_t} &#x3D; {\beta_1} {m}_{t-1}+(1-{\beta_1})g_t<br>\end{align}</p>
+<p>\begin{align}<br>v_t &#x3D; {\beta_2}v_{t-1}+(1-\beta_2){g{_t}}^2<br>\end{align}</p>
+<p>\begin{align}<br>\hat{m}_t &#x3D; {m_t &#x2F; 1-{\beta{_1}}^t}<br>\end{align}</p>
+<p>\begin{align}<br>\hat{v} &#x3D; {v_t &#x2F; 1-{\beta{_2}}^t}<br>\end{align}</p>
+<p>\begin{align}<br>\theta_{t+1} &#x3D; \theta_t-({\eta &#x2F; \sqrt{\hat{v_t}+\epsilon}}) \hat{m}_t<br>\end{align}</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Adam</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, lr=<span class="number">0.001</span>, beta1=<span class="number">0.9</span>, beta2=<span class="number">0.999</span></span>):</span><br><span class="line">        self.lr = lr</span><br><span class="line">        self.beta1 = beta1</span><br><span class="line">        self.beta2 = beta2</span><br><span class="line">        self.<span class="built_in">iter</span> = <span class="number">0</span></span><br><span class="line">        self.m = <span class="literal">None</span></span><br><span class="line">        self.v = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, params, grads</span>):</span><br><span class="line">        <span class="keyword">if</span> self.m <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            self.m, self.v = &#123;&#125;, &#123;&#125;</span><br><span class="line">            <span class="keyword">for</span> key, val <span class="keyword">in</span> params.items():</span><br><span class="line">                self.m[key] = np.zeros_like(val)</span><br><span class="line">                self.v[key] = np.zeros_like(val)</span><br><span class="line"></span><br><span class="line">        self.<span class="built_in">iter</span> += <span class="number">1</span></span><br><span class="line">        lr_t = self.lr * np.sqrt(<span class="number">1.0</span> - self.beta2 ** self.<span class="built_in">iter</span>) / (<span class="number">1.0</span> - self.beta1 ** self.<span class="built_in">iter</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> params.keys():</span><br><span class="line">            self.m[key] += (<span class="number">1</span> - self.beta1) * (grads[key] - self.m[key])</span><br><span class="line">            self.v[key] += (<span class="number">1</span> - self.beta2) * (grads[key] ** <span class="number">2</span> - self.v[key])</span><br><span class="line"></span><br><span class="line">            params[key] -= lr_t * self.m[key] / (np.sqrt(self.v[key]) + <span class="number">1e-7</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Adam optimizer는 RMSProp과 Momentum을 합친 알고리즘이다.</li>
+<li>1차 Momentum m과 2차 Momentum v를 이용하여 최적화를 진행한다.</li>
+</ul>
+<h2 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h2><h3 id="Gradient-vanishing-Exploding-problem"><a href="#Gradient-vanishing-Exploding-problem" class="headerlink" title="Gradient vanishing, Exploding problem"></a>Gradient vanishing, Exploding problem</h3><ul>
+<li><p>신경망 학습시 gradient(변화량)이 매우 작아지거나 커지면 신경망을 제대로 학습시키지 못한다.</p>
+</li>
+<li><p>이런 문제를 해결하기 위한 트릭은 activation function 바꾸기(ReLU), 가중치 초기화하기, learning rate를 작게 하기가 있다.</p>
+</li>
+<li><p>학습 과정을 전체적으로 안정적이게 하여 학습 속도를 높여주는 Batch Normalization을 사용할 수 있다.</p>
+<h3 id="Batch-Normalization-1"><a href="#Batch-Normalization-1" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h3><p><img src="/assets/img/posts/TaveResearch/neuralN5/batchN.png" alt="/assets/img/posts/TaveResearch/neuralN5/batchN.png"></p>
+</li>
+<li><p>배치 정규화는 신경망 안에 포함되어 학습시 평균과 분산을 조정하는 역할을 한다.</p>
+</li>
+<li><p>레이어 마다 정규화 하는 레이어를 둬서 변형된 분포가 나오지 않게 한다.</p>
+</li>
+<li><p>미니 배치의 평균과 분산을 이용하여 정규화 한 후 scaling과 shift를 진행한다.($\gamma$ 와 $\beta$값을 이용)</p>
+</li>
+</ul>
+<p><img src="/assets/img/posts/TaveResearch/neuralN5/covariate.png" alt="/assets/img/posts/TaveResearch/neuralN5/covariate.png"></p>
+<p>\begin{align}<br>u_i &#x3D; {z_i -\mu_B &#x2F; \sqrt {\sigma{_B}^2 +\epsilon}}<br>\end{align}</p>
+<p>\begin{align}<br>\hat {z}_i &#x3D; \gamma u_i +\beta<br>\end{align}</p>
+<ul>
+<li>미니 배치의 평균은 $\mu_B &#x3D; {1 &#x2F; B}{\sum_{i&#x3D;1}}^B {z_i}$이고, 분산은 $\sigma{_B}^2 &#x3D; 1&#x2F;B {\sum{^B}}_{i&#x3D;1} {(z_i - \mu_B)} $이다.</li>
+<li>$u_i$은 정규화 식이고, $\hat{z}_i$는 scaling과 shift이다.</li>
+</ul>
+<h2 id="For-right-learning"><a href="#For-right-learning" class="headerlink" title="For right learning"></a>For right learning</h2><ul>
+<li>기계학습에서는 overfitting이 문제가 되는일이 많다.</li>
+<li>신경망이 훈련 데이터에만 지나치게 적으오디어 그 외의 데이터에는 제대로 대응하지 못하는 상태를 overfitting이라고 한다.</li>
+</ul>
+<h3 id="Overfitting"><a href="#Overfitting" class="headerlink" title="Overfitting"></a>Overfitting</h3><ul>
+<li>overfitting이 일어나는 경우<ul>
+<li>매개변수가 많고 표현력이 높은 모델</li>
+<li>훈련 데이터가 적은 경우</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">sys.path.append(os.pardir)  <span class="comment"># 부모 디렉터리의 파일을 가져올 수 있도록 설정</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> dataset.mnist <span class="keyword">import</span> load_mnist</span><br><span class="line"><span class="keyword">from</span> common.multi_layer_net <span class="keyword">import</span> MultiLayerNet</span><br><span class="line"><span class="keyword">from</span> common.optimizer <span class="keyword">import</span> SGD</span><br><span class="line"></span><br><span class="line">(x_train, t_train), (x_test, t_test) = load_mnist(normalize=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 오버피팅을 재현하기 위해 학습 데이터 수를 줄임</span></span><br><span class="line">x_train = x_train[:<span class="number">300</span>]</span><br><span class="line">t_train = t_train[:<span class="number">300</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># weight decay（가중치 감쇠） 설정 =======================</span></span><br><span class="line"><span class="comment"># weight_decay_lambda = 0 # weight decay를 사용하지 않을 경우</span></span><br><span class="line">weight_decay_lambda = <span class="number">0.1</span></span><br><span class="line"><span class="comment"># ====================================================</span></span><br><span class="line"></span><br><span class="line">network = MultiLayerNet(input_size=<span class="number">784</span>, hidden_size_list=[<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>], output_size=<span class="number">10</span>,</span><br><span class="line">                        )</span><br><span class="line">optimizer = SGD(lr=<span class="number">0.01</span>)  <span class="comment"># 학습률이 0.01인 SGD로 매개변수 갱신</span></span><br><span class="line"></span><br><span class="line">max_epochs = <span class="number">201</span></span><br><span class="line">train_size = x_train.shape[<span class="number">0</span>]</span><br><span class="line">batch_size = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">train_loss_list = []</span><br><span class="line">train_acc_list = []</span><br><span class="line">test_acc_list = []</span><br><span class="line"></span><br><span class="line">iter_per_epoch = <span class="built_in">max</span>(train_size / batch_size, <span class="number">1</span>)</span><br><span class="line">epoch_cnt = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000000000</span>):</span><br><span class="line">    batch_mask = np.random.choice(train_size, batch_size)</span><br><span class="line">    x_batch = x_train[batch_mask]</span><br><span class="line">    t_batch = t_train[batch_mask]</span><br><span class="line"></span><br><span class="line">    grads = network.gradient(x_batch, t_batch)</span><br><span class="line">    optimizer.update(network.params, grads)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> i % iter_per_epoch == <span class="number">0</span>:</span><br><span class="line">        train_acc = network.accuracy(x_train, t_train)</span><br><span class="line">        test_acc = network.accuracy(x_test, t_test)</span><br><span class="line">        train_acc_list.append(train_acc)</span><br><span class="line">        test_acc_list.append(test_acc)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;epoch:&quot;</span> + <span class="built_in">str</span>(epoch_cnt) + <span class="string">&quot;, train acc:&quot;</span> + <span class="built_in">str</span>(train_acc) + <span class="string">&quot;, test acc:&quot;</span> + <span class="built_in">str</span>(test_acc))</span><br><span class="line"></span><br><span class="line">        epoch_cnt += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> epoch_cnt &gt;= max_epochs:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 그래프 그리기==========</span></span><br><span class="line">markers = &#123;<span class="string">&#x27;train&#x27;</span>: <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;test&#x27;</span>: <span class="string">&#x27;s&#x27;</span>&#125;</span><br><span class="line">x = np.arange(max_epochs)</span><br><span class="line">plt.plot(x, train_acc_list, marker=<span class="string">&#x27;o&#x27;</span>, label=<span class="string">&#x27;train&#x27;</span>, markevery=<span class="number">10</span>)</span><br><span class="line">plt.plot(x, test_acc_list, marker=<span class="string">&#x27;s&#x27;</span>, label=<span class="string">&#x27;test&#x27;</span>, markevery=<span class="number">10</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;epochs&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;accuracy&quot;</span>)</span><br><span class="line">plt.ylim(<span class="number">0</span>, <span class="number">1.0</span>)</span><br><span class="line">plt.legend(loc=<span class="string">&#x27;lower right&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>60,000개인 MNIST 데이터셋의 훈련 데이터중 300개만 사용하고 7층 네트워크를 사용하였다.</p>
+</li>
+<li><p>각 층의 뉴런 갯수는 100개, activation function은 ReLU를 사용하였다.</p>
+<p><img src="/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay.png" alt="/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay.png"></p>
+</li>
+<li><p>훈련 데이터를 사용한 것과 시험 데이터를 사용한 것의 정확도 차이가 크게 나는것을 볼 수 있다.</p>
+</li>
+<li><p>epoch마다 모든 훈련 데이터와 모든 시험 데이터에서 정확도를 산출한다.</p>
+</li>
+<li><p>훈련 데이터는 100 epoch 부분부터 100의 정확도를 보인다.</p>
+</li>
+</ul>
+<h3 id="Weight-decay"><a href="#Weight-decay" class="headerlink" title="Weight decay"></a>Weight decay</h3><ul>
+<li><p>overfitting을 억제하기 위해 weight decay(가중치 감소)를 사용한다.</p>
+</li>
+<li><p>학습 과정 중에서 큰 가중치에 대해서는 그에 따른 큰 페널티를 부여하여 overfitting을 억제한다.</p>
+</li>
+<li><p>가중치 감소는 모든 가중치 각각의 손실 함수에 ${1 &#x2F; 2}\lambda W$를 더해준다.</p>
+</li>
+<li><p>가중치의 기울기를 구하는 계산에서는 Backpropagation에 따른 결과에 정규화 항을 미분한 $\lambda W$를 더해준다.</p>
+</li>
+<li><p>가중치 감소를 추가해 준다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">loss</span>(<span class="params">self, x, t</span>):</span><br><span class="line">        y = self.predict(x)</span><br><span class="line"></span><br><span class="line">        weight_decay = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, self.hidden_layer_num + <span class="number">2</span>):</span><br><span class="line">            W = self.params[<span class="string">&#x27;W&#x27;</span> + <span class="built_in">str</span>(idx)]</span><br><span class="line">            weight_decay += <span class="number">0.5</span> * self.weight_decay_lambda * np.<span class="built_in">sum</span>(W ** <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> self.last_layer.forward(y, t) + weight_decay</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">gradient</span>(<span class="params">self, x, t</span>):</span><br><span class="line">        <span class="comment"># forward</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># backward</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 결과 저장</span></span><br><span class="line">        grads = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, self.hidden_layer_num+<span class="number">2</span>):</span><br><span class="line">            grads[<span class="string">&#x27;W&#x27;</span> + <span class="built_in">str</span>(idx)] = self.layers[<span class="string">&#x27;Affine&#x27;</span> + <span class="built_in">str</span>(idx)].dW + self.weight_decay_lambda * self.layers[<span class="string">&#x27;Affine&#x27;</span> + <span class="built_in">str</span>(idx)].W</span><br><span class="line">            grads[<span class="string">&#x27;b&#x27;</span> + <span class="built_in">str</span>(idx)] = self.layers[<span class="string">&#x27;Affine&#x27;</span> + <span class="built_in">str</span>(idx)].db</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> grads</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">weight_decay_lambda = <span class="number">0.1</span></span><br><span class="line">network = MultiLayerNet(input_size=<span class="number">784</span>, hidden_size_list=[<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>], output_size=<span class="number">10</span>,</span><br><span class="line">                        weight_decay_lambda=weight_decay_lambda)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay%201.png" alt="/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay%201.png"></p>
+<ul>
+<li>overfitting이 억제된 것을 볼 수 있고, 훈련 데이터에 대한 정확도가 떨어진 것을 볼 수 있다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h3><ul>
+<li>뉴런을 임의로 삭제하면서 학습하는 방법이다.</li>
+<li>은닉층의 뉴런을 무작위로 골라 삭제한다.</li>
+<li>훈련 시에는 삭제할 뉴런을 무작위로 선택하고, 시험 때는 모든 뉴런에 신호를 전달한다.</li>
+</ul>
+<p><img src="/assets/img/posts/TaveResearch/neuralN5/dropout.png" alt="/assets/img/posts/TaveResearch/neuralN5/dropout.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dropout</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dropout_ratio=<span class="number">0.5</span></span>):</span><br><span class="line">        self.dropout_ratio = dropout_ratio</span><br><span class="line">        self.mask = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x, train_flg=<span class="literal">True</span></span>):</span><br><span class="line">        <span class="keyword">if</span> train_flg:</span><br><span class="line">            self.mask = np.random.rand(*x.shape) &gt; self.dropout_ratio</span><br><span class="line">            <span class="keyword">return</span> x * self.mask</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> x * (<span class="number">1.0</span> - self.dropout_ratio)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">backward</span>(<span class="params">self, dout</span>):</span><br><span class="line">        <span class="keyword">return</span> dout * self.mask</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>self.mask는 x와 형상이 같은 배열을 무작위로 생성하고 그 값이 0.5(dropout_ratio)보다 큰 원소만 True로 설정한다.</p>
+<p><img src="/assets/img/posts/TaveResearch/neuralN5/dropout2.png" alt="/assets/img/posts/TaveResearch/neuralN5/dropout2.png"></p>
+</li>
+</ul>
+<h2 id="Find-the-value-of-the-appropriate-hyperparameter"><a href="#Find-the-value-of-the-appropriate-hyperparameter" class="headerlink" title="Find the value of the appropriate hyperparameter"></a>Find the value of the appropriate hyperparameter</h2><ul>
+<li>하이퍼파라미터는 각 층의 뉴런 수 , 배치 크기, 매개변수 갱신 시 학습률, 가중치 감소 등이다.</li>
+</ul>
+<h3 id="Validation-data"><a href="#Validation-data" class="headerlink" title="Validation data"></a>Validation data</h3><ul>
+<li>하이퍼파라미터를 조정할 때 사용하는 데이터를 validation data(검증 데이터)라고 한다.</li>
+<li>MNIST 데이터셋에서 검증 데이터를 얻는 방법은 훈련 데이터 중 20% 정도를 검증 데이터로 분리하는 것이다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> common.util <span class="keyword">import</span> shuffle_dataset</span><br><span class="line"></span><br><span class="line">(x_train, t_train), (x_test, t_test) = load_mnist()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 훈련 데이터를 섞는다</span></span><br><span class="line">x_train, t_train = shuffle_dataset(x_train, t_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 20%를 검증 데이터로 분할</span></span><br><span class="line">validation_rate = <span class="number">0.20</span></span><br><span class="line">validation_num = <span class="built_in">int</span>(x_train.shape[<span class="number">0</span>] * validation_rate)</span><br><span class="line"></span><br><span class="line">x_val = x_train[:validation_num]</span><br><span class="line">t_val = t_train[:validation_num]</span><br><span class="line">x_train = x_train[validation_num:]</span><br><span class="line">t_train = t_train[validation_num:]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Hyperparameter-optimization"><a href="#Hyperparameter-optimization" class="headerlink" title="Hyperparameter optimization"></a>Hyperparameter optimization</h3><ul>
+<li><p>0단계</p>
+<p>하이퍼파라미터 값의 범위를 설정한다</p>
+</li>
+<li><p>1단계</p>
+<p>설정된 범위에서 하이퍼파라미터의 값을 무작위로 추출한다</p>
+</li>
+<li><p>2단계</p>
+<p>1단계에서 샘플링한 하이퍼파라미터 값을 사용하여 학습하고, 검증 데이터로 정확도를 평가한다(epoch은 작게 설정한다.)</p>
+</li>
+<li><p>3단계</p>
+<p>1단계와 2단계를 특정 횟수 반복하여 그 정확도의 결과를 보고 하이퍼파라미터의 범위를 좁힌다</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 탐색한 하이퍼파라미터의 범위 지정</span></span><br><span class="line">    weight_decay = <span class="number">10</span> ** np.random.uniform(-<span class="number">8</span>, -<span class="number">4</span>)</span><br><span class="line">    lr = <span class="number">10</span> ** np.random.uniform(-<span class="number">6</span>, -<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>전체 코드는 <a target="_blank" rel="noopener" href="https://github.com/Marshmellowon/DeepLearning_from_Scratch_TAVEr/blob/master/lec7_lec8/hyperparameter_optimization.py">hyperparameter_optimization.py</a>에 있다.</li>
+</ul>
+<blockquote>
+<p>이 글에 나왔던 common 폴더는 [<a target="_blank" rel="noopener" href="https://github.com/Marshmellowon/DeepLearning_from_Scratch_TAVEr/tree/master/common">common</a>] 여기에 있다.</p>
+</blockquote>
+<h6 id="References"><a href="#References" class="headerlink" title="References"></a>References</h6><blockquote>
+<p><sub>강의: <a target="_blank" rel="noopener" href="https://deeplearning.cs.cmu.edu/F20/index.html">CMU Introduction to Deep Learning</a></sub><br><sub>코드: <a target="_blank" rel="noopener" href="https://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198">밑바닥부터 시작하는 딥러닝</a></sub></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Update-Parameter"><span class="toc-number">1.</span> <span class="toc-text">Update Parameter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimization"><span class="toc-number">1.1.</span> <span class="toc-text">Optimization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SGD-%ED%99%95%EB%A5%A0%EC%A0%81-%EA%B2%BD%EC%82%AC-%ED%95%98%EA%B0%95%EB%B2%95"><span class="toc-number">1.2.</span> <span class="toc-text">SGD(확률적 경사 하강법)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Momentum"><span class="toc-number">1.3.</span> <span class="toc-text">Momentum</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AdaGrad"><span class="toc-number">1.4.</span> <span class="toc-text">AdaGrad</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RMSProp"><span class="toc-number">1.5.</span> <span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adam"><span class="toc-number">1.6.</span> <span class="toc-text">Adam</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Batch-Normalization"><span class="toc-number">2.</span> <span class="toc-text">Batch Normalization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient-vanishing-Exploding-problem"><span class="toc-number">2.1.</span> <span class="toc-text">Gradient vanishing, Exploding problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Normalization-1"><span class="toc-number">2.2.</span> <span class="toc-text">Batch Normalization</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#For-right-learning"><span class="toc-number">3.</span> <span class="toc-text">For right learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Overfitting"><span class="toc-number">3.1.</span> <span class="toc-text">Overfitting</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Weight-decay"><span class="toc-number">3.2.</span> <span class="toc-text">Weight decay</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropout"><span class="toc-number">3.3.</span> <span class="toc-text">Dropout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Find-the-value-of-the-appropriate-hyperparameter"><span class="toc-number">4.</span> <span class="toc-text">Find the value of the appropriate hyperparameter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Validation-data"><span class="toc-number">4.1.</span> <span class="toc-text">Validation data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hyperparameter-optimization"><span class="toc-number">4.2.</span> <span class="toc-text">Hyperparameter optimization</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#References"><span class="toc-number">4.2.0.0.1.</span> <span class="toc-text">References</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&text=Neural Network V"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&is_video=false&description=Neural Network V"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Neural Network V&body=Check out this article: https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&title=Neural Network V"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&name=Neural Network V&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/01/13/2021-01-13-TAVE_Research5/&t=Neural Network V"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>
