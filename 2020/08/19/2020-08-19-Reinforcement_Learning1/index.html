@@ -14,21 +14,21 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="강화학습이란?  에이전트가 환경으로부터 얻는 보상을 통해 좋은 행동을 더 많이 하게 하는 학습 방법이다.  강화학습 기초Markov Decision Process(MDP) 순차척 행동을 결정하는 문제를 풀때 MDP를 사용한다.   상태: 에이전트가 관찰 가능한 상태의 집합  행동: 에이전트가 상태에서 할 수 있는 행동의 집합  보상함수: 환경이 에이전트에게">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/RL_study_1/RL_img.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/RL_study_1/bellman_optimal.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/RL_study_1/policy_evaluation.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/RL_study_1/greedy_pol.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/RL_study_1/value_iteration.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/RL_study_1/PI.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/RL_study_1/sarsa1.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/RL_study_1/sarsa3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/RL_img.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/bellman_optimal.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/policy_evaluation.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/greedy_pol.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/value_iteration.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/PI.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/sarsa1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/sarsa3.png">
 <meta property="article:published_time" content="2020-08-18T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.813Z">
+<meta property="article:modified_time" content="2023-07-23T15:04:59.456Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="reinforcement learning">
 <meta property="article:tag" content="tave">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/RL_study_1/RL_img.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/RL_img.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -191,7 +191,7 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h1 id="강화학습이란"><a href="#강화학습이란" class="headerlink" title="강화학습이란?"></a>강화학습이란?</h1><p><img src="/assets/img/posts/RL_study_1/RL_img.png" alt="RL"></p>
+    <h1 id="강화학습이란"><a href="#강화학습이란" class="headerlink" title="강화학습이란?"></a>강화학습이란?</h1><p><img src="/images/img/posts/RL_study_1/RL_img.png" alt="RL"></p>
 <ul>
 <li>에이전트가 환경으로부터 얻는 보상을 통해 좋은 행동을 더 많이 하게 하는 학습 방법이다.</li>
 </ul>
@@ -227,7 +227,7 @@
 <li>상태와 행동이라는 두가지 변수를 가진다.<br><b>q<sub>𝜋</sub>(s, a) &#x3D; E[R<sub>t+1</sub> + 𝛾q<sub>𝜋</sub>(S<sub>t+1</sub>, A<sub>t+1</sub>) | S<sub>t</sub> &#x3D; s, A<sub>t</sub> &#x3D; a]</b></li>
 </ul>
 <h3 id="Bellman-Optimality-Equation"><a href="#Bellman-Optimality-Equation" class="headerlink" title="Bellman Optimality Equation"></a>Bellman Optimality Equation</h3><ul>
-<li>가치함수의 역할은 정책을 정하고 정책을 따라갔을때 받는 보상들의 합인 가치함수로 더 좋은 정책을 찾는것이다.<br><img src="/assets/img/posts/RL_study_1/bellman_optimal.png" alt="bellman optimal"></li>
+<li>가치함수의 역할은 정책을 정하고 정책을 따라갔을때 받는 보상들의 합인 가치함수로 더 좋은 정책을 찾는것이다.<br><img src="/images/img/posts/RL_study_1/bellman_optimal.png" alt="bellman optimal"></li>
 </ul>
 <h1 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h1><ul>
 <li><p>큰 문제를 한번에 해결하기 힘들때 작은 여러개의 문제로 나눠 푸는 방법 ex)피보나치 수열</p>
@@ -266,27 +266,27 @@
 </li>
 <li><p>처음에는 무작위로 행동을 하고 iteration을 돌며 가치함수 최적화를 한다.</p>
 <h4 id="정책-평가"><a href="#정책-평가" class="headerlink" title="정책 평가"></a>정책 평가</h4><ul>
-<li>어떤 정책이 있을때 그 정책을 정책 평가 를 통해 얼마나<br>좋은지 판단하고 그 결과를 기준으로 더 좋은 정책 으로 발전 시킨다.<br><img src="/assets/img/posts/RL_study_1/policy_evaluation.png" alt="policy evaluation"></li>
+<li>어떤 정책이 있을때 그 정책을 정책 평가 를 통해 얼마나<br>좋은지 판단하고 그 결과를 기준으로 더 좋은 정책 으로 발전 시킨다.<br><img src="/images/img/posts/RL_study_1/policy_evaluation.png" alt="policy evaluation"></li>
 </ul>
 <h4 id="정책-발전"><a href="#정책-발전" class="headerlink" title="정책 발전"></a>정책 발전</h4><ul>
 <li>정책 평가를 바탕으로 정책을 발전시킨다.</li>
 <li>탐욕 정책 발전(Greedy Policy Improvement)를 사용</li>
 <li>Q-Function을 사용하여 행동에 대한 가치함수를 알 수 있다.</li>
-<li>argmax는 가장 큰 큐함수를 가지는 행동을 반환하는 함수이다.<br><img src="/assets/img/posts/RL_study_1/greedy_pol.png" alt="greedy pol"></li>
+<li>argmax는 가장 큰 큐함수를 가지는 행동을 반환하는 함수이다.<br><img src="/images/img/posts/RL_study_1/greedy_pol.png" alt="greedy pol"></li>
 </ul>
 </li>
 </ul>
 <h3 id="가치-이터레이션"><a href="#가치-이터레이션" class="headerlink" title="가치 이터레이션"></a>가치 이터레이션</h3><ul>
 <li>가치 이터레이션은 가치함수가 최적이라는 전제하에 각 상태에 대한 가치함수를 업데이트 하는 방법이다.<br>(벨만최적방정식 사용한다)</li>
 <li>벨만 최적방정식에서는 현재 상태에서 가능한 최고의<br>가치함수 값을 고려하면 된다.</li>
-<li>벨만 최적 방정식과는 다르게 정책값을 이용해 기댓값을 계산하던 부분이 없어지고 max가 있다.<br><img src="/assets/img/posts/RL_study_1/value_iteration.png" alt="value iteration"></li>
+<li>벨만 최적 방정식과는 다르게 정책값을 이용해 기댓값을 계산하던 부분이 없어지고 max가 있다.<br><img src="/images/img/posts/RL_study_1/value_iteration.png" alt="value iteration"></li>
 </ul>
 <h1 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h1><h3 id="Monte-carlo-Approximation"><a href="#Monte-carlo-Approximation" class="headerlink" title="Monte-carlo Approximation"></a>Monte-carlo Approximation</h3><ul>
 <li><p>몬테카를로 근사의 예시로 원의 넓이 구하기가 있다.</p>
 </li>
 <li><p>원의 넓이는 <b>S &#x3D; 𝜋r<sup>2</sup></b> 이다.</p>
 </li>
-<li><p>원의 넓이를 구하는 공식을 모를때 몬테카를로 근사를 사용할 수 있다.<br><img src="/assets/img/posts/RL_study_1/PI.png" alt="PI"></p>
+<li><p>원의 넓이를 구하는 공식을 모를때 몬테카를로 근사를 사용할 수 있다.<br><img src="/images/img/posts/RL_study_1/PI.png" alt="PI"></p>
 </li>
 <li><p>몬테카를로 근사로 원의 넓이 구하기</p>
 <p>1 원이 그려진 종이위에 점을 무작위로 뿌린다.<br>2 뿌린 점들중 원에 들어간 점의 비율을 구하면 이미 알고있는 사각형의 넓이를 통해 원의 넓이를 추정할 수 있다.<br>3 뿌린 점의 비율로 (원의 넓이)&#x2F;(사각형의 넓이) 를 근사하는 것이다.<br><a target="_blank" rel="noopener" href="https://marshmellowon.github.io/2020/05/29/PI.html">파이썬으로 PI값 예측하기</a></p>
@@ -314,13 +314,13 @@
 <li>SARSA &#x3D; 시간차 예측 + 탐욕정책(ε-greedy)</li>
 <li>SARSA에서 업데이트 하는것은 큐함수이다.</li>
 <li>큐함수를 업데이트하기 위한 샘플로 [S<sub>t</sub>, A<sub>t</sub>, R<sub>t+1</sub>, S<sub>t+1</sub>, A<sub>t+1</sub>]을 사용한다.</li>
-<li>ε만큼의 확률로 탐욕적이지 않은 행동을 선택하게 한다.<br><img src="/assets/img/posts/RL_study_1/sarsa1.png" alt="sarsa"></li>
+<li>ε만큼의 확률로 탐욕적이지 않은 행동을 선택하게 한다.<br><img src="/images/img/posts/RL_study_1/sarsa1.png" alt="sarsa"></li>
 </ul>
 <h3 id="Q-Learning-1"><a href="#Q-Learning-1" class="headerlink" title="Q-Learning"></a>Q-Learning</h3><ul>
 <li>큐러닝은 에이전트가 다음상태를 알게되면 그 상태에서 가장 큰 큐함수를 현재 큐함수의 업데이트에 사용한다.</li>
 <li>온폴리시(On-Policy)학습의 경우 에이전트가 탐험할 때 문제점이 발생한다.</li>
 <li>오프폴리시(Off-Policy) &#x3D; Q-Learning으로 해결이 가능하다.</li>
-<li>현재 상태의 큐함수를 업데이트하기 위해 필요한 샘플은 [s, a, r, s]이다.<br><img src="/assets/img/posts/RL_study_1/sarsa3.png" alt="sarsa2"></li>
+<li>현재 상태의 큐함수를 업데이트하기 위해 필요한 샘플은 [s, a, r, s]이다.<br><img src="/images/img/posts/RL_study_1/sarsa3.png" alt="sarsa2"></li>
 </ul>
 <h2 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h2><blockquote>
 <p>TAVE 6기가 8월부터 시작되었다. 머신러닝을 공부하려고 들어왔지만, 강화학습이 너무 재미있어보여서 강화학습스터디에 참여하게 되었다. 첫 스터디는 조장님이 쭉 설명을 해주셨다. 수식도 많고 헷갈리는 부분이 많았지만 반복해서 보다보니 이해가 잘 되었다.</p>

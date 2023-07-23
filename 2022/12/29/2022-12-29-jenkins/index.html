@@ -14,18 +14,18 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="jenkins로 vue 프로젝트 배포하기">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/backend/jenkins/pic1.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/backend/jenkins/pic2.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/backend/jenkins/pic3.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/backend/jenkins/pic4.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/backend/jenkins/pic5.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/backend/jenkins/pic6.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic4.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic5.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic6.png">
 <meta property="article:published_time" content="2022-12-29T13:15:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:16.396Z">
+<meta property="article:modified_time" content="2023-07-23T15:22:09.818Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="ci&#x2F;cd deploy docker jenkins">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/posting/backend/jenkins/pic1.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic1.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -198,22 +198,22 @@
 <h2 id="docker-sock-권한-변경"><a href="#docker-sock-권한-변경" class="headerlink" title="docker.sock 권한 변경"></a>docker.sock 권한 변경</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chmod</span> 666 /var/run/docker.sock</span><br></pre></td></tr></table></figure>
 
 <p>docker.sock 경로 권한을 666으로 변경해 그룹 내 다른 사용자도 접근 가능하도록 설정한다.</p>
-<p><img src="/assets/posting/backend/jenkins/pic1.png" alt="스크린샷 2022-12-29 오후 10.36.12.png"></p>
+<p><img src="/images/posting/backend/jenkins/pic1.png" alt="스크린샷 2022-12-29 오후 10.36.12.png"></p>
 <p>jenkins shell로 접근하여 실행중인 docker 컨테이너를 확인한다. 로컬에 설치된 docker의 컨테이너를 확인할 수 있다.</p>
 <h2 id="vue-프로젝트-배포하기"><a href="#vue-프로젝트-배포하기" class="headerlink" title="vue 프로젝트 배포하기"></a>vue 프로젝트 배포하기</h2><h3 id="vue-프로젝트-생성"><a href="#vue-프로젝트-생성" class="headerlink" title="vue 프로젝트 생성"></a>vue 프로젝트 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create deploytest</span><br></pre></td></tr></table></figure>
 
 <p>vue 프로젝트를 생성한다. 기본 vue 프로젝트를 gitlab에 배포할 것이다.</p>
-<h2 id="jenkins에서-배포하기"><a href="#jenkins에서-배포하기" class="headerlink" title="jenkins에서 배포하기"></a>jenkins에서 배포하기</h2><p><img src="/assets/posting/backend/jenkins/pic2.png" alt="스크린샷 2022-12-29 오후 10.40.07.png"></p>
+<h2 id="jenkins에서-배포하기"><a href="#jenkins에서-배포하기" class="headerlink" title="jenkins에서 배포하기"></a>jenkins에서 배포하기</h2><p><img src="/images/posting/backend/jenkins/pic2.png" alt="스크린샷 2022-12-29 오후 10.40.07.png"></p>
 <p>프로젝트 이름은 vue_deploy로 한다.</p>
-<p><img src="/assets/posting/backend/jenkins/pic3.png" alt="스크린샷 2022-12-29 오후 10.41.07.png"></p>
+<p><img src="/images/posting/backend/jenkins/pic3.png" alt="스크린샷 2022-12-29 오후 10.41.07.png"></p>
 <p>생성한 vue repository 경로를 추가한다.</p>
-<p><img src="/assets/posting/backend/jenkins/pic4.png" alt="스크린샷 2022-12-29 오후 10.41.51.png"></p>
+<p><img src="/images/posting/backend/jenkins/pic4.png" alt="스크린샷 2022-12-29 오후 10.41.51.png"></p>
 <p>빌드가 발생하는 경우를 선택해 준다.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t vue:front .</span><br><span class="line">docker run --name vue -d -p 8080:8080 vue:front</span><br></pre></td></tr></table></figure>
 
 <p>build 설정에 Execute shell 을 선택하고 Command에 위 명령어를 넣어준다.</p>
-<p><img src="/assets/posting/backend/jenkins/pic5.png" alt="스크린샷 2022-12-29 오후 10.48.21.png"></p>
-<p><img src="/assets/posting/backend/jenkins/pic6.png" alt="스크린샷 2022-12-29 오후 10.49.06.png"></p>
+<p><img src="/images/posting/backend/jenkins/pic5.png" alt="스크린샷 2022-12-29 오후 10.48.21.png"></p>
+<p><img src="/images/posting/backend/jenkins/pic6.png" alt="스크린샷 2022-12-29 오후 10.49.06.png"></p>
 <p>jenkins에서 정상적으로 배포된 것을 확인할 수 있고, docker 컨테이너도 정상적으로 실행되어 페이지 접근이 잘 되는것을 볼 수 있다.</p>
 
   </div>

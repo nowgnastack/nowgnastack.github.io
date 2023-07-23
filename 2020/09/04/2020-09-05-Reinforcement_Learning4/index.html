@@ -14,21 +14,21 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="Leacture: Deep Learning for everyone  Outline CNN RNN CrossEntropyLoss  CNN CNN(Convolutional Neural Network)은 합성곱 신경망으로 필터링 기법을 인공신경망에 적용함으로써 이미지를 더욱 효과적으로 처리하기 위해 처음 소개되었다. 자율주행 자동차, 얼굴인식같은 분야에 많이">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/convolution.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/padding.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/max.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/avg.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/Mnist.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/rnn.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/rnn2.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/rnn3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study4/convolution.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study4/padding.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study4/max.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study4/avg.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study4/Mnist.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study4/rnn.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study4/rnn2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study4/rnn3.png">
 <meta property="article:published_time" content="2020-09-03T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.833Z">
+<meta property="article:modified_time" content="2023-07-23T15:05:56.421Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="tave">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/RL_Study4/convolution.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/RL_Study4/convolution.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -205,7 +205,7 @@
 </ul>
 <h2 id="Convolution"><a href="#Convolution" class="headerlink" title="Convolution"></a>Convolution</h2><ul>
 <li><p>이미지 위에서 stride값 만큼 filter를 이동시키면서 겹쳐지는 부분의 각 원소의 값을 곱해서 모두 더한 값을 출력으로 하는 연산이다.</p>
-<p><img src="/assets/img/RL_Study4/convolution.png" alt="convolution"></p>
+<p><img src="/images/img/RL_Study4/convolution.png" alt="convolution"></p>
 </li>
 <li><p>첫 번째 convolution 연산은 보라색 테두리와 필터의 연산이다.</p>
 </li>
@@ -220,7 +220,7 @@
 <li>filter를 한번에 얼마나 이동할 것인가?</li>
 </ul>
 <h3 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h3><ul>
-<li>zero-padding(0이 들어간 패드가 이미지 각 면에 둘러진다.)<br><img src="/assets/img/RL_Study4/padding.png" alt="padding"></li>
+<li>zero-padding(0이 들어간 패드가 이미지 각 면에 둘러진다.)<br><img src="/images/img/RL_Study4/padding.png" alt="padding"></li>
 </ul>
 <h2 id="입력의-형태"><a href="#입력의-형태" class="headerlink" title="입력의 형태"></a>입력의 형태</h2><ul>
 <li>input type: torch.Tensor</li>
@@ -240,10 +240,10 @@
 <h3 id="Max-Pooling"><a href="#Max-Pooling" class="headerlink" title="Max Pooling"></a>Max Pooling</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.MaxPool2d(kernel_size, stride=<span class="literal">None</span>, padding=<span class="number">0</span> ...)</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>max pooling &#x3D; 2일때 2x2사이즈 안에서 가장 큰값을 출력한다.<br><img src="/assets/img/RL_Study4/max.png" alt="max"></li>
+<li>max pooling &#x3D; 2일때 2x2사이즈 안에서 가장 큰값을 출력한다.<br><img src="/images/img/RL_Study4/max.png" alt="max"></li>
 </ul>
 <h3 id="Average-Pooling"><a href="#Average-Pooling" class="headerlink" title="Average Pooling"></a>Average Pooling</h3><ul>
-<li>average pooling &#x3D; 2일때 2x2사이즈 안에서 평균값을 출력한다.<br><img src="/assets/img/RL_Study4/avg.png" alt="max"></li>
+<li>average pooling &#x3D; 2일때 2x2사이즈 안에서 평균값을 출력한다.<br><img src="/images/img/RL_Study4/avg.png" alt="max"></li>
 </ul>
 <h2 id="Mnist-CNN"><a href="#Mnist-CNN" class="headerlink" title="Mnist CNN"></a>Mnist CNN</h2><h3 id="딥러닝을-학습시키는-단계"><a href="#딥러닝을-학습시키는-단계" class="headerlink" title="딥러닝을 학습시키는 단계"></a>딥러닝을 학습시키는 단계</h3><ol>
 <li>라이브러리 가져오기</li>
@@ -258,11 +258,11 @@
 <h2 id="MNIST를-이용하여-만들-CNN-구조"><a href="#MNIST를-이용하여-만들-CNN-구조" class="headerlink" title="MNIST를 이용하여 만들 CNN 구조"></a>MNIST를 이용하여 만들 CNN 구조</h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/Marshmellowon/DeepLearning_with_Pytorch/blob/master/Mnist_CNN_jupyter.ipynb">CNN MNIST code</a></p>
 </blockquote>
-<p><img src="/assets/img/RL_Study4/Mnist.png" alt="mnist"></p>
+<p><img src="/images/img/RL_Study4/Mnist.png" alt="mnist"></p>
 <h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><ul>
 <li><p>반복적이고 순차적인 데이터(Sequential data)학습에 특화된 인공신경망의 한 종류이다.</p>
 </li>
-<li><p>내부의 순환구조가 들어있으며 이를 이용하여 과거의 학습을 현재 학습에 반영한다.<br><img src="/assets/img/RL_Study4/rnn.png" alt="rnn"><br><img src="/assets/img/RL_Study4/rnn2.png" alt="rnn2"></p>
+<li><p>내부의 순환구조가 들어있으며 이를 이용하여 과거의 학습을 현재 학습에 반영한다.<br><img src="/images/img/RL_Study4/rnn.png" alt="rnn"><br><img src="/images/img/RL_Study4/rnn2.png" alt="rnn2"></p>
 </li>
 <li><p>h<sub>t-1</sub>: 이전 상태값</p>
 </li>
@@ -273,7 +273,7 @@
 <li><p>h<sub>t</sub>: 새로운 상태값</p>
 </li>
 </ul>
-<h2 id="RNN의-다양한-구조"><a href="#RNN의-다양한-구조" class="headerlink" title="RNN의 다양한 구조"></a>RNN의 다양한 구조</h2><p><img src="/assets/img/RL_Study4/rnn3.png" alt="rnn3"></p>
+<h2 id="RNN의-다양한-구조"><a href="#RNN의-다양한-구조" class="headerlink" title="RNN의 다양한 구조"></a>RNN의 다양한 구조</h2><p><img src="/images/img/RL_Study4/rnn3.png" alt="rnn3"></p>
 <h4 id="one-to-many"><a href="#one-to-many" class="headerlink" title="one to many"></a>one to many</h4><ul>
 <li>하나의 이미지가 들어가고 문장이 나온다.(자막)</li>
 </ul>

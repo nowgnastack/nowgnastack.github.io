@@ -14,23 +14,23 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="Variational Auto Encoder Variational auto encoder 는 Generative model 이다.  Training data의 distribution을 근사하는 특징을 가지고 있다.     z : latent variablex : target data   z~p(z) : random variable $g_\theta$(.)">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/generator.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/model.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/derivation1.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/derivation2.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/fullmodel.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/KL.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/regular.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/reparameterization.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/decoder.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/reconstruction.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/reconstruction2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/generator.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/model.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/derivation1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/derivation2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/fullmodel.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/KL.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/regular.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/reparameterization.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/decoder.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/reconstruction.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/reconstruction2.png">
 <meta property="article:published_time" content="2021-01-16T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.881Z">
+<meta property="article:modified_time" content="2023-07-23T15:07:29.320Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="deep learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/GraduationPaper/vae/generator.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/GraduationPaper/vae/generator.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -197,7 +197,7 @@
 <li><p>Variational auto encoder 는 Generative model 이다.</p>
 </li>
 <li><p>Training data의 distribution을 근사하는 특징을 가지고 있다.</p>
-<p><img src="/assets/img/posts/GraduationPaper/vae/generator.png" alt="/assets/img/posts/GraduationPaper/vae/generator.png"></p>
+<p><img src="/images/img/posts/GraduationPaper/vae/generator.png" alt="/images/img/posts/GraduationPaper/vae/generator.png"></p>
 </li>
 </ul>
 <blockquote>
@@ -210,19 +210,19 @@
 <li>z vector는 controller 역할을 한다. (ex. 사람 얼굴에 화난 얼굴, 기쁜얼굴, 당황한 얼굴 조절 가능)</li>
 </ul>
 <hr>
-<h1 id="Intractable-calculation-issue"><a href="#Intractable-calculation-issue" class="headerlink" title="Intractable calculation issue"></a>Intractable calculation issue</h1><p><img src="/assets/img/posts/GraduationPaper/vae/model.png" alt="/assets/img/posts/GraduationPaper/vae/model.png"></p>
+<h1 id="Intractable-calculation-issue"><a href="#Intractable-calculation-issue" class="headerlink" title="Intractable calculation issue"></a>Intractable calculation issue</h1><p><img src="/images/img/posts/GraduationPaper/vae/model.png" alt="/images/img/posts/GraduationPaper/vae/model.png"></p>
 <ul>
 <li>실선이 generative model 인 $p_\theta(z)p_\theta(x|z)$이고, 점선은 $q_\theta(z|x)$를 이용해 근사할 $p_\theta(z|x)$이다.</li>
 <li>$p(z|x)$를 계산하기 위한 $p_\theta(x) &#x3D; \int_z(p_\theta(x|z)p_\theta(z)dz$가 모든 z에 대해 적분 할 수 없기때문에 $q_\theta(z|x)$(입력 x)를 도입하여 계산한다.</li>
 </ul>
-<h2 id="Derivation-1"><a href="#Derivation-1" class="headerlink" title="Derivation 1"></a>Derivation 1</h2><p><img src="/assets/img/posts/GraduationPaper/vae/derivation1.png" alt="/assets/img/posts/GraduationPaper/vae/derivation1.png"></p>
+<h2 id="Derivation-1"><a href="#Derivation-1" class="headerlink" title="Derivation 1"></a>Derivation 1</h2><p><img src="/images/img/posts/GraduationPaper/vae/derivation1.png" alt="/images/img/posts/GraduationPaper/vae/derivation1.png"></p>
 <ul>
 <li>Concave 함수로 변환하기 위해 log를 씌운다.</li>
 <li>Jensen’s Inequality 를 사용하여 log를 안으로 넣어준다. ($f[E(x)] \ge E[f(x)]$)</li>
 <li>$q{_\phi}(z|x)$를 추가해 준다.</li>
 <li>최종적으로 정리한 식은 $\log(p(x)$ 보다 작거나 같기 때문에 ELBO(evidence lower bound)라고 한다.</li>
 </ul>
-<h2 id="Derivation-2"><a href="#Derivation-2" class="headerlink" title="Derivation 2"></a>Derivation 2</h2><p><img src="/assets/img/posts/GraduationPaper/vae/derivation2.png" alt="/assets/img/posts/GraduationPaper/vae/derivation2.png"></p>
+<h2 id="Derivation-2"><a href="#Derivation-2" class="headerlink" title="Derivation 2"></a>Derivation 2</h2><p><img src="/images/img/posts/GraduationPaper/vae/derivation2.png" alt="/images/img/posts/GraduationPaper/vae/derivation2.png"></p>
 <ul>
 <li>2번째 증명 공식은 $p(x) &#x3D; p(x)$으로 시작 한다.</li>
 <li>z에 대한 확률분포의 모든 합이 1인 것을 이용하여 $p(x)$에 곱해준다.</li>
@@ -232,7 +232,7 @@
 <li>KL을 최소화 하는 $q_\theta(z|x)$를 찾으면 되지만 $p(z|x)$를 모르기 때문에 ELBO를 최대화 하는 $\phi$ 값을 찾아야 한다.</li>
 </ul>
 <hr>
-<h2 id="LOSS-Function"><a href="#LOSS-Function" class="headerlink" title="LOSS Function"></a>LOSS Function</h2><p><img src="/assets/img/posts/GraduationPaper/vae/fullmodel.png" alt="/assets/img/posts/GraduationPaper/vae/fullmodel.png"></p>
+<h2 id="LOSS-Function"><a href="#LOSS-Function" class="headerlink" title="LOSS Function"></a>LOSS Function</h2><p><img src="/images/img/posts/GraduationPaper/vae/fullmodel.png" alt="/images/img/posts/GraduationPaper/vae/fullmodel.png"></p>
 <h3 id="Variational-Inference-phi"><a href="#Variational-Inference-phi" class="headerlink" title="Variational Inference ($\phi$)"></a>Variational Inference ($\phi$)</h3><p>\begin{align}<br>\log(p(x)) \ge E_{q{_\phi} (z|x)} [ \log (p(x|z))] - KL(q_\phi(z|x) |p(z)) &#x3D; ELBO(\phi)<br>\end{align}</p>
 <h3 id="Maximum-Likelihood-theta"><a href="#Maximum-Likelihood-theta" class="headerlink" title="Maximum Likelihood ($\theta$)"></a>Maximum Likelihood ($\theta$)</h3><p>\begin{align}<br>-{\sum}_i {\log(p(x_i))} \le -{\sum}_i { E_{q{_\phi} (z|x_i)} [ \log (p(x_i|g_\theta(z)))] - KL(q_\phi(z|x) |p(z))}<br>\end{align}</p>
 <h3 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h3><p>\begin{align}<br>argmax_({\phi, \theta}) {\sum}_i -{E_{q{_\phi} (z|x_i)} [ \log (p(x_i|g_\theta(z)))] + KL(q_\phi(z|x_i) |p(z))}<br>\end{align}</p>
@@ -241,10 +241,10 @@
 <li>$q_\theta(z|x)$는 Encoder이고, $g_\theta(x|z)$는 Decoder이다.</li>
 <li>Decoder를 학습시키기위해 Encoder를 도입하였다.</li>
 </ul>
-<h3 id="Regularization-Encoder"><a href="#Regularization-Encoder" class="headerlink" title="Regularization (Encoder)"></a>Regularization (Encoder)</h3><p><img src="/assets/img/posts/GraduationPaper/vae/KL.png" alt="/assets/img/posts/GraduationPaper/vae/KL.png"></p>
+<h3 id="Regularization-Encoder"><a href="#Regularization-Encoder" class="headerlink" title="Regularization (Encoder)"></a>Regularization (Encoder)</h3><p><img src="/images/img/posts/GraduationPaper/vae/KL.png" alt="/images/img/posts/GraduationPaper/vae/KL.png"></p>
 <ul>
 <li><p>$q_\phi (z|x_i)$는 $N(\mu_i, {\sigma{_i}}^2I)$, $p(z)$는 $N(0,1)$으로 가정한다.</p>
-<p><img src="/assets/img/posts/GraduationPaper/vae/regular.png" alt="/assets/img/posts/GraduationPaper/vae/regular.png"></p>
+<p><img src="/images/img/posts/GraduationPaper/vae/regular.png" alt="/images/img/posts/GraduationPaper/vae/regular.png"></p>
 </li>
 </ul>
 <blockquote>
@@ -253,19 +253,19 @@
 <ul>
 <li>Encoder부분의 계산은 위 식처럼 계산 가능하다.</li>
 </ul>
-<h3 id="Reparameterization-Trick"><a href="#Reparameterization-Trick" class="headerlink" title="Reparameterization Trick"></a>Reparameterization Trick</h3><p><img src="/assets/img/posts/GraduationPaper/vae/reparameterization.png" alt="/assets/img/posts/GraduationPaper/vae/reparameterization.png"></p>
+<h3 id="Reparameterization-Trick"><a href="#Reparameterization-Trick" class="headerlink" title="Reparameterization Trick"></a>Reparameterization Trick</h3><p><img src="/images/img/posts/GraduationPaper/vae/reparameterization.png" alt="/images/img/posts/GraduationPaper/vae/reparameterization.png"></p>
 <p>KLD까지 통과를 하고 이제 Decoder 부분으로 넘어가면 되는데 문제가 있다. $q_\theta ()$에서는 sampling을 진행하게 되며, z는 Gaussian distribution이므로 Backpropagation이 불가능하다.</p>
 <p>\begin{align}<br>z^{i,j} &#x3D; \mu_i +{\sigma{_i}}^2 \odot \epsilon<br>\end{align}</p>
 <ul>
 <li>Gaussian distribution인 $z^{i,j}$에 약간의 변형을 준다.</li>
 <li>$\epsilon \sim N(0,I)$이기 때문에 같은 분포지만 Backpropagation이 가능하다.</li>
 </ul>
-<h3 id="Reconstruction-Error-Decoder"><a href="#Reconstruction-Error-Decoder" class="headerlink" title="Reconstruction Error (Decoder)"></a>Reconstruction Error (Decoder)</h3><p><img src="/assets/img/posts/GraduationPaper/vae/decoder.png" alt="/assets/img/posts/GraduationPaper/vae/decoder.png"></p>
-<p><img src="/assets/img/posts/GraduationPaper/vae/reconstruction.png" alt="/assets/img/posts/GraduationPaper/vae/reconstruction.png"></p>
+<h3 id="Reconstruction-Error-Decoder"><a href="#Reconstruction-Error-Decoder" class="headerlink" title="Reconstruction Error (Decoder)"></a>Reconstruction Error (Decoder)</h3><p><img src="/images/img/posts/GraduationPaper/vae/decoder.png" alt="/images/img/posts/GraduationPaper/vae/decoder.png"></p>
+<p><img src="/images/img/posts/GraduationPaper/vae/reconstruction.png" alt="/images/img/posts/GraduationPaper/vae/reconstruction.png"></p>
 <ul>
 <li>$L&#x3D;1$인 경우의 식을 전개하면 아래와 같다.</li>
 </ul>
-<p><img src="/assets/img/posts/GraduationPaper/vae/reconstruction2.png" alt="/assets/img/posts/GraduationPaper/vae/reconstruction2.png"></p>
+<p><img src="/images/img/posts/GraduationPaper/vae/reconstruction2.png" alt="/images/img/posts/GraduationPaper/vae/reconstruction2.png"></p>
 <ul>
 <li>입력 x와 출력 $p_{i,j}$ 사이의 cross-entropy가 되는것을 볼 수 있다.</li>
 </ul>

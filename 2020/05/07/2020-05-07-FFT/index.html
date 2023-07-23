@@ -14,18 +14,18 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="FFT(Fast Fourier Transform) AlgorithmFFT(고속 푸리에 변환 알고리즘) 알고리즘을 보기전에 DFT(이산 푸리에 변환)을 간단히 알아보자. DFT(Discrete Fourier transform)은 무엇인가?? 디지털 시스템 설계와 신호처리와 해석에 사용되는 변환이다. 시간 영역의 그래프를 주파수 영역에서 스펙트럼으로 나타낼 수">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/DFT1.JPG">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/DFT2.JPG">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/DFT3.JPG">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/timecomplex.JPG">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/fast_fourier.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/DFT1.JPG">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/DFT2.JPG">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/DFT3.JPG">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/timecomplex.JPG">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/fast_fourier.png">
 <meta property="article:published_time" content="2020-05-06T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.717Z">
+<meta property="article:modified_time" content="2023-07-23T15:03:30.815Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/DFT1.JPG">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/DFT1.JPG">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -196,8 +196,8 @@
 </ul>
 <h3 id="DFT-식"><a href="#DFT-식" class="headerlink" title="DFT 식"></a>DFT 식</h3><ul>
 <li>이산 푸리에 변환 식이다.<ul>
-<li>x[t]는 입력배열이고 X[k]는 변환된 배열이다.<br>(k &#x3D; 0,1,2,…N-1)<br><img src="/assets/img/posts/DFT1.JPG" alt="DFT_main"><br><sup>이미지: PPT캡쳐</sup></li>
-<li>W<sub>N</sub>과 j의 값이다.<br><img src="/assets/img/posts/DFT2.JPG" alt="DFT_2"> <img src="/assets/img/posts/DFT3.JPG" alt="DFT_3"><br><sup>이미지: PPT캡쳐</sup></li>
+<li>x[t]는 입력배열이고 X[k]는 변환된 배열이다.<br>(k &#x3D; 0,1,2,…N-1)<br><img src="/images/img/posts/DFT1.JPG" alt="DFT_main"><br><sup>이미지: PPT캡쳐</sup></li>
+<li>W<sub>N</sub>과 j의 값이다.<br><img src="/images/img/posts/DFT2.JPG" alt="DFT_2"> <img src="/images/img/posts/DFT3.JPG" alt="DFT_3"><br><sup>이미지: PPT캡쳐</sup></li>
 </ul>
 </li>
 </ul>
@@ -246,7 +246,7 @@
 </li>
 <li><p>N 크기의 DFT를 짝수번째 항과 홀수번째 항으로 나누어 짝수번째 항들의 DFT와 홀수번째 항들의 DFT를 합치면 O(nlogn)이 된다.</p>
 <ul>
-<li>시간복잡도 비교<br>n(데이터 개수)<br><img src="/assets/img/posts/timecomplex.JPG" alt="시간 복잡도"><br><sup>이미지: PPT캡쳐</sup></li>
+<li>시간복잡도 비교<br>n(데이터 개수)<br><img src="/images/img/posts/timecomplex.JPG" alt="시간 복잡도"><br><sup>이미지: PPT캡쳐</sup></li>
 </ul>
 </li>
 <li><p>데이터의 개수가 많을수록 시간 복잡도의 차이가 크다.</p>
@@ -264,7 +264,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> rcParams</span><br><span class="line"></span><br><span class="line">rcParams[<span class="string">&#x27;figure.figsize&#x27;</span>] = <span class="number">11</span>, <span class="number">10</span>  <span class="comment"># 그래프를 나타낼 창의 크기 설정</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fft</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="comment"># FFT 사용자 함수 정의</span></span><br><span class="line">    N_len = <span class="built_in">len</span>(x)  <span class="comment"># 파라미터 리스트의 길이</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> N_len &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">    even = fft(x[<span class="number">0</span>::<span class="number">2</span>])  <span class="comment"># 짝수 항 0부터 2간격</span></span><br><span class="line">    odd = fft(x[<span class="number">1</span>::<span class="number">2</span>])  <span class="comment"># 홀수 항 1부터 2간격</span></span><br><span class="line">    T = [np.exp(-<span class="number">2j</span>*np.pi*k/N_len)*odd[k]</span><br><span class="line">         <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(N_len//<span class="number">2</span>)]  <span class="comment"># 홀수 항과 회전인자의 곱</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 합치기</span></span><br><span class="line">    T_sum = [even[k] + T[k] <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(N_len//<span class="number">2</span>)] + \</span><br><span class="line">            [even[k] - T[k] <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(N_len//<span class="number">2</span>)]</span><br><span class="line">    <span class="keyword">return</span> T_sum</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fs = <span class="number">512</span>    <span class="comment"># 샘플링 주파수</span></span><br><span class="line">dt = <span class="number">1</span>/fs   <span class="comment"># 샘플링 주기</span></span><br><span class="line">N = <span class="number">512</span>     <span class="comment"># 데이터 길이</span></span><br><span class="line"></span><br><span class="line">t = np.arange(<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>/fs)  <span class="comment"># 0 &lt;= t &lt;= 1, step</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 입력 신호</span></span><br><span class="line">r = <span class="number">3</span> * np.cos(<span class="number">2</span> * np.pi * <span class="number">10</span> * t) + <span class="number">6</span> * \</span><br><span class="line">    np.sin(<span class="number">2</span> * np.pi * (<span class="number">15</span> * t - <span class="number">3</span>/<span class="number">8</span>*<span class="built_in">pow</span>(np.pi, <span class="number">2</span>)))</span><br><span class="line"></span><br><span class="line">x_list = <span class="built_in">list</span>(r)    <span class="comment"># 입력신호 type list로 변경</span></span><br><span class="line">x_fft = fft(x_list)  <span class="comment"># 입력신호 FFT함수에 입력</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 변환된 그래프가 그려질 주파수 범위 설정</span></span><br><span class="line">f = np.arange(<span class="number">0</span>, N)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Original Signal 그래프 나타내기</span></span><br><span class="line">plt.subplot(<span class="number">211</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Original Signal x(t)&#x27;</span>)  <span class="comment"># title of graph</span></span><br><span class="line">plt.xlabel(<span class="string">&#x27;time&#x27;</span>)  <span class="comment"># x축 label</span></span><br><span class="line">plt.plot(t, r)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 변환된 그래프 나타내기</span></span><br><span class="line">plt.subplot(<span class="number">212</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Fast Fourier Transform Graph X(f)&#x27;</span>)  <span class="comment"># title of graph</span></span><br><span class="line">plt.xlabel(<span class="string">&#x27;frequency&#x27;</span>)  <span class="comment"># x축 label</span></span><br><span class="line">plt.plot(f[<span class="number">0</span>: <span class="built_in">int</span>(N//<span class="number">20</span>)], x_fft[<span class="number">0</span>:<span class="built_in">int</span>(N//<span class="number">20</span>)])</span><br><span class="line">plt.savefig(<span class="string">&#x27;./img/fast_fourier.png&#x27;</span>)  <span class="comment"># 사진으로 저장하기</span></span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>아래 그림은 주어진 식의 그래프와 푸리에 변환된 그래프이다.<br><img src="/assets/img/posts/fast_fourier.png" alt="signal"></p>
+<li><p>아래 그림은 주어진 식의 그래프와 푸리에 변환된 그래프이다.<br><img src="/images/img/posts/fast_fourier.png" alt="signal"></p>
 </li>
 <li><p>변환된 그래프에서 입력 신호의 스펙트럼을 알 수 있다. Peak 주파수가 10, 15이다.주어진 식에서 cos함수와 sin함수의 주파수가 각각 10, 15 인것을 생각하면 알맞게 변환된 것을 알 수 있다.</p>
 </li>

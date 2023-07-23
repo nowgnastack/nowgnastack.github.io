@@ -14,21 +14,21 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="Outline LSTM GRU seq2seq Attention  LSTM LSTM은 언어, 음성인식과 같은 다양한 분야에서 사용된다. RNN에서 gradient vanishing을 해결할 수 있다.  LSTM Cell 단순히 activation만 하는것이 아니라 시간적인 흐름을 조절해서 메모리를 잊어버릴지 유지할지 제어하는 네트워크가 심어져 있다.  LST">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/LSTM_GRU/LSTM_Cellmy.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/LSTM_GRU/forget.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/LSTM_GRU/input.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/LSTM_GRU/output.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/LSTM_GRU/GRU.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/LSTM_GRU/seq2.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/LSTM_GRU/seq3.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/LSTM_GRU/seq4.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/LSTM_GRU/LSTM_Cellmy.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/LSTM_GRU/forget.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/LSTM_GRU/input.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/LSTM_GRU/output.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/LSTM_GRU/GRU.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/LSTM_GRU/seq2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/LSTM_GRU/seq3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/LSTM_GRU/seq4.png">
 <meta property="article:published_time" content="2020-09-04T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T04:25:37.516Z">
+<meta property="article:modified_time" content="2023-07-23T15:06:06.264Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="tave">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/LSTM_GRU/LSTM_Cellmy.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/LSTM_GRU/LSTM_Cellmy.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -211,23 +211,23 @@
 <blockquote>
 <p>3gates : f<sub>t</sub>, i<sub>t</sub>, o<sub>t</sub><br>2 outputs: h<sub>t</sub>, C<sub>t</sub><br>4 params: W<sub>i</sub>, W<sub>f</sub>, W<sub>o</sub>, W<sub>h</sub></p>
 </blockquote>
-<p><img src="/assets/img/LSTM_GRU/LSTM_Cellmy.png" alt="LSTMcell"><br> <sub>이미지 참고: <a target="_blank" rel="noopener" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">colah’s blog</a></sub></p>
+<p><img src="/images/img/LSTM_GRU/LSTM_Cellmy.png" alt="LSTMcell"><br> <sub>이미지 참고: <a target="_blank" rel="noopener" href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">colah’s blog</a></sub></p>
 <h2 id="Forget-Mechanism"><a href="#Forget-Mechanism" class="headerlink" title="Forget Mechanism"></a>Forget Mechanism</h2><ul>
 <li>과거의 정보를 기억할지 잊을지를 결정하는 단계이다.</li>
 <li>forget mechanism은 hidden unit(h<sub>t-1</sub>)과 input을 받아 sigmoid를 통과한다</li>
-<li>f<sub>t</sub> &#x3D; 𝜎(W<sub>f</sub> x [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>f</sub>)<br><img src="/assets/img/LSTM_GRU/forget.png" alt="forget"></li>
+<li>f<sub>t</sub> &#x3D; 𝜎(W<sub>f</sub> x [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>f</sub>)<br><img src="/images/img/LSTM_GRU/forget.png" alt="forget"></li>
 </ul>
 <h2 id="Input-Mechanism"><a href="#Input-Mechanism" class="headerlink" title="Input Mechanism"></a>Input Mechanism</h2><ul>
 <li>현재의 정보를 잊을지 기억할지 결정하는 gate이다.</li>
 <li>input mechanism은 hidden unit(h<sub>t-1</sub>)과 input을 받아 sigmoid와 tanh를 통과 하여 C<sub>t</sub>를 생성한다.</li>
-<li>i<sub>t</sub> &#x3D; 𝜎(W<sub>i</sub> x [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>i</sub>)<br><img src="/assets/img/LSTM_GRU/input.png" alt="input"></li>
+<li>i<sub>t</sub> &#x3D; 𝜎(W<sub>i</sub> x [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>i</sub>)<br><img src="/images/img/LSTM_GRU/input.png" alt="input"></li>
 </ul>
 <h2 id="Output-Mechanism"><a href="#Output-Mechanism" class="headerlink" title="Output Mechanism"></a>Output Mechanism</h2><ul>
 <li>최종적인 출력값이다. 현 시점의 hidden state는 현 시점의 cell state와 계산되어 출력되며, 다음 시점으로 hidden state를 넘긴다.</li>
 <li>o<sub>t</sub> &#x3D; 𝜎(W<sub>o</sub> x [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>o</sub>)</li>
 <li>h<sub>t</sub> &#x3D; o<sub>t</sub> * tanh(C<sub>t</sub>)</li>
 <li>C<sub>t</sub> &#x3D; f<sub>t</sub> * C<sub>t-1</sub> + i<sub>t</sub> * C’<sub>t</sub></li>
-<li>C’<sub>t</sub> &#x3D; tanh(W<sub>C</sub> x [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>C</sub>)<br><img src="/assets/img/LSTM_GRU/output.png" alt="output"></li>
+<li>C’<sub>t</sub> &#x3D; tanh(W<sub>C</sub> x [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>C</sub>)<br><img src="/images/img/LSTM_GRU/output.png" alt="output"></li>
 </ul>
 <h1 id="GRU-Cell"><a href="#GRU-Cell" class="headerlink" title="GRU Cell"></a>GRU Cell</h1><ul>
 <li>LSTM cell의 간소화된 버전이다.</li>
@@ -236,7 +236,7 @@
 <li>z<sub>t</sub>가 1일때 forget 게이트가 열리고, 0일때 input 게이트가 열린다.</li>
 </ul>
 </li>
-<li>output게이트가 없으며, 이전 hidden cell에서 어느 부분이 출력될지 결정하는 것은 r<sub>t</sub>가 수행한다.<br><img src="/assets/img/LSTM_GRU/GRU.png" alt="gru"></li>
+<li>output게이트가 없으며, 이전 hidden cell에서 어느 부분이 출력될지 결정하는 것은 r<sub>t</sub>가 수행한다.<br><img src="/images/img/LSTM_GRU/GRU.png" alt="gru"></li>
 </ul>
 <h3 id="Reset-Gate"><a href="#Reset-Gate" class="headerlink" title="Reset Gate"></a>Reset Gate</h3><ul>
 <li>두 번째 식에 해당하는 부분이다. 이전 시점의 hidden state와 현 시점의 x를 𝑠𝑖𝑔𝑚𝑜𝑖𝑑를 적용하여 구한다. 즉 이전 hidden state를 얼마나 활용할지 결정한다.</li>
@@ -255,15 +255,15 @@
 <li>d1은 Encoder의 모든 hidden space vector를 자신의 위치와 가장 관계가 깊은 단어가 무엇인지 고민한다.</li>
 <li>모든 e를 살펴보며 score funtion을 통과 한 것이 Attention Score이다.</li>
 </ul>
-<p><img src="/assets/img/LSTM_GRU/seq2.png" alt="seq2"></p>
+<p><img src="/images/img/LSTM_GRU/seq2.png" alt="seq2"></p>
 <h3 id="Normalize"><a href="#Normalize" class="headerlink" title="[Normalize]"></a><b>[Normalize]</b></h3><ul>
 <li>Sorce에 Softmax를 취한다.</li>
 <li>e와 a를 가지고 context vector c를 만든다.</li>
 </ul>
-<p><img src="/assets/img/LSTM_GRU/seq3.png" alt="seq3"></p>
+<p><img src="/images/img/LSTM_GRU/seq3.png" alt="seq3"></p>
 <h3 id="다음-언어-예측"><a href="#다음-언어-예측" class="headerlink" title="[다음 언어 예측]"></a><b>[다음 언어 예측]</b></h3><ul>
 <li><p>c와 d를 가지고 다음 언어를 예측할 수 있다. 이 때, 단어 예측을 위한 f는 Neural Network를 사용한다.</p>
-<p><img src="/assets/img/LSTM_GRU/seq4.png" alt="seq4"></p>
+<p><img src="/images/img/LSTM_GRU/seq4.png" alt="seq4"></p>
 </li>
 </ul>
 

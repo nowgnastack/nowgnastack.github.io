@@ -14,20 +14,20 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="Update ParameterOptimization 신경망 학습의 목적은 손실 함수의 값을 가능한 낮추는 매개변수를 찾는 것이다.  SGD(확률적 경사 하강법)\begin{align}W \leftarrow W-\eta ({\partial L &#x2F; \partial W})\end{align} 1234567class SGD:    def __init__(">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/batchN.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/covariate.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay%201.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/dropout.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/dropout2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN5/batchN.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN5/covariate.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN5/overfit_weight_decay.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN5/overfit_weight_decay%201.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN5/dropout.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN5/dropout2.png">
 <meta property="article:published_time" content="2021-01-12T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.873Z">
+<meta property="article:modified_time" content="2023-07-23T15:07:15.367Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="tave">
 <meta property="article:tag" content="tave research">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN5/batchN.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN5/batchN.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -248,7 +248,7 @@
 <li><p>이런 문제를 해결하기 위한 트릭은 activation function 바꾸기(ReLU), 가중치 초기화하기, learning rate를 작게 하기가 있다.</p>
 </li>
 <li><p>학습 과정을 전체적으로 안정적이게 하여 학습 속도를 높여주는 Batch Normalization을 사용할 수 있다.</p>
-<h3 id="Batch-Normalization-1"><a href="#Batch-Normalization-1" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h3><p><img src="/assets/img/posts/TaveResearch/neuralN5/batchN.png" alt="/assets/img/posts/TaveResearch/neuralN5/batchN.png"></p>
+<h3 id="Batch-Normalization-1"><a href="#Batch-Normalization-1" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h3><p><img src="/images/img/posts/TaveResearch/neuralN5/batchN.png" alt="/images/img/posts/TaveResearch/neuralN5/batchN.png"></p>
 </li>
 <li><p>배치 정규화는 신경망 안에 포함되어 학습시 평균과 분산을 조정하는 역할을 한다.</p>
 </li>
@@ -257,7 +257,7 @@
 <li><p>미니 배치의 평균과 분산을 이용하여 정규화 한 후 scaling과 shift를 진행한다.($\gamma$ 와 $\beta$값을 이용)</p>
 </li>
 </ul>
-<p><img src="/assets/img/posts/TaveResearch/neuralN5/covariate.png" alt="/assets/img/posts/TaveResearch/neuralN5/covariate.png"></p>
+<p><img src="/images/img/posts/TaveResearch/neuralN5/covariate.png" alt="/images/img/posts/TaveResearch/neuralN5/covariate.png"></p>
 <p>\begin{align}<br>u_i &#x3D; {z_i -\mu_B &#x2F; \sqrt {\sigma{_B}^2 +\epsilon}}<br>\end{align}</p>
 <p>\begin{align}<br>\hat {z}_i &#x3D; \gamma u_i +\beta<br>\end{align}</p>
 <ul>
@@ -281,7 +281,7 @@
 <li><p>60,000개인 MNIST 데이터셋의 훈련 데이터중 300개만 사용하고 7층 네트워크를 사용하였다.</p>
 </li>
 <li><p>각 층의 뉴런 갯수는 100개, activation function은 ReLU를 사용하였다.</p>
-<p><img src="/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay.png" alt="/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay.png"></p>
+<p><img src="/images/img/posts/TaveResearch/neuralN5/overfit_weight_decay.png" alt="/images/img/posts/TaveResearch/neuralN5/overfit_weight_decay.png"></p>
 </li>
 <li><p>훈련 데이터를 사용한 것과 시험 데이터를 사용한 것의 정확도 차이가 크게 나는것을 볼 수 있다.</p>
 </li>
@@ -306,7 +306,7 @@
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">weight_decay_lambda = <span class="number">0.1</span></span><br><span class="line">network = MultiLayerNet(input_size=<span class="number">784</span>, hidden_size_list=[<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>], output_size=<span class="number">10</span>,</span><br><span class="line">                        weight_decay_lambda=weight_decay_lambda)</span><br></pre></td></tr></table></figure>
 
-<p><img src="/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay%201.png" alt="/assets/img/posts/TaveResearch/neuralN5/overfit_weight_decay%201.png"></p>
+<p><img src="/images/img/posts/TaveResearch/neuralN5/overfit_weight_decay%201.png" alt="/images/img/posts/TaveResearch/neuralN5/overfit_weight_decay%201.png"></p>
 <ul>
 <li>overfitting이 억제된 것을 볼 수 있고, 훈련 데이터에 대한 정확도가 떨어진 것을 볼 수 있다.</li>
 </ul>
@@ -317,12 +317,12 @@
 <li>은닉층의 뉴런을 무작위로 골라 삭제한다.</li>
 <li>훈련 시에는 삭제할 뉴런을 무작위로 선택하고, 시험 때는 모든 뉴런에 신호를 전달한다.</li>
 </ul>
-<p><img src="/assets/img/posts/TaveResearch/neuralN5/dropout.png" alt="/assets/img/posts/TaveResearch/neuralN5/dropout.png"></p>
+<p><img src="/images/img/posts/TaveResearch/neuralN5/dropout.png" alt="/images/img/posts/TaveResearch/neuralN5/dropout.png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dropout</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dropout_ratio=<span class="number">0.5</span></span>):</span><br><span class="line">        self.dropout_ratio = dropout_ratio</span><br><span class="line">        self.mask = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x, train_flg=<span class="literal">True</span></span>):</span><br><span class="line">        <span class="keyword">if</span> train_flg:</span><br><span class="line">            self.mask = np.random.rand(*x.shape) &gt; self.dropout_ratio</span><br><span class="line">            <span class="keyword">return</span> x * self.mask</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> x * (<span class="number">1.0</span> - self.dropout_ratio)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">backward</span>(<span class="params">self, dout</span>):</span><br><span class="line">        <span class="keyword">return</span> dout * self.mask</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>self.mask는 x와 형상이 같은 배열을 무작위로 생성하고 그 값이 0.5(dropout_ratio)보다 큰 원소만 True로 설정한다.</p>
-<p><img src="/assets/img/posts/TaveResearch/neuralN5/dropout2.png" alt="/assets/img/posts/TaveResearch/neuralN5/dropout2.png"></p>
+<p><img src="/images/img/posts/TaveResearch/neuralN5/dropout2.png" alt="/images/img/posts/TaveResearch/neuralN5/dropout2.png"></p>
 </li>
 </ul>
 <h2 id="Find-the-value-of-the-appropriate-hyperparameter"><a href="#Find-the-value-of-the-appropriate-hyperparameter" class="headerlink" title="Find the value of the appropriate hyperparameter"></a>Find the value of the appropriate hyperparameter</h2><ul>

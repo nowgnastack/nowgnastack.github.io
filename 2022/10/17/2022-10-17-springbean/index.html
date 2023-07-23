@@ -14,14 +14,14 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="spring에서 DI와 AOP에 대해 알아본다">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/spring/bean/pic1.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/spring/bean/beanlifecycle.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/spring/bean/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/spring/bean/beanlifecycle.png">
 <meta property="article:published_time" content="2022-10-17T14:20:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:16.337Z">
+<meta property="article:modified_time" content="2023-07-23T15:20:52.342Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="aop di java spring">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/posting/spring/bean/pic1.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/posting/spring/bean/pic1.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -198,7 +198,7 @@
 <p>BeanFactory는 스프링 IoC를 담당하는 핵심 컨테이너로 Bean의 등록, 생성, 조회, 반환을 담당한다. ApplicationContext는 BeanFactory를 확장한 IoC컨테이너이다. 기본 동작은 BeanFactory와 동일하며, 스프링이 제공하는 부가 서비스를 추가로 제공한다.</p>
 <h3 id="IoC-Container"><a href="#IoC-Container" class="headerlink" title="IoC Container"></a>IoC Container</h3><p>스프링에서 IoC를 담당하는 컨테이너는 BeanFactory, ApplicationContext가 있다. Object의 생성과 관계 설정, 사용, 제거 등 작업을 애플리케이션 코드 대신 독립된 컨테이너가 담당한다.</p>
 <p>객체 생성을 컨테이너에 위임하여 처리하므로 객체 간의 결합도를 낮출 수 있다. 프로젝트의 결합도가 높으면 유지보수 시 하나의 클래스가 변경될 때 다수의 클래스들도 변경되어야 하므로 결합도가 낮은 프로젝트가 유지보수에 용이하다.</p>
-<p><img src="/assets/posting/spring/bean/pic1.png" alt="스크린샷 2022-10-18 오전 8.14.02.png"></p>
+<p><img src="/images/posting/spring/bean/pic1.png" alt="스크린샷 2022-10-18 오전 8.14.02.png"></p>
 <p>IoC의 호출 방식은 위와 같다. 팩토리 패턴의 장점을 더하여 어떠한 것에도 의존하지 않는 형태를 가진다. 실행 시점에 클래스 간의 관계가 형성된다.</p>
 <p>applicationContext.xml에서 bean을 이용해 service 구현체 객체의 생성 및 관리를 하고, controller에서 ApplicationContext의 ClassPathXmlApplicationContext로 xml파일을 읽어 각 bean을 불러와 service를 불러온다.</p>
 <h2 id="DI-Dependency-Injection"><a href="#DI-Dependency-Injection" class="headerlink" title="DI(Dependency Injection)"></a>DI(Dependency Injection)</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component(&quot;memberService&quot;)</span></span><br><span class="line"><span class="meta">@Scope(&quot;singleton&quot;)</span> <span class="comment">// singleton으로 생성</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MemberServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">MemberService</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insertMember</span><span class="params">(String name)</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -265,7 +265,7 @@
 </tr>
 </tbody></table>
 <h2 id="Bean의-life-cycle"><a href="#Bean의-life-cycle" class="headerlink" title="Bean의 life cycle"></a>Bean의 life cycle</h2><p>지금까지 봤던 bean의 생명주기이다.</p>
-<p><img src="/assets/posting/spring/bean/beanlifecycle.png" alt="beanlifecycle.png"></p>
+<p><img src="/images/posting/spring/bean/beanlifecycle.png" alt="beanlifecycle.png"></p>
 
   </div>
 </article>

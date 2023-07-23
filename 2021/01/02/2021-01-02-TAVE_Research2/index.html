@@ -14,18 +14,18 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="Derivative 미분은 한 순간의 변화량을 표현한 것이다.  \begin{align}\Delta y &#x3D; \alpha \Delta x\end{align}  $\alpha$(기울기)와 x변화량의 곱은 y의 변화량과 같다. 일반적인 최적화 문제는 f(x)의 값이 가장 작아지거나 가장 커지는 x를 찾는 것이다.    Gradient Descent 기울">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN2/derivative.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN2/gradDescent.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN2/gradientDescent.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN2/softmax.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN2/derivative.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN2/gradDescent.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN2/gradientDescent.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN2/softmax.png">
 <meta property="article:published_time" content="2021-01-01T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.856Z">
+<meta property="article:modified_time" content="2023-07-23T15:06:36.672Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="tave">
 <meta property="article:tag" content="tave research">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN2/derivative.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN2/derivative.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -190,7 +190,7 @@
   <div class="content e-content" itemprop="articleBody">
     <h2 id="Derivative"><a href="#Derivative" class="headerlink" title="Derivative"></a>Derivative</h2><ul>
 <li><p>미분은 한 순간의 변화량을 표현한 것이다.</p>
-<p><img src="/assets/img/posts/TaveResearch/neuralN2/derivative.png" alt="derivative.png"></p>
+<p><img src="/images/img/posts/TaveResearch/neuralN2/derivative.png" alt="derivative.png"></p>
 <p>\begin{align}<br>\Delta y &#x3D; \alpha \Delta x<br>\end{align}</p>
 <ul>
 <li>$\alpha$(기울기)와 x변화량의 곱은 y의 변화량과 같다.</li>
@@ -204,7 +204,7 @@
 <li><p>함수가 볼록한 형태에서는 항상 경사 하강법으로 최솟값을 찾을 수 있다. (a)</p>
 </li>
 <li><p>볼록하지 않은 함수에서는 해당 함수의 극솟값이나 안정점에 도달 할 수 있다. (b)</p>
-<p><img src="/assets/img/posts/TaveResearch/neuralN2/gradDescent.png" alt="gradDescent.png"></p>
+<p><img src="/images/img/posts/TaveResearch/neuralN2/gradDescent.png" alt="gradDescent.png"></p>
 <h3 id="경사법에-의한-f-x-0-x-1-x-0-2-x-1-2-함수의-갱신-과정"><a href="#경사법에-의한-f-x-0-x-1-x-0-2-x-1-2-함수의-갱신-과정" class="headerlink" title="경사법에 의한 $f(x_0, x_1) &#x3D; (x_0)^2 + (x_1)^2$ 함수의 갱신 과정"></a>경사법에 의한 $f(x_0, x_1) &#x3D; (x_0)^2 + (x_1)^2$ 함수의 갱신 과정</h3><p>\begin{align}<br>x_0 &#x3D; \eta ({\partial f &#x2F; \partial x_0})<br>\end{align}</p>
 <ul>
 <li>$\eta$는 갱신하는 양을 나타낸다. 학습률(learning rate)이다.</li>
@@ -214,13 +214,13 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pylab <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">numerical_gradient</span>(<span class="params">f, x</span>):</span><br><span class="line">    h = <span class="number">1e-4</span></span><br><span class="line">    grad = np.zeros_like(x)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="built_in">range</span>(x.size):</span><br><span class="line">        tmp_val = x[idx]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># f(x+h)</span></span><br><span class="line">        x[idx] = tmp_val + h</span><br><span class="line">        fxh1 = f(x)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># f(x-h)</span></span><br><span class="line">        x[idx] = tmp_val - h</span><br><span class="line">        fxh2 = f(x)</span><br><span class="line"></span><br><span class="line">        grad[idx] = (fxh1 - fxh2) / (<span class="number">2</span> * h)</span><br><span class="line">        x[idx] = tmp_val</span><br><span class="line">    <span class="keyword">return</span> grad</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gradient_descent</span>(<span class="params">f, init_x, lr=<span class="number">0.01</span>, step_num=<span class="number">100</span></span>):</span><br><span class="line">    x = init_x</span><br><span class="line">    x_history = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(step_num):</span><br><span class="line">        x_history.append(x.copy())</span><br><span class="line"></span><br><span class="line">        grad = numerical_gradient(f, x)</span><br><span class="line">        x -= lr * grad</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> x, np.array(x_history)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">function_2</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> x[<span class="number">0</span>] ** <span class="number">2</span> + x[<span class="number">1</span>] ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line">init_x = np.array([-<span class="number">3.0</span>, <span class="number">4.0</span>])</span><br><span class="line"></span><br><span class="line">lr = <span class="number">0.1</span></span><br><span class="line">step_num = <span class="number">20</span></span><br><span class="line">x, x_history = gradient_descent(function_2, init_x, lr=lr, step_num=step_num)</span><br><span class="line"></span><br><span class="line">plt.plot([-<span class="number">5</span>, <span class="number">5</span>], [<span class="number">0</span>, <span class="number">0</span>], <span class="string">&#x27;--b&#x27;</span>)</span><br><span class="line">plt.plot([<span class="number">0</span>, <span class="number">0</span>], [-<span class="number">5</span>, <span class="number">5</span>], <span class="string">&#x27;--b&#x27;</span>)</span><br><span class="line">plt.plot(x_history[:, <span class="number">0</span>], x_history[:, <span class="number">1</span>], <span class="string">&#x27;o&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.xlim(-<span class="number">3.5</span>, <span class="number">3.5</span>)</span><br><span class="line">plt.ylim(-<span class="number">4.5</span>, <span class="number">4.5</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;X0&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;X1&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
-<p><img src="/assets/img/posts/TaveResearch/neuralN2/gradientDescent.png" alt="gradientDescent.png"></p>
+<p><img src="/images/img/posts/TaveResearch/neuralN2/gradientDescent.png" alt="gradientDescent.png"></p>
 <ul>
 <li>경사법을 사용한 갱신 과정을 나타낸 그림으로 최솟값인 원점에 점점 가까워지는 것을 볼 수 있다.</li>
 </ul>
 </li>
 </ul>
-<h2 id="Softmax-Function"><a href="#Softmax-Function" class="headerlink" title="Softmax Function"></a>Softmax Function</h2><p><img src="/assets/img/posts/TaveResearch/neuralN2/softmax.png" alt="softmax.png"></p>
+<h2 id="Softmax-Function"><a href="#Softmax-Function" class="headerlink" title="Softmax Function"></a>Softmax Function</h2><p><img src="/images/img/posts/TaveResearch/neuralN2/softmax.png" alt="softmax.png"></p>
 <p>\begin{align}<br>{y_k} &#x3D; \exp(a_k) &#x2F; {\sum{^n}}_{i&#x3D;1} {\exp(a_i)}<br>\end{align}</p>
 <ul>
 <li>n은 출력층의 뉴런 수, $y_k$는 그중 k번째 출력을 뜻한다.</li>

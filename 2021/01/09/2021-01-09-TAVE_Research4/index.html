@@ -14,20 +14,20 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="Chain Rule\begin{align}y &#x3D; f(g(x))\end{align} \begin{align}{dy &#x2F; dx}&#x3D; {df &#x2F; dg(x)}{dg(x) &#x2F; dx}\end{align}  Chain Rule은 합성함수의 미분을 위한 공식이다.  $z &#x3D; g(x)$, $y &#x3D; f(z)$라고 가">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN4/chainrule.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN4/jacobian.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN4/forwardpass1.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN4/back1.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN4/foward2.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN4/back2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/chainrule.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/jacobian.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/forwardpass1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/back1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/foward2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/back2.png">
 <meta property="article:published_time" content="2021-01-08T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.870Z">
+<meta property="article:modified_time" content="2023-07-23T15:06:59.995Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="deep learning">
 <meta property="article:tag" content="tave">
 <meta property="article:tag" content="tave research">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/TaveResearch/neuralN4/chainrule.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/chainrule.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -201,12 +201,12 @@
 <ul>
 <li><p>$dg(x)$가 약분이 되면서 아래 식처럼 되는것을 확인할 수 있다.</p>
 <p>\begin{align}<br>\Delta y&#x3D;{dy &#x2F; dx}<br>\Delta x<br>\end{align}</p>
-<p><img src="/assets/img/posts/TaveResearch/neuralN4/chainrule.png" alt="/assets/img/posts/TaveResearch/neuralN4/chainrule.png"></p>
+<p><img src="/images/img/posts/TaveResearch/neuralN4/chainrule.png" alt="/images/img/posts/TaveResearch/neuralN4/chainrule.png"></p>
 </li>
 <li><p>z에 대한 y의 미분은 x에 대한 g(x)의 편미분들의 합이 된다.</p>
 </li>
 </ul>
-<h2 id="Jacobian"><a href="#Jacobian" class="headerlink" title="Jacobian"></a>Jacobian</h2><p><img src="/assets/img/posts/TaveResearch/neuralN4/jacobian.png" alt="/assets/img/posts/TaveResearch/neuralN4/jacobian.png"></p>
+<h2 id="Jacobian"><a href="#Jacobian" class="headerlink" title="Jacobian"></a>Jacobian</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/jacobian.png" alt="/images/img/posts/TaveResearch/neuralN4/jacobian.png"></p>
 <p>\begin{align}<br>\Delta y &#x3D; J_y (z) \Delta z<br>\end{align}</p>
 <ul>
 <li>벡터 입력에 대한 벡터 함수의 미분이 Jacobian행렬이다.</li>
@@ -214,7 +214,7 @@
 <li>함수 $f$가 스칼라인 경우는 y의 Jacobian 행렬이 대각 행렬이다.</li>
 <li>함수 $f$가 벡터인 경우는 y의 Jacobian 행렬이 전체 행렬이다.</li>
 </ul>
-<h2 id="Forward-propagation-using-scalar-formula"><a href="#Forward-propagation-using-scalar-formula" class="headerlink" title="Forward propagation using scalar formula"></a>Forward propagation using scalar formula</h2><p><img src="/assets/img/posts/TaveResearch/neuralN4/forwardpass1.png" alt="/assets/img/posts/TaveResearch/neuralN4/forwardpass1.png"></p>
+<h2 id="Forward-propagation-using-scalar-formula"><a href="#Forward-propagation-using-scalar-formula" class="headerlink" title="Forward propagation using scalar formula"></a>Forward propagation using scalar formula</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/forwardpass1.png" alt="/images/img/posts/TaveResearch/neuralN4/forwardpass1.png"></p>
 <p>\begin{align}<br>{z_j}^{(n)} &#x3D; {\sum}_i {w_{ij}}^{(N)}{y_i}^{(N-1)}<br>\end{align}</p>
 <p>\begin{align}<br>{y_j}^{(N)} &#x3D; f_{N({z_j}^{(N)})}<br>\end{align}</p>
 <ul>
@@ -222,7 +222,7 @@
 <li>각각의 입력에 대한 가중치가 곱해지고 가중치의 합으로 계산된 후 각 은닉층 뉴런의 함수를 거쳐 다음 은닉층의 입력으로 전달되어 최종 결과를 출력한다.</li>
 </ul>
 <hr>
-<h2 id="Backward-propagation-using-scalar-formula"><a href="#Backward-propagation-using-scalar-formula" class="headerlink" title="Backward propagation using scalar formula"></a>Backward propagation using scalar formula</h2><p><img src="/assets/img/posts/TaveResearch/neuralN4/back1.png" alt="/assets/img/posts/TaveResearch/neuralN4/back1.png"></p>
+<h2 id="Backward-propagation-using-scalar-formula"><a href="#Backward-propagation-using-scalar-formula" class="headerlink" title="Backward propagation using scalar formula"></a>Backward propagation using scalar formula</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/back1.png" alt="/images/img/posts/TaveResearch/neuralN4/back1.png"></p>
 <ul>
 <li><p>역전파의 시작은 divergence(Div)를 미분하는것으로 시작한다.<br>\begin{align}<br>\color{orange}{\partial Div(Y,d) &#x2F; \partial {y_i}^{(N)}}<br>\color{black}&#x3D; \partial Div(Y,d)&#x2F;\partial y_i<br>\end{align}</p>
 </li>
@@ -254,7 +254,7 @@
 <li>Output layer에서와의 차이점은 y에 대한 z의 편미분이 있다는 것이다.</li>
 <li>$z &#x3D; wy+b$인 것을 생각하면 y에 대한 z의 편미분은 w가 되는것을 알 수 있다.</li>
 </ul>
-<h2 id="Forward-propagation-using-vector-formula"><a href="#Forward-propagation-using-vector-formula" class="headerlink" title="Forward propagation using vector formula"></a>Forward propagation using vector formula</h2><p><img src="/assets/img/posts/TaveResearch/neuralN4/foward2.png" alt="/assets/img/posts/TaveResearch/neuralN4/foward2.png"></p>
+<h2 id="Forward-propagation-using-vector-formula"><a href="#Forward-propagation-using-vector-formula" class="headerlink" title="Forward propagation using vector formula"></a>Forward propagation using vector formula</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/foward2.png" alt="/images/img/posts/TaveResearch/neuralN4/foward2.png"></p>
 <p>\begin{align}<br>z_k &#x3D; W_k {y}_{k-1} + b_k<br>\end{align}</p>
 <p>\begin{align}<br>y_k &#x3D; f_k(z_k)<br>\end{align}</p>
 <p>\begin{align}<br>Y &#x3D; {f}_N(W_N{f}_{N-1}(…f_2(W_2f_1(W_1x+b_1)+b_2)…+b_N)<br>\end{align}</p>
@@ -264,7 +264,7 @@
 <li>식 $Y$는 입력층부터 마지막 레이어까지 전파된 출력이다.</li>
 </ul>
 <hr>
-<h2 id="Backward-propagation-using-vector-formula"><a href="#Backward-propagation-using-vector-formula" class="headerlink" title="Backward propagation using vector formula"></a>Backward propagation using vector formula</h2><p><img src="/assets/img/posts/TaveResearch/neuralN4/back2.png" alt="/assets/img/posts/TaveResearch/neuralN4/back2.png"></p>
+<h2 id="Backward-propagation-using-vector-formula"><a href="#Backward-propagation-using-vector-formula" class="headerlink" title="Backward propagation using vector formula"></a>Backward propagation using vector formula</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/back2.png" alt="/images/img/posts/TaveResearch/neuralN4/back2.png"></p>
 <ul>
 <li>역전파는 Y에 대한 Div의 편미분으로 시작된다.</li>
 </ul>

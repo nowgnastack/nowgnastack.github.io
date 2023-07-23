@@ -3,22 +3,365 @@
 
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/pytorch/</loc>
-        <lastmod>2023-07-23T12:32:50.811Z</lastmod>
+        <loc>https://nowgnastack.github.io/tags/env-profile-spring-boot/</loc>
+        <lastmod>2023-07-23T15:22:21.395Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/tave/</loc>
-        <lastmod>2023-07-23T12:32:50.811Z</lastmod>
+        <loc>https://nowgnastack.github.io/tags/ci-cd-deploy-docker-jenkins/</loc>
+        <lastmod>2023-07-23T15:22:09.818Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/mysql/</loc>
+        <lastmod>2023-07-23T15:22:02.748Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/vue-javascript-todo/</loc>
+        <lastmod>2023-07-23T15:21:52.354Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/network-tcp-udp/</loc>
+        <lastmod>2023-07-23T15:21:43.213Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/web-async-spring-boot-sync/</loc>
+        <lastmod>2023-07-23T15:21:35.139Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/spring-boot-aop-exception-java/</loc>
+        <lastmod>2023-07-23T15:21:27.818Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/java-react-spring-boot-swagger-web/</loc>
+        <lastmod>2023-07-23T15:21:14.931Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/aop-di-java-spring/</loc>
+        <lastmod>2023-07-23T15:20:52.342Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/eclipse-java-spring/</loc>
+        <lastmod>2023-07-23T15:19:51.735Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/ssafy/</loc>
+        <lastmod>2023-07-23T15:19:42.998Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/%ED%95%A9%EA%B2%A9%ED%9B%84%EA%B8%B0/</loc>
+        <lastmod>2023-07-23T15:19:42.998Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/nest-js/</loc>
+        <lastmod>2023-07-23T15:19:36.518Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/api/</loc>
+        <lastmod>2023-07-23T15:19:36.518Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/swagger/</loc>
+        <lastmod>2023-07-23T15:19:36.518Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/node-js/</loc>
+        <lastmod>2023-07-23T15:18:57.396Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/web/</loc>
+        <lastmod>2023-07-23T15:18:57.396Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/access-token/</loc>
+        <lastmod>2023-07-23T15:18:41.266Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/refresh-token/</loc>
+        <lastmod>2023-07-23T15:18:41.266Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/token/</loc>
+        <lastmod>2023-07-23T15:18:41.266Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/colab/</loc>
+        <lastmod>2023-07-23T15:18:34.004Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/vscode/</loc>
+        <lastmod>2023-07-23T15:18:34.004Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/deep-learning/</loc>
+        <lastmod>2023-07-23T15:18:34.004Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/spring/</loc>
+        <lastmod>2023-07-23T15:18:04.339Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/java/</loc>
+        <lastmod>2023-07-23T15:18:04.339Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/react-js/</loc>
+        <lastmod>2023-07-23T15:17:54.064Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/elice/</loc>
+        <lastmod>2023-07-23T15:17:54.064Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/</loc>
+        <lastmod>2023-07-23T15:17:37.112Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/%EC%9D%B4%EC%BD%94%ED%85%8C/</loc>
+        <lastmod>2023-07-23T15:17:37.112Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://nowgnastack.github.io/tags/algorithm/</loc>
-        <lastmod>2023-07-23T12:24:24.293Z</lastmod>
+        <lastmod>2023-07-23T15:17:37.112Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/%EC%9D%B4%EC%A7%84%ED%83%90%EC%83%89/</loc>
+        <lastmod>2023-07-23T15:16:47.399Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/DFS-BFS/</loc>
+        <lastmod>2023-07-23T15:14:31.589Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/git/</loc>
+        <lastmod>2023-07-23T15:14:11.332Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/machine-learning/</loc>
+        <lastmod>2023-07-23T15:13:49.241Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/express/</loc>
+        <lastmod>2023-07-23T15:13:28.232Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/H-mobility/</loc>
+        <lastmod>2023-07-23T15:12:59.357Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/next-js/</loc>
+        <lastmod>2023-07-23T15:12:59.351Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/nomadcoder/</loc>
+        <lastmod>2023-07-23T15:12:59.351Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/data-analytics/</loc>
+        <lastmod>2023-07-23T15:09:19.792Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/pandas/</loc>
+        <lastmod>2023-07-23T15:09:19.792Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/code-review/</loc>
+        <lastmod>2023-07-23T15:08:11.076Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/webinar/</loc>
+        <lastmod>2023-07-23T15:08:11.076Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/blog/</loc>
+        <lastmod>2023-07-23T15:08:01.016Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/jekyll/</loc>
+        <lastmod>2023-07-23T15:08:01.016Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/tave-research/</loc>
+        <lastmod>2023-07-23T15:07:40.241Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/tave/</loc>
+        <lastmod>2023-07-23T15:07:40.241Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/reinforcement-learning/</loc>
+        <lastmod>2023-07-23T15:06:16.093Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/pytorch/</loc>
+        <lastmod>2023-07-23T15:05:44.181Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/python/</loc>
+        <lastmod>2023-07-23T15:03:30.815Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/database/</loc>
+        <lastmod>2023-07-23T15:03:21.183Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/servlet/</loc>
+        <lastmod>2023-07-23T15:03:21.183Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/tags/jsp/</loc>
+        <lastmod>2023-07-23T15:03:21.183Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -38,34 +381,6 @@
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/deep-learning/</loc>
-        <lastmod>2023-04-17T04:25:37.516Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/env-profile-spring-boot/</loc>
-        <lastmod>2023-04-17T01:56:16.403Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/ci-cd-deploy-docker-jenkins/</loc>
-        <lastmod>2023-04-17T01:56:16.396Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/mysql/</loc>
-        <lastmod>2023-04-17T01:56:16.389Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nowgnastack.github.io/tags/SOLID-java-oop-spring/</loc>
         <lastmod>2023-04-17T01:56:16.381Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -73,50 +388,8 @@
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/vue-javascript-todo/</loc>
-        <lastmod>2023-04-17T01:56:16.374Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/network-tcp-udp/</loc>
-        <lastmod>2023-04-17T01:56:16.370Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/web-async-spring-boot-sync/</loc>
-        <lastmod>2023-04-17T01:56:16.363Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/spring-boot-aop-exception-java/</loc>
-        <lastmod>2023-04-17T01:56:16.355Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/java-react-spring-boot-swagger-web/</loc>
-        <lastmod>2023-04-17T01:56:16.348Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nowgnastack.github.io/tags/java-mvc-mybatis-spring-sts/</loc>
         <lastmod>2023-04-17T01:56:16.341Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/aop-di-java-spring/</loc>
-        <lastmod>2023-04-17T01:56:16.337Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -150,48 +423,6 @@
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/eclipse-java-spring/</loc>
-        <lastmod>2023-04-17T01:56:16.299Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/ssafy/</loc>
-        <lastmod>2023-04-17T01:56:16.289Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/%ED%95%A9%EA%B2%A9%ED%9B%84%EA%B8%B0/</loc>
-        <lastmod>2023-04-17T01:56:16.289Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/nest-js/</loc>
-        <lastmod>2023-04-17T01:56:16.281Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/api/</loc>
-        <lastmod>2023-04-17T01:56:16.281Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/swagger/</loc>
-        <lastmod>2023-04-17T01:56:16.281Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nowgnastack.github.io/tags/3-layer/</loc>
         <lastmod>2023-04-17T01:56:16.273Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -208,27 +439,6 @@
     <url>
         <loc>https://nowgnastack.github.io/tags/project/</loc>
         <lastmod>2023-04-17T01:56:16.270Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/elice/</loc>
-        <lastmod>2023-04-17T01:56:16.270Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/node-js/</loc>
-        <lastmod>2023-04-17T01:56:16.256Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/web/</loc>
-        <lastmod>2023-04-17T01:56:16.256Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -255,41 +465,6 @@
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/access-token/</loc>
-        <lastmod>2023-04-17T01:56:16.246Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/refresh-token/</loc>
-        <lastmod>2023-04-17T01:56:16.246Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/token/</loc>
-        <lastmod>2023-04-17T01:56:16.246Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/colab/</loc>
-        <lastmod>2023-04-17T01:56:16.239Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/vscode/</loc>
-        <lastmod>2023-04-17T01:56:16.239Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nowgnastack.github.io/tags/class/</loc>
         <lastmod>2023-04-17T01:56:16.231Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -304,28 +479,7 @@
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/spring/</loc>
-        <lastmod>2023-04-17T01:56:16.220Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/java/</loc>
-        <lastmod>2023-04-17T01:56:16.220Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nowgnastack.github.io/tags/cors/</loc>
-        <lastmod>2023-04-17T01:56:16.213Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/react-js/</loc>
         <lastmod>2023-04-17T01:56:16.213Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -360,20 +514,6 @@
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/</loc>
-        <lastmod>2023-04-17T01:56:16.188Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/%EC%9D%B4%EC%BD%94%ED%85%8C/</loc>
-        <lastmod>2023-04-17T01:56:16.188Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nowgnastack.github.io/tags/middleware/</loc>
         <lastmod>2023-04-17T01:56:16.179Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -388,13 +528,6 @@
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/%EC%9D%B4%EC%A7%84%ED%83%90%EC%83%89/</loc>
-        <lastmod>2023-04-17T01:56:16.157Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nowgnastack.github.io/tags/javascript/</loc>
         <lastmod>2023-04-17T01:56:16.145Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -402,29 +535,8 @@
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/DFS-BFS/</loc>
-        <lastmod>2023-04-17T01:56:16.131Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/git/</loc>
-        <lastmod>2023-04-17T01:56:16.120Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nowgnastack.github.io/tags/greedy-algorithm/</loc>
         <lastmod>2023-04-17T01:56:16.113Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/machine-learning/</loc>
-        <lastmod>2023-04-17T01:56:16.104Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -444,56 +556,7 @@
     </url>
 
     <url>
-        <loc>https://nowgnastack.github.io/tags/express/</loc>
-        <lastmod>2023-04-17T01:56:16.087Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/next-js/</loc>
-        <lastmod>2023-04-17T01:56:16.070Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/nomadcoder/</loc>
-        <lastmod>2023-04-17T01:56:16.070Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/H-mobility/</loc>
-        <lastmod>2023-04-17T01:56:16.063Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/blog/</loc>
-        <lastmod>2023-04-17T01:56:16.047Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/jekyll/</loc>
-        <lastmod>2023-04-17T01:56:16.047Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://nowgnastack.github.io/tags/function/</loc>
-        <lastmod>2023-04-17T01:56:16.013Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/python/</loc>
         <lastmod>2023-04-17T01:56:16.013Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -502,48 +565,6 @@
     <url>
         <loc>https://nowgnastack.github.io/tags/django/</loc>
         <lastmod>2023-04-17T01:56:16.004Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/data-analytics/</loc>
-        <lastmod>2023-04-17T01:56:15.991Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/pandas/</loc>
-        <lastmod>2023-04-17T01:56:15.991Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/code-review/</loc>
-        <lastmod>2023-04-17T01:56:15.906Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/webinar/</loc>
-        <lastmod>2023-04-17T01:56:15.906Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/tave-research/</loc>
-        <lastmod>2023-04-17T01:56:15.888Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/reinforcement-learning/</loc>
-        <lastmod>2023-04-17T01:56:15.845Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -565,27 +586,6 @@
     <url>
         <loc>https://nowgnastack.github.io/tags/programming/</loc>
         <lastmod>2023-04-17T01:56:15.721Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/database/</loc>
-        <lastmod>2023-04-17T01:56:15.706Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/servlet/</loc>
-        <lastmod>2023-04-17T01:56:15.706Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/tags/jsp/</loc>
-        <lastmod>2023-04-17T01:56:15.706Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

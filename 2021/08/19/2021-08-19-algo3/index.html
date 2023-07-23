@@ -14,16 +14,16 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="파이썬 알고리즘 인터뷰 19장을 정리한 내용입니다.  Hamming Distance 해밍거리는 같은 길이를 가진 두 개의 문자열에서 같은 위치에 있지만 서로 다른 문자의 개수이다 컴퓨터 통신에서 문자열 전송 시 에러 검출에 사용되는 방법 중 하나이다   비트 조작부울 연산자  기본적인 부울 연산으로 AND , OR , NOT 이 있다   #71 해밍 거리">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter19/pic1.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter19/pic2.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter19/pic3.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter19/pic4.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter19/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter19/pic2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter19/pic3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter19/pic4.png">
 <meta property="article:published_time" content="2021-08-18T18:27:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.941Z">
+<meta property="article:modified_time" content="2023-07-23T15:08:42.557Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter19/pic1.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter19/pic1.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -194,7 +194,7 @@
 <li>컴퓨터 통신에서 문자열 전송 시 에러 검출에 사용되는 방법 중 하나이다</li>
 </ul>
 <hr>
-<h1 id="비트-조작"><a href="#비트-조작" class="headerlink" title="비트 조작"></a>비트 조작</h1><h2 id="부울-연산자"><a href="#부울-연산자" class="headerlink" title="부울 연산자"></a>부울 연산자</h2><p><img src="/assets/img/posts/pyAlgo/chapter19/pic1.png" alt="pic1.png"></p>
+<h1 id="비트-조작"><a href="#비트-조작" class="headerlink" title="비트 조작"></a>비트 조작</h1><h2 id="부울-연산자"><a href="#부울-연산자" class="headerlink" title="부울 연산자"></a>부울 연산자</h2><p><img src="/images/img/posts/pyAlgo/chapter19/pic1.png" alt="pic1.png"></p>
 <ul>
 <li>기본적인 부울 연산으로 <code>AND</code> , <code>OR</code> , <code>NOT</code> 이 있다</li>
 </ul>
@@ -218,7 +218,7 @@
 <h1 id="72-두-정수의-합"><a href="#72-두-정수의-합" class="headerlink" title="#72 두 정수의 합"></a>#72 두 정수의 합</h1><p>두 정수 a와 b의 합을 구하라. ‘+’와 ‘-‘연산자는 사용할 수 없다</p>
 <h2 id="입력-1"><a href="#입력-1" class="headerlink" title="입력"></a>입력</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line">b = <span class="number">2</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="전가산기-구현"><a href="#전가산기-구현" class="headerlink" title="전가산기 구현"></a>전가산기 구현</h3><p>:——–:|:———-:<br><img src="/assets/img/posts/pyAlgo/chapter19/pic2.png" alt="스크린샷, 2021-08-17 15-46-33.png"> | <img src="/assets/img/posts/pyAlgo/chapter19/pic3.png" alt="스크린샷, 2021-08-17 15-47-54.png"></p>
+<h3 id="전가산기-구현"><a href="#전가산기-구현" class="headerlink" title="전가산기 구현"></a>전가산기 구현</h3><p>:——–:|:———-:<br><img src="/images/img/posts/pyAlgo/chapter19/pic2.png" alt="스크린샷, 2021-08-17 15-46-33.png"> | <img src="/images/img/posts/pyAlgo/chapter19/pic3.png" alt="스크린샷, 2021-08-17 15-47-54.png"></p>
 <ul>
 <li>왼쪽 그림은 전가산기의 회로도의 진리표이다</li>
 <li><code>Q1</code> , <code>Q2</code>, <code>Q3</code> 에 회로도의 중간값을 계산한다</li>
@@ -267,7 +267,7 @@
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">UTP</span>(<span class="params">data: <span class="built_in">list</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    <span class="comment"># 문자 바이트 만큼 10으로 시작 판별</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">size</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(start + <span class="number">1</span>, start + size + <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> i &gt;= <span class="built_in">len</span>(data) <span class="keyword">or</span> (data[i] &gt;&gt; <span class="number">6</span>) != <span class="number">0b10</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    start = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> start &lt; <span class="built_in">len</span>(data):</span><br><span class="line">        <span class="comment"># 첫 바이트 기준 총 문자 바이트 판별</span></span><br><span class="line">        first = data[start]</span><br><span class="line">        <span class="keyword">if</span> (first &gt;&gt; <span class="number">3</span>) == <span class="number">0b11110</span> <span class="keyword">and</span> check(<span class="number">3</span>):</span><br><span class="line">            start += <span class="number">4</span></span><br><span class="line">        <span class="keyword">elif</span> (first &gt;&gt; <span class="number">4</span>) == <span class="number">0b1110</span> <span class="keyword">and</span> check(<span class="number">2</span>):</span><br><span class="line">            start += <span class="number">3</span></span><br><span class="line">        <span class="keyword">elif</span> (first &gt;&gt; <span class="number">5</span>) == <span class="number">0b110</span> <span class="keyword">and</span> check(<span class="number">1</span>):</span><br><span class="line">            start += <span class="number">2</span></span><br><span class="line">        <span class="keyword">elif</span> (first &gt;&gt; <span class="number">7</span>) == <span class="number">0</span>:</span><br><span class="line">            start += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/assets/img/posts/pyAlgo/chapter19/pic4.png" alt="스크린샷, 2021-08-19 02-03-30.png"></p>
+<p><img src="/images/img/posts/pyAlgo/chapter19/pic4.png" alt="스크린샷, 2021-08-19 02-03-30.png"></p>
 <ul>
 <li>표는 UTF-8 바이트 순서의 이진 포맷이다</li>
 <li>첫 바이트가 <code>1110</code> 으로 시작한다면 3바이트 문자이며 첫 바이트를 제외하고 다음에 오는 2바이트는 모두 <code>10</code> 으로 시작해야 한다</li>

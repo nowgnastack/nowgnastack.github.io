@@ -14,13 +14,13 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="책 정보: 밑바닥부터 시작하는 딥러닝 Numpynumpy는 외부 라이브러리이다. numpy를 사용하기위해 impot를 해준다. 1import numpy as np  배열을 생성하고 산술연산이 가능하다. 12345x &#x3D; np.array([1.0, 2.0, 3.0])y &#x3D; np.array([2.0, 4.0, 6.0])print(x * 2) # [2. 4. 6.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/Deep_Learning/cossin.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Deep_Learning/cossin.png">
 <meta property="article:published_time" content="2020-07-04T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.765Z">
+<meta property="article:modified_time" content="2023-07-23T15:04:29.949Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="deep learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/Deep_Learning/cossin.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/Deep_Learning/cossin.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -193,7 +193,7 @@
 <h2 id="matplotlib"><a href="#matplotlib" class="headerlink" title="matplotlib"></a>matplotlib</h2><p>matplotlib 라이브러리는 그래프 그리기와 이미지 표시, 데이터 시각화 하기 쉬워진다.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 데이터 준비</span></span><br><span class="line">x1 = np.arange(<span class="number">0</span>, <span class="number">6</span>, <span class="number">0.1</span>)</span><br><span class="line">y1 = np.sin(x1)</span><br><span class="line">y2 = np.cos(x1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 그래프 그리기</span></span><br><span class="line">plt.plot(x1, y1, label=<span class="string">&quot;sin&quot;</span>)</span><br><span class="line">plt.plot(x1, y2, linestyle=<span class="string">&quot;--&quot;</span>, label=<span class="string">&quot;cos&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;x&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;y&quot;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;sin &amp; cos&#x27;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
-<p>위 코드를 실행한 그래프이다.<br><img src="/assets/img/posts/Deep_Learning/cossin.png" alt="cos&amp;sin"></p>
+<p>위 코드를 실행한 그래프이다.<br><img src="/images/img/posts/Deep_Learning/cossin.png" alt="cos&amp;sin"></p>
 <p>이미지를 표시하려면 matplotlib의 image에서 imread를 import하여 사용한다.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.image <span class="keyword">import</span> imread</span><br><span class="line"></span><br><span class="line">img = imread(<span class="string">&#x27;img/germany.png&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.imshow(img)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 

@@ -14,13 +14,13 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="파이썬 알고리즘 인터뷰 책을 정리한 포스트 입니다.  #12 주식을 사고팔기 가장 좋은 시점한 번의 거래로 낼 수 있는 최대 이익을 산출하라 입력1prices &#x3D; [7, 1, 5, 3, 6, 4]  출력15  Brute Force 계산1234567def bruteForce(prices: list) -&gt; int:    max_price &#x3D; 0    f">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter7/pic_2021-11-23_14-40-28.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter7/pic_2021-11-23_14-40-28.png">
 <meta property="article:published_time" content="2021-11-23T12:49:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:16.040Z">
+<meta property="article:modified_time" content="2023-07-23T15:12:25.196Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter7/pic_2021-11-23_14-40-28.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter7/pic_2021-11-23_14-40-28.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -203,7 +203,7 @@
 <li>최저점에 사서 최고점에 팔아야 하기 때문에 최대 최소값을 구해 차이로 이익을 구한다</li>
 <li>값을 구할때 날짜가 지나가면 최저점과 최고점의 의미가 없기때문에 <code>if</code>문에 날짜 조건을 걸어준다</li>
 </ul>
-<h2 id="저점과-현재-값과의-차이-계산"><a href="#저점과-현재-값과의-차이-계산" class="headerlink" title="저점과 현재 값과의 차이 계산"></a>저점과 현재 값과의 차이 계산</h2><p><img src="/assets/img/posts/pyAlgo/chapter7/pic_2021-11-23_14-40-28.png" alt="스크린샷, 2021-11-23 14-40-28.png"></p>
+<h2 id="저점과-현재-값과의-차이-계산"><a href="#저점과-현재-값과의-차이-계산" class="headerlink" title="저점과 현재 값과의 차이 계산"></a>저점과 현재 값과의 차이 계산</h2><p><img src="/images/img/posts/pyAlgo/chapter7/pic_2021-11-23_14-40-28.png" alt="스크린샷, 2021-11-23 14-40-28.png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">maxProfit_low_now_val</span>(<span class="params">prices: <span class="built_in">list</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    profit = <span class="number">0</span></span><br><span class="line">    min_price = sys.maxsize</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 최솟값과 최댓값을 계속 갱신</span></span><br><span class="line">    <span class="keyword">for</span> price <span class="keyword">in</span> prices:</span><br><span class="line">        min_price = <span class="built_in">min</span>(min_price, price)</span><br><span class="line">        profit = <span class="built_in">max</span>(profit, price - min_price)</span><br><span class="line">    <span class="keyword">return</span> profit</span><br></pre></td></tr></table></figure>
 
 <ul>

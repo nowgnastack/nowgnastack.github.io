@@ -4,17 +4,22 @@
 
     <sitemap>
         <loc>https://nowgnastack.github.io/post-sitemap.xml</loc>
-        <lastmod>2023-07-23T12:32:50.811Z</lastmod>
+        <lastmod>2023-07-23T15:22:21.395Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>https://nowgnastack.github.io/page-sitemap.xml</loc>
+        <lastmod>2023-07-23T15:38:13.786Z</lastmod>
     </sitemap>
 
     <sitemap>
         <loc>https://nowgnastack.github.io/category-sitemap.xml</loc>
-        <lastmod>2023-07-23T12:32:50.811Z</lastmod>
+        <lastmod>2023-07-23T15:22:21.395Z</lastmod>
     </sitemap>
 
     <sitemap>
         <loc>https://nowgnastack.github.io/tag-sitemap.xml</loc>
-        <lastmod>2023-07-23T12:32:50.811Z</lastmod>
+        <lastmod>2023-07-23T15:22:21.395Z</lastmod>
     </sitemap>
 
 </sitemapindex>

@@ -14,13 +14,13 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="Strassen Algorithm요약선형대수학에서 슈트라센 알고리즘은 독일의 수학자 폴커 슈트라센(Volker Strassen)이 1969년에 개발한행렬 곱셈 알고리즘이다.정의에 따라 n×n 크기의 두 행렬을 곱하면 O(n3)의 시간이 소요되지만이 알고리즘은 대략 O(n2.807)의 시간이 소요된다. 알고리즘- 일반적인 행렬의 곱셈일반적으로 행렬의 곱셈은">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/Strassen/matrixcomplex.JPG">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Strassen/matrixcomplex.JPG">
 <meta property="article:published_time" content="2020-04-05T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:15.688Z">
+<meta property="article:modified_time" content="2023-07-23T15:01:17.955Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/Strassen/matrixcomplex.JPG">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/Strassen/matrixcomplex.JPG">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -184,7 +184,7 @@
     <h1 id="Strassen-Algorithm"><a href="#Strassen-Algorithm" class="headerlink" title="Strassen Algorithm"></a>Strassen Algorithm</h1><h2 id="요약"><a href="#요약" class="headerlink" title="요약"></a>요약</h2><p>선형대수학에서 슈트라센 알고리즘은 독일의 수학자 폴커 슈트라센(Volker Strassen)이 1969년에 개발한<br>행렬 곱셈 알고리즘이다.<br>정의에 따라 n×n 크기의 두 행렬을 곱하면 O(n<sup>3</sup>)의 시간이 소요되지만<br>이 알고리즘은 대략 O(n<sup>2.807</sup>)의 시간이 소요된다.</p>
 <h2 id="알고리즘"><a href="#알고리즘" class="headerlink" title="알고리즘"></a>알고리즘</h2><h3 id="일반적인-행렬의-곱셈"><a href="#일반적인-행렬의-곱셈" class="headerlink" title="- 일반적인 행렬의 곱셈"></a>- 일반적인 행렬의 곱셈</h3><p>일반적으로 행렬의 곱셈은 A(ixj) , B(kxl) 일 때 AxB 행렬의 크기는 AxB(ixl)이 된다.<br>이 글에서는 스트라센 알고리즘을 위해 정방행렬을 사용할 것이다.</p>
 <p>우리가 일반적으로 사용하는 행렬의 곱셉이다.<br>nxn 크기의 정사각 행렬을 곱하면 총 n<sup>2</sup>번의 곱셈과 (n-1)n<sup>2</sup>번의 덧셈을 한다. O(n<sup>3</sup>)의 시간이 소요된다.</p>
-<p><img src="/assets/img/posts/Strassen/matrixcomplex.JPG" alt="matrix"><br><sup>이미지 출처: PPT 수식 캡쳐</sup></p>
+<p><img src="/images/img/posts/Strassen/matrixcomplex.JPG" alt="matrix"><br><sup>이미지 출처: PPT 수식 캡쳐</sup></p>
 <p>C<sub>1,1</sub> &#x3D;<br>(A<sub>1,1</sub> x B<sub>1,1</sub> + A<sub>1,2</sub> x B<sub>2,1</sub>)</p>
 <p>C<sub>1,2</sub> &#x3D;<br>(A<sub>1,1</sub> x B<sub>1,2</sub> + A<sub>1,2</sub> x B<sub>1,2</sub>)</p>
 <p>C<sub>2,1</sub> &#x3D;<br>(A<sub>2,1</sub> x B<sub>1,1</sub> + A<sub>2,2</sub> x B<sub>2,1</sub>)</p>

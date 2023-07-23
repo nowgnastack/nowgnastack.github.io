@@ -14,20 +14,20 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="Todo를 vue로 만들어 보자(vue cli)">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/vue/vuetodo/pic1.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/vue/vuetodo/pic2.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/vue/vuetodo/pic3.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/vue/vuetodo/pic4.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/vue/vuetodo/pic5.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/vue/vuetodo/pic6.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/vue/vuetodo/pic7.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/vue/vuetodo/pic8.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/vue/vuetodo/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/vue/vuetodo/pic2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/vue/vuetodo/pic3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/vue/vuetodo/pic4.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/vue/vuetodo/pic5.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/vue/vuetodo/pic6.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/vue/vuetodo/pic7.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/vue/vuetodo/pic8.png">
 <meta property="article:published_time" content="2022-11-09T15:54:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:16.374Z">
+<meta property="article:modified_time" content="2023-07-23T15:21:52.354Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="vue javascript todo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/posting/vue/vuetodo/pic1.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/posting/vue/vuetodo/pic1.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -193,27 +193,27 @@
     <h1 id="create-project"><a href="#create-project" class="headerlink" title="create project"></a>create project</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create appname</span><br></pre></td></tr></table></figure>
 
 <p>vue create를 사용하여 vue 프로젝트를 생성한다. 프로젝트 이름에는 대문자가 들어갈 수 없으며, 하이픈(-)은 사용 가능하다. (ex. my-app)</p>
-<p><img src="/assets/posting/vue/vuetodo/pic1.png" alt="스크린샷 2022-11-09 오후 2.06.43.png"></p>
+<p><img src="/images/posting/vue/vuetodo/pic1.png" alt="스크린샷 2022-11-09 오후 2.06.43.png"></p>
 <p>위 명령어를 치게 되면 vue 프로젝트를 생성할 수 있는 선택지가 나온다. vue 2, 3버전을 사용하거나 원하는 의존성을 따로 설치할 수 있는 Manually 옵션이 있다. 이번 프로젝트는 Manually를 선택해서 생성해 본다.</p>
-<p><img src="/assets/posting/vue/vuetodo/pic2.png" alt="스크린샷 2022-11-09 오후 2.08.29.png"></p>
+<p><img src="/images/posting/vue/vuetodo/pic2.png" alt="스크린샷 2022-11-09 오후 2.08.29.png"></p>
 <p>Manually를 선택하게 되면 프로젝트 설정에 대한 내용이 나온다. Babel, Router, Vuex, Linter &#x2F; Formatter를 선택해 준다.</p>
-<p><img src="/assets/posting/vue/vuetodo/pic3.png" alt="스크린샷 2022-11-09 오후 2.09.47.png"></p>
+<p><img src="/images/posting/vue/vuetodo/pic3.png" alt="스크린샷 2022-11-09 오후 2.09.47.png"></p>
 <p>버전은 2, 3 버전 중 선택이 가능하다. 이번 프로젝트는 2 버전을 선택한다.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Use <span class="built_in">history</span> mode <span class="keyword">for</span> router? (Requires proper server setup <span class="keyword">for</span> index fallback <span class="keyword">in</span> production)</span><br></pre></td></tr></table></figure>
 
 <p>위와 같은 router에 대한 질문이 나오는데 Yes를 선택해 준다.</p>
-<p><img src="/assets/posting/vue/vuetodo/pic4.png" alt="스크린샷 2022-11-09 오후 2.13.14.png"></p>
+<p><img src="/images/posting/vue/vuetodo/pic4.png" alt="스크린샷 2022-11-09 오후 2.13.14.png"></p>
 <p>linter와 fommater에 대한 질문이다. 다양한 fomatting이 있지만 이번 프로젝트는 가장 위에 있는 것을 선택해 준다.</p>
-<p><img src="/assets/posting/vue/vuetodo/pic5.png" alt="스크린샷 2022-11-09 오후 2.14.00.png"></p>
+<p><img src="/images/posting/vue/vuetodo/pic5.png" alt="스크린샷 2022-11-09 오후 2.14.00.png"></p>
 <p>Lint가 언제 코드를 확인해 주는가에 대한 내용이다. 저장 시 확인해 주는 것으로 선택한다.</p>
-<p><img src="/assets/posting/vue/vuetodo/pic6.png" alt="스크린샷 2022-11-09 오후 2.14.45.png"></p>
+<p><img src="/images/posting/vue/vuetodo/pic6.png" alt="스크린샷 2022-11-09 오후 2.14.45.png"></p>
 <p>프로젝트에 대한 설정들을 어디에 명시할지에 대한 질문이다 package.json을 선택해 준다.</p>
-<p><img src="/assets/posting/vue/vuetodo/pic7.png" alt="스크린샷 2022-11-09 오후 2.15.34.png"></p>
+<p><img src="/images/posting/vue/vuetodo/pic7.png" alt="스크린샷 2022-11-09 오후 2.15.34.png"></p>
 <p>지금까지 선택한 사항들을 저장할 것인지에 대한 질문이다. linter 부분에서 가장 위에 있는걸 선택해서 eslint-default라고 이름을 지어줄 것이다.</p>
-<p><img src="/assets/posting/vue/vuetodo/pic8.png" alt="스크린샷 2022-11-09 오후 2.16.44.png"></p>
+<p><img src="/images/posting/vue/vuetodo/pic8.png" alt="스크린샷 2022-11-09 오후 2.16.44.png"></p>
 <p>이름을 지어주어 preset을 저장하면 다음 프로젝트 생성 시 바로 사용할 수 있다.</p>
 <h1 id="Todo-기능-만들어보기"><a href="#Todo-기능-만들어보기" class="headerlink" title="Todo 기능 만들어보기"></a>Todo 기능 만들어보기</h1><p>프로젝트 세팅이 끝났으니 할일을 추가하고 완료 표시를 할 수 있는 todo list를 만들어보자</p>
-<h2 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// App.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span> |</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/about&quot;</span>&gt;</span>About<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span> |</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/board&quot;</span>&gt;</span>board<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span> |</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/todo&quot;</span>&gt;</span>TODO<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">router-view</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// App.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span> |<span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/about&quot;</span>&gt;</span>About<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span> |</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/board&quot;</span>&gt;</span>board<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span> |<span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/todo&quot;</span>&gt;</span>TODO<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">router-view</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/index.js</span></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&quot;/&quot;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;home&quot;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">HomeView</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  ...&#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&quot;/todo&quot;</span>,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;todo&quot;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">TodoView</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
 

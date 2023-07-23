@@ -14,15 +14,15 @@
 <meta property="og:site_name" content="nowgnastack">
 <meta property="og:description" content="파이썬 알고리즘 인터뷰 23장을 정리한 내용입니다.  다이나믹프로그래밍 다이나믹프로그래밍 알고리즘은 문제를 각각의 작은 문제로 나누어 해결한 결과를 저장해뒀다가 나중에 큰 문제의 결과와 합하여 풀이하는 알고리즘이다 다이나믹 프로그래밍을 이용해 문제의 최적 해결 방법이 부분 문제에 대한 최적 해결 방법으로 구성되는 경우의 문제를 풀이할 수 있다 순간 최적을">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter23/pic1.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter23/pic2.png">
-<meta property="og:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter23/pic3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter23/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter23/pic2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter23/pic3.png">
 <meta property="article:published_time" content="2021-09-30T08:31:00.000Z">
-<meta property="article:modified_time" content="2023-04-17T01:56:16.023Z">
+<meta property="article:modified_time" content="2023-07-23T15:11:35.642Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://nowgnastack.github.io/assets/img/posts/pyAlgo/chapter23/pic1.png">    
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter23/pic1.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
      
   <link
@@ -193,16 +193,16 @@
 <li>다이나믹 프로그래밍을 이용해 문제의 최적 해결 방법이 부분 문제에 대한 최적 해결 방법으로 구성되는 경우의 문제를 풀이할 수 있다</li>
 <li>순간 최적을 선택하는 그리디 알고리즘과 많이 비교되며 다이타믹 프로그래밍은 중복된 하위 문제들의 결과를 저장했다가 풀이한다는 차이가 있다</li>
 </ul>
-<h1 id="최적-부분-구조"><a href="#최적-부분-구조" class="headerlink" title="최적 부분 구조"></a>최적 부분 구조</h1><p><img src="/assets/img/posts/pyAlgo/chapter23/pic1.png" alt="스크린샷, 2021-09-29 17-58-34.png"></p>
+<h1 id="최적-부분-구조"><a href="#최적-부분-구조" class="headerlink" title="최적 부분 구조"></a>최적 부분 구조</h1><p><img src="/images/img/posts/pyAlgo/chapter23/pic1.png" alt="스크린샷, 2021-09-29 17-58-34.png"></p>
 <ul>
 <li>서울에서 부산까지 가는 최단 경로를 찾는 간단한 예이다</li>
 <li>서울에서 대구까지는 3가지의 경로가 있고 부산까지도 3가지의 경로를 가지고 있다</li>
 <li>서울에서 부산까지의 최단 경로는 $200km + 80km&#x3D;280km$이다</li>
 <li>위 경로는 서울에서 대구까지 가는 최단경로(200km)와 대구에서 부산까지 가는 최단 경로(80km)로 구성된다</li>
-<li>서울에서 부산까지의 최단 경로는 (1)서울에서 대구까지 최단경로 (2)대구에서 부산까지 최단경로 두가지 부분 문제의 해답의 합이된다 </li>
+<li>서울에서 부산까지의 최단 경로는 (1)서울에서 대구까지 최단경로 (2)대구에서 부산까지 최단경로 두가지 부분 문제의 해답의 합이된다</li>
 <li>이런 구조는 부분 문제에 대한 최적 해결 방법으로 구성되는 다이나믹 프로그래밍이다</li>
 </ul>
-<h1 id="다이나믹-프로그래밍-방법론"><a href="#다이나믹-프로그래밍-방법론" class="headerlink" title="다이나믹 프로그래밍 방법론"></a>다이나믹 프로그래밍 방법론</h1><p><img src="/assets/img/posts/pyAlgo/chapter23/pic2.png" alt="스크린샷, 2021-09-29 18-18-23.png"></p>
+<h1 id="다이나믹-프로그래밍-방법론"><a href="#다이나믹-프로그래밍-방법론" class="headerlink" title="다이나믹 프로그래밍 방법론"></a>다이나믹 프로그래밍 방법론</h1><p><img src="/images/img/posts/pyAlgo/chapter23/pic2.png" alt="스크린샷, 2021-09-29 18-18-23.png"></p>
 <ul>
 <li>상향식과 하향식으로 나뉜다 상향식을 타블레이션, 하향식을 메모이제이션이라고도 한다</li>
 </ul>
@@ -228,7 +228,7 @@
 <ul>
 <li><code>pack</code>에 중간 결과 테이블을 생성한다</li>
 <li>테이블 크기의 기준은 짐의 최대 개수 +1, 배낭의 최대 용량 +1로 6X16이다</li>
-<li>각 셀에는 위치까지의 짐의 개수와 배낭에 용량에 따른 최댓값이 담긴다<br><img src="/assets/img/posts/pyAlgo/chapter23/pic3.png" alt="스크린샷, 2021-09-30 12-51-41.png"></li>
+<li>각 셀에는 위치까지의 짐의 개수와 배낭에 용량에 따른 최댓값이 담긴다<br><img src="/images/img/posts/pyAlgo/chapter23/pic3.png" alt="스크린샷, 2021-09-30 12-51-41.png"></li>
 <li>세로축은 짐의 개수, 가로축은 배낭의 용량이다</li>
 <li>0-1 배낭문제를 타뷸레이션으로 풀었다</li>
 </ul>
