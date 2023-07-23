@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="javascript map, reduce, filter로 문자열 다루기">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="javascript map, reduce, filter로 문자열 다루기">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-09T13:13:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.145Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="elice">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/02/16/2022-02-16-algo12/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/02/08/2022-02-08-algo11/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&text=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&is_video=false&description=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)&body=Check out this article: https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&name=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&t=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%A1%B0%EC%9E%91%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">문자열 조작하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#trim"><span class="toc-number">1.0.1.</span> <span class="toc-text">trim()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#split"><span class="toc-number">1.0.2.</span> <span class="toc-text">split()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B0%B0%EC%97%B4-%EB%8B%A4%EB%A3%A8%EA%B8%B0-filter-reduce-map"><span class="toc-number">2.</span> <span class="toc-text">배열 다루기 (filter, reduce, map)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#filter"><span class="toc-number">2.1.</span> <span class="toc-text">filter()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce"><span class="toc-number">2.2.</span> <span class="toc-text">reduce()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map"><span class="toc-number">2.3.</span> <span class="toc-text">map()</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-02-09T13:13:00.000Z" class="dt-published" itemprop="datePublished">2022-02-09</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/elice/" rel="tag">elice</a>, <a class="p-category" href="/tags/javascript/" rel="tag">javascript</a>, <a class="p-category" href="/tags/web/" rel="tag">web</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>이 포스트는 엘리스 AI 트랙 4기 강의를 듣고 정리한 내용입니다.</p>
+</blockquote>
+<h1 id="문자열-조작하기"><a href="#문자열-조작하기" class="headerlink" title="문자열 조작하기"></a>문자열 조작하기</h1><p>문장에서 각 알파벳이 몇개 존재하는지 출력하는 알고리즘을 구현해 보았다. Javascript의 문자열을 조작할 수 있는 내장함수를 사용했다.</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> stringControll = <span class="string">&quot;hi my name is marshmello!!&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> alpha_count = stringControll</span><br><span class="line">  .<span class="title function_">trim</span>()</span><br><span class="line">  .<span class="title function_">split</span>(<span class="string">&quot;&quot;</span>)</span><br><span class="line">  .<span class="title function_">filter</span>(<span class="function">(<span class="params">alpha</span>) =&gt;</span> alpha &gt;= <span class="string">&quot;a&quot;</span> &amp;&amp; alpha &lt;= <span class="string">&quot;z&quot;</span>)</span><br><span class="line">  .<span class="title function_">reduce</span>(<span class="function">(<span class="params">map, char</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!map[char]) &#123;</span><br><span class="line">      map[char] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    map[char]++;</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">  &#125;, &#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(alpha_count);</span><br></pre></td></tr></table></figure>
+
+<h3 id="trim"><a href="#trim" class="headerlink" title="trim()"></a>trim()</h3><p><code>trim()</code>은 문자열의 앞, 뒤에 공백이 존재할 경우 공백을 없애주는 함수이다.</p>
+<h3 id="split"><a href="#split" class="headerlink" title="split()"></a>split()</h3><p><code>split()</code>은 문자열에서 지정된 구분자를 사용해서 여러개의 문자열로 나눠 배열을 반환해 준다.</p>
+<h1 id="배열-다루기-filter-reduce-map"><a href="#배열-다루기-filter-reduce-map" class="headerlink" title="배열 다루기 (filter, reduce, map)"></a>배열 다루기 (filter, reduce, map)</h1><h2 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h2><p><code>filter()</code>는 주어진 함수의 테스트를 통과하는 모든 요소를 모아 새로운 배열을 반환해 준다.</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> filter_a = a.<span class="title function_">filter</span>(<span class="function">(<span class="params">v</span>) =&gt;</span> v % <span class="number">2</span> == <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>filter()</code>를 사용해 배열 안에서 짝수인 값만 반환하는 코드이다. <code>v</code>는 배열의 인자를 차례대로 돌고, <code>=&gt;</code>뒤에는 조건이 들어간다. 조건이 맞는 값들만 새로운 배열에 저장된다.</p>
+<h2 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a>reduce()</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.<span class="title function_">reduce</span>(callback[, initialValue])</span><br></pre></td></tr></table></figure>
+
+<p><code>reducer()</code>의 구조는 <code>callback</code>과 <code>initialValue</code>로 구성되며, <code>callback</code>에는 네 가지의 매개변수가 있다.</p>
+<ul>
+<li>accumulator<br>누산기는 콜백 함수의 반환값을 누적한다. 콜백의 첫 번째 호출이면서 <code>initialValue</code>를 제공한 경우에는 <code>initialValue</code>의 값이다.</li>
+<li>currentValue<br>처리할 현재 요소이다.</li>
+<li>currentIndex<br>처리할 현재 요소의 인덱스. <code>initialValue</code>를 제공한 경우 0, 아니면 1부터 시작한다.</li>
+<li>array<br><code>reduce()</code>를 호출한 배열이다.</li>
+<li>initialValue<br><code>callback</code>의 최초 호출에서 첫 번째 인수에 제공하는 값이다. 초기값을 제공하지 않으면 배열의 첫 번째 요소를 사용한다. 빈 배열에서 초기값 없이 <code>reduce()</code>를 호출하면 오류가 발생하게 된다.</li>
+</ul>
+<p><code>currentValue</code>, <code>array</code>, <code>initialValue</code>는 필수 인자는 아니다.</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// reducer 함수 정의</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">reducer</span> = (<span class="params">prev, curr</span>) =&gt; prev + curr;</span><br><span class="line"><span class="keyword">const</span> reduce_result = a.<span class="title function_">reduce</span>(reducer);</span><br><span class="line"></span><br><span class="line"><span class="comment">// reduce 함수 내에서 reducer 정의</span></span><br><span class="line"><span class="keyword">const</span> reduce_inner = a.<span class="title function_">reduce</span>(<span class="function">(<span class="params">prev, curr</span>) =&gt;</span> prev + curr);</span><br></pre></td></tr></table></figure>
+
+<p><code>reduce()</code>는 배열의 각 요소에 대해 주어진 <code>reducer</code>함수를 실행하고, 하나의 결과값을 반환한다. <code>reducer</code>함수는 따로 함수로 선언해서 사용할 수도 있고, <code>reduce()</code>내에서 정의할 수도 있다.</p>
+<h2 id="map"><a href="#map" class="headerlink" title="map()"></a>map()</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> aa = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> map_a = aa.<span class="title function_">map</span>(<span class="function">(<span class="params">v</span>) =&gt;</span> v * <span class="number">2</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(map_a); <span class="comment">// [ 2, 4, 6, 8, 10 ]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>map()</code>메서드는 배열 내의 모든 요소 각각에 대해 주어진 함수를 호출한 결과를 모아 새로운 배열을 반환한다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr.map(callback(currentValue[, index[, array]])[, thisArg])</span><br></pre></td></tr></table></figure>
+
+<p><code>callback()</code>은 세 가지 인자를 가진다.</p>
+<ul>
+<li>currentValue: 처리할 현재 요소</li>
+<li>index: 처리할 요소의 인덱스</li>
+<li>array: <code>map()</code>을 호출한 배열</li>
+<li>thisArg: <code>callback</code>을 실행할 때 <code>this</code>로 사용되는 값</li>
+</ul>
+<p><code>index</code>와 <code>array</code>, <code>thisArg</code>는 필수 요소는 아니다. <code>map()</code>은 배열의 각 요소에 대해 실행한 <code>callback</code>의 결과를 모은 새로운 배열을 반환한다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%AC%B8%EC%9E%90%EC%97%B4-%EC%A1%B0%EC%9E%91%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">문자열 조작하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#trim"><span class="toc-number">1.0.1.</span> <span class="toc-text">trim()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#split"><span class="toc-number">1.0.2.</span> <span class="toc-text">split()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B0%B0%EC%97%B4-%EB%8B%A4%EB%A3%A8%EA%B8%B0-filter-reduce-map"><span class="toc-number">2.</span> <span class="toc-text">배열 다루기 (filter, reduce, map)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#filter"><span class="toc-number">2.1.</span> <span class="toc-text">filter()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce"><span class="toc-number">2.2.</span> <span class="toc-text">reduce()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map"><span class="toc-number">2.3.</span> <span class="toc-text">map()</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&text=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&is_video=false&description=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)&body=Check out this article: https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&title=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&name=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/02/09/2022-02-09-elice4/&t=Javascript 내장 함수 (문자열 다루기, Map, Filter, Reduce)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

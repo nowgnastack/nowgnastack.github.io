@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="강화학습이란?  에이전트가 환경으로부터 얻는 보상을 통해 좋은 행동을 더 많이 하게 하는 학습 방법이다.  강화학습 기초Markov Decision Process(MDP) 순차척 행동을 결정하는 문제를 풀때 MDP를 사용한다.   상태: 에이전트가 관찰 가능한 상태의 집합  행동: 에이전트가 상태에서 할 수 있는 행동의 집합  보상함수: 환경이 에이전트에게">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reinforcement Learning">
+<meta property="og:url" content="https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="강화학습이란?  에이전트가 환경으로부터 얻는 보상을 통해 좋은 행동을 더 많이 하게 하는 학습 방법이다.  강화학습 기초Markov Decision Process(MDP) 순차척 행동을 결정하는 문제를 풀때 MDP를 사용한다.   상태: 에이전트가 관찰 가능한 상태의 집합  행동: 에이전트가 상태에서 할 수 있는 행동의 집합  보상함수: 환경이 에이전트에게">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/RL_img.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/bellman_optimal.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/policy_evaluation.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/greedy_pol.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/value_iteration.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/PI.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/sarsa1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/sarsa3.png">
+<meta property="article:published_time" content="2020-08-18T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:04:59.456Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="reinforcement learning">
+<meta property="article:tag" content="tave">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/RL_study_1/RL_img.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Reinforcement Learning</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2020/08/19/2020-08-19-reinforcement_learning1/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/08/20/2020-08-20-pytorch/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&text=Reinforcement Learning"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&is_video=false&description=Reinforcement Learning"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Reinforcement Learning&body=Check out this article: https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&name=Reinforcement Learning&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&t=Reinforcement Learning"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%95%ED%99%94%ED%95%99%EC%8A%B5%EC%9D%B4%EB%9E%80"><span class="toc-number">1.</span> <span class="toc-text">강화학습이란?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%95%ED%99%94%ED%95%99%EC%8A%B5-%EA%B8%B0%EC%B4%88"><span class="toc-number">2.</span> <span class="toc-text">강화학습 기초</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Markov-Decision-Process-MDP"><span class="toc-number">2.0.1.</span> <span class="toc-text">Markov Decision Process(MDP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Value-Function"><span class="toc-number">2.0.2.</span> <span class="toc-text">Value Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Policy"><span class="toc-number">2.0.3.</span> <span class="toc-text">Policy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman-Expectation-Equation"><span class="toc-number">2.0.4.</span> <span class="toc-text">Bellman Expectation Equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-Function"><span class="toc-number">2.0.5.</span> <span class="toc-text">Q-Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman-Optimality-Equation"><span class="toc-number">2.0.6.</span> <span class="toc-text">Bellman Optimality Equation</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dynamic-Programming"><span class="toc-number">3.</span> <span class="toc-text">Dynamic Programming</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%A0%95%EC%B1%85-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%EC%85%98-%EC%A0%95%EC%B1%85-%ED%8F%89%EA%B0%80%EC%99%80-%EC%A0%95%EC%B1%85-%EB%B0%9C%EC%A0%84"><span class="toc-number">3.0.1.</span> <span class="toc-text">정책 이터레이션: 정책 평가와 정책 발전</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EC%A0%95%EC%B1%85-%ED%8F%89%EA%B0%80"><span class="toc-number">3.0.1.1.</span> <span class="toc-text">정책 평가</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EC%A0%95%EC%B1%85-%EB%B0%9C%EC%A0%84"><span class="toc-number">3.0.1.2.</span> <span class="toc-text">정책 발전</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EA%B0%80%EC%B9%98-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%EC%85%98"><span class="toc-number">3.0.2.</span> <span class="toc-text">가치 이터레이션</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Q-Learning"><span class="toc-number">4.</span> <span class="toc-text">Q-Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Monte-carlo-Approximation"><span class="toc-number">4.0.1.</span> <span class="toc-text">Monte-carlo Approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Temporal-Difference-Prediction"><span class="toc-number">4.0.2.</span> <span class="toc-text">Temporal Difference Prediction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SARSA"><span class="toc-number">4.0.3.</span> <span class="toc-text">SARSA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-Learning-1"><span class="toc-number">4.0.4.</span> <span class="toc-text">Q-Learning</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">4.1.</span> <span class="toc-text">정리</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Reinforcement Learning
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-08-18T15:00:00.000Z" class="dt-published" itemprop="datePublished">2020-08-19</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/reinforcement-learning/">reinforcement learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/reinforcement-learning/" rel="tag">reinforcement learning</a>, <a class="p-category" href="/tags/tave/" rel="tag">tave</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="강화학습이란"><a href="#강화학습이란" class="headerlink" title="강화학습이란?"></a>강화학습이란?</h1><p><img src="/images/img/posts/RL_study_1/RL_img.png" alt="RL"></p>
+<ul>
+<li>에이전트가 환경으로부터 얻는 보상을 통해 좋은 행동을 더 많이 하게 하는 학습 방법이다.</li>
+</ul>
+<h1 id="강화학습-기초"><a href="#강화학습-기초" class="headerlink" title="강화학습 기초"></a>강화학습 기초</h1><h3 id="Markov-Decision-Process-MDP"><a href="#Markov-Decision-Process-MDP" class="headerlink" title="Markov Decision Process(MDP)"></a>Markov Decision Process(MDP)</h3><ul>
+<li>순차척 행동을 결정하는 문제를 풀때 MDP를 사용한다.</li>
+</ul>
+<ol>
+<li><p>상태: 에이전트가 관찰 가능한 상태의 집합</p>
+</li>
+<li><p>행동: 에이전트가 상태에서 할 수 있는 행동의 집합</p>
+</li>
+<li><p>보상함수: 환경이 에이전트에게 주는 정보. 에이전트가 학습할 수 있는 정보</p>
+</li>
+<li><p>상태변환 확률: 에이전트가 어떠한 상태 s에서 행동 a를 해서 다음 상태 s’에 도달할 확률</p>
+</li>
+<li><p>감가율: 받는 보상정보를 수학적으로 표현하기 위함</p>
+</li>
+</ol>
+<h3 id="Value-Function"><a href="#Value-Function" class="headerlink" title="Value Function"></a>Value Function</h3><ul>
+<li><p>반환값(return): 에이전트가 탐험하며 얻은 보상<br><b>G<sub>t</sub> &#x3D; R<sub>t+1</sub> + 𝛾R<sub>t+2</sub> + 𝛾<sup>2</sup>R<sub>t+3</sub> …</b></p>
+</li>
+<li><p>가치함수(value function): 얼마의 보상을 받을지에 대한 기댓값<br><b>v(s) &#x3D; E[G<sub>t</sub>|S<sub>t</sub> &#x3D; s] &#x3D; E[R<sub>t+1</sub> + 𝛾R<sub>t+2</sub> + 𝛾<sup>2</sup>R<sub>t+3</sub> + … |S<sub>t</sub> &#x3D; s]</b></p>
+</li>
+</ul>
+<h3 id="Policy"><a href="#Policy" class="headerlink" title="Policy"></a>Policy</h3><ul>
+<li>정책은 모든 상태에서 에이전트가 할 행동이다.<br><b>𝜋(𝑎|𝑠) &#x3D; P[A<sub>t</sub> &#x3D; a| S<sub>t</sub> &#x3D; s]</b></li>
+</ul>
+<h3 id="Bellman-Expectation-Equation"><a href="#Bellman-Expectation-Equation" class="headerlink" title="Bellman Expectation Equation"></a>Bellman Expectation Equation</h3><ul>
+<li>벨만 기대방정식은 현재상태의 가치함수와 다음상태의 가치함수 사이의 관계를 말해준다.<br><b>v<sub>𝜋</sub>(s) &#x3D; E<sub>𝜋</sub>[R<sub>t+1</sub> + 𝛾𝑣(S<sub>t+1</sub>) | S<sub>t</sub> &#x3D; s]</b></li>
+</ul>
+<h3 id="Q-Function"><a href="#Q-Function" class="headerlink" title="Q-Function"></a>Q-Function</h3><ul>
+<li>큐 함수는 어떤 상태에서 어떤 행동이 얼마나 좋은지 알려주는 함수이다.</li>
+<li>상태와 행동이라는 두가지 변수를 가진다.<br><b>q<sub>𝜋</sub>(s, a) &#x3D; E[R<sub>t+1</sub> + 𝛾q<sub>𝜋</sub>(S<sub>t+1</sub>, A<sub>t+1</sub>) | S<sub>t</sub> &#x3D; s, A<sub>t</sub> &#x3D; a]</b></li>
+</ul>
+<h3 id="Bellman-Optimality-Equation"><a href="#Bellman-Optimality-Equation" class="headerlink" title="Bellman Optimality Equation"></a>Bellman Optimality Equation</h3><ul>
+<li>가치함수의 역할은 정책을 정하고 정책을 따라갔을때 받는 보상들의 합인 가치함수로 더 좋은 정책을 찾는것이다.<br><img src="/images/img/posts/RL_study_1/bellman_optimal.png" alt="bellman optimal"></li>
+</ul>
+<h1 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h1><ul>
+<li><p>큰 문제를 한번에 해결하기 힘들때 작은 여러개의 문제로 나눠 푸는 방법 ex)피보나치 수열</p>
+</li>
+<li><p>모든 상태에 대해 가치함수를 구하고 iteration을 돌며 각 상태에 대한 가치함수를 업데이트 한다.</p>
+</li>
+<li><p>5*5인 그리드 월드에서의 가치함수가 구해지는 과정이다.</p>
+<table>
+<thead>
+<tr>
+<th align="center">itration</th>
+<th align="center">가치함수(v<sub>𝜋</sub>)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">v<sub>0</sub>(s<sub>1</sub>),…, v<sub>0</sub>(s<sub>25</sub>)</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">v<sub>1</sub>(s<sub>1</sub>),…, v<sub>1</sub>(s<sub>25</sub>)</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">…</td>
+</tr>
+<tr>
+<td align="center">k</td>
+<td align="center">v<sub>𝜋</sub>(s<sub>1</sub>),…, v<sub>𝜋</sub>(s<sub>25</sub>)</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="정책-이터레이션-정책-평가와-정책-발전"><a href="#정책-이터레이션-정책-평가와-정책-발전" class="headerlink" title="정책 이터레이션: 정책 평가와 정책 발전"></a>정책 이터레이션: 정책 평가와 정책 발전</h3><ul>
+<li><p>정책 이터레이션<br>다이나믹 프로그래밍으로 벨만방정식을 풀어서 가치함수를<br>구하는 과정이다.</p>
+</li>
+<li><p>처음에는 무작위로 행동을 하고 iteration을 돌며 가치함수 최적화를 한다.</p>
+<h4 id="정책-평가"><a href="#정책-평가" class="headerlink" title="정책 평가"></a>정책 평가</h4><ul>
+<li>어떤 정책이 있을때 그 정책을 정책 평가 를 통해 얼마나<br>좋은지 판단하고 그 결과를 기준으로 더 좋은 정책 으로 발전 시킨다.<br><img src="/images/img/posts/RL_study_1/policy_evaluation.png" alt="policy evaluation"></li>
+</ul>
+<h4 id="정책-발전"><a href="#정책-발전" class="headerlink" title="정책 발전"></a>정책 발전</h4><ul>
+<li>정책 평가를 바탕으로 정책을 발전시킨다.</li>
+<li>탐욕 정책 발전(Greedy Policy Improvement)를 사용</li>
+<li>Q-Function을 사용하여 행동에 대한 가치함수를 알 수 있다.</li>
+<li>argmax는 가장 큰 큐함수를 가지는 행동을 반환하는 함수이다.<br><img src="/images/img/posts/RL_study_1/greedy_pol.png" alt="greedy pol"></li>
+</ul>
+</li>
+</ul>
+<h3 id="가치-이터레이션"><a href="#가치-이터레이션" class="headerlink" title="가치 이터레이션"></a>가치 이터레이션</h3><ul>
+<li>가치 이터레이션은 가치함수가 최적이라는 전제하에 각 상태에 대한 가치함수를 업데이트 하는 방법이다.<br>(벨만최적방정식 사용한다)</li>
+<li>벨만 최적방정식에서는 현재 상태에서 가능한 최고의<br>가치함수 값을 고려하면 된다.</li>
+<li>벨만 최적 방정식과는 다르게 정책값을 이용해 기댓값을 계산하던 부분이 없어지고 max가 있다.<br><img src="/images/img/posts/RL_study_1/value_iteration.png" alt="value iteration"></li>
+</ul>
+<h1 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h1><h3 id="Monte-carlo-Approximation"><a href="#Monte-carlo-Approximation" class="headerlink" title="Monte-carlo Approximation"></a>Monte-carlo Approximation</h3><ul>
+<li><p>몬테카를로 근사의 예시로 원의 넓이 구하기가 있다.</p>
+</li>
+<li><p>원의 넓이는 <b>S &#x3D; 𝜋r<sup>2</sup></b> 이다.</p>
+</li>
+<li><p>원의 넓이를 구하는 공식을 모를때 몬테카를로 근사를 사용할 수 있다.<br><img src="/images/img/posts/RL_study_1/PI.png" alt="PI"></p>
+</li>
+<li><p>몬테카를로 근사로 원의 넓이 구하기</p>
+<p>1 원이 그려진 종이위에 점을 무작위로 뿌린다.<br>2 뿌린 점들중 원에 들어간 점의 비율을 구하면 이미 알고있는 사각형의 넓이를 통해 원의 넓이를 추정할 수 있다.<br>3 뿌린 점의 비율로 (원의 넓이)&#x2F;(사각형의 넓이) 를 근사하는 것이다.<br><a target="_blank" rel="noopener" href="https://marshmellowon.github.io/2020/05/29/PI.html">파이썬으로 PI값 예측하기</a></p>
+</li>
+<li><p>몬테카를로 예측에서 에이전트는 아래 식을 통해 에피소드 동안 경험한 모든 상태에 대해 가치함수를 업데이트 한다.<br><b>V(s) &lt;- V(s) + α(G(s) - V(s))</b></p>
+</li>
+<li><p>샘플수가 많을수록 정확한 가치함수 최적화가 가능하다.</p>
+</li>
+</ul>
+<h3 id="Temporal-Difference-Prediction"><a href="#Temporal-Difference-Prediction" class="headerlink" title="Temporal Difference Prediction"></a>Temporal Difference Prediction</h3><ul>
+<li><p>시간차 예측은 타임스텝마다 가치함수를 업데이트 하는 방법이다.</p>
+</li>
+<li><p>몬테카를로 예측은 실시간으로 가치함수의 업데이트가 불가능하다.</p>
+</li>
+<li><p>다음 스텝의 <b>보상</b>과 <b>가치함수</b>를 샘플링하여 현재 상태의 가치함수를 업데이트한다.<br><b>V(S<sub>t</sub>) &lt;- V(S<sub>t</sub>) + α(R + 𝛾V(S<sub>t+1</sub> - V(S<sub>t</sub>)</b></p>
+</li>
+<li><p><b>R + 𝛾V(S<sub>t+1</sub>)</b>를 시간차 에러(Temporal difference error)라고 한다.</p>
+</li>
+<li><p>따라서 시간차 예측은 어떤 상태에서 행동을 하면 보상을 받고<br>다음 상태를 알게되고 다음 상태의 가치함수와 알게된 보상을 더해<br>그 값을 업데이트의 목표로 삼는것을 반복한다.</p>
+</li>
+</ul>
+<h3 id="SARSA"><a href="#SARSA" class="headerlink" title="SARSA"></a>SARSA</h3><ul>
+<li>SARSA &#x3D; Policy Iteration(정책 이터레이션) + Value Iteration(가치 이터레이션)</li>
+<li>SARSA는 가치 이터레이션을 통해 문제를 해결한다.</li>
+<li>SARSA &#x3D; 시간차 예측 + 탐욕정책(ε-greedy)</li>
+<li>SARSA에서 업데이트 하는것은 큐함수이다.</li>
+<li>큐함수를 업데이트하기 위한 샘플로 [S<sub>t</sub>, A<sub>t</sub>, R<sub>t+1</sub>, S<sub>t+1</sub>, A<sub>t+1</sub>]을 사용한다.</li>
+<li>ε만큼의 확률로 탐욕적이지 않은 행동을 선택하게 한다.<br><img src="/images/img/posts/RL_study_1/sarsa1.png" alt="sarsa"></li>
+</ul>
+<h3 id="Q-Learning-1"><a href="#Q-Learning-1" class="headerlink" title="Q-Learning"></a>Q-Learning</h3><ul>
+<li>큐러닝은 에이전트가 다음상태를 알게되면 그 상태에서 가장 큰 큐함수를 현재 큐함수의 업데이트에 사용한다.</li>
+<li>온폴리시(On-Policy)학습의 경우 에이전트가 탐험할 때 문제점이 발생한다.</li>
+<li>오프폴리시(Off-Policy) &#x3D; Q-Learning으로 해결이 가능하다.</li>
+<li>현재 상태의 큐함수를 업데이트하기 위해 필요한 샘플은 [s, a, r, s]이다.<br><img src="/images/img/posts/RL_study_1/sarsa3.png" alt="sarsa2"></li>
+</ul>
+<h2 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h2><blockquote>
+<p>TAVE 6기가 8월부터 시작되었다. 머신러닝을 공부하려고 들어왔지만, 강화학습이 너무 재미있어보여서 강화학습스터디에 참여하게 되었다. 첫 스터디는 조장님이 쭉 설명을 해주셨다. 수식도 많고 헷갈리는 부분이 많았지만 반복해서 보다보니 이해가 잘 되었다.</p>
+</blockquote>
+<blockquote>
+<p>같은 팀원들이 관심도 많고 잘하는 사람들이 많아 더 열심히 해야될것 같다.</p>
+</blockquote>
+<blockquote>
+<p>우리 스터디 블로그이다.: <a target="_blank" rel="noopener" href="https://tave-6th-rlstudy.github.io/">TAVE 6기 강화학습 스터디 블로그</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%95%ED%99%94%ED%95%99%EC%8A%B5%EC%9D%B4%EB%9E%80"><span class="toc-number">1.</span> <span class="toc-text">강화학습이란?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%95%ED%99%94%ED%95%99%EC%8A%B5-%EA%B8%B0%EC%B4%88"><span class="toc-number">2.</span> <span class="toc-text">강화학습 기초</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Markov-Decision-Process-MDP"><span class="toc-number">2.0.1.</span> <span class="toc-text">Markov Decision Process(MDP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Value-Function"><span class="toc-number">2.0.2.</span> <span class="toc-text">Value Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Policy"><span class="toc-number">2.0.3.</span> <span class="toc-text">Policy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman-Expectation-Equation"><span class="toc-number">2.0.4.</span> <span class="toc-text">Bellman Expectation Equation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-Function"><span class="toc-number">2.0.5.</span> <span class="toc-text">Q-Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman-Optimality-Equation"><span class="toc-number">2.0.6.</span> <span class="toc-text">Bellman Optimality Equation</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dynamic-Programming"><span class="toc-number">3.</span> <span class="toc-text">Dynamic Programming</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%A0%95%EC%B1%85-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%EC%85%98-%EC%A0%95%EC%B1%85-%ED%8F%89%EA%B0%80%EC%99%80-%EC%A0%95%EC%B1%85-%EB%B0%9C%EC%A0%84"><span class="toc-number">3.0.1.</span> <span class="toc-text">정책 이터레이션: 정책 평가와 정책 발전</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EC%A0%95%EC%B1%85-%ED%8F%89%EA%B0%80"><span class="toc-number">3.0.1.1.</span> <span class="toc-text">정책 평가</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EC%A0%95%EC%B1%85-%EB%B0%9C%EC%A0%84"><span class="toc-number">3.0.1.2.</span> <span class="toc-text">정책 발전</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EA%B0%80%EC%B9%98-%EC%9D%B4%ED%84%B0%EB%A0%88%EC%9D%B4%EC%85%98"><span class="toc-number">3.0.2.</span> <span class="toc-text">가치 이터레이션</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Q-Learning"><span class="toc-number">4.</span> <span class="toc-text">Q-Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Monte-carlo-Approximation"><span class="toc-number">4.0.1.</span> <span class="toc-text">Monte-carlo Approximation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Temporal-Difference-Prediction"><span class="toc-number">4.0.2.</span> <span class="toc-text">Temporal Difference Prediction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SARSA"><span class="toc-number">4.0.3.</span> <span class="toc-text">SARSA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q-Learning-1"><span class="toc-number">4.0.4.</span> <span class="toc-text">Q-Learning</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">4.1.</span> <span class="toc-text">정리</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&text=Reinforcement Learning"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&is_video=false&description=Reinforcement Learning"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Reinforcement Learning&body=Check out this article: https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&title=Reinforcement Learning"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&name=Reinforcement Learning&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/08/19/2020-08-19-Reinforcement_Learning1/&t=Reinforcement Learning"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

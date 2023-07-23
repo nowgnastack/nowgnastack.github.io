@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="spring boot에서 yml 파일로 환경에 따른 설정 파일 적용하기">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot Profile 환경변수 분할 적용">
+<meta property="og:url" content="https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="spring boot에서 yml 파일로 환경에 따른 설정 파일 적용하기">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/springboot_env/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/springboot_env/pic2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/springboot_env/pic3.png">
+<meta property="article:published_time" content="2023-01-18T14:20:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:22:21.395Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="env profile spring boot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/posting/backend/springboot_env/pic1.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Spring Boot Profile 환경변수 분할 적용</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/07/23/rest-api/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/12/29/2022-12-29-jenkins/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&text=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&is_video=false&description=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Spring Boot Profile 환경변수 분할 적용&body=Check out this article: https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&name=Spring Boot Profile 환경변수 분할 적용&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&t=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%98%EA%B2%BD%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%84%A4%EC%A0%95-%ED%8C%8C%EC%9D%BC-%EB%B6%84%ED%95%A0-%EC%A0%81%EC%9A%A9"><span class="toc-number">1.</span> <span class="toc-text">환경에 따른 설정 파일 분할 적용?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-boot%EC%9D%98-%EC%84%A4%EC%A0%95-%ED%8C%8C%EC%9D%BC-application-yml"><span class="toc-number">2.</span> <span class="toc-text">spring boot의 설정 파일 application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%ED%8C%8C%EC%9D%BC-%EB%A7%8C%EB%93%A4%EA%B8%B0"><span class="toc-number">3.</span> <span class="toc-text">환경 변수 파일 만들기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Edit-Configuration"><span class="toc-number">3.1.</span> <span class="toc-text">Edit Configuration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Active-profiles"><span class="toc-number">3.2.</span> <span class="toc-text">Active profiles</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-boot-env-%ED%8C%8C%EC%9D%BC-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">spring boot env 파일 설정하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#env-yml"><span class="toc-number">5.</span> <span class="toc-text">env.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EnvConfig"><span class="toc-number">6.</span> <span class="toc-text">EnvConfig</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%ED%8C%8C%EC%9D%BC-%EC%9C%84%EC%B9%98-%EC%9E%A1%EA%B8%B0"><span class="toc-number">7.</span> <span class="toc-text">환경변수 파일 위치 잡기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">8.</span> <span class="toc-text">환경 변수 사용하기</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Spring Boot Profile 환경변수 분할 적용
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-18T14:20:00.000Z" class="dt-published" itemprop="datePublished">2023-01-18</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/spring-boot/">spring boot</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/env-profile-spring-boot/" rel="tag">env profile spring boot</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="환경에-따른-설정-파일-분할-적용"><a href="#환경에-따른-설정-파일-분할-적용" class="headerlink" title="환경에 따른 설정 파일 분할 적용?"></a>환경에 따른 설정 파일 분할 적용?</h2><p>팀 프로젝트를 진행하다보면 설정 파일에서 형상 관리를 하면서 충돌이 난다. 로컬에서 테스트하는 데이터베이스나 포트가 다른 경우 저장소에서 pull 받을 때마다 수정해줘야 하는 귀찮음이 있다.</p>
+<p>귀찮음을 해소하면서 프로젝트의 환경을 개발, 운영, 로컬로 나눌 수 있는 설정파일 분할 적용에 대해 알아보자 !</p>
+<h2 id="spring-boot의-설정-파일-application-yml"><a href="#spring-boot의-설정-파일-application-yml" class="headerlink" title="spring boot의 설정 파일 application.yml"></a>spring boot의 설정 파일 application.yml</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">activate:</span></span><br><span class="line">      <span class="attr">on-profile:</span> <span class="string">local</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="string">jpa,</span> <span class="string">datasource...</span></span><br></pre></td></tr></table></figure>
+
+<p>기본적인 설정파일이다. 서버의 포트와 데이터베이스 설정 등을 정의할 수 있다.</p>
+<p>이번 포스팅에서는 개발, 운영, 로컬을 정의해본다.</p>
+<h2 id="환경-변수-파일-만들기"><a href="#환경-변수-파일-만들기" class="headerlink" title="환경 변수 파일 만들기"></a>환경 변수 파일 만들기</h2><p>환경 변수 파일을 resources폴더 아래에 <code>application-dev.yml</code>, <code>application-local.yml</code>, <code>application-prod.yml</code>을 만든다.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># application-dev.yml</span></span><br><span class="line"><span class="comment"># 개발</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">activate:</span></span><br><span class="line">      <span class="attr">on-profile:</span> <span class="string">dev</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">...</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">----</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">----</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8090</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># application-prod.yml</span></span><br><span class="line"><span class="comment"># 운영</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">activate:</span></span><br><span class="line">      <span class="attr">on-profile:</span> <span class="string">prod</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">...</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">----</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">----</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">9999</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># application-local.yml</span></span><br><span class="line"><span class="comment"># 로컬</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">config:</span></span><br><span class="line">    <span class="attr">activate:</span></span><br><span class="line">      <span class="attr">on-profile:</span> <span class="string">local</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">org.h2.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">...</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">----</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">----</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
+
+<p>각 서버 마다 포트와 데이터베이스를 다르게 적용하였다. 세 가지 환경을 나눠 서버를 개발 할 수 있는데 환경을 나눠 실행하는 방법은 <code>Run Configuration</code>에서 profile을 설정해주면 된다.</p>
+<p><code>spring.config.active.on-profile</code>에 dev, local, prod와 같이 환경에 대한 이름을 설정해 주면된다.</p>
+<h3 id="Edit-Configuration"><a href="#Edit-Configuration" class="headerlink" title="Edit Configuration"></a>Edit Configuration</h3><p><img src="/images/posting/backend/springboot_env/pic1.png" alt="스크린샷 2023-01-18 오후 11.50.09.png"></p>
+<h3 id="Active-profiles"><a href="#Active-profiles" class="headerlink" title="Active profiles"></a>Active profiles</h3><p><img src="/images/posting/backend/springboot_env/pic2.png" alt="스크린샷 2023-01-18 오후 11.50.49.png"></p>
+<p>상단에 Edit Configuration을 열어 profile에 dev, local, prod 중 하나를 넣어 실행하면 환경에 따라 서버를 실행할 수 있다.</p>
+<p><img src="/images/posting/backend/springboot_env/pic3.png" alt="스크린샷 2023-01-18 오후 11.54.55.png"></p>
+<p>local을 넣어 실행하게되면 로그에 profile이 local로 찍히게 된다.</p>
+<p>로컬에서 개발하는 환경은 저장소에 올라가면 안되므로 .gitignore에 넣어 관리한다.</p>
+<h2 id="spring-boot-env-파일-설정하기"><a href="#spring-boot-env-파일-설정하기" class="headerlink" title="spring boot env 파일 설정하기"></a>spring boot env 파일 설정하기</h2><p>개발을 진행하다보면 토큰을 만드는 secret 키나 api 요청하는 개인 키가 필요하다. 이런 키는 저장소에 올리지 않고 사용해야 한다.</p>
+<p>설정파일에 넣고 .gitignore에 추가해 개발을 해야 한다. 사용자 정의 환경변수 파일을 만들고 spring boot가 이 설정파일들을 알게 해보자</p>
+<h2 id="env-yml"><a href="#env-yml" class="headerlink" title="env.yml"></a>env.yml</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">oauth:</span></span><br><span class="line">  <span class="attr">naver:</span></span><br><span class="line">    <span class="attr">redirect:</span></span><br><span class="line">      <span class="attr">url:</span> <span class="string">https://nid.naver.com/oauth2.0/token</span></span><br><span class="line">      <span class="attr">header:</span> <span class="string">Content-type</span></span><br><span class="line">      <span class="attr">header-value:</span> <span class="string">application/x-www-form-urlencoded;charset=utf-8</span></span><br><span class="line">      <span class="attr">grant-type:</span> <span class="string">authorization_code</span></span><br><span class="line">    <span class="attr">get-info:</span></span><br><span class="line">      <span class="attr">url:</span> <span class="string">https://openapi.naver.com/v1/nid/me</span></span><br><span class="line">      <span class="attr">header-type:</span> <span class="string">Content-type</span></span><br><span class="line">      <span class="attr">header-value:</span> <span class="string">application/x-www-form-urlencoded;charset=utf-8</span></span><br><span class="line">      <span class="attr">auth:</span></span><br><span class="line">        <span class="attr">header-type:</span> <span class="string">Authorization</span></span><br><span class="line">        <span class="attr">header-value:</span> <span class="string">&quot;Bearer &quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>먼저 사용자 정의 환경 변수 파일이다. resources 폴더에 추가하여 사용한다.</p>
+<h2 id="EnvConfig"><a href="#EnvConfig" class="headerlink" title="EnvConfig"></a>EnvConfig</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EnvConfig</span> <span class="keyword">implements</span> <span class="title class_">PropertySourceFactory</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> PropertySource&lt;?&gt; createPropertySource(String name, EncodedResource resource) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">YamlPropertiesFactoryBean</span> <span class="variable">factoryBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">YamlPropertiesFactoryBean</span>();</span><br><span class="line">        factoryBean.setResources(resource.getResource());</span><br><span class="line">        <span class="type">Properties</span> <span class="variable">properties</span> <span class="operator">=</span> factoryBean.getObject();</span><br><span class="line">        <span class="keyword">assert</span> properties != <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PropertiesPropertySource</span>(Objects.requireNonNull(resource.getResource().getFilename()), properties);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>PropertySourceFactory</code>의 구현체 <code>YamlPropertiesFactoryBean</code>를 사용해 환경 변수를 잡을 EnvConfig 클래스를 생성한다.</p>
+<h2 id="환경변수-파일-위치-잡기"><a href="#환경변수-파일-위치-잡기" class="headerlink" title="환경변수 파일 위치 잡기"></a>환경변수 파일 위치 잡기</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@PropertySource(value = &#123;</span></span><br><span class="line"><span class="meta">        &quot;classpath:env/env.yml&quot;,</span></span><br><span class="line"><span class="meta">				&quot;classpath:env/env-key.yml&quot;,</span></span><br><span class="line"><span class="meta">...</span></span><br><span class="line"><span class="meta">&#125;, factory = EnvConfig.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServerApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(ServerApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>spring boot 애플리케이션 파일에서 <code>@PropertySource</code>를 사용해 yml파일의 위치를 추가해 준다.</p>
+<p>value 속성에 환경변수가 필요한 파일들의 위치를 지정해 주면 되는데 resources의 경로는 classpath:로 시작하며 spring boot가 잡을 파일까지 경로를 추가해 주면된다.</p>
+<p>factory 속성은 위에서 정의해준 EnvConfig 클래스를 넣어주면 된다</p>
+<h2 id="환경-변수-사용하기"><a href="#환경-변수-사용하기" class="headerlink" title="환경 변수 사용하기"></a>환경 변수 사용하기</h2><p>jwt 토큰에 사용할 secret 키를 환경변수에 추가하여 사용해 보자</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># env.yml</span></span><br><span class="line"><span class="attr">jwt-config:</span></span><br><span class="line">  <span class="attr">secret:</span> <span class="string">sldiufhwkejfb</span></span><br><span class="line">  <span class="attr">header-prefix:</span> <span class="string">&quot;Bearer &quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>환경 변수에 위와 같은 구조로 값을 정의해 준다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Value(&quot;$&#123;jwt-config.secret&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> String jwtSecret;</span><br></pre></td></tr></table></figure>
+
+<p>필드에서 @Value 어노테이션을 사용해 ${}안에 계층 구조에 따라 정의해주면 된다. .yml 파일에서 계층 구조의 구분은 .으로 한다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%98%EA%B2%BD%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%84%A4%EC%A0%95-%ED%8C%8C%EC%9D%BC-%EB%B6%84%ED%95%A0-%EC%A0%81%EC%9A%A9"><span class="toc-number">1.</span> <span class="toc-text">환경에 따른 설정 파일 분할 적용?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-boot%EC%9D%98-%EC%84%A4%EC%A0%95-%ED%8C%8C%EC%9D%BC-application-yml"><span class="toc-number">2.</span> <span class="toc-text">spring boot의 설정 파일 application.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%ED%8C%8C%EC%9D%BC-%EB%A7%8C%EB%93%A4%EA%B8%B0"><span class="toc-number">3.</span> <span class="toc-text">환경 변수 파일 만들기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Edit-Configuration"><span class="toc-number">3.1.</span> <span class="toc-text">Edit Configuration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Active-profiles"><span class="toc-number">3.2.</span> <span class="toc-text">Active profiles</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-boot-env-%ED%8C%8C%EC%9D%BC-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">spring boot env 파일 설정하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#env-yml"><span class="toc-number">5.</span> <span class="toc-text">env.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EnvConfig"><span class="toc-number">6.</span> <span class="toc-text">EnvConfig</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%ED%8C%8C%EC%9D%BC-%EC%9C%84%EC%B9%98-%EC%9E%A1%EA%B8%B0"><span class="toc-number">7.</span> <span class="toc-text">환경변수 파일 위치 잡기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">8.</span> <span class="toc-text">환경 변수 사용하기</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&text=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&is_video=false&description=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Spring Boot Profile 환경변수 분할 적용&body=Check out this article: https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&title=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&name=Spring Boot Profile 환경변수 분할 적용&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/&t=Spring Boot Profile 환경변수 분할 적용"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

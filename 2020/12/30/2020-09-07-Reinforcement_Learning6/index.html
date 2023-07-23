@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="Outline DQN Cartpole Cartpole Code  DQN(Deep Q Network)DQN이란? DQN 알고리즘은 2013년 딥마인드가 “Playing Atari with Deep Reinforcement Learning”이라는 논문에서 소개되었다. DQN은 Deep SARSA와는 다르게 Q learning의 Q Function을 업데이트 한">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DQN(Deep Q Network)">
+<meta property="og:url" content="https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="Outline DQN Cartpole Cartpole Code  DQN(Deep Q Network)DQN이란? DQN 알고리즘은 2013년 딥마인드가 “Playing Atari with Deep Reinforcement Learning”이라는 논문에서 소개되었다. DQN은 Deep SARSA와는 다르게 Q learning의 Q Function을 업데이트 한">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study6/q.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study6/dqn.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study6/cart.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/RL_Study6/agent.png">
+<meta property="article:published_time" content="2020-12-29T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:06:16.093Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="reinforcement learning">
+<meta property="article:tag" content="tave">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/RL_Study6/q.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>DQN(Deep Q Network)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2020/12/30/2020-09-07-reinforcement_learning6/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/12/30/2020-12-30-TAVE_Research1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/09/05/2020-09-05-Reinforcement_Learning5/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&text=DQN(Deep Q Network)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&is_video=false&description=DQN(Deep Q Network)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DQN(Deep Q Network)&body=Check out this article: https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&name=DQN(Deep Q Network)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&t=DQN(Deep Q Network)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Outline"><span class="toc-number">1.</span> <span class="toc-text">Outline</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DQN-Deep-Q-Network"><span class="toc-number">2.</span> <span class="toc-text">DQN(Deep Q Network)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DQN%EC%9D%B4%EB%9E%80"><span class="toc-number">2.1.</span> <span class="toc-text">DQN이란?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DQN%EC%9D%98-%ED%8A%B9%EC%A7%95"><span class="toc-number">2.2.</span> <span class="toc-text">DQN의 특징</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B2%BD%ED%97%98-%EB%A6%AC%ED%94%8C%EB%A0%88%EC%9D%B4"><span class="toc-number">2.3.</span> <span class="toc-text">경험 리플레이</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%A6%AC%ED%94%8C%EB%A0%88%EC%9D%B4-%EB%A9%94%EB%AA%A8%EB%A6%AC"><span class="toc-number">2.4.</span> <span class="toc-text">리플레이 메모리</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DQN-Algorithm-%EA%B5%AC%EC%A1%B0"><span class="toc-number">2.5.</span> <span class="toc-text">[DQN Algorithm 구조]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cartpole"><span class="toc-number">3.</span> <span class="toc-text">Cartpole</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Markov-Decision-Process-MDP"><span class="toc-number">3.1.</span> <span class="toc-text">Markov Decision Process (MDP)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cartpole-Code"><span class="toc-number">4.</span> <span class="toc-text">Cartpole Code</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Environments"><span class="toc-number">4.1.</span> <span class="toc-text">Environments</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DQNAgent-Class"><span class="toc-number">4.2.</span> <span class="toc-text">DQNAgent Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#def-init"><span class="toc-number">4.3.</span> <span class="toc-text">def __init__</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-Epsilon-Greedy-Algorithm"><span class="toc-number">4.3.1.</span> <span class="toc-text">I. Epsilon Greedy Algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-Replay-Memory"><span class="toc-number">4.3.2.</span> <span class="toc-text">II. Replay Memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#III-Target-Network"><span class="toc-number">4.3.3.</span> <span class="toc-text">III. Target Network</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#build-model"><span class="toc-number">4.4.</span> <span class="toc-text">build_model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#update-target-model"><span class="toc-number">4.5.</span> <span class="toc-text">update_target_model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get-action"><span class="toc-number">4.6.</span> <span class="toc-text">get_action</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#append-sample"><span class="toc-number">4.7.</span> <span class="toc-text">append_ sample</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#triain-model"><span class="toc-number">4.8.</span> <span class="toc-text">triain_model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Train"><span class="toc-number">4.9.</span> <span class="toc-text">Train</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        DQN(Deep Q Network)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-12-29T15:00:00.000Z" class="dt-published" itemprop="datePublished">2020-12-30</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/reinforcement-learning/">reinforcement learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/reinforcement-learning/" rel="tag">reinforcement learning</a>, <a class="p-category" href="/tags/tave/" rel="tag">tave</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h1><ol>
+<li>DQN</li>
+<li>Cartpole</li>
+<li>Cartpole Code</li>
+</ol>
+<h1 id="DQN-Deep-Q-Network"><a href="#DQN-Deep-Q-Network" class="headerlink" title="DQN(Deep Q Network)"></a>DQN(Deep Q Network)</h1><h2 id="DQN이란"><a href="#DQN이란" class="headerlink" title="DQN이란?"></a>DQN이란?</h2><ul>
+<li>DQN 알고리즘은 2013년 딥마인드가 “Playing Atari with Deep Reinforcement Learning”이라는 논문에서 소개되었다.</li>
+<li>DQN은 Deep SARSA와는 다르게 Q learning의 Q Function을 업데이트 한다.</li>
+<li>Q Function 업데이트를 가능하게 하기 위해 경험 리플레이를 사용한다.</li>
+<li>경험 리플레이는 에이전트가 환경에서 탐험하며 얻는 샘플(s, a, r, s’)을 메모리에 저장하는것이다.<br><img src="/images/img/RL_Study6/q.png" alt="q funtion"><br><sub>Q-learning의 Q함수 업데이트 식</sub></li>
+</ul>
+<h2 id="DQN의-특징"><a href="#DQN의-특징" class="headerlink" title="DQN의 특징"></a>DQN의 특징</h2><ul>
+<li>타깃 신경망을 사용한다.</li>
+<li>경험 리플레이를 사용 사용하는 에이전트는 매 타임스텝마다 리플레이 메모리에서 샘플을 배치로 추출해서 학습에 사용한다.</li>
+<li>오류함수로 MSE사용한다.</li>
+</ul>
+<h2 id="경험-리플레이"><a href="#경험-리플레이" class="headerlink" title="경험 리플레이"></a>경험 리플레이</h2><ul>
+<li>환경에서 에이전트가 탐험하며 얻는 샘플(s,a,r,s’)를 메모리에 저장한다.</li>
+<li>샘플을 저장하는 메모리는 리플레이 메모리이다.</li>
+<li>에이전트가 학습할 때 샘플을 무작위로 뽑아 샘플에 대해 인공신경망을 업데이트 한다.</li>
+<li>샘플간의 상관관계를 없앨 수 있다.</li>
+<li>현재 에이전트가 경험하고 있는 상황이 아닌 다양한 과거의 상황으로부터 학습하기 때문에 오프폴리시가 적합하다.</li>
+<li>그래서 q learning을 경험 리플레이 메모리와 사용하는것이다.</li>
+</ul>
+<h2 id="리플레이-메모리"><a href="#리플레이-메모리" class="headerlink" title="리플레이 메모리"></a>리플레이 메모리</h2><ul>
+<li>크기가 정해져 있다.</li>
+<li>메모리가 차면 처음들어온 것부터 삭제된다. (큐 방식)</li>
+<li>에이전트가 학습해서 높은 점수를 받으면 더 좋은 샘플이 리플레이 메모리에 저장된다.</li>
+<li>메모리에서 추출한 여러개의 샘플을 통해 인공신경망을 업데이트 하므로 학습이 안정적이다.</li>
+<li>여러개의 gradient를 구하면 하나의 데이터에서 gradient를 구하는것보다 값 자체의 변화가 줄어 인공신경망 업데이트가 안정적이다.</li>
+</ul>
+<h2 id="DQN-Algorithm-구조"><a href="#DQN-Algorithm-구조" class="headerlink" title="[DQN Algorithm 구조]"></a>[DQN Algorithm 구조]</h2><p><img src="/images/img/RL_Study6/dqn.png" alt="dqn"></p>
+<h1 id="Cartpole"><a href="#Cartpole" class="headerlink" title="Cartpole"></a>Cartpole</h1><p><img src="/images/img/RL_Study6/cart.png" alt="cart"></p>
+<h2 id="Markov-Decision-Process-MDP"><a href="#Markov-Decision-Process-MDP" class="headerlink" title="Markov Decision Process (MDP)"></a>Markov Decision Process (MDP)</h2><ul>
+<li><p>상태(state) : 카트의 위치, 속도, 폴의 각도, 각속도<br><img src="/images/img/RL_Study6/agent.png" alt="mdp"></p>
+</li>
+<li><p>행동(action) : 왼쪽(0), 오른쪽(1)</p>
+</li>
+<li><p>보상(reward) : 카트폴이 쓰러지지 않고 버티는 시간</p>
+<ol>
+<li>예를들어, 10초를 버티면 보상은 +10</li>
+<li>여기선 단위가 초가 아니라 타임스텝</li>
+<li>최대 500타임스텝까지 버틸 수 있음. 보상은 +500</li>
+<li>중간에 카트폴이 쓰러지면 -100</li>
+<li>감가율 : Q함수에 대한 discount</li>
+</ol>
+</li>
+</ul>
+<h1 id="Cartpole-Code"><a href="#Cartpole-Code" class="headerlink" title="Cartpole Code"></a>Cartpole Code</h1><h2 id="Environments"><a href="#Environments" class="headerlink" title="Environments"></a>Environments</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CartPole-v1 환경, v1은 최대 타임스텝 500, v0는 최대 타임스텝 200</span></span><br><span class="line">env = gym.make(<span class="string">&#x27;CartPole-v1&#x27;</span>)</span><br><span class="line">state_size = env.observation_space.shape[<span class="number">0</span>] <span class="comment"># 4</span></span><br><span class="line">action_size = env.action_space.n <span class="comment"># 2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;state_size:&quot;</span>, state_size)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;action_size:&quot;</span>, action_size)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Cartpole을 실행할 환경을 생성한다.</li>
+<li>CartPole-v0 과 v1의 차이는 최대 타임스텝의 수 (각각 200, 500) - state_size &#x3D; 4 (카트의 위치, 속도, 폴의 각도, 각속도)</li>
+<li>action_size &#x3D; 2 (왼쪽으로 움직이기, 오른쪽으로 움직이기)</li>
+</ul>
+<h2 id="DQNAgent-Class"><a href="#DQNAgent-Class" class="headerlink" title="DQNAgent Class"></a>DQNAgent Class</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DQNAgent</span>:</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, state_size, action_size</span>):</span><br><span class="line">    <span class="comment"># 클래스를 사용할 떄 자동으로 실행된다.</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">build_model</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="comment"># 상태가 입력된다. 큐함수가 출력인 인공신경망을 생성한다.</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">update_target_model</span>(<span class="params">self</span>):</span><br><span class="line">   <span class="comment"># 타겟 모델을 모델의 가중치로 업데이트</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">get_action</span>(<span class="params">self, state</span>):</span><br><span class="line">    <span class="comment"># 입실론 탐욕 정책으로 행동 선택</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">append_sample</span>(<span class="params">self, state, action, reward, next_state, done</span>):</span><br><span class="line">    <span class="comment"># 샘플 &lt;s, a, r, s&#x27;&gt;을 리플레이 메모리에 저장</span></span><br><span class="line">    <span class="comment"># done : false 였다가 게임이 끝나면 True로 바뀜</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">train_model</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="comment"># 리플레이 메모리에서 배치 사이즈 만큼 무작위로 추출해서 학습하는 함수</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>DQNAgent class를 구성하고 있는 메서드들이다.</li>
+</ul>
+<h2 id="def-init"><a href="#def-init" class="headerlink" title="def __init__"></a>def __init__</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, state_size, action_size</span>):</span><br><span class="line">        self.render = <span class="literal">False</span></span><br><span class="line">        self.load_model = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 상태와 행동의 크기 정의</span></span><br><span class="line">        self.state_size = state_size <span class="comment"># 4</span></span><br><span class="line">        self.action_size = action_size <span class="comment"># 2</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># DQN hyperparameter</span></span><br><span class="line">        self.discount_factor = <span class="number">0.99</span></span><br><span class="line">        self.learning_rate = <span class="number">0.001</span></span><br><span class="line">        <span class="comment"># epsilon이 1이면 무조건 무작위로 행동을 선택한다.</span></span><br><span class="line">        self.epsilon = <span class="number">1.0</span></span><br><span class="line">        self.epsilon_decay = <span class="number">0.999</span></span><br><span class="line">        <span class="comment"># 지속적인 탐험을 위해 epsilon을 0으로 만들지 않고 하한선을 설정함.</span></span><br><span class="line">        self.epsilon_min = <span class="number">0.01</span></span><br><span class="line">        self.batch_size = <span class="number">64</span></span><br><span class="line">        self.train_start = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 리플레이 메모리, 최대크기 2000</span></span><br><span class="line">        self.memory = deque(maxlen = <span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 모델과 타겟 모델 생성</span></span><br><span class="line">        <span class="comment"># DQN의 특징 중 하나는 타겟신경망(모델)을 사용한다는 것</span></span><br><span class="line">        <span class="comment"># 가중치가 무작위로 초기화 되기 때문에 현재 두 모델이 같지 않음</span></span><br><span class="line">        self.model = self.build_model()</span><br><span class="line">        self.target_model = self.build_model()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 타겟 모델 초기화</span></span><br><span class="line">        self.update_target_model()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.load_model:</span><br><span class="line">            self.model.load_weights(<span class="string">&quot;./save_model/cartpole_dqn.h5&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="I-Epsilon-Greedy-Algorithm"><a href="#I-Epsilon-Greedy-Algorithm" class="headerlink" title="I. Epsilon Greedy Algorithm"></a>I. Epsilon Greedy Algorithm</h3><ul>
+<li>epsilon decay : 1.0 에서 0.999씩 곱해지며 decay 된다.</li>
+<li>epsilon이 1이면 무조건 무작위로 행동을 선택한다.</li>
+<li>epsilon min : decay되는 최솟값이다.</li>
+</ul>
+<h3 id="II-Replay-Memory"><a href="#II-Replay-Memory" class="headerlink" title="II. Replay Memory"></a>II. Replay Memory</h3><ul>
+<li>Batch_size : 리플레이 메모리에서 무작위로 추출할 샘플의 사이즈다.</li>
+<li>Train_start : 리플레이 메모리에 1000개가 쌓이면 학습을 시작한다.</li>
+<li>Memory : 리플레이 메모리에 2000개가 쌓이면 일반적인 큐의 규칙에 의해 처음 들어온 데이터부터 삭제가 된다.</li>
+</ul>
+<h3 id="III-Target-Network"><a href="#III-Target-Network" class="headerlink" title="III. Target Network"></a>III. Target Network</h3><ul>
+<li>Model, target_model : 모델과 타깃모델 생성</li>
+<li>Q함수의 업데이트는 다음상태 예측값을 통해 현재 상태를 예측하는 부트스트랩 방식이다.</li>
+<li>부트스트랩의 문제점은 업데이트 목표가 계속 바뀐다.</li>
+<li>이를 방지하기 위해 정답을 만들어 내는 신경망을 한 에피소드동안 유지한다.</li>
+<li>타겟 신경망을 따로 만들어서 정답에 해당하는 값을 구한다.</li>
+<li>구한 정답을 통해 다른 인공신경망을 계속 학습시키며 타겟 신경망은 한 에피소드 마다 학습된 인공신경망으로 업데이트 한다.</li>
+</ul>
+<h2 id="build-model"><a href="#build-model" class="headerlink" title="build_model"></a>build_model</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">build_model</span>(<span class="params">self</span>):</span><br><span class="line">        model = Sequential()</span><br><span class="line">        model.add(Dense(<span class="number">24</span>, input_dim = self.state_size, activation = <span class="string">&#x27;relu&#x27;</span>, kernel_initializer = <span class="string">&#x27;he_uniform&#x27;</span>))</span><br><span class="line">        model.add(Dense(<span class="number">24</span>, activation = <span class="string">&#x27;relu&#x27;</span>, kernel_initializer = <span class="string">&#x27;he_uniform&#x27;</span>))</span><br><span class="line">        model.add(Dense(self.action_size, activation = <span class="string">&#x27;linear&#x27;</span>, kernel_initializer = <span class="string">&#x27;he_uniform&#x27;</span>))</span><br><span class="line">        model.summary()</span><br><span class="line">        model.<span class="built_in">compile</span>(loss = <span class="string">&#x27;mse&#x27;</span>, optimizer = Adam(lr = self.learning_rate))</span><br><span class="line">        <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+
+<h2 id="update-target-model"><a href="#update-target-model" class="headerlink" title="update_target_model"></a>update_target_model</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">update_target_model</span>(<span class="params">self</span>):</span><br><span class="line">        self.target_model.set_weights(self.model.get_weights())</span><br></pre></td></tr></table></figure>
+
+<h2 id="get-action"><a href="#get-action" class="headerlink" title="get_action"></a>get_action</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_action</span>(<span class="params">self, state</span>):</span><br><span class="line">        <span class="comment"># 2 &lt;= 3 : 첫번째 숫자가 두번째 보다 같거나 더 작은가? -&gt; True of False</span></span><br><span class="line">        <span class="comment"># np.random.rand() : 0~1 사이 실수 1개 / np.random.rand(5) : 0~1 사이 실수 5개</span></span><br><span class="line">        <span class="comment"># random.randrange(5) : 0~4 임의의 정수 / random.randrange(-5,5) : -5 ~ 4 임의의 정수</span></span><br><span class="line">        <span class="keyword">if</span> np.random.rand() &lt;= self.epsilon:</span><br><span class="line">            <span class="keyword">return</span> random.randrange(self.action_size)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># q_value = [[-1.3104991 -1.6175464]]</span></span><br><span class="line">            <span class="comment"># q_value[0] = [-1.3104991 -1.6175464]</span></span><br><span class="line">            <span class="comment"># np.argmax(q_value[0]) = -1.3104991</span></span><br><span class="line">            q_value = self.model.predict(state)</span><br><span class="line">            <span class="keyword">return</span> np.argmax(q_value[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>np.random.rand() : 0~1 사이 임의의 실수 1개</li>
+<li>self.epsilon : Epsilon Greedy Algorithm의 epsilon 값</li>
+<li>epsilon값이 더 크면 무작위 행동(왼쪽 or 오른쪽으로 움직이기)</li>
+<li>그게 아니라면 계산한 두개의 Q값들 중 더 큰 값을 반환한다.</li>
+</ul>
+<h2 id="append-sample"><a href="#append-sample" class="headerlink" title="append_ sample"></a>append_ sample</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">append_sample</span>(<span class="params">self, state, action, reward, next_state, done</span>):</span><br><span class="line">        self.memory.append((state, action, reward, next_state, done))</span><br></pre></td></tr></table></figure>
+
+<h2 id="triain-model"><a href="#triain-model" class="headerlink" title="triain_model"></a>triain_model</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">train_model</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.epsilon &gt; self.epsilon_min:</span><br><span class="line">            self.epsilon *= self.epsilon_decay</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 메모리에서 배치 크기만큼 무작위로 샘플 추출</span></span><br><span class="line">        <span class="comment"># mini_batch의 모양: 64 x 5</span></span><br><span class="line">        <span class="comment"># np.shape(mini_batch)</span></span><br><span class="line">        mini_batch = random.sample(self.memory, self.batch_size)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 모델의 업데이트는 배치로 샘플들을 모아서 한 번에 진행하기 때문에</span></span><br><span class="line">        <span class="comment"># model.fit(states, target)에 들어가는 states는 배치여야함</span></span><br><span class="line">        <span class="comment"># 따라서 np.zeros를 사용해 states의 형태를 배치 형태로 지정함.</span></span><br><span class="line">        <span class="comment"># np.zeros( (2, 3) ) : 2x3 영행렬</span></span><br><span class="line">        states = np.zeros((self.batch_size, self.state_size)) <span class="comment"># 64 x 4</span></span><br><span class="line">        next_states = np.zeros((self.batch_size, self.state_size)) <span class="comment"># 64 x 4</span></span><br><span class="line">        actions, rewards, dones = [], [], []</span><br><span class="line"></span><br><span class="line">        <span class="comment"># def append_sample(self, state, action, reward, next_state, done):</span></span><br><span class="line">        <span class="comment"># mini_batch의 모양: 64 x 5</span></span><br><span class="line">        <span class="comment"># actions의 모양 : np.shape(actions)</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.batch_size):</span><br><span class="line">            states[i] = mini_batch[i][<span class="number">0</span>]</span><br><span class="line">            actions.append(mini_batch[i][<span class="number">1</span>])</span><br><span class="line">            rewards.append(mini_batch[i][<span class="number">2</span>])</span><br><span class="line">            next_states[i] = mini_batch[i][<span class="number">3</span>]</span><br><span class="line">            dones.append(mini_batch[i][<span class="number">4</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># self.model = self.build_model()</span></span><br><span class="line">        <span class="comment"># self.target_model = self.build_model()</span></span><br><span class="line">        <span class="comment"># target 의 size: 64 x 2</span></span><br><span class="line">        <span class="comment"># target_val 의 size : 64 x 2</span></span><br><span class="line">        target = self.model.predict(states) <span class="comment"># 큐함수 값</span></span><br><span class="line">        target_val = self.target_model.predict(next_states) <span class="comment"># 정답 큐함수 값 (부트스트랩)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 벨만 최적 방정식을 이용한 업데이트 타겟</span></span><br><span class="line">        <span class="comment"># amax 함수는 array 의 최댓값을 반환하는 함수</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.batch_size): <span class="comment"># i: 0 ~ 63</span></span><br><span class="line">            <span class="comment"># actions[i] : 0 or 1</span></span><br><span class="line">            <span class="comment"># dones[i] : False or True</span></span><br><span class="line">            <span class="keyword">if</span> dones[i]:</span><br><span class="line">                target[i][actions[i]] = rewards[i]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                target[i][actions[i]] = rewards[i] + self.discount_factor * (np.amax(target_val[i]))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>target은 현재 상태에 대한 모델의 큐함수이다.</li>
+<li>target_val은 다음 상태에 대한 타겟 모델의 큐함수이다.</li>
+</ul>
+<h2 id="Train"><a href="#Train" class="headerlink" title="Train"></a>Train</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">scores, episodes = [], []</span><br><span class="line"></span><br><span class="line">N_EPISODES = <span class="number">100</span></span><br><span class="line"><span class="keyword">for</span> e <span class="keyword">in</span> <span class="built_in">range</span>(N_EPISODES):</span><br><span class="line">    done = <span class="literal">False</span></span><br><span class="line">    score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># env 초기화</span></span><br><span class="line">    <span class="comment"># state의 모양 : 4</span></span><br><span class="line">    state = env.reset()</span><br><span class="line">    <span class="comment"># state의 모양 : 4 -&gt; 1 x 4</span></span><br><span class="line">    state = np.reshape(state, [<span class="number">1</span>, state_size])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># done : false 였다가 한 에피소드가 끝나면 True로 바뀜</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> done:</span><br><span class="line">        <span class="comment"># render = True 이면 학습영상 보여줌</span></span><br><span class="line">        <span class="keyword">if</span> agent.render:</span><br><span class="line">            env.render()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 현재 상태로 행동을 선택</span></span><br><span class="line">        action = agent.get_action(state) <span class="comment"># q함수를 얻었다.</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 선택한 행동으로 환경에서 한 타임스텝 진행</span></span><br><span class="line">        <span class="comment"># next_state = np.reshape(next_state, [1, state_size]) : 1x1 -&gt; 1x4</span></span><br><span class="line">        <span class="comment"># info : &#123;&#125; / 넣고싶은 정보가 있으면 추가하면 됨. 없으면 안넣어도 됨.</span></span><br><span class="line">        next_state, reward, done, info = env.step(action)</span><br><span class="line">        next_state = np.reshape(next_state, [<span class="number">1</span>, state_size])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 에피소드가 중간에 끝나면 -100 보상</span></span><br><span class="line">        <span class="comment"># reward = reward if not done else -100</span></span><br><span class="line">        reward = reward <span class="keyword">if</span> <span class="keyword">not</span> done <span class="keyword">or</span> score == <span class="number">499</span> <span class="keyword">else</span> -<span class="number">100</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 리플레이 메모리에 샘플 &lt;s,a,r,s&#x27;&gt; 저장</span></span><br><span class="line">        agent.append_sample(state, action, reward, next_state, done)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 매 타임스텝마다 학습문</span></span><br><span class="line">        <span class="comment"># self.train_start = 1000</span></span><br><span class="line">        <span class="comment"># 이렇게 하는 이유는 DQN에서는 배치로 학습하기 때문에 샘플이 어느정도 모일때 까지 기다려야 하기때문.</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(agent.memory) &gt;= agent.train_start:</span><br><span class="line">            agent.train_model()</span><br><span class="line"></span><br><span class="line">        score += reward</span><br><span class="line">        state = next_state</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> done:</span><br><span class="line">            <span class="comment"># 각 에피소드마다 타겟 모델을 모델의 가중치로 업데이트</span></span><br><span class="line">            agent.update_target_model()</span><br><span class="line"></span><br><span class="line">            score = score <span class="keyword">if</span> score == <span class="number">500</span> <span class="keyword">else</span> score + <span class="number">100</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 에피소드 마다 학습결과 출력</span></span><br><span class="line">            scores.append(score)</span><br><span class="line">            episodes.append(e)</span><br><span class="line">            pylab.plot(episodes, scores, <span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">&quot;./save_graph&quot;</span>):</span><br><span class="line">              os.makedirs(<span class="string">&quot;./save_graph&quot;</span>)</span><br><span class="line">            pylab.savefig(<span class="string">&quot;./save_graph/cartpole_dqn.png&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;episode:&quot;</span>, e, <span class="string">&quot; score:&quot;</span>, score, <span class="string">&quot; memory length:&quot;</span>, <span class="built_in">len</span>(agent.memory), <span class="string">&quot; epsilon:&quot;</span>, agent.epsilon)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 이전 10개 에피소드의 점수 평균이 490보다 크면 학습 중단</span></span><br><span class="line">            <span class="comment"># np.mean([1, 2, 3]) = 2.0 / np.mean() : 평균</span></span><br><span class="line">            <span class="comment"># min([1, 2, 3]) = 1 / min : 가장 작은 값</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># a = [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]</span></span><br><span class="line">            <span class="comment"># print(a[-10:])</span></span><br><span class="line">            <span class="comment"># b = [1,2,3,4,5,6,7,8,9]</span></span><br><span class="line">            <span class="comment"># print(b[-9:])</span></span><br><span class="line">            <span class="keyword">if</span> np.mean(scores[-<span class="built_in">min</span>(<span class="number">10</span>, <span class="built_in">len</span>(scores)):]) &gt; <span class="number">490</span>:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">&quot;./save_model&quot;</span>):</span><br><span class="line">                  os.makedirs(<span class="string">&quot;./save_model&quot;</span>)</span><br><span class="line">                agent.model.save_weights(<span class="string">&quot;./save_model/cartpole_dqn.h5&quot;</span>)</span><br><span class="line">                sys.exit()</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Outline"><span class="toc-number">1.</span> <span class="toc-text">Outline</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DQN-Deep-Q-Network"><span class="toc-number">2.</span> <span class="toc-text">DQN(Deep Q Network)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DQN%EC%9D%B4%EB%9E%80"><span class="toc-number">2.1.</span> <span class="toc-text">DQN이란?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DQN%EC%9D%98-%ED%8A%B9%EC%A7%95"><span class="toc-number">2.2.</span> <span class="toc-text">DQN의 특징</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B2%BD%ED%97%98-%EB%A6%AC%ED%94%8C%EB%A0%88%EC%9D%B4"><span class="toc-number">2.3.</span> <span class="toc-text">경험 리플레이</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%A6%AC%ED%94%8C%EB%A0%88%EC%9D%B4-%EB%A9%94%EB%AA%A8%EB%A6%AC"><span class="toc-number">2.4.</span> <span class="toc-text">리플레이 메모리</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DQN-Algorithm-%EA%B5%AC%EC%A1%B0"><span class="toc-number">2.5.</span> <span class="toc-text">[DQN Algorithm 구조]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cartpole"><span class="toc-number">3.</span> <span class="toc-text">Cartpole</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Markov-Decision-Process-MDP"><span class="toc-number">3.1.</span> <span class="toc-text">Markov Decision Process (MDP)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cartpole-Code"><span class="toc-number">4.</span> <span class="toc-text">Cartpole Code</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Environments"><span class="toc-number">4.1.</span> <span class="toc-text">Environments</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DQNAgent-Class"><span class="toc-number">4.2.</span> <span class="toc-text">DQNAgent Class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#def-init"><span class="toc-number">4.3.</span> <span class="toc-text">def __init__</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-Epsilon-Greedy-Algorithm"><span class="toc-number">4.3.1.</span> <span class="toc-text">I. Epsilon Greedy Algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-Replay-Memory"><span class="toc-number">4.3.2.</span> <span class="toc-text">II. Replay Memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#III-Target-Network"><span class="toc-number">4.3.3.</span> <span class="toc-text">III. Target Network</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#build-model"><span class="toc-number">4.4.</span> <span class="toc-text">build_model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#update-target-model"><span class="toc-number">4.5.</span> <span class="toc-text">update_target_model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get-action"><span class="toc-number">4.6.</span> <span class="toc-text">get_action</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#append-sample"><span class="toc-number">4.7.</span> <span class="toc-text">append_ sample</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#triain-model"><span class="toc-number">4.8.</span> <span class="toc-text">triain_model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Train"><span class="toc-number">4.9.</span> <span class="toc-text">Train</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&text=DQN(Deep Q Network)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&is_video=false&description=DQN(Deep Q Network)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DQN(Deep Q Network)&body=Check out this article: https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&title=DQN(Deep Q Network)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&name=DQN(Deep Q Network)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/12/30/2020-09-07-Reinforcement_Learning6/&t=DQN(Deep Q Network)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

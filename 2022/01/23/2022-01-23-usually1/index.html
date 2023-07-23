@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="이것이 취업을 위한 코딩 테스트다를 정리한 글입니다.  그리디 알고리즘그리디 알고리즘은 “현재 상황에서 지금 당장 좋은 것만 고르는 방법”이다. 매 순간 가장 좋은 선택을 하고, 현재의 선택이 나중에 미칠 영향은 고려하지 않는 방법이다. 거스름돈거스름돈 문제는 그리디 알고리즘을 잘 나타내는 문제이다. 상점에는 500원, 100원, 50원, 10원짜리 동전">
+<meta property="og:type" content="article">
+<meta property="og:title" content="그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="이것이 취업을 위한 코딩 테스트다를 정리한 글입니다.  그리디 알고리즘그리디 알고리즘은 “현재 상황에서 지금 당장 좋은 것만 고르는 방법”이다. 매 순간 가장 좋은 선택을 하고, 현재의 선택이 나중에 미칠 영향은 고려하지 않는 방법이다. 거스름돈거스름돈 문제는 그리디 알고리즘을 잘 나타내는 문제이다. 상점에는 500원, 100원, 50원, 10원짜리 동전">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-23T09:08:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.113Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="greedy algorithm">
+<meta property="article:tag" content="이코테">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/01/24/2022-01-24-elice2/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/01/20/2022-01-20-algo10/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&text=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&is_video=false&description=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)&body=Check out this article: https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&name=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&t=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B7%B8%EB%A6%AC%EB%94%94-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-number">1.</span> <span class="toc-text">그리디 알고리즘</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B1%B0%EC%8A%A4%EB%A6%84%EB%8F%88"><span class="toc-number">2.</span> <span class="toc-text">거스름돈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%8B%9C%EA%B0%84-%EB%B3%B5%EC%9E%A1%EB%8F%84-%EB%B6%84%EC%84%9D"><span class="toc-number">2.0.1.</span> <span class="toc-text">시간 복잡도 분석</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%81%B0-%EC%88%98%EC%9D%98-%EB%B2%95%EC%B9%99"><span class="toc-number">3.</span> <span class="toc-text">큰 수의 법칙</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5-%EC%A1%B0%EA%B1%B4"><span class="toc-number">3.0.1.</span> <span class="toc-text">입력 조건</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%88%AB%EC%9E%90-%EC%B9%B4%EB%93%9C-%EA%B2%8C%EC%9E%84"><span class="toc-number">4.</span> <span class="toc-text">숫자 카드 게임</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5-%EC%A1%B0%EA%B1%B4-1"><span class="toc-number">4.0.1.</span> <span class="toc-text">입력 조건</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1%EC%9D%B4-%EB%90%A0-%EB%95%8C%EA%B9%8C%EC%A7%80"><span class="toc-number">5.</span> <span class="toc-text">1이 될 때까지</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5-%EC%A1%B0%EA%B1%B4-2"><span class="toc-number">5.0.1.</span> <span class="toc-text">입력 조건</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%B6%9C%EB%A0%A5-%EC%A1%B0%EA%B1%B4"><span class="toc-number">5.0.2.</span> <span class="toc-text">출력 조건</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-23T09:08:00.000Z" class="dt-published" itemprop="datePublished">2022-01-23</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/algorithm/">algorithm</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="p-category" href="/tags/greedy-algorithm/" rel="tag">greedy algorithm</a>, <a class="p-category" href="/tags/%EC%9D%B4%EC%BD%94%ED%85%8C/" rel="tag">이코테</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLRx0vPvlEmdAghTr5mXQxGpHjWqSz0dgC">이것이 취업을 위한 코딩 테스트다</a>를 정리한 글입니다.</p>
+</blockquote>
+<h1 id="그리디-알고리즘"><a href="#그리디-알고리즘" class="headerlink" title="그리디 알고리즘"></a>그리디 알고리즘</h1><p>그리디 알고리즘은 “현재 상황에서 지금 당장 좋은 것만 고르는 방법”이다. 매 순간 가장 좋은 선택을 하고, 현재의 선택이 나중에 미칠 영향은 고려하지 않는 방법이다.</p>
+<h1 id="거스름돈"><a href="#거스름돈" class="headerlink" title="거스름돈"></a>거스름돈</h1><p>거스름돈 문제는 그리디 알고리즘을 잘 나타내는 문제이다.</p>
+<p>상점에는 500원, 100원, 50원, 10원짜리 동전으로 거스름돈을 줄 수 있다. 손님에게 거슬러 줘야 할 돈이 <code>N</code>원일 때 거슬러 줘야 할 동전의 최소 개수를 구한다. 단, 거슬러 줘야 할 돈은 항상 10의 배수이다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">solution</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    :param n: 거스름돈</span></span><br><span class="line"><span class="string">    :return: 동전 개수</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 큰 단위 화폐부터 차례대로 확인</span></span><br><span class="line">    array = [<span class="number">500</span>, <span class="number">100</span>, <span class="number">50</span>, <span class="number">10</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> coin <span class="keyword">in</span> array:</span><br><span class="line">        count += n // coin</span><br><span class="line">        n %= coin</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> count</span><br></pre></td></tr></table></figure>
+
+<p>거스름돈을 큰 단위 화폐부터 나눠가며 몫과 나머지를 사용해 동전 개수를 더해 간다.</p>
+<h3 id="시간-복잡도-분석"><a href="#시간-복잡도-분석" class="headerlink" title="시간 복잡도 분석"></a>시간 복잡도 분석</h3><ul>
+<li>화폐의 종류가 <code>K</code>라고 할 때, 소스코드의 시간 복잡도는 <code>O(K)</code>이다.</li>
+<li>시간 복잡도는 거슬러줘야 하는 금액과는 상관이 없으며, 동전의 총 종류에만 영향을 받는다.</li>
+</ul>
+<h1 id="큰-수의-법칙"><a href="#큰-수의-법칙" class="headerlink" title="큰 수의 법칙"></a>큰 수의 법칙</h1><p>다양한 수로 이루어진 배열이 있을 때 주어진 수들을 M번 더하여 가장 큰 수를 만드는 법칙이다. 단, 배열의 특정한 인덱스(번호)에 해당하는 수가 연속해서 K번을 초과하여 더해질 수 없는 것이 이 법칙의 특징이다.</p>
+<h3 id="입력-조건"><a href="#입력-조건" class="headerlink" title="입력 조건"></a>입력 조건</h3><ul>
+<li>첫째 줄에 N(2≤N≤1,000), M(1≤K10,000), K(1≤K≤10,000)의 자연수가 주어지며, 각 자연수는 공백으로 구분한다.</li>
+<li>둘째 줄에 N개의 자연수가 주어진다. 각 자연수는 공백으로 구분한다. 단, 각각의 자연수는 1 이상 10,000 이하의 수로 주어진다.</li>
+<li>입력으로 주어지는 K는 항상 M보다 작거나 같다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">5 8 3</span><br><span class="line">2 4 5 4 6</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">solution</span>(<span class="params">N, M, K, arr</span>):</span><br><span class="line">    lst.sort()</span><br><span class="line"></span><br><span class="line">    first = lst[-<span class="number">1</span>]</span><br><span class="line">    second = lst[-<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(K):</span><br><span class="line">            <span class="keyword">if</span> M == <span class="number">0</span>:  <span class="comment"># M이 0이면 탈출</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            result += first</span><br><span class="line">            M -= <span class="number">1</span>  <span class="comment"># 더할 때마다 1씩 빼기</span></span><br><span class="line">        <span class="keyword">if</span> M == <span class="number">0</span>:  <span class="comment"># M이 0이면 탈출</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        result += second  <span class="comment"># 두 번재 큰 수를 한번 더하기</span></span><br><span class="line">        M -= <span class="number">1</span>  <span class="comment"># 더할때마다 1씩 빼기</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<p>리스트 중 큰 값과 다음으로 큰 값을 구하기 위해 정렬을 한 후 더해준다. 가장 큰 수를 연속으로 <code>K</code>번 더하게 구현하고 매번 더할 때마다 <code>M</code>을 줄여가며 연산한다. 하지만 이 풀이는 M의 크기가 커지면 시간 초과가 날 수 있다고 한다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">solution2</span>():</span><br><span class="line">    n, m, k = <span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split())</span><br><span class="line">    data = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split()))</span><br><span class="line"></span><br><span class="line">    data.sort()</span><br><span class="line">    first = data[-<span class="number">1</span>]</span><br><span class="line">    second = data[-<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    count = <span class="built_in">int</span>(m / (k + <span class="number">1</span>)) * k</span><br><span class="line">    count += m % (k + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    result = <span class="number">0</span></span><br><span class="line">    result += (count) * first</span><br><span class="line">    result += (m - count) * second</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<p><code>count</code>를 구해 가장 큰 수를 더할 횟수를 정하고 총 횟수 <code>M</code>에서 <code>count</code>를 빼 두 번째로 큰 수를 더할 횟수를 구해 큰 수를 구할 수 있다.</p>
+<h1 id="숫자-카드-게임"><a href="#숫자-카드-게임" class="headerlink" title="숫자 카드 게임"></a>숫자 카드 게임</h1><p>숫자 카드 게임은 여러 개의 숫자 카드 중에서 가장 높은 숫자가 쓰인 카드 한 장을 뽑는 게임이다.</p>
+<ol>
+<li>숫자가 쓰인 카드들이 N x M 형태로 놓여 있다. 이때 N은 행의 개수를 의미하며, M은 열의 개수를 의미한다.</li>
+<li>먼저 뽑고자 하는 카드가 포함되어 있는 행을 선택한다.</li>
+<li>그다음 선택된 행에 포함된 카드들 중 가장 낮은 숫자를 뽑아야 한다.</li>
+<li>따라서 처음에 카드를 골라낼 행을 선택할 때, 이후에 해당 행에서 가장 숫자가 낮은 카드를 뽑을 것을 고려하여 최종적으로 가장 높은 숫자의 카드를 뽑을 수 있도록 전략을 세워야 한다.</li>
+</ol>
+<h3 id="입력-조건-1"><a href="#입력-조건-1" class="headerlink" title="입력 조건"></a>입력 조건</h3><ul>
+<li>첫째 줄에 숫자 카드들이 놓인 행의 개수 N과 열의 개수 M이 공백을 기준으로 하여 각각 자연수로 주어진다. (1≤N, M≤100)</li>
+<li>둘째 줄부터 N개의 줄에 걸쳐 각 카드에 적힌 숫자가 주어진다. 각 숫자는 1 이상 10,000 이하의 자연수이다.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3 3</span><br><span class="line">3 1 2</span><br><span class="line">4 1 4</span><br><span class="line">2 2 2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n, m = <span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split())</span><br><span class="line"></span><br><span class="line">result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    data = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split()))</span><br><span class="line">    min_value = <span class="built_in">min</span>(data)</span><br><span class="line">    result = <span class="built_in">max</span>(result, min_value)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(result)</span><br></pre></td></tr></table></figure>
+
+<p>각 행에서 작은 값들을 뽑아낸 다음 <code>result</code>와 비교해서 큰 값을 갱신한다.</p>
+<h1 id="1이-될-때까지"><a href="#1이-될-때까지" class="headerlink" title="1이 될 때까지"></a>1이 될 때까지</h1><p>어떠한 수 <code>N</code>이 1이 될 때까지 다음의 두 과정 중 하나를 반복적으로 선택하여 수행하려고 한다. 단, 두 번째 연산은 <code>N</code>이 <code>K</code>로 나누어 떨어질 때만 선택할 수 있다.</p>
+<ol>
+<li>N에서 1을 뺀다.</li>
+<li>N을 K로 나눈다.</li>
+</ol>
+<p><code>N</code>과 <code>K</code>가 주어질 때 <code>N</code>이 1이 될 때까지 1번 혹은 2번의 과정을 수행해야 하는 최소 횟수를 구하는 프로그램을 작성하라.</p>
+<h3 id="입력-조건-2"><a href="#입력-조건-2" class="headerlink" title="입력 조건"></a>입력 조건</h3><ul>
+<li>첫째 줄에서 N(1 ≤ N ≤100,000)과 K(2 ≤ K ≤ 100,000)가 공백을 기준으로 하여 각각 자연수로 주어진다.</li>
+</ul>
+<h3 id="출력-조건"><a href="#출력-조건" class="headerlink" title="출력 조건"></a>출력 조건</h3><ul>
+<li>첫째 줄에 N이 1이 될 때까지 1번 혹은 2번의 과정을 수행해야 하는 횟수의 최솟값을 출력한다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">solution</span>():</span><br><span class="line">    <span class="comment"># 입력 받기</span></span><br><span class="line">    n, k = <span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split())</span><br><span class="line"></span><br><span class="line">    result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># N이 K로 나누어 떨어지는 수가 될 때까지 빼기</span></span><br><span class="line">        target = (n // k) * k</span><br><span class="line">        result += (n - target)</span><br><span class="line">        n = target</span><br><span class="line">        <span class="comment"># N이 K보다 작을 때 (더 이상 나눌 수 없을 때) 반복문 탈출</span></span><br><span class="line">        <span class="keyword">if</span> n &lt; k:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        result += <span class="number">1</span></span><br><span class="line">        n //= k</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 마지막으로 남은 수에 대해 1씩 빼기</span></span><br><span class="line">    result += (n - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<p><code>N</code>이 <code>K</code>로 나눠지는지 매번 확인하고 나눠지지 않으면 1을 빼는 방법으로 푸는 것이 가장 기본적인 생각일 것이다. 위 풀이는 <code>K</code>로 나눌 수 있는 만큼 나누고 <code>result</code>에 1을 얼마나 빼야 하는지를 한번에 계산한다. <code>n</code>이 <code>k</code>보다 작게 되면 반복문을 탈출하게 되고, <code>result</code>를 하나 줄여 결과를 반환한다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B7%B8%EB%A6%AC%EB%94%94-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-number">1.</span> <span class="toc-text">그리디 알고리즘</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B1%B0%EC%8A%A4%EB%A6%84%EB%8F%88"><span class="toc-number">2.</span> <span class="toc-text">거스름돈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%8B%9C%EA%B0%84-%EB%B3%B5%EC%9E%A1%EB%8F%84-%EB%B6%84%EC%84%9D"><span class="toc-number">2.0.1.</span> <span class="toc-text">시간 복잡도 분석</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%81%B0-%EC%88%98%EC%9D%98-%EB%B2%95%EC%B9%99"><span class="toc-number">3.</span> <span class="toc-text">큰 수의 법칙</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5-%EC%A1%B0%EA%B1%B4"><span class="toc-number">3.0.1.</span> <span class="toc-text">입력 조건</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%88%AB%EC%9E%90-%EC%B9%B4%EB%93%9C-%EA%B2%8C%EC%9E%84"><span class="toc-number">4.</span> <span class="toc-text">숫자 카드 게임</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5-%EC%A1%B0%EA%B1%B4-1"><span class="toc-number">4.0.1.</span> <span class="toc-text">입력 조건</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1%EC%9D%B4-%EB%90%A0-%EB%95%8C%EA%B9%8C%EC%A7%80"><span class="toc-number">5.</span> <span class="toc-text">1이 될 때까지</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5-%EC%A1%B0%EA%B1%B4-2"><span class="toc-number">5.0.1.</span> <span class="toc-text">입력 조건</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%B6%9C%EB%A0%A5-%EC%A1%B0%EA%B1%B4"><span class="toc-number">5.0.2.</span> <span class="toc-text">출력 조건</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&text=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&is_video=false&description=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)&body=Check out this article: https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&title=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&name=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/23/2022-01-23-usually1/&t=그리디 알고리즘 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

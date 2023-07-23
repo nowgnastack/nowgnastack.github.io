@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="이것이 취업을 위한 코딩 테스트다를 정리한 글입니다.  다이나믹 프로그래밍메모리를 적절히 사용해서 수행 시간을 향상시키는 방법이다 한 번 계산한 문제는 다시 계산하지 않도록 구현된다. 완전 탐색보다 시간 복잡도를 줄일 수 있다. 탑 다운과 바텀 업 방식 두가지가 있다  동적 계획법이라고도 한다 최적 부분 구조 큰 문제를 작은 문제로 나눌 수 있으며 작은">
+<meta property="og:type" content="article">
+<meta property="og:title" content="다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="이것이 취업을 위한 코딩 테스트다를 정리한 글입니다.  다이나믹 프로그래밍메모리를 적절히 사용해서 수행 시간을 향상시키는 방법이다 한 번 계산한 문제는 다시 계산하지 않도록 구현된다. 완전 탐색보다 시간 복잡도를 줄일 수 있다. 탑 다운과 바텀 업 방식 두가지가 있다  동적 계획법이라고도 한다 최적 부분 구조 큰 문제를 작은 문제로 나눌 수 있으며 작은">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/usually/post8/Untitled.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/usually/post8/Untitled1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/usually/post8/Untitled2.png">
+<meta property="article:published_time" content="2022-03-10T16:47:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:17:37.112Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="이코테">
+<meta property="article:tag" content="다이나믹프로그래밍">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/usually/post8/Untitled.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/03/13/2022-03-13-asyncawait/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/03/07/2022-03-07-backend2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&text=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&is_video=false&description=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)&body=Check out this article: https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&name=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&t=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D"><span class="toc-number">1.</span> <span class="toc-text">다이나믹 프로그래밍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%A9%94%EB%AA%A8%EC%9D%B4%EC%A0%9C%EC%9D%B4%EC%85%98"><span class="toc-number">2.</span> <span class="toc-text">메모이제이션</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%83%91-%EB%8B%A4%EC%9A%B4-%EB%B0%94%ED%85%80-%EC%97%85"><span class="toc-number">3.</span> <span class="toc-text">탑 다운, 바텀 업</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-vs-%EB%B6%84%ED%95%A0-%EC%A0%95%EB%B3%B5"><span class="toc-number">4.</span> <span class="toc-text">다이나믹 vs 분할 정복</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dp-%EB%AC%B8%EC%A0%9C%EC%97%90-%EC%A0%91%EA%B7%BC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95"><span class="toc-number">5.</span> <span class="toc-text">dp 문제에 접근하는 방법</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0"><span class="toc-number">6.</span> <span class="toc-text">1로 만들기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%90%ED%99%94%EC%8B%9D"><span class="toc-number">6.1.</span> <span class="toc-text">점화식</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%9C%EB%AF%B8-%EC%A0%84%EC%82%AC"><span class="toc-number">7.</span> <span class="toc-text">개미 전사</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%90%ED%99%94%EC%8B%9D-1"><span class="toc-number">7.1.</span> <span class="toc-text">점화식</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%BD%94%EB%93%9C"><span class="toc-number">7.2.</span> <span class="toc-text">코드</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-10T16:47:00.000Z" class="dt-published" itemprop="datePublished">2022-03-11</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/algorithm/">algorithm</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="p-category" href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/" rel="tag">다이나믹프로그래밍</a>, <a class="p-category" href="/tags/%EC%9D%B4%EC%BD%94%ED%85%8C/" rel="tag">이코테</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLRx0vPvlEmdAghTr5mXQxGpHjWqSz0dgC">이것이 취업을 위한 코딩 테스트다</a>를 정리한 글입니다.</p>
+</blockquote>
+<h1 id="다이나믹-프로그래밍"><a href="#다이나믹-프로그래밍" class="headerlink" title="다이나믹 프로그래밍"></a>다이나믹 프로그래밍</h1><p>메모리를 적절히 사용해서 수행 시간을 향상시키는 방법이다</p>
+<p>한 번 계산한 문제는 다시 계산하지 않도록 구현된다. 완전 탐색보다 시간 복잡도를 줄일 수 있다.</p>
+<p>탑 다운과 바텀 업 방식 두가지가 있다</p>
+<ul>
+<li>동적 계획법이라고도 한다</li>
+<li>최적 부분 구조<ul>
+<li>큰 문제를 작은 문제로 나눌 수 있으며 작은 문제의 답을 모아서 큰 문제를 해결할 수 있다</li>
+</ul>
+</li>
+<li>중복되는 부분 문제<ul>
+<li>동일한 작은 문제를 반복적으로 해결해야 한다</li>
+</ul>
+</li>
+</ul>
+<h1 id="메모이제이션"><a href="#메모이제이션" class="headerlink" title="메모이제이션"></a>메모이제이션</h1><ul>
+<li>하향식 방식</li>
+<li>한번 계산한 결과를 메모리 공간에 메모하는 기법</li>
+<li>같은 문제를 다시 호출하면 메모했던 결과를 가져온다</li>
+<li>값을 기록해 놓는다는 점에서 캐싱이라고 한다</li>
+</ul>
+<h1 id="탑-다운-바텀-업"><a href="#탑-다운-바텀-업" class="headerlink" title="탑 다운, 바텀 업"></a>탑 다운, 바텀 업</h1><ul>
+<li>탑 다운(메모이제이션) 은 하향식이고 바텀업은 상향식이다</li>
+<li>dp의 전형적인 형태는 바텀 업이다<ul>
+<li>결과 저장용 리스트는 dp 테이블이라고 한다</li>
+</ul>
+</li>
+<li>메모이제이션은 이전에 계산된 결과를 일시적으로 기록해 놓는 넓은 개념이다</li>
+</ul>
+<h1 id="다이나믹-vs-분할-정복"><a href="#다이나믹-vs-분할-정복" class="headerlink" title="다이나믹 vs 분할 정복"></a>다이나믹 vs 분할 정복</h1><ul>
+<li>다이나믹 프로그래밍과 분할 정복은 모두 최적 부분 구조를 가질 때 사용할 수 있다<ul>
+<li>큰 문제를 작은 문제로 나눠서 해결 할 수 있는 공통점</li>
+</ul>
+</li>
+<li>차이점은 부분 문제의 중복이다<ul>
+<li>다이나믹은 각 부분 문제들이 서로 영향을 미치며 부분 문제가 중복된다</li>
+<li>분할정복은 문제에서 동일한 부분 문제가 반복적으로 계산되지 않는다</li>
+</ul>
+</li>
+</ul>
+<h1 id="dp-문제에-접근하는-방법"><a href="#dp-문제에-접근하는-방법" class="headerlink" title="dp 문제에 접근하는 방법"></a>dp 문제에 접근하는 방법</h1><ul>
+<li>dp 유형의 문제임을 파악하는 것이 중요</li>
+<li>그리디, 구현, 완전 탐색 등으로 해결할 수 있는지 검토<ul>
+<li>다른 문제로 해결이 안되면 다이나믹으로 해보기</li>
+</ul>
+</li>
+<li>재귀 함수로 비효율적인 완전 탐색으로 작성한 뒤 작은 문제에서 구한 답이 큰 문제에서 그대로 사용될 수 있으면 코드를 개선하는 방법을 사용</li>
+<li>기본 유형의 dp문제가 나올 수 있다</li>
+</ul>
+<h1 id="1로-만들기"><a href="#1로-만들기" class="headerlink" title="1로 만들기"></a>1로 만들기</h1><ul>
+<li>정수 X가 주어졌을 때, 정수 X에 사용할 수 있는 연산은 4가지이다.<ol>
+<li>X가 5로 나누어 떨어지면, 5로 나눈다.</li>
+<li>X가 3으로 나누어 떨어지면, 3으로 나눈다.</li>
+<li>X가 2로 나누어 떨어지면, 2로 나눈다.</li>
+<li>X에서 1을 뺀다.</li>
+</ol>
+</li>
+<li>정수 X가 주어졌을 때, 연산 4개를 적절히 사용하여 값을 1로 만드려고 한다. 연산을 사용하는 최소 횟수를 구하라.</li>
+</ul>
+<h2 id="점화식"><a href="#점화식" class="headerlink" title="점화식"></a>점화식</h2><p>$$<br>a_i &#x3D; min(a_{i-1}, a_{i&#x2F;2}, a_{i&#x2F;3}, a_{i&#x2F;5})+1<br>$$</p>
+<ul>
+<li>$a_i &#x3D; i$를 1로 만들기 위한 최소 연산 횟수</li>
+<li>1을 빼는 연산을 제외하고는 해당 수로 나눠 떨어질 때에 한해 점화식을 사용할 수 있다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 정수 X를 입력 받기</span></span><br><span class="line">x = <span class="built_in">int</span>(<span class="built_in">input</span>())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 앞서 계산된 결과를 저장하기 위한 DP 테이블 초기화</span></span><br><span class="line">d = [<span class="number">0</span>] * <span class="number">30001</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 다이나믹 프로그래밍(Dynamic Programming) 진행(보텀업)</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, x + <span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 현재의 수에서 1을 빼는 경우</span></span><br><span class="line">    d[i] = d[i - <span class="number">1</span>] + <span class="number">1</span></span><br><span class="line">    <span class="comment"># 현재의 수가 2로 나누어 떨어지는 경우</span></span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        d[i] = <span class="built_in">min</span>(d[i], d[i // <span class="number">2</span>] + <span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 현재의 수가 3으로 나누어 떨어지는 경우</span></span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">3</span> == <span class="number">0</span>:</span><br><span class="line">        d[i] = <span class="built_in">min</span>(d[i], d[i // <span class="number">3</span>] + <span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 현재의 수가 5로 나누어 떨어지는 경우</span></span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">5</span> == <span class="number">0</span>:</span><br><span class="line">        d[i] = <span class="built_in">min</span>(d[i], d[i // <span class="number">5</span>] + <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(d[x])</span><br></pre></td></tr></table></figure>
+
+<p>다이나믹 프로그래밍의 <code>Bottom up</code>방식을 이용해 구현해 본다.</p>
+<p>위의 점화식을 사용하여 해당 인덱스의 수에 대한 결과값을 인덱스에 저장하게 된다. 먼저 현재 수에서 1을 빼는 경우를 인덱스에 저장하고, 나누는 부분은 나눠지면 저장된 값과 비교해서 작은 값을 인덱스에 저장한다.</p>
+<h1 id="개미-전사"><a href="#개미-전사" class="headerlink" title="개미 전사"></a>개미 전사</h1><ul>
+<li>개미 전사는 부족한 식량을 충당하기 위해 메뚜기 마을의 식량창고를 몰래 공격하려고 한다. 메뚜기 마을에는 여러개의 식량 창고가 있는데 모두 일직선으로 이어져 있다</li>
+<li>각 식량 창고에는 정해진 수의 식량을 저장하고 있으며 개미 전사는 식량 창고를 선택적으로 약탈하여 식량을 빼앗을 예정이다. 이때 메뚜기 정찰병들은 일직선상에 존재하는 식량창고 중에서 서로 인접한 식량 창고가 공격 받으면 바로 알아챌 수 있다</li>
+<li>개미 전사가 정찰병들에게 들키지 않고 식량 창고를 약탈하기 위해서는 최소한 한 칸 이상 떨어진 식량 창고를 약탈해야 한다</li>
+</ul>
+<p><img src="/images/img/posts/usually/post8/Untitled.png" alt="Untitled"></p>
+<ul>
+<li>위 예시에서 개미 전사는 창고1과 창고3을 공격해야 가장 많이 얻을 수 있다</li>
+</ul>
+<p><img src="/images/img/posts/usually/post8/Untitled1.png" alt="Untitled"></p>
+<ul>
+<li>7번째 경우에서 개미 전사는 8만큼의 식량을 얻을 수 있고 가장 많이 얻을 수 있는 경우이다.</li>
+</ul>
+<p><img src="/images/img/posts/usually/post8/Untitled2.png" alt="Untitled"></p>
+<ul>
+<li>최적 부분 구조<ul>
+<li>최적 해는 i-1, i-2 번째값을 이용해서 계산될 수 있다</li>
+<li>큰 문제를 해결하기 위해 작은 문제를 사용한다</li>
+<li>i-3까지는 고려할 필요가 없다 i-1, i-2에서 고려되었기 때문이다</li>
+</ul>
+</li>
+</ul>
+<h2 id="점화식-1"><a href="#점화식-1" class="headerlink" title="점화식"></a>점화식</h2><p>$$<br>a_i &#x3D; max(a_{i-1}, a_{i-2} +k_i)<br>$$</p>
+<ul>
+<li>$a_i &#x3D; i$번째 식량 창고까지의 최적의 해 (얻을 수 있는 식량의 최댓값)</li>
+<li>$k_i &#x3D; i$번째 식량창고에 있는 식량의 양</li>
+<li>한 칸 이상 떨어진 식량창고는 항상 털 수 있으므로 $(i-3)$번째 이하는 고려할 필요가 없다</li>
+</ul>
+<h2 id="코드"><a href="#코드" class="headerlink" title="코드"></a>코드</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 정수 N을 입력 받기</span></span><br><span class="line">n = <span class="built_in">int</span>(<span class="built_in">input</span>())</span><br><span class="line"><span class="comment"># 모든 식량 정보 입력 받기</span></span><br><span class="line">array = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split()))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 앞서 계산된 결과를 저장하기 위한 DP 테이블 초기화</span></span><br><span class="line">d = [<span class="number">0</span>] * <span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 다이나믹 프로그래밍(Dynamic Programming) 진행 (보텀업)</span></span><br><span class="line">d[<span class="number">0</span>] = array[<span class="number">0</span>]</span><br><span class="line">d[<span class="number">1</span>] = <span class="built_in">max</span>(array[<span class="number">0</span>], array[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n):</span><br><span class="line">    d[i] = <span class="built_in">max</span>(d[i - <span class="number">1</span>], d[i - <span class="number">2</span>] + array[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 계산된 결과 출력</span></span><br><span class="line"><span class="built_in">print</span>(d[n - <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p>앞에서 정의했던 점화식을 이용해 코드를 구현해 본다. 다이나믹 프로그래밍의 <code>Bottom up</code>방식으로 해결한다.</p>
+<p>계산된 결과를 저장하기 위한 DP 테이블을 0으로 초기화 해준다. 1번째 인덱스 까지 얻을 수 있는 최대의 식량을 구한 다음 2번째 인덱스부터 n번째까지 점화식을 이용해 얻을 수 있는 식량을 DP 테이블에 저장한다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D"><span class="toc-number">1.</span> <span class="toc-text">다이나믹 프로그래밍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%A9%94%EB%AA%A8%EC%9D%B4%EC%A0%9C%EC%9D%B4%EC%85%98"><span class="toc-number">2.</span> <span class="toc-text">메모이제이션</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%83%91-%EB%8B%A4%EC%9A%B4-%EB%B0%94%ED%85%80-%EC%97%85"><span class="toc-number">3.</span> <span class="toc-text">탑 다운, 바텀 업</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-vs-%EB%B6%84%ED%95%A0-%EC%A0%95%EB%B3%B5"><span class="toc-number">4.</span> <span class="toc-text">다이나믹 vs 분할 정복</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dp-%EB%AC%B8%EC%A0%9C%EC%97%90-%EC%A0%91%EA%B7%BC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95"><span class="toc-number">5.</span> <span class="toc-text">dp 문제에 접근하는 방법</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0"><span class="toc-number">6.</span> <span class="toc-text">1로 만들기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%90%ED%99%94%EC%8B%9D"><span class="toc-number">6.1.</span> <span class="toc-text">점화식</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%9C%EB%AF%B8-%EC%A0%84%EC%82%AC"><span class="toc-number">7.</span> <span class="toc-text">개미 전사</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%90%ED%99%94%EC%8B%9D-1"><span class="toc-number">7.1.</span> <span class="toc-text">점화식</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%BD%94%EB%93%9C"><span class="toc-number">7.2.</span> <span class="toc-text">코드</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&text=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&is_video=false&description=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)&body=Check out this article: https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&title=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&name=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/11/2022-03-11-usually8/&t=다이나믹 프로그래밍 (이것이 취업을 위한 코딩 테스트다)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

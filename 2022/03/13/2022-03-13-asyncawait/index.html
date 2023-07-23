@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="async와 await, promise">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Async와 Await">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="async와 await, promise">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-13T09:25:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.196Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="elice">
+<meta property="article:tag" content="node js">
+<meta property="article:tag" content="backend">
+<meta property="article:tag" content="async">
+<meta property="article:tag" content="promise">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Async와 Await</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/03/14/2022-03-14-backend3/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/03/11/2022-03-11-usually8/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&text=Async와 Await"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&is_video=false&description=Async와 Await"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Async와 Await&body=Check out this article: https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&name=Async와 Await&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&t=Async와 Await"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B9%84%EB%8F%99%EA%B8%B0-asynchronous"><span class="toc-number">1.</span> <span class="toc-text">비동기(asynchronous)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Promise"><span class="toc-number">2.</span> <span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise%EC%9D%98-state"><span class="toc-number">2.1.</span> <span class="toc-text">Promise의 state</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiple-Promise-handling"><span class="toc-number">2.2.</span> <span class="toc-text">Multiple Promise handling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-all"><span class="toc-number">2.2.1.</span> <span class="toc-text">Promise.all()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-allSettled"><span class="toc-number">2.2.2.</span> <span class="toc-text">Promise.allSettled()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-race"><span class="toc-number">2.2.3.</span> <span class="toc-text">Promise.race()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-any"><span class="toc-number">2.2.4.</span> <span class="toc-text">Promise.any()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#async-await"><span class="toc-number">3.</span> <span class="toc-text">async, await</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%97%AC%EB%9F%AC%EA%B0%9C%EC%9D%98-await"><span class="toc-number">3.1.</span> <span class="toc-text">여러개의 await</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Async와 Await
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-13T09:25:00.000Z" class="dt-published" itemprop="datePublished">2022-03-13</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/async/" rel="tag">async</a>, <a class="p-category" href="/tags/backend/" rel="tag">backend</a>, <a class="p-category" href="/tags/elice/" rel="tag">elice</a>, <a class="p-category" href="/tags/node-js/" rel="tag">node js</a>, <a class="p-category" href="/tags/promise/" rel="tag">promise</a>, <a class="p-category" href="/tags/web/" rel="tag">web</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="비동기-asynchronous"><a href="#비동기-asynchronous" class="headerlink" title="비동기(asynchronous)"></a>비동기(asynchronous)</h1><p>Javascript는 single thread 이므로 서버 요청을 기다려야 하는 경우 사용자는 멈춰있는 브라우저를 보게 된다. 그러므로 동기 처리가 아닌 비동기 처리가 필요하다. 비동기는 코드의 순서와 다르게 실행되는 것을 말한다. 비동기 처리 코드를 감싸고 있는 블럭은 <code>task queue</code>에 넣어진다. Main thread가 동기 코드를 실행한 후 <code>event loop</code>가 <code>task queue</code>에 있는 비동기 코드를 실행한다.</p>
+<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>Promise는 비동기 실행이 완료된 후에 <code>then</code>, <code>catch</code>, <code>finally</code>등의 핸들러를 붙여서 각각 데이터 처리, 에러, 클린업 로직을 실행할 수 있다. <code>then</code>을 이어 붙이면 동기 실행처럼 구현 가능하다.</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">promise</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (condition) &#123;</span><br><span class="line">      first;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">(<span class="params">num</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>();</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">finally</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;finally&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>promise가 정상적으로 종료되면 <code>then</code>으로 넘어가게 되고, 에러가 발생하면 <code>catch</code>로 넘어간다. 마지막에 있는 <code>finally</code>는 어떤 인자도 받을 수 없으며 promise가 반환된다.</p>
+<h2 id="Promise의-state"><a href="#Promise의-state" class="headerlink" title="Promise의 state"></a>Promise의 state</h2><p>Promise 객체는 pending, fulfilled, rejected 3가지의 상태를 가진다. fulfilled와 rejected 두 가지 상태를 <code>settled</code>라고 한다. pending은 비동기 실행이 끝나기를 기다리는 상태이며 fulfilled는 비동기 실행이 성공한 상태이다. rejected는 비동기 실행이 실패한 상태다.</p>
+<h2 id="Multiple-Promise-handling"><a href="#Multiple-Promise-handling" class="headerlink" title="Multiple Promise handling"></a>Multiple Promise handling</h2><p>하나 이상의 promise를 다루는 방법이 몇 가지 있다. 하나씩 알아보자</p>
+<h3 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all()"></a>Promise.all()</h3><p>Promise.all() 내에 존재하는 모든 promise가 완료되어야 다음 단계로 넘어갈 수 있다. 모든 promise가 정상 동작하게 되면 <code>then</code>으로 넘어가게 되고 하나의 promise라도 실패하게 되면 <code>catch</code>로 넘어가게 된다.</p>
+<h3 id="Promise-allSettled"><a href="#Promise-allSettled" class="headerlink" title="Promise.allSettled()"></a>Promise.allSettled()</h3><p>모든 promise가 <code>settled</code>되기를 기다린다. <code>settled</code>는 위에서도 설명되어 있듯이 <code>fulfilled</code>와 <code>rejected</code>상태를 말한다.</p>
+<h3 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race()"></a>Promise.race()</h3><p>넘겨진 promise 중 하나라도 <code>settled</code>가 되기를 기다린다.</p>
+<h3 id="Promise-any"><a href="#Promise-any" class="headerlink" title="Promise.any()"></a>Promise.any()</h3><p>넘겨진 promise 중에서 하나라도 <code>fulfilled</code>가 되기를 기다린다.</p>
+<h1 id="async-await"><a href="#async-await" class="headerlink" title="async, await"></a>async, await</h1><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">name</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> vari = <span class="keyword">await</span> <span class="title function_">action</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>async와 await은 promise 체인을 구현하지 않고 promise를 사용할 수 있게 해준다. promise를 기다려야 하는 동작 앞에 await을 붙이게 되고 await은 항상 async function에서만 사용할 수 있다. 여러 개의 await을 순서대로 나열해서 then chain을 구현할 수 있다.</p>
+<h2 id="여러개의-await"><a href="#여러개의-await" class="headerlink" title="여러개의 await"></a>여러개의 await</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">asyncFunc</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> post = <span class="keyword">await</span> <span class="title function_">action</span>();</span><br><span class="line">    <span class="keyword">const</span> userList = <span class="keyword">await</span> <span class="title function_">action</span>();</span><br><span class="line">    <span class="keyword">return</span> &#123; post, userList &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>try catch</code>문을 사용해서 두 가지의 <code>await</code>을 사용해 보았다. <code>post</code>와 <code>userList</code> 둘 중 하나라도 에러가 발생하면 <code>catch</code>가 실행된다. await이 순차적으로 사용되어도 병렬적으로 실행된다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B9%84%EB%8F%99%EA%B8%B0-asynchronous"><span class="toc-number">1.</span> <span class="toc-text">비동기(asynchronous)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Promise"><span class="toc-number">2.</span> <span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise%EC%9D%98-state"><span class="toc-number">2.1.</span> <span class="toc-text">Promise의 state</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiple-Promise-handling"><span class="toc-number">2.2.</span> <span class="toc-text">Multiple Promise handling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-all"><span class="toc-number">2.2.1.</span> <span class="toc-text">Promise.all()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-allSettled"><span class="toc-number">2.2.2.</span> <span class="toc-text">Promise.allSettled()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-race"><span class="toc-number">2.2.3.</span> <span class="toc-text">Promise.race()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-any"><span class="toc-number">2.2.4.</span> <span class="toc-text">Promise.any()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#async-await"><span class="toc-number">3.</span> <span class="toc-text">async, await</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%97%AC%EB%9F%AC%EA%B0%9C%EC%9D%98-await"><span class="toc-number">3.1.</span> <span class="toc-text">여러개의 await</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&text=Async와 Await"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&is_video=false&description=Async와 Await"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Async와 Await&body=Check out this article: https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&title=Async와 Await"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&name=Async와 Await&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/13/2022-03-13-asyncawait/&t=Async와 Await"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

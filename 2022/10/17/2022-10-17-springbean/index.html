@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="spring에서 DI와 AOP에 대해 알아본다">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Framework 파헤쳐보기">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="spring에서 DI와 AOP에 대해 알아본다">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/spring/bean/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/spring/bean/beanlifecycle.png">
+<meta property="article:published_time" content="2022-10-17T14:20:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:20:52.342Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="aop di java spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/posting/spring/bean/pic1.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Spring Framework 파헤쳐보기</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/10/18/2022-10-19-mybatispractice/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/10/09/2022-10-10-encryption/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&text=Spring Framework 파헤쳐보기"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&is_video=false&description=Spring Framework 파헤쳐보기"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Spring Framework 파헤쳐보기&body=Check out this article: https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&name=Spring Framework 파헤쳐보기&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&t=Spring Framework 파헤쳐보기"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Framework"><span class="toc-number">1.</span> <span class="toc-text">Spring Framework</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Framework%EC%9D%98-%EA%B5%AC%EC%A1%B0"><span class="toc-number">2.</span> <span class="toc-text">Spring Framework의 구조</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#POJO-Plain-Old-Java-Object"><span class="toc-number">2.1.</span> <span class="toc-text">POJO(Plain Old Java Object)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PSA-Portable-Service-Abstraction"><span class="toc-number">2.2.</span> <span class="toc-text">PSA(Portable Service Abstraction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IoC-Inversion-of-Control-DI-Dependency-Injection"><span class="toc-number">2.3.</span> <span class="toc-text">IoC(Inversion of Control)&#x2F;DI(Dependency Injection)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOP-Aspect-Oriented-Programming"><span class="toc-number">2.4.</span> <span class="toc-text">AOP(Aspect Oriented Programming)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container"><span class="toc-number">3.</span> <span class="toc-text">Container</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DI-Container"><span class="toc-number">3.1.</span> <span class="toc-text">DI Container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IoC-Container"><span class="toc-number">3.2.</span> <span class="toc-text">IoC Container</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DI-Dependency-Injection"><span class="toc-number">4.</span> <span class="toc-text">DI(Dependency Injection)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bean%EC%9D%98-%EB%B2%94%EC%9C%84-%EC%A7%80%EC%A0%95"><span class="toc-number">4.0.1.</span> <span class="toc-text">Bean의 범위 지정</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#singleton-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%EB%8B%B9-%ED%95%98%EB%82%98%EC%9D%98-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EB%B9%88%EB%A7%8C-%EC%83%9D%EC%84%B1-default"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">singleton: 스프링 컨테이너당 하나의 인스턴스 빈만 생성(default)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#prototype-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EB%B9%88%EC%9D%84-%EC%9A%94%EC%B2%AD%ED%95%A0-%EB%95%8C%EB%A7%88%EB%8B%A4-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%83%9D%EC%84%B1"><span class="toc-number">4.0.1.2.</span> <span class="toc-text">prototype: 컨테이너 빈을 요청할 때마다 새로운 인스턴스 생성</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#request-HTTP-Request-%EB%B3%84%EB%A1%9C-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%83%9D%EC%84%B1"><span class="toc-number">4.0.1.3.</span> <span class="toc-text">request: HTTP Request 별로 새로운 인스턴스 생성</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#session-HTTP-Session-%EB%B3%84%EB%A1%9C-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%83%9D%EC%84%B1"><span class="toc-number">4.0.1.4.</span> <span class="toc-text">session: HTTP Session 별로 새로운 인스턴스 생성</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#spring-bean-annotation%EC%9D%98-%EC%A2%85%EB%A5%98"><span class="toc-number">4.0.2.</span> <span class="toc-text">spring bean annotation의 종류</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Repository-Data-Access-Layer%EC%9D%98-DAO-%EB%98%90%EB%8A%94-Repository-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90-%EC%82%AC%EC%9A%A9%EB%90%9C%EB%8B%A4-Data-Access-Exception-%EC%9E%90%EB%8F%99%EB%B3%80%ED%99%98%EA%B3%BC-%EA%B0%99%EC%9D%80-AOP%EC%9D%98-%EC%A0%81%EC%9A%A9-%EB%8C%80%EC%83%81%EC%9D%84-%EC%84%A0%EC%A0%95%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%B4-%EC%82%AC%EC%9A%A9%EB%90%9C%EB%8B%A4"><span class="toc-number">4.0.2.1.</span> <span class="toc-text">@Repository: Data Access Layer의 DAO 또는 Repository 클래스에 사용된다. Data Access Exception 자동변환과 같은 AOP의 적용 대상을 선정하기 위해 사용된다.</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Service-Service-layer%EC%9D%98-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90-%EC%82%AC%EC%9A%A9%EB%90%9C%EB%8B%A4"><span class="toc-number">4.0.2.2.</span> <span class="toc-text">@Service: Service layer의 클래스에 사용된다.</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Controller-Presentation-Layer%EC%9D%98-MVC-controller%EC%97%90-%EC%82%AC%EC%9A%A9%EB%90%9C%EB%8B%A4-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9B%B9-%EC%84%9C%EB%B8%94%EB%A6%BF%EC%97%90-%EC%9D%98%ED%95%B4-%EC%9B%B9-%EC%84%9C%EB%B8%94%EB%A6%BF%EC%97%90-%EC%9D%98%ED%95%B4-%EC%9B%B9-%EC%9A%94%EC%B2%AD%EC%9D%84-%EC%B2%98%EB%A6%AC%ED%95%98%EB%8A%94-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC-bean%EC%9C%BC%EB%A1%9C-%EC%84%A0%EC%A0%95%ED%95%9C%EB%8B%A4"><span class="toc-number">4.0.2.3.</span> <span class="toc-text">@Controller: Presentation Layer의 MVC controller에 사용된다. 스프링 웹 서블릿에 의해 웹 서블릿에 의해 웹 요청을 처리하는 컨트롤러 bean으로 선정한다</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Component-%EC%9C%84%EC%9D%98-layer-%EA%B5%AC%EB%B6%84%EC%9D%84-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%96%B4%EB%A0%A4%EC%9A%B4-%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9D%B8-%EA%B2%BD%EC%9A%B0-%EC%84%A4%EC%A0%95%ED%95%9C%EB%8B%A4"><span class="toc-number">4.0.2.4.</span> <span class="toc-text">@Component: 위의 layer 구분을 적용하기 어려운 일반적인 경우 설정한다.</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-bean-%EC%9D%98%EC%A1%B4%EA%B4%80%EA%B3%84-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0-xml"><span class="toc-number">5.</span> <span class="toc-text">spring bean 의존관계 설정하기 (xml)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Annotation-%EB%B0%A9%EC%8B%9D%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-bean-%EC%9D%98%EC%A1%B4-%EA%B4%80%EA%B3%84-%EC%84%A4%EC%A0%95"><span class="toc-number">6.</span> <span class="toc-text">Annotation 방식을 사용한 bean 의존 관계 설정</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean-%EA%B0%9D%EC%B2%B4%EC%9D%98-%EC%83%9D%EC%84%B1-%EB%8B%A8%EC%9C%84"><span class="toc-number">7.</span> <span class="toc-text">Bean 객체의 생성 단위</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%EC%9D%98-life-cycle"><span class="toc-number">8.</span> <span class="toc-text">Bean의 life cycle</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Spring Framework 파헤쳐보기
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-10-17T14:20:00.000Z" class="dt-published" itemprop="datePublished">2022-10-17</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/spring/">spring</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/aop-di-java-spring/" rel="tag">aop di java spring</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Spring-Framework"><a href="#Spring-Framework" class="headerlink" title="Spring Framework"></a>Spring Framework</h2><p>Spring 프레임워크는 자바를 사용해 Enterprise Application을 만들 때 포괄적으로 사용하는 프로그래밍 및 Configuration Model을 제공해 주는 프레임워크로 Application 수준의 인프라를 제공한다.</p>
+<p>Spring 프레임워크는 개발자가 복잡하고 실수하기 쉬운 low level에 신경쓰지 않고 business logic 구현에만 집중할 수 있게 해준다.</p>
+<p>Spring 컨테이너는 자바 객체의 생성, 소멸과 같은 라이프사이클을 관리한다. 언제든지 스프링 컨테이너로부터 필요한 객체를 가져와 사용할 수 있다.</p>
+<p>스프링은 JDBC와 Mybatis, Hibernate, JPA 등 DB 처리를 위해 사용되는 라이브러리와의 연동을 지원한다. 또한 JMS, 메일, 스케쥴링 등 다양한 API를 설정파일과 Annotation을 통해 쉽게 사용할 수 있도록 지원한다.</p>
+<h2 id="Spring-Framework의-구조"><a href="#Spring-Framework의-구조" class="headerlink" title="Spring Framework의 구조"></a>Spring Framework의 구조</h2><h3 id="POJO-Plain-Old-Java-Object"><a href="#POJO-Plain-Old-Java-Object" class="headerlink" title="POJO(Plain Old Java Object)"></a>POJO(Plain Old Java Object)</h3><p>특정 환경이나 기술에 종속적이지 않은 객체지향 원리에 충실한 자바 객체이다. 테스트에 용이하며 객체지향 설계를 자유롭게 적용할 수 있는 특징이 있다.</p>
+<h3 id="PSA-Portable-Service-Abstraction"><a href="#PSA-Portable-Service-Abstraction" class="headerlink" title="PSA(Portable Service Abstraction)"></a>PSA(Portable Service Abstraction)</h3><p>환경과 세부기술의 변경과 관계없이 일관된 방식으로 기술에 접근할 수 있게 해주는 설계원칙으로 트랜잭션 추상화, OXM 추상화, 데이터 엑세스의 Exception 변환기능 등 기술적인 복잡함은 추상화하여 low level의 기술 구현 부분과 기술을 사용하는 인터페이스로 분리한다.</p>
+<h3 id="IoC-Inversion-of-Control-DI-Dependency-Injection"><a href="#IoC-Inversion-of-Control-DI-Dependency-Injection" class="headerlink" title="IoC(Inversion of Control)&#x2F;DI(Dependency Injection)"></a>IoC(Inversion of Control)&#x2F;DI(Dependency Injection)</h3><p>DI는 유연하게 확장 가능한 객체를 만들어 두고 객체 간의 의존관계는 외부에서 다이나믹하게 설정한다. IoC는 Servlet container 및 EJB container에 객체 제어권이 주어지는 특징이 있다.</p>
+<h3 id="AOP-Aspect-Oriented-Programming"><a href="#AOP-Aspect-Oriented-Programming" class="headerlink" title="AOP(Aspect Oriented Programming)"></a>AOP(Aspect Oriented Programming)</h3><p>관심사의 분리를 통해서 소프트웨어의 모듈성을 향상시킨다. 공통 모듈을 여러 코드에서 쉽게 적용 가능하게 만들어 준다.</p>
+<h2 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h2><p>container는 라이프사이클을 관리하고 스레드 관리와 의존성 객체를 제공한다. container는 비즈니스 로직 외에 부가적인 기능에 대해서 독립적으로 관리되도록 하기 위해 존재한다. 서비스 객체를 사용하기 위해 각 Factory나 Singleton 패턴을 직접 구현하지 않아도 된다.</p>
+<h3 id="DI-Container"><a href="#DI-Container" class="headerlink" title="DI Container"></a>DI Container</h3><p>DI 컨테이너가 관리하는 객체를 Bean이라고 하고 Bean의 라이프사이클을 관리하는 것이 BeanFactory이다. BeanFactory에 여러 컨테이너 기능을 추가하여 ApplicationContext라고 한다.</p>
+<p>Bean은 스프링이 IoC 방식으로 관리하는 object를 말한다. Bean은 스프링이 직접 생성과 제어를 담당한다.</p>
+<p>BeanFactory는 스프링 IoC를 담당하는 핵심 컨테이너로 Bean의 등록, 생성, 조회, 반환을 담당한다. ApplicationContext는 BeanFactory를 확장한 IoC컨테이너이다. 기본 동작은 BeanFactory와 동일하며, 스프링이 제공하는 부가 서비스를 추가로 제공한다.</p>
+<h3 id="IoC-Container"><a href="#IoC-Container" class="headerlink" title="IoC Container"></a>IoC Container</h3><p>스프링에서 IoC를 담당하는 컨테이너는 BeanFactory, ApplicationContext가 있다. Object의 생성과 관계 설정, 사용, 제거 등 작업을 애플리케이션 코드 대신 독립된 컨테이너가 담당한다.</p>
+<p>객체 생성을 컨테이너에 위임하여 처리하므로 객체 간의 결합도를 낮출 수 있다. 프로젝트의 결합도가 높으면 유지보수 시 하나의 클래스가 변경될 때 다수의 클래스들도 변경되어야 하므로 결합도가 낮은 프로젝트가 유지보수에 용이하다.</p>
+<p><img src="/images/posting/spring/bean/pic1.png" alt="스크린샷 2022-10-18 오전 8.14.02.png"></p>
+<p>IoC의 호출 방식은 위와 같다. 팩토리 패턴의 장점을 더하여 어떠한 것에도 의존하지 않는 형태를 가진다. 실행 시점에 클래스 간의 관계가 형성된다.</p>
+<p>applicationContext.xml에서 bean을 이용해 service 구현체 객체의 생성 및 관리를 하고, controller에서 ApplicationContext의 ClassPathXmlApplicationContext로 xml파일을 읽어 각 bean을 불러와 service를 불러온다.</p>
+<h2 id="DI-Dependency-Injection"><a href="#DI-Dependency-Injection" class="headerlink" title="DI(Dependency Injection)"></a>DI(Dependency Injection)</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component(&quot;memberService&quot;)</span></span><br><span class="line"><span class="meta">@Scope(&quot;singleton&quot;)</span> <span class="comment">// singleton으로 생성</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MemberServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">MemberService</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">insertMember</span><span class="params">(String name)</span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans:bean id=<span class="string">&quot;memberService&quot;</span> class=<span class="string">&quot;com.hello.myapp.MemberServiceImpl&quot;</span> scope=<span class="string">&quot;prototype&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>스프링 Bean은 싱글톤으로 만들어지므로 컨테이너가 제공하는 모든 빈의 인스턴스는 항상 동일하다. 싱글톤 정의는 annotation으로 한다. 컨테이너가 항상 새로운 인스턴스를 반환하게 만들고 싶은 경우 scope를 prototype으로 설정해줘야 한다.</p>
+<h4 id="Bean의-범위-지정"><a href="#Bean의-범위-지정" class="headerlink" title="Bean의 범위 지정"></a>Bean의 범위 지정</h4><h5 id="singleton-스프링-컨테이너당-하나의-인스턴스-빈만-생성-default"><a href="#singleton-스프링-컨테이너당-하나의-인스턴스-빈만-생성-default" class="headerlink" title="singleton: 스프링 컨테이너당 하나의 인스턴스 빈만 생성(default)"></a>singleton: 스프링 컨테이너당 하나의 인스턴스 빈만 생성(default)</h5><h5 id="prototype-컨테이너-빈을-요청할-때마다-새로운-인스턴스-생성"><a href="#prototype-컨테이너-빈을-요청할-때마다-새로운-인스턴스-생성" class="headerlink" title="prototype: 컨테이너 빈을 요청할 때마다 새로운 인스턴스 생성"></a>prototype: 컨테이너 빈을 요청할 때마다 새로운 인스턴스 생성</h5><h5 id="request-HTTP-Request-별로-새로운-인스턴스-생성"><a href="#request-HTTP-Request-별로-새로운-인스턴스-생성" class="headerlink" title="request: HTTP Request 별로 새로운 인스턴스 생성"></a>request: HTTP Request 별로 새로운 인스턴스 생성</h5><h5 id="session-HTTP-Session-별로-새로운-인스턴스-생성"><a href="#session-HTTP-Session-별로-새로운-인스턴스-생성" class="headerlink" title="session: HTTP Session 별로 새로운 인스턴스 생성"></a>session: HTTP Session 별로 새로운 인스턴스 생성</h5><p>스프링 Bean설정은 xml과 annotation 방식으로 가능하다. xml에서는 <code>&lt;bean&gt;</code>태그를 사용해 제어한다.</p>
+<p>어플리케이션의 규모가 커지고 bean의 개수가 많아질 경우 xml 파일을 관리하는 것이 힘들어진다. Bean으로 사용될 클래스에 annotation을 부여해 자동으로 bean을 등록해 준다.</p>
+<p>오브젝트 빈 스캐너로 빈 스캐닝을 통해 자동으로 등록된다. Bean 스캐너는 기본적으로 클래스 이름의 bean의 아이디로 사용한다.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.hello.cafe&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>annotation으로 bean을 사용할 경우 servlet-context.xml에서 context에 component-scan을 추가해 줘야 한다.</p>
+<h4 id="spring-bean-annotation의-종류"><a href="#spring-bean-annotation의-종류" class="headerlink" title="spring bean annotation의 종류"></a>spring bean annotation의 종류</h4><h5 id="Repository-Data-Access-Layer의-DAO-또는-Repository-클래스에-사용된다-Data-Access-Exception-자동변환과-같은-AOP의-적용-대상을-선정하기-위해-사용된다"><a href="#Repository-Data-Access-Layer의-DAO-또는-Repository-클래스에-사용된다-Data-Access-Exception-자동변환과-같은-AOP의-적용-대상을-선정하기-위해-사용된다" class="headerlink" title="@Repository: Data Access Layer의 DAO 또는 Repository 클래스에 사용된다. Data Access Exception 자동변환과 같은 AOP의 적용 대상을 선정하기 위해 사용된다."></a>@Repository: Data Access Layer의 DAO 또는 Repository 클래스에 사용된다. Data Access Exception 자동변환과 같은 AOP의 적용 대상을 선정하기 위해 사용된다.</h5><h5 id="Service-Service-layer의-클래스에-사용된다"><a href="#Service-Service-layer의-클래스에-사용된다" class="headerlink" title="@Service: Service layer의 클래스에 사용된다."></a>@Service: Service layer의 클래스에 사용된다.</h5><h5 id="Controller-Presentation-Layer의-MVC-controller에-사용된다-스프링-웹-서블릿에-의해-웹-서블릿에-의해-웹-요청을-처리하는-컨트롤러-bean으로-선정한다"><a href="#Controller-Presentation-Layer의-MVC-controller에-사용된다-스프링-웹-서블릿에-의해-웹-서블릿에-의해-웹-요청을-처리하는-컨트롤러-bean으로-선정한다" class="headerlink" title="@Controller: Presentation Layer의 MVC controller에 사용된다. 스프링 웹 서블릿에 의해 웹 서블릿에 의해 웹 요청을 처리하는 컨트롤러 bean으로 선정한다"></a>@Controller: Presentation Layer의 MVC controller에 사용된다. 스프링 웹 서블릿에 의해 웹 서블릿에 의해 웹 요청을 처리하는 컨트롤러 bean으로 선정한다</h5><h5 id="Component-위의-layer-구분을-적용하기-어려운-일반적인-경우-설정한다"><a href="#Component-위의-layer-구분을-적용하기-어려운-일반적인-경우-설정한다" class="headerlink" title="@Component: 위의 layer 구분을 적용하기 어려운 일반적인 경우 설정한다."></a>@Component: 위의 layer 구분을 적용하기 어려운 일반적인 경우 설정한다.</h5><h2 id="spring-bean-의존관계-설정하기-xml"><a href="#spring-bean-의존관계-설정하기-xml" class="headerlink" title="spring bean 의존관계 설정하기 (xml)"></a>spring bean 의존관계 설정하기 (xml)</h2><p>객체 또는 값을 constructor를 통해 주입 받는다. constructor-arg 태그는 <code>&lt;bean&gt;</code>의 하위 태그로 설정한 bean 객체 또는 값을 생성자를 통해 주입하도록 설정한다.</p>
+<p><code>&lt;constructor-arg&gt;</code>의 하위 태그로 ref와 value가 있다. ref는 객체 주입 시 사용하고 <code>&lt;ref bean=”bean name” /&gt;</code> 으로 사용한다. value에는 문자열이 들어가며, primitive data 주입 시 사용한다. value의 속성으로 type이 들어갈 수 있다.</p>
+<p>속성으로 사용할 수도 있다. <code>&lt;constructor-arg ref=”bean name&quot; /&gt;</code>으로 사용하고 <code>&lt;constructor-arg value=”값” /&gt;</code>으로 사용한다.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dao&quot;</span> <span class="attr">class</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;service&quot;</span> <span class="attr">class</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">&quot;dao&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>위 코드 처럼 주입하게 된다.</p>
+<p>Bean 의존 관계설정에 property 태그를 사용할 수 있다. property 또한 하위 태그와 속성으로 이용할 수 있다. 하위 태그인 경우 constructor-arg와 동일하며, 속성으로 사용할 경우 <code>&lt;property name=”property name” ref=”bean name” /&gt;</code>, <code>&lt;property name=”property name” value=”값” /&gt;</code> 으로 사용한다.</p>
+<h2 id="Annotation-방식을-사용한-bean-의존-관계-설정"><a href="#Annotation-방식을-사용한-bean-의존-관계-설정" class="headerlink" title="Annotation 방식을 사용한 bean 의존 관계 설정"></a>Annotation 방식을 사용한 bean 의존 관계 설정</h2><p>Annotation은 멤버 변수에 직접 정의 하는 경우 setter method를 만들지 않아도 된다. 앞으로 많이 사용하게 될 annotation 방식 bean 의존 관계를 알아보자.</p>
+<table>
+<thead>
+<tr>
+<th align="center">annotation</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">@Resource</td>
+<td>Spring 2.5부터 지원<br>멤버 변수, setter method에 사용 가능<br>타입에 맞춰 연결</td>
+</tr>
+<tr>
+<td align="center">@Autowired</td>
+<td>Spring 2.5 부터 지원<br>Spring에서만 사용 가능<br>Required 속성을 통해 DI여부 조정<br>멤버 변수, setter, constructor, 일반 method 사용 가능<br>타입에 맞춰 연결</td>
+</tr>
+<tr>
+<td align="center">@Inject</td>
+<td>Spring 3.0부터 지원<br>Framework에 종속적이지 않다<br>Javax.Inject.x.jar가 필요<br>멤버 변수, setter, constructor, 일반 method 사용 가능<br>이름으로 연결</td>
+</tr>
+</tbody></table>
+<h2 id="Bean-객체의-생성-단위"><a href="#Bean-객체의-생성-단위" class="headerlink" title="Bean 객체의 생성 단위"></a>Bean 객체의 생성 단위</h2><table>
+<thead>
+<tr>
+<th align="center">scope</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">singleton</td>
+<td>스프링 컨테이너당 하나의 인스턴스 빈만 생성</td>
+</tr>
+<tr>
+<td align="center">prototype</td>
+<td>컨테이너에 빈을 요청할 때마다 새로운 인스턴스 생성</td>
+</tr>
+<tr>
+<td align="center">request</td>
+<td>HTTP Request 별로 새로운 인스턴스 생성</td>
+</tr>
+<tr>
+<td align="center">session</td>
+<td>HTTP Session 별로 새로운 인스턴스 생성</td>
+</tr>
+</tbody></table>
+<h2 id="Bean의-life-cycle"><a href="#Bean의-life-cycle" class="headerlink" title="Bean의 life cycle"></a>Bean의 life cycle</h2><p>지금까지 봤던 bean의 생명주기이다.</p>
+<p><img src="/images/posting/spring/bean/beanlifecycle.png" alt="beanlifecycle.png"></p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Framework"><span class="toc-number">1.</span> <span class="toc-text">Spring Framework</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-Framework%EC%9D%98-%EA%B5%AC%EC%A1%B0"><span class="toc-number">2.</span> <span class="toc-text">Spring Framework의 구조</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#POJO-Plain-Old-Java-Object"><span class="toc-number">2.1.</span> <span class="toc-text">POJO(Plain Old Java Object)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PSA-Portable-Service-Abstraction"><span class="toc-number">2.2.</span> <span class="toc-text">PSA(Portable Service Abstraction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IoC-Inversion-of-Control-DI-Dependency-Injection"><span class="toc-number">2.3.</span> <span class="toc-text">IoC(Inversion of Control)&#x2F;DI(Dependency Injection)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOP-Aspect-Oriented-Programming"><span class="toc-number">2.4.</span> <span class="toc-text">AOP(Aspect Oriented Programming)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container"><span class="toc-number">3.</span> <span class="toc-text">Container</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DI-Container"><span class="toc-number">3.1.</span> <span class="toc-text">DI Container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IoC-Container"><span class="toc-number">3.2.</span> <span class="toc-text">IoC Container</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DI-Dependency-Injection"><span class="toc-number">4.</span> <span class="toc-text">DI(Dependency Injection)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bean%EC%9D%98-%EB%B2%94%EC%9C%84-%EC%A7%80%EC%A0%95"><span class="toc-number">4.0.1.</span> <span class="toc-text">Bean의 범위 지정</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#singleton-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%EB%8B%B9-%ED%95%98%EB%82%98%EC%9D%98-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EB%B9%88%EB%A7%8C-%EC%83%9D%EC%84%B1-default"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">singleton: 스프링 컨테이너당 하나의 인스턴스 빈만 생성(default)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#prototype-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EB%B9%88%EC%9D%84-%EC%9A%94%EC%B2%AD%ED%95%A0-%EB%95%8C%EB%A7%88%EB%8B%A4-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%83%9D%EC%84%B1"><span class="toc-number">4.0.1.2.</span> <span class="toc-text">prototype: 컨테이너 빈을 요청할 때마다 새로운 인스턴스 생성</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#request-HTTP-Request-%EB%B3%84%EB%A1%9C-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%83%9D%EC%84%B1"><span class="toc-number">4.0.1.3.</span> <span class="toc-text">request: HTTP Request 별로 새로운 인스턴스 생성</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#session-HTTP-Session-%EB%B3%84%EB%A1%9C-%EC%83%88%EB%A1%9C%EC%9A%B4-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%83%9D%EC%84%B1"><span class="toc-number">4.0.1.4.</span> <span class="toc-text">session: HTTP Session 별로 새로운 인스턴스 생성</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#spring-bean-annotation%EC%9D%98-%EC%A2%85%EB%A5%98"><span class="toc-number">4.0.2.</span> <span class="toc-text">spring bean annotation의 종류</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Repository-Data-Access-Layer%EC%9D%98-DAO-%EB%98%90%EB%8A%94-Repository-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90-%EC%82%AC%EC%9A%A9%EB%90%9C%EB%8B%A4-Data-Access-Exception-%EC%9E%90%EB%8F%99%EB%B3%80%ED%99%98%EA%B3%BC-%EA%B0%99%EC%9D%80-AOP%EC%9D%98-%EC%A0%81%EC%9A%A9-%EB%8C%80%EC%83%81%EC%9D%84-%EC%84%A0%EC%A0%95%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%B4-%EC%82%AC%EC%9A%A9%EB%90%9C%EB%8B%A4"><span class="toc-number">4.0.2.1.</span> <span class="toc-text">@Repository: Data Access Layer의 DAO 또는 Repository 클래스에 사용된다. Data Access Exception 자동변환과 같은 AOP의 적용 대상을 선정하기 위해 사용된다.</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Service-Service-layer%EC%9D%98-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90-%EC%82%AC%EC%9A%A9%EB%90%9C%EB%8B%A4"><span class="toc-number">4.0.2.2.</span> <span class="toc-text">@Service: Service layer의 클래스에 사용된다.</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Controller-Presentation-Layer%EC%9D%98-MVC-controller%EC%97%90-%EC%82%AC%EC%9A%A9%EB%90%9C%EB%8B%A4-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9B%B9-%EC%84%9C%EB%B8%94%EB%A6%BF%EC%97%90-%EC%9D%98%ED%95%B4-%EC%9B%B9-%EC%84%9C%EB%B8%94%EB%A6%BF%EC%97%90-%EC%9D%98%ED%95%B4-%EC%9B%B9-%EC%9A%94%EC%B2%AD%EC%9D%84-%EC%B2%98%EB%A6%AC%ED%95%98%EB%8A%94-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC-bean%EC%9C%BC%EB%A1%9C-%EC%84%A0%EC%A0%95%ED%95%9C%EB%8B%A4"><span class="toc-number">4.0.2.3.</span> <span class="toc-text">@Controller: Presentation Layer의 MVC controller에 사용된다. 스프링 웹 서블릿에 의해 웹 서블릿에 의해 웹 요청을 처리하는 컨트롤러 bean으로 선정한다</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Component-%EC%9C%84%EC%9D%98-layer-%EA%B5%AC%EB%B6%84%EC%9D%84-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%96%B4%EB%A0%A4%EC%9A%B4-%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9D%B8-%EA%B2%BD%EC%9A%B0-%EC%84%A4%EC%A0%95%ED%95%9C%EB%8B%A4"><span class="toc-number">4.0.2.4.</span> <span class="toc-text">@Component: 위의 layer 구분을 적용하기 어려운 일반적인 경우 설정한다.</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-bean-%EC%9D%98%EC%A1%B4%EA%B4%80%EA%B3%84-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0-xml"><span class="toc-number">5.</span> <span class="toc-text">spring bean 의존관계 설정하기 (xml)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Annotation-%EB%B0%A9%EC%8B%9D%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-bean-%EC%9D%98%EC%A1%B4-%EA%B4%80%EA%B3%84-%EC%84%A4%EC%A0%95"><span class="toc-number">6.</span> <span class="toc-text">Annotation 방식을 사용한 bean 의존 관계 설정</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean-%EA%B0%9D%EC%B2%B4%EC%9D%98-%EC%83%9D%EC%84%B1-%EB%8B%A8%EC%9C%84"><span class="toc-number">7.</span> <span class="toc-text">Bean 객체의 생성 단위</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%EC%9D%98-life-cycle"><span class="toc-number">8.</span> <span class="toc-text">Bean의 life cycle</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&text=Spring Framework 파헤쳐보기"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&is_video=false&description=Spring Framework 파헤쳐보기"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Spring Framework 파헤쳐보기&body=Check out this article: https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&title=Spring Framework 파헤쳐보기"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&name=Spring Framework 파헤쳐보기&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/10/17/2022-10-17-springbean/&t=Spring Framework 파헤쳐보기"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

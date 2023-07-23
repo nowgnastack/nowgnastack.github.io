@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="유전 알고리즘이란?유전 알고리즘은 다윈의 ‘적자생존’의 개념을 최적화 문제를 해결하는데 적용한 것이다. 생물체가 적응하면서 진화해가는 것을 모방하여 최적해를 찾는 방법이다. 알고리즘 구성 초기 후보해 집합을 생성 선택 연산 교차 연산 돌연변이 연산  사용할 데이터셋 Kaggle에서 Tesla Stock Price 데이터를 사용하였다.Tesla Stock P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Generic Algorithm">
+<meta property="og:url" content="https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="유전 알고리즘이란?유전 알고리즘은 다윈의 ‘적자생존’의 개념을 최적화 문제를 해결하는데 적용한 것이다. 생물체가 적응하면서 진화해가는 것을 모방하여 최적해를 찾는 방법이다. 알고리즘 구성 초기 후보해 집합을 생성 선택 연산 교차 연산 돌연변이 연산  사용할 데이터셋 Kaggle에서 Tesla Stock Price 데이터를 사용하였다.Tesla Stock P">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Generic_Algorithm/Tesla.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Generic_Algorithm/TeslaMSE.png">
+<meta property="article:published_time" content="2020-06-16T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:04:16.553Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/Generic_Algorithm/Tesla.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Generic Algorithm</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2020/06/17/2020-06-17-generic_algorithm/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/06/30/2020-06-30-DataScience1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/06/03/2020-06-03-AI1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&text=Generic Algorithm"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&is_video=false&description=Generic Algorithm"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Generic Algorithm&body=Check out this article: https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&name=Generic Algorithm&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&t=Generic Algorithm"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9C%A0%EC%A0%84-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EC%9D%B4%EB%9E%80"><span class="toc-number">1.</span> <span class="toc-text">유전 알고리즘이란?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B5%AC%EC%84%B1"><span class="toc-number">2.</span> <span class="toc-text">알고리즘 구성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%82%AC%EC%9A%A9%ED%95%A0-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%85%8B"><span class="toc-number">3.</span> <span class="toc-text">사용할 데이터셋</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9C%A0%EC%A0%84-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EC%9C%BC%EB%A1%9C-%EC%98%88%EC%B8%A1%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">유전 알고리즘으로 예측하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0"><span class="toc-number">4.1.</span> <span class="toc-text">데이터 가져오기</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%B4%88%EA%B8%B0-%ED%9B%84%EB%B3%B4%ED%95%B4-%EC%A7%91%ED%95%A9%EC%9D%84-%EC%83%9D%EC%84%B1"><span class="toc-number">4.2.</span> <span class="toc-text">초기 후보해 집합을 생성</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%84%A0%ED%83%9D-%EC%97%B0%EC%82%B0"><span class="toc-number">4.3.</span> <span class="toc-text">선택 연산</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EA%B5%90%EC%B0%A8-%EC%97%B0%EC%82%B0"><span class="toc-number">4.4.</span> <span class="toc-text">교차 연산</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%8F%8C%EC%97%B0%EB%B3%80%EC%9D%B4-%EC%97%B0%EC%82%B0"><span class="toc-number">4.5.</span> <span class="toc-text">돌연변이 연산</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%82%B0%EC%A0%90%EB%8F%84"><span class="toc-number">5.</span> <span class="toc-text">데이터 산점도</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MSE-%ED%8F%89%EA%B7%A0-%EC%A0%9C%EA%B3%B1-%EC%98%A4%EC%B0%A8"><span class="toc-number">6.</span> <span class="toc-text">MSE(평균 제곱 오차)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EC%B6%9C%EB%A0%A5%ED%95%9C-%EA%B0%92%EB%93%A4%EC%9D%B4%EB%8B%A4"><span class="toc-number">6.0.0.1.</span> <span class="toc-text">출력한 값들이다.</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">7.</span> <span class="toc-text">정리</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#code"><span class="toc-number">7.1.</span> <span class="toc-text">code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REFERENCES"><span class="toc-number">8.</span> <span class="toc-text">REFERENCES</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Generic Algorithm
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-06-16T15:00:00.000Z" class="dt-published" itemprop="datePublished">2020-06-17</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/algorithm/">algorithm</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/algorithm/" rel="tag">algorithm</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="유전-알고리즘이란"><a href="#유전-알고리즘이란" class="headerlink" title="유전 알고리즘이란?"></a>유전 알고리즘이란?</h2><p>유전 알고리즘은 다윈의 ‘적자생존’의 개념을 최적화 문제를 해결하는데 적용한 것이다. 생물체가 적응하면서 진화해가는 것을 모방하여 최적해를 찾는 방법이다.</p>
+<h2 id="알고리즘-구성"><a href="#알고리즘-구성" class="headerlink" title="알고리즘 구성"></a>알고리즘 구성</h2><ol>
+<li>초기 후보해 집합을 생성</li>
+<li>선택 연산</li>
+<li>교차 연산</li>
+<li>돌연변이 연산</li>
+</ol>
+<h2 id="사용할-데이터셋"><a href="#사용할-데이터셋" class="headerlink" title="사용할 데이터셋"></a>사용할 데이터셋</h2><ul>
+<li><p>Kaggle에서 Tesla Stock Price 데이터를 사용하였다.<br><a target="_blank" rel="noopener" href="https://www.kaggle.com/rpaguirre/tesla-stock-price">Tesla Stock Price(Kaggle)</a></p>
+</li>
+<li><p>Open 열과 High열, Low열을 사용하였다. Open 가격에 따른 High와 Low의 평균값을 나타내었다.</p>
+</li>
+</ul>
+<h2 id="유전-알고리즘으로-예측하기"><a href="#유전-알고리즘으로-예측하기" class="headerlink" title="유전 알고리즘으로 예측하기"></a>유전 알고리즘으로 예측하기</h2><h3 id="데이터-가져오기"><a href="#데이터-가져오기" class="headerlink" title="데이터 가져오기"></a>데이터 가져오기</h3><ul>
+<li><p>Tesla Stock Price의 csv 파일의 값을 읽어 배열에 저장하는 코드이다.<br>arr에는 Open 가격을 넣고 arr2와 arr3에 각각 High와 Low값을 가져온 후 평균값을 avg 배열에 저장 하였다.</p>
+</li>
+<li><p>저장한 데이터의 형식은 float형을 사용하였다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ----------------주어진 데이터셋--------------------</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;Tesla.csv&#x27;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">rdr = csv.reader(f)</span><br><span class="line"></span><br><span class="line">arr = []</span><br><span class="line">arr2 = []</span><br><span class="line">arr3 = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> rdr:</span><br><span class="line">    <span class="comment"># Open</span></span><br><span class="line">    arr.append(<span class="built_in">float</span>(line[<span class="number">1</span>]))</span><br><span class="line">    <span class="comment"># High</span></span><br><span class="line">    arr2.append(<span class="built_in">float</span>(line[<span class="number">2</span>]))</span><br><span class="line">    <span class="comment"># Low</span></span><br><span class="line">    arr3.append(<span class="built_in">float</span>(line[<span class="number">3</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># High와 Low의 평균값</span></span><br><span class="line">avg = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(arr2)):</span><br><span class="line">    av = (arr2[i] + arr3[i]) / <span class="number">2</span></span><br><span class="line">    avg.append(<span class="built_in">float</span>(av))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="초기-후보해-집합을-생성"><a href="#초기-후보해-집합을-생성" class="headerlink" title="초기 후보해 집합을 생성"></a>초기 후보해 집합을 생성</h3><ul>
+<li>먼저 초기 후보해 집합을 구한다.</li>
+<li>Open가격 최소와 최대, 평균가격의 최소와 최대를 지정한다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Openmin = <span class="number">2</span></span><br><span class="line">Openmax = <span class="number">300</span></span><br><span class="line">Avgmin = <span class="number">2</span></span><br><span class="line">Avgmax = <span class="number">300</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>4개의 값을 받아와 기울기 a의 값 4개를 얻는다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 초기 식 y = ax</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">expression</span>(<span class="params">t, h</span>):</span><br><span class="line">    <span class="keyword">return</span> h / t</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 초기 a 4개 구하기</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">init</span>(<span class="params">Open1, Open2, Avg1, Avg2</span>):</span><br><span class="line">    a = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        OPEN = rn.randint(Open1, Open2)</span><br><span class="line">        AVG = rn.randint(Avg1, Avg2)</span><br><span class="line"></span><br><span class="line">        a.append(math.ceil(expression(OPEN, AVG)))</span><br><span class="line">    <span class="keyword">return</span> a</span><br></pre></td></tr></table></figure>
+
+<h3 id="선택-연산"><a href="#선택-연산" class="headerlink" title="선택 연산"></a>선택 연산</h3><ul>
+<li>각각의 값에 대해 비율을 지정하고 랜덤값과 비교하여 새로운 배열에 넣는다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 선택 연산</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">selection</span>(<span class="params">Aarr</span>):</span><br><span class="line">    ratio = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        <span class="keyword">if</span> i == <span class="number">0</span>:</span><br><span class="line">            ratio.append(Aarr[<span class="number">0</span>] / <span class="built_in">sum</span>(Aarr))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ratio.append(ratio[i - <span class="number">1</span>] + Aarr[i] / <span class="built_in">sum</span>(Aarr))</span><br><span class="line"></span><br><span class="line">    sx = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        p = rn.random()</span><br><span class="line">        <span class="keyword">if</span> p &lt; ratio[<span class="number">0</span>]:</span><br><span class="line">            sx.append(Aarr[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">elif</span> p &lt; ratio[<span class="number">1</span>]:</span><br><span class="line">            sx.append(Aarr[<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">elif</span> p &lt; ratio[<span class="number">2</span>]:</span><br><span class="line">            sx.append(Aarr[<span class="number">2</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            sx.append(Aarr[<span class="number">3</span>])</span><br><span class="line">    <span class="keyword">return</span> sx</span><br></pre></td></tr></table></figure>
+
+<h3 id="교차-연산"><a href="#교차-연산" class="headerlink" title="교차 연산"></a>교차 연산</h3><ul>
+<li>교차 연산을 하기 위해 선택연산에서 나온 값들을 이진수로 변경해 준다.</li>
+<li>bin(x) 함수의 값은 “0b0100”이므로 0으로 대체해 준다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># bin() format</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binformat</span>(<span class="params">x</span>):</span><br><span class="line">    binformat = <span class="string">&#x27;&#123;0:&gt;8&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="built_in">bin</span>(x)).replace(<span class="string">&quot;b&quot;</span>, <span class="string">&quot;0&quot;</span>).replace(<span class="string">&quot; &quot;</span>, <span class="string">&quot;0&quot;</span>).replace(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;0&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> binformat</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># int to binary</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">int2Bin</span>(<span class="params"><span class="built_in">str</span></span>):</span><br><span class="line">    binlist = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        binsrting = binformat(<span class="built_in">str</span>[i])</span><br><span class="line">        binlist.append(binsrting)</span><br><span class="line">    <span class="keyword">return</span> binlist</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>교차 연산은 각 염색채들을 교차하여 새로운 해집단을 생성한다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 교차 연산</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">crossover</span>(<span class="params">arr</span>):</span><br><span class="line">    strarr = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">        bita = <span class="built_in">str</span>(arr[i])</span><br><span class="line">        bitb = <span class="built_in">str</span>(arr[i + <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        strarr.append(bita[:<span class="number">5</span>] + bitb[<span class="number">5</span>:])</span><br><span class="line">        strarr.append(bitb[:<span class="number">5</span>] + bita[<span class="number">5</span>:])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> strarr</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="돌연변이-연산"><a href="#돌연변이-연산" class="headerlink" title="돌연변이 연산"></a>돌연변이 연산</h3><ul>
+<li>invert 함수가 돌연변이 연산을 수행한다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 돌연변이 한 값 저장하기</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mutation</span>(<span class="params">mut</span>):</span><br><span class="line">    mutarr = []</span><br><span class="line">    mutint = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">str</span>, mut))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        mutinv = <span class="built_in">float</span>(invert(mutint[i]))</span><br><span class="line">        mutarr.append(mutinv)</span><br><span class="line">    <span class="keyword">return</span> mutarr</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>돌연변이 연산은 교차된 염색체들중 랜덤한 확률로 비트가 반전이 된다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 돌연변이 연산</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">invert</span>(<span class="params">char</span>):</span><br><span class="line">    ran = rn.random()</span><br><span class="line">    a = <span class="built_in">int</span>(char, <span class="number">2</span>)  <span class="comment"># 숫자</span></span><br><span class="line">    b = <span class="built_in">int</span>(<span class="string">&quot;1000&quot;</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">        p = <span class="number">1</span> / <span class="number">30</span></span><br><span class="line">        <span class="keyword">if</span> ran &lt; p:</span><br><span class="line">            <span class="keyword">if</span> char[<span class="number">4</span>:<span class="number">5</span>] == <span class="string">&quot;1&quot;</span>:</span><br><span class="line">                aa = a - b</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> char[<span class="number">4</span>:<span class="number">5</span>] == <span class="string">&quot;0&quot;</span>:</span><br><span class="line">                aa = a + b</span><br><span class="line">            <span class="keyword">return</span> aa</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="데이터-산점도"><a href="#데이터-산점도" class="headerlink" title="데이터 산점도"></a>데이터 산점도</h2><ul>
+<li>초기 데이터의 산점도와 예측된 값들의 산점도이다.</li>
+<li>pandas library를 사용하여 초기 데이터와 예측된 데이터를 DataFrame에 넣고, matlibplot library를 이용하여 산점도를 그렸다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pandas library로 DataFrame 지정</span></span><br><span class="line"></span><br><span class="line">MSEGrapg = pd.DataFrame(</span><br><span class="line">&#123;<span class="string">&quot;aValue&quot;</span>: x, <span class="string">&quot;MSE&quot;</span>: y&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">OpPrice = pd.DataFrame(</span><br><span class="line">&#123;<span class="string">&quot;temp&quot;</span>: arr, <span class="string">&quot;hum&quot;</span>: avg&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">predictgraph = pd.DataFrame(</span><br><span class="line">&#123;<span class="string">&quot;temp2&quot;</span>: RanOpenprice, <span class="string">&quot;hum2&quot;</span>: yPredict&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 그래프 그리기</span></span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 기존 데이터의 그래프를 그린다</span></span><br><span class="line"></span><br><span class="line">one = plt.scatter(OpPrice[<span class="string">&#x27;temp&#x27;</span>], OpPrice[<span class="string">&#x27;hum&#x27;</span>], marker=<span class="string">&quot;o&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 예측된 기울기로 그래프를 예측한다.</span></span><br><span class="line"></span><br><span class="line">two = plt.scatter(predictgraph[<span class="string">&quot;temp2&quot;</span>], predictgraph[<span class="string">&quot;hum2&quot;</span>], marker=<span class="string">&quot;x&quot;</span>)</span><br><span class="line">plt.legend(handles=(one, two), labels=(<span class="string">&quot;Initial data&quot;</span>, <span class="string">&quot;predicted data&quot;</span>), loc=<span class="string">&quot;upper left&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Open_Price&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Average_Price&#x27;</span>)</span><br><span class="line">plt.savefig(<span class="string">&quot;Tesla.png&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line"></span><br><span class="line"><span class="comment"># MSE 평가지표 그래프</span></span><br><span class="line"></span><br><span class="line">MSEleg = plt.scatter(MSEGrapg[<span class="string">&#x27;aValue&#x27;</span>], MSEGrapg[<span class="string">&#x27;MSE&#x27;</span>], marker=<span class="string">&quot;o&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Inclination&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;MSE&#x27;</span>)</span><br><span class="line">plt.savefig(<span class="string">&quot;TeslaMSE.png&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 그래프 띄우기</span></span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>초기 데이터는 파란색 o모양 마커를 사용하였고, 예측된 데이터는 주황색 x모양 마커를 사용하였다.</li>
+<li>최종 예측된 기울기는 1이다.</li>
+</ul>
+<p><img src="/images/img/posts/Generic_Algorithm/Tesla.png" alt="산점도 사진.png"></p>
+<h2 id="MSE-평균-제곱-오차"><a href="#MSE-평균-제곱-오차" class="headerlink" title="MSE(평균 제곱 오차)"></a>MSE(평균 제곱 오차)</h2><ul>
+<li>머신러닝에서 뿐만 아니라 영상처리에서도 사용되는 추측값에 대한 정확성을 측정하는 방법이다.</li>
+<li>기본식의 형태는 다음과 같다.<br><b>MSE &#x3D; 1&#x2F;n ∑<sup>n</sup><sub>i&#x3D;1</sub>(Y’<sub>i</sub> - Y<sub>i</sub>)<sup>2</sup></b></li>
+<li>MSE의 값이 작을수록 원본과의 오차가 적으며 추측한 값의 정확도가 높은 것이다.</li>
+<li>아래 MSE 그래프를 보면 원래 기울기와의 오차가 클수록 MSE값이 커지는 것을 볼 수 있다.</li>
+</ul>
+<p><img src="/images/img/posts/Generic_Algorithm/TeslaMSE.png" alt="MSE 그래프"></p>
+<ul>
+<li>코드가 실행될 때 어떤 값들을 예측하고 지나가는지 알기위해 각 함수 출력도 같이 하였다.</li>
+<li>MSE의 값이 가장 작은 기울기가 1로 나왔다.</li>
+</ul>
+<h5 id="출력한-값들이다"><a href="#출력한-값들이다" class="headerlink" title="출력한 값들이다."></a>출력한 값들이다.</h5><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">init: [35, 2, 4, 1]</span><br><span class="line">selection: [35, 35, 35, 35]</span><br><span class="line">inttobin: [&#x27;00100011&#x27;, &#x27;00100011&#x27;, &#x27;00100011&#x27;, &#x27;00100011&#x27;]</span><br><span class="line">cross: [&#x27;00100011&#x27;, &#x27;00100011&#x27;, &#x27;00100011&#x27;, &#x27;00100011&#x27;]</span><br><span class="line">mutationed: [35.0, 35.0, 35.0, 35.0]</span><br><span class="line">MSEarr: [67913541.24469241, 135827082.48938468, 203740623.734077, 271654164.97876936]</span><br><span class="line">예측된 기울기: 35.0</span><br><span class="line"></span><br><span class="line">최소 MSE를 만족하는 기울기: 1.0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h2><ul>
+<li>유전 알고리즘을 파이썬으로 구현해 보았다. 이차함수나 지수함수가 나오는 데이터를 이용하고 싶었지만, 데이터를 찾는것이 쉽지 않았다.</li>
+<li>처음에는 구현하기 힘들것이라고 생각했었다. 알고리즘 동작 구성을 이해하고, 차근차근 구현해 보니 잘 짜여졌다.</li>
+<li>기상청에서 제공하는 서울시의 온도와 습도의 관계 데이터도 사용해 보았지만, Tesla Stock Price 데이터가 좀 더 정확한 것 같아 선택하게 되었다.</li>
+</ul>
+<h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Marshmellowon/Generic_Algorithm_MSE/blob/master/Tesla_StockPrice.py">Tesla Stock Price</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Marshmellowon/Generic_Algorithm_MSE/blob/master/Generic_Alrorithm.py">서울시 온도와 습도의 관계</a></li>
+</ul>
+<h2 id="REFERENCES"><a href="#REFERENCES" class="headerlink" title="REFERENCES"></a>REFERENCES</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Yr_nRnqeDp0">유전알고리즘으로 그네 타는 법 학습하기</a></li>
+<li><a target="_blank" rel="noopener" href="https://untitledtblog.tistory.com/110">untitledtblog</a></li>
+<li><a target="_blank" rel="noopener" href="https://morningcoding.tistory.com/entry/Python-71-ScikitLearn%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%B9%84%EC%84%A0%ED%98%95-%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D">morningcoding</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9C%A0%EC%A0%84-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EC%9D%B4%EB%9E%80"><span class="toc-number">1.</span> <span class="toc-text">유전 알고리즘이란?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B5%AC%EC%84%B1"><span class="toc-number">2.</span> <span class="toc-text">알고리즘 구성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%82%AC%EC%9A%A9%ED%95%A0-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%85%8B"><span class="toc-number">3.</span> <span class="toc-text">사용할 데이터셋</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9C%A0%EC%A0%84-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EC%9C%BC%EB%A1%9C-%EC%98%88%EC%B8%A1%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">유전 알고리즘으로 예측하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0"><span class="toc-number">4.1.</span> <span class="toc-text">데이터 가져오기</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%B4%88%EA%B8%B0-%ED%9B%84%EB%B3%B4%ED%95%B4-%EC%A7%91%ED%95%A9%EC%9D%84-%EC%83%9D%EC%84%B1"><span class="toc-number">4.2.</span> <span class="toc-text">초기 후보해 집합을 생성</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%84%A0%ED%83%9D-%EC%97%B0%EC%82%B0"><span class="toc-number">4.3.</span> <span class="toc-text">선택 연산</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EA%B5%90%EC%B0%A8-%EC%97%B0%EC%82%B0"><span class="toc-number">4.4.</span> <span class="toc-text">교차 연산</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%8F%8C%EC%97%B0%EB%B3%80%EC%9D%B4-%EC%97%B0%EC%82%B0"><span class="toc-number">4.5.</span> <span class="toc-text">돌연변이 연산</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%82%B0%EC%A0%90%EB%8F%84"><span class="toc-number">5.</span> <span class="toc-text">데이터 산점도</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MSE-%ED%8F%89%EA%B7%A0-%EC%A0%9C%EA%B3%B1-%EC%98%A4%EC%B0%A8"><span class="toc-number">6.</span> <span class="toc-text">MSE(평균 제곱 오차)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%EC%B6%9C%EB%A0%A5%ED%95%9C-%EA%B0%92%EB%93%A4%EC%9D%B4%EB%8B%A4"><span class="toc-number">6.0.0.1.</span> <span class="toc-text">출력한 값들이다.</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">7.</span> <span class="toc-text">정리</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#code"><span class="toc-number">7.1.</span> <span class="toc-text">code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REFERENCES"><span class="toc-number">8.</span> <span class="toc-text">REFERENCES</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&text=Generic Algorithm"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&is_video=false&description=Generic Algorithm"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Generic Algorithm&body=Check out this article: https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&title=Generic Algorithm"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&name=Generic Algorithm&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/06/17/2020-06-17-Generic_Algorithm/&t=Generic Algorithm"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

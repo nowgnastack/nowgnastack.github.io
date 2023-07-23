@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="Chain Rule\begin{align}y &#x3D; f(g(x))\end{align} \begin{align}{dy &#x2F; dx}&#x3D; {df &#x2F; dg(x)}{dg(x) &#x2F; dx}\end{align}  Chain Rule은 합성함수의 미분을 위한 공식이다.  $z &#x3D; g(x)$, $y &#x3D; f(z)$라고 가">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neural Network IV">
+<meta property="og:url" content="https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="Chain Rule\begin{align}y &#x3D; f(g(x))\end{align} \begin{align}{dy &#x2F; dx}&#x3D; {df &#x2F; dg(x)}{dg(x) &#x2F; dx}\end{align}  Chain Rule은 합성함수의 미분을 위한 공식이다.  $z &#x3D; g(x)$, $y &#x3D; f(z)$라고 가">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/chainrule.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/jacobian.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/forwardpass1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/back1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/foward2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/back2.png">
+<meta property="article:published_time" content="2021-01-08T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:06:59.995Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="tave">
+<meta property="article:tag" content="tave research">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/TaveResearch/neuralN4/chainrule.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Neural Network IV</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2021/01/09/2021-01-09-tave_research4/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/01/13/2021-01-13-TAVE_Research5/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/01/03/2021-01-03-TAVE_Research3/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&text=Neural Network IV"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&is_video=false&description=Neural Network IV"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Neural Network IV&body=Check out this article: https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&name=Neural Network IV&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&t=Neural Network IV"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chain-Rule"><span class="toc-number">1.</span> <span class="toc-text">Chain Rule</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jacobian"><span class="toc-number">2.</span> <span class="toc-text">Jacobian</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forward-propagation-using-scalar-formula"><span class="toc-number">3.</span> <span class="toc-text">Forward propagation using scalar formula</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backward-propagation-using-scalar-formula"><span class="toc-number">4.</span> <span class="toc-text">Backward propagation using scalar formula</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forward-propagation-using-vector-formula"><span class="toc-number">5.</span> <span class="toc-text">Forward propagation using vector formula</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backward-propagation-using-vector-formula"><span class="toc-number">6.</span> <span class="toc-text">Backward propagation using vector formula</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Neural-network-training-algorithm"><span class="toc-number">7.</span> <span class="toc-text">Neural network training algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#References"><span class="toc-number">7.0.0.0.1.</span> <span class="toc-text">References</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Neural Network IV
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-01-08T15:00:00.000Z" class="dt-published" itemprop="datePublished">2021-01-09</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/deep-learning/">deep learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/deep-learning/" rel="tag">deep learning</a>, <a class="p-category" href="/tags/tave/" rel="tag">tave</a>, <a class="p-category" href="/tags/tave-research/" rel="tag">tave research</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Chain-Rule"><a href="#Chain-Rule" class="headerlink" title="Chain Rule"></a>Chain Rule</h2><p>\begin{align}<br>y &#x3D; f(g(x))<br>\end{align}</p>
+<p>\begin{align}<br>{dy &#x2F; dx}<br>&#x3D; {df &#x2F; dg(x)}<br>{dg(x) &#x2F; dx}<br>\end{align}</p>
+<ul>
+<li>Chain Rule은 합성함수의 미분을 위한 공식이다.</li>
+</ul>
+<p>$z &#x3D; g(x)$, $y &#x3D; f(z)$라고 가정한다면</p>
+<p>\begin{align}<br>\Delta z &#x3D; {dg(x) &#x2F; dx} \Delta x<br>\end{align}</p>
+<p>\begin{align}<br>\Delta y&#x3D; {df &#x2F; dz} \Delta z&#x3D; {df &#x2F; dg(x)} {dg(x) &#x2F; dx} \Delta x<br>\end{align}</p>
+<ul>
+<li><p>$dg(x)$가 약분이 되면서 아래 식처럼 되는것을 확인할 수 있다.</p>
+<p>\begin{align}<br>\Delta y&#x3D;{dy &#x2F; dx}<br>\Delta x<br>\end{align}</p>
+<p><img src="/images/img/posts/TaveResearch/neuralN4/chainrule.png" alt="/images/img/posts/TaveResearch/neuralN4/chainrule.png"></p>
+</li>
+<li><p>z에 대한 y의 미분은 x에 대한 g(x)의 편미분들의 합이 된다.</p>
+</li>
+</ul>
+<h2 id="Jacobian"><a href="#Jacobian" class="headerlink" title="Jacobian"></a>Jacobian</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/jacobian.png" alt="/images/img/posts/TaveResearch/neuralN4/jacobian.png"></p>
+<p>\begin{align}<br>\Delta y &#x3D; J_y (z) \Delta z<br>\end{align}</p>
+<ul>
+<li>벡터 입력에 대한 벡터 함수의 미분이 Jacobian행렬이다.</li>
+<li>열 벡터 y를 미분하면 z에 대한 y의 편미분인 Jacobian 행렬과 z의 미분의 곱으로 나타낼 수 있다.</li>
+<li>함수 $f$가 스칼라인 경우는 y의 Jacobian 행렬이 대각 행렬이다.</li>
+<li>함수 $f$가 벡터인 경우는 y의 Jacobian 행렬이 전체 행렬이다.</li>
+</ul>
+<h2 id="Forward-propagation-using-scalar-formula"><a href="#Forward-propagation-using-scalar-formula" class="headerlink" title="Forward propagation using scalar formula"></a>Forward propagation using scalar formula</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/forwardpass1.png" alt="/images/img/posts/TaveResearch/neuralN4/forwardpass1.png"></p>
+<p>\begin{align}<br>{z_j}^{(n)} &#x3D; {\sum}_i {w_{ij}}^{(N)}{y_i}^{(N-1)}<br>\end{align}</p>
+<p>\begin{align}<br>{y_j}^{(N)} &#x3D; f_{N({z_j}^{(N)})}<br>\end{align}</p>
+<ul>
+<li>신경망에서의 순전파는 입력층에서 은닉층 방향으로 이동한다</li>
+<li>각각의 입력에 대한 가중치가 곱해지고 가중치의 합으로 계산된 후 각 은닉층 뉴런의 함수를 거쳐 다음 은닉층의 입력으로 전달되어 최종 결과를 출력한다.</li>
+</ul>
+<hr>
+<h2 id="Backward-propagation-using-scalar-formula"><a href="#Backward-propagation-using-scalar-formula" class="headerlink" title="Backward propagation using scalar formula"></a>Backward propagation using scalar formula</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/back1.png" alt="/images/img/posts/TaveResearch/neuralN4/back1.png"></p>
+<ul>
+<li><p>역전파의 시작은 divergence(Div)를 미분하는것으로 시작한다.<br>\begin{align}<br>\color{orange}{\partial Div(Y,d) &#x2F; \partial {y_i}^{(N)}}<br>\color{black}&#x3D; \partial Div(Y,d)&#x2F;\partial y_i<br>\end{align}</p>
+</li>
+<li><p>Output layer 부분에서 y에 대한 divergence의 편미분은 단순한 미분형태이다.</p>
+</li>
+</ul>
+<hr>
+<p>\begin{align}<br>\color{black}\partial Div&#x2F;\partial {z_1}^{(N)} &#x3D; \color{blue}\partial {y_1}^{(N)}&#x2F;\partial {z_i}^{(N)}\color{black}*<br>\color{orange}{\partial Div &#x2F; \partial {y_i}^{(N)}}<br>\end{align}</p>
+<p>\begin{align}<br>\color{blue}\partial {y_1}^{(N)}&#x2F;\partial {z_i}^{(N)} \color{black}&#x3D; {f_N}’({z_1}^{(N)})<br>\end{align}</p>
+<p>\begin{align}<br>\color{red}\partial Div&#x2F;\partial {z_1}^{(N)}&#x3D;{f_N}’({z_1}^{(N)})*\partial Div &#x2F; \partial {y_i}^{(N)}<br>\end{align}</p>
+<ul>
+<li>z에 대한 Div의 편미분이다.</li>
+<li>y에 대한 Div의 편미분은 앞에서 계산되었고 z에 대한 y의 편미분은 활성함수를 미분하는것과 같다.</li>
+</ul>
+<hr>
+<p>\begin{align}<br>\color{black}\partial Div&#x2F;\partial {w}_{11^{(N)}} &#x3D; \color{orange}\partial {w_{11}}^{(N)}&#x2F;\partial {z_1}^{(N)}\color{black}*<br>\color{blue}{\partial Div &#x2F; \partial {z_1}^{(N)}}<br>\end{align}</p>
+<p>\begin{align}<br>\color{orange}\partial {w_{11}}^{(N)}&#x2F;\partial {z_1}^{(N)}<br>\color{black}&#x3D;{y_1}^{(N-1)}<br>\end{align}</p>
+<p>\begin{align}<br>\color{red}\partial Div&#x2F;\partial {w_{11}}^{(N)} &#x3D; {y_1}^{(N-1)}*<br>\partial Div &#x2F; \partial {z_1}^{(N)}<br>\end{align}</p>
+<ul>
+<li>가중치 w에 대한 Div 편미분이다.</li>
+<li>z에 대한 Div의 편미분은 앞에서 계산되었고 $z &#x3D; wy +b$이기 때문에 가중치에 대한 z의 편미분은 y가 된다.</li>
+</ul>
+<hr>
+<p>\begin{align}<br>\partial Div&#x2F;\partial {y_{1}}^{(N-1)} &#x3D; {\sum}_i {\color{orange}\partial {z_{j}}^{(N)}&#x2F;\partial {y_1}^{(N-1)}<br>\color{black}*<br>\color{blue}\partial Div&#x2F;\partial {z_j}^{(N)}}<br>\end{align}</p>
+<p>\begin{align}<br>\color{orange}\color{orange}\partial {z_{j}}^{(N)}&#x2F;\partial {y_1}^{(N-1)}<br>\color{black}&#x3D;{w}_{1j^{(N)}}<br>\end{align}</p>
+<p>\begin{align}<br>\color{red}\partial Div&#x2F;\partial {y_{1}}^{(N-1)} &#x3D; {\sum}_i {w}_{1j^{(N)}}*\partial Div&#x2F;\partial {z_j}^{(N)}<br>\end{align}</p>
+<ul>
+<li>은닉층에서의 y에 대한 Div의 편미분이다.</li>
+<li>Output layer에서와의 차이점은 y에 대한 z의 편미분이 있다는 것이다.</li>
+<li>$z &#x3D; wy+b$인 것을 생각하면 y에 대한 z의 편미분은 w가 되는것을 알 수 있다.</li>
+</ul>
+<h2 id="Forward-propagation-using-vector-formula"><a href="#Forward-propagation-using-vector-formula" class="headerlink" title="Forward propagation using vector formula"></a>Forward propagation using vector formula</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/foward2.png" alt="/images/img/posts/TaveResearch/neuralN4/foward2.png"></p>
+<p>\begin{align}<br>z_k &#x3D; W_k {y}_{k-1} + b_k<br>\end{align}</p>
+<p>\begin{align}<br>y_k &#x3D; f_k(z_k)<br>\end{align}</p>
+<p>\begin{align}<br>Y &#x3D; {f}_N(W_N{f}_{N-1}(…f_2(W_2f_1(W_1x+b_1)+b_2)…+b_N)<br>\end{align}</p>
+<ul>
+<li>입력 x, z(wy+b), 레이어 출력 y, 편향 b는 열 벡터이고, 가중치 w는 행렬이다.</li>
+<li>z는 가중치와 입력의 곱과 편향의 합이다.</li>
+<li>식 $Y$는 입력층부터 마지막 레이어까지 전파된 출력이다.</li>
+</ul>
+<hr>
+<h2 id="Backward-propagation-using-vector-formula"><a href="#Backward-propagation-using-vector-formula" class="headerlink" title="Backward propagation using vector formula"></a>Backward propagation using vector formula</h2><p><img src="/images/img/posts/TaveResearch/neuralN4/back2.png" alt="/images/img/posts/TaveResearch/neuralN4/back2.png"></p>
+<ul>
+<li>역전파는 Y에 대한 Div의 편미분으로 시작된다.</li>
+</ul>
+<p>\begin{align}<br>\color{blue}{\nabla _YDiv}<br>\end{align}</p>
+<hr>
+<p>\begin{align}<br>\nabla_{z_N}Div &#x3D; \color{blue}{\nabla_YDiv}\color{orange}{\nabla_{z_N}Y}<br>\end{align}</p>
+<p>\begin{align}<br>\color{orange}{\nabla_{z_N}Y }\color{black}&#x3D; J_Y(Z_N)<br>\end{align}</p>
+<p>\begin{align}<br>\color{red}{\nabla_{z_N}Div &#x3D; {\nabla_YDiv}J_Y(Z_N)}<br>\end{align}</p>
+<ul>
+<li>Z에 대한 Div의 편미분이다.</li>
+<li>Y에 대한 Div의 편미분은 앞에서 계산되었고, chain rule과 Jacobian에 의하면 Y의 Jacobian행렬이 나온다.</li>
+</ul>
+<hr>
+<p>\begin{align}<br>\nabla_{y_{N-1}}Div &#x3D; \color{blue}{\nabla_z{_N}Div}\color{black}*\color{orange}{\nabla_{y{_N-1}}Z_N}<br>\end{align}</p>
+<p>\begin{align}<br>\color{orange}{\nabla_{y_{N-1}}Z_N }\color{black}&#x3D; W_N<br>\end{align}</p>
+<p>\begin{align}<br>\color{red}{\nabla_{y_{N-1}}Div &#x3D; \nabla_z{_N}Div*W_N}<br>\end{align}</p>
+<ul>
+<li>은닉층에서 y에 대한 Div의 미분은 output layer와 차이가 있다.</li>
+<li>Z에 대한 Div의 편미분은 앞에서 계산되었고, y에 대한 Z의 편미분은 W로 나타낼 수 있다.</li>
+</ul>
+<hr>
+<p>\begin{align}<br>\nabla_{w_{k}}Div &#x3D; y_{k-1}* \nabla_{z_{k}}Div<br>\end{align}</p>
+<p>\begin{align}<br>\nabla_{b_{k}}Div &#x3D; \nabla_{z_{k}}Div<br>\end{align}</p>
+<ul>
+<li>가중치와 편향에 대한 Div의 편미분은 신경망 학습에서 가중치, 편향 업데이트에 사용된다.</li>
+</ul>
+<hr>
+<h2 id="Neural-network-training-algorithm"><a href="#Neural-network-training-algorithm" class="headerlink" title="Neural network training algorithm"></a>Neural network training algorithm</h2><ul>
+<li><p>Initialize weights, bias (가중치 편향 초기화)</p>
+</li>
+<li><p>DO:</p>
+<p>$Loss &#x3D; 0$</p>
+<p>For all k, initialize $\nabla_{w_k}Loss &#x3D; 0, \nabla_{b_k}Loss &#x3D; 0$</p>
+<p>For all t &#x3D; 1:T</p>
+<ul>
+<li><p>Forward propagation:</p>
+<p>Output$Y(X_t$)</p>
+<p>Divergence $Div(Y_t,d_t)$</p>
+<p>$Loss +&#x3D;Div(Y_t, d_t)$</p>
+</li>
+<li><p>Backward propagation</p>
+<p>$\nabla_{y_{k}}Div &#x3D; {\nabla_{Z_{k+1}}Div}W_{k+1}$</p>
+<p>$\nabla_{z_{k}}Div &#x3D; {\nabla_{y_{k}}Div}J_{y_k}(z_k)$</p>
+<p>$\nabla_{w_k}Div &#x3D; y_{k-1}\nabla_{z_k}Div$</p>
+<p>$\nabla_{b_k}Div &#x3D; \nabla_{z_k}Div$</p>
+<p>$\nabla_{W_k}Loss +&#x3D;\nabla_{w_k}Div$</p>
+<p>$\nabla_{b_k}Loss +&#x3D;\nabla_{b_k}Div$</p>
+</li>
+</ul>
+<p>For all k, update:</p>
+<p>$W_k &#x3D; W_k {-{\eta &#x2F; T}(\nabla_{W_k}Loss)^T}$</p>
+<p>$b_k &#x3D; b_k {-{\eta &#x2F; T}(\nabla_{W_k}Loss)^T}$</p>
+</li>
+<li><p>Until Loss has converged</p>
+</li>
+</ul>
+<h6 id="References"><a href="#References" class="headerlink" title="References"></a>References</h6><blockquote>
+<p><sub>강의: <a target="_blank" rel="noopener" href="https://deeplearning.cs.cmu.edu/F20/index.html">CMU Introduction to Deep Learning</a></sub></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chain-Rule"><span class="toc-number">1.</span> <span class="toc-text">Chain Rule</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jacobian"><span class="toc-number">2.</span> <span class="toc-text">Jacobian</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forward-propagation-using-scalar-formula"><span class="toc-number">3.</span> <span class="toc-text">Forward propagation using scalar formula</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backward-propagation-using-scalar-formula"><span class="toc-number">4.</span> <span class="toc-text">Backward propagation using scalar formula</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forward-propagation-using-vector-formula"><span class="toc-number">5.</span> <span class="toc-text">Forward propagation using vector formula</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backward-propagation-using-vector-formula"><span class="toc-number">6.</span> <span class="toc-text">Backward propagation using vector formula</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Neural-network-training-algorithm"><span class="toc-number">7.</span> <span class="toc-text">Neural network training algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#References"><span class="toc-number">7.0.0.0.1.</span> <span class="toc-text">References</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&text=Neural Network IV"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&is_video=false&description=Neural Network IV"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Neural Network IV&body=Check out this article: https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&title=Neural Network IV"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&name=Neural Network IV&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/01/09/2021-01-09-TAVE_Research4/&t=Neural Network IV"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

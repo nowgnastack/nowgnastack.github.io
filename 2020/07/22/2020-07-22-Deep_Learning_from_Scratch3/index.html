@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="책 정보: 밑바닥부터 시작하는 딥러닝 Neural Network(신경망)인공신경망은 사람의 뇌에서 여러개의 뉴런이 연결되면서 복잡한 연산을 수행하는 정보 처리 과정을 모방해서 만든 알고리즘이다. 신경망은 가장 왼쪽에 입력층, 가장 오른쪽에 출력층, 중간을 은닉층이라고 한다.총 3개의 층으로 이루어져있다.  이전 포스트에서 봤던 퍼셉트론과 크게 다르지 않다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning for Scratch(3)">
+<meta property="og:url" content="https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="책 정보: 밑바닥부터 시작하는 딥러닝 Neural Network(신경망)인공신경망은 사람의 뇌에서 여러개의 뉴런이 연결되면서 복잡한 연산을 수행하는 정보 처리 과정을 모방해서 만든 알고리즘이다. 신경망은 가장 왼쪽에 입력층, 가장 오른쪽에 출력층, 중간을 은닉층이라고 한다.총 3개의 층으로 이루어져있다.  이전 포스트에서 봤던 퍼셉트론과 크게 다르지 않다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Deep_Learning/no3/Neural_Network.JPG">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Deep_Learning/no3/sigmoid.JPG">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Deep_Learning/no3/step.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Deep_Learning/no3/sigmoid_graph.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Deep_Learning/no3/ReLU.png">
+<meta property="article:published_time" content="2020-07-21T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:04:48.060Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="deep learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/Deep_Learning/no3/Neural_Network.JPG">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Deep Learning for Scratch(3)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2020/07/22/2020-07-22-deep_learning_from_scratch3/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/08/19/2020-08-19-Reinforcement_Learning1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/07/08/2020-07-08-Deep_Learning_from_Scratch2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&text=Deep Learning for Scratch(3)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&is_video=false&description=Deep Learning for Scratch(3)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Deep Learning for Scratch(3)&body=Check out this article: https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&name=Deep Learning for Scratch(3)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&t=Deep Learning for Scratch(3)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Neural-Network-%EC%8B%A0%EA%B2%BD%EB%A7%9D"><span class="toc-number">1.</span> <span class="toc-text">Neural Network(신경망)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%9C%EC%84%B1%ED%99%94-%ED%95%A8%EC%88%98"><span class="toc-number">2.</span> <span class="toc-text">활성화 함수</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sigmoid-Function-%EC%8B%9C%EA%B7%B8%EB%AA%A8%EC%9D%B4%EB%93%9C-%ED%95%A8%EC%88%98"><span class="toc-number">2.1.</span> <span class="toc-text">Sigmoid Function(시그모이드 함수)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-Function-%EA%B3%84%EB%8B%A8%ED%95%A8%EC%88%98"><span class="toc-number">2.2.</span> <span class="toc-text">Step Function(계단함수)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EA%B3%84%EB%8B%A8-%ED%95%A8%EC%88%98-%EA%B5%AC%ED%98%84"><span class="toc-number">2.2.1.</span> <span class="toc-text">- 계단 함수 구현</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EC%8B%9C%EA%B7%B8%EB%AA%A8%EC%9D%B4%EB%93%9C-%ED%95%A8%EC%88%98-%EA%B5%AC%ED%98%84"><span class="toc-number">2.2.2.</span> <span class="toc-text">- 시그모이드 함수 구현</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ReLU-Function"><span class="toc-number">3.</span> <span class="toc-text">ReLU Function</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Deep Learning for Scratch(3)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-07-21T15:00:00.000Z" class="dt-published" itemprop="datePublished">2020-07-22</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/deep-learning/">deep learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/deep-learning/" rel="tag">deep learning</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><sub>책 정보: <a target="_blank" rel="noopener" href="https://www.hanbit.co.kr/store/books/look.php?p_code=B8475831198">밑바닥부터 시작하는 딥러닝</a></sub></p>
+<h2 id="Neural-Network-신경망"><a href="#Neural-Network-신경망" class="headerlink" title="Neural Network(신경망)"></a>Neural Network(신경망)</h2><p>인공신경망은 사람의 뇌에서 여러개의 뉴런이 연결되면서 복잡한 연산을 수행하는 정보 처리 과정을 모방해서 만든 알고리즘이다.</p>
+<p>신경망은 가장 왼쪽에 입력층, 가장 오른쪽에 출력층, 중간을 은닉층이라고 한다.<br>총 3개의 층으로 이루어져있다.</p>
+<p><img src="/images/img/posts/Deep_Learning/no3/Neural_Network.JPG" alt="신경망의 예"></p>
+<p>이전 포스트에서 봤던 퍼셉트론과 크게 다르지 않다. 간단한 퍼셉트론과의 차이는 입력과 출력 이외에 은닉층이 추가된 것 뿐이다.</p>
+<h2 id="활성화-함수"><a href="#활성화-함수" class="headerlink" title="활성화 함수"></a>활성화 함수</h2><p>활성화 함수는 임계값을 경계로 출력이 바뀐다. 이와 같은 함수를 계단 함수라고 한다.</p>
+<h3 id="Sigmoid-Function-시그모이드-함수"><a href="#Sigmoid-Function-시그모이드-함수" class="headerlink" title="Sigmoid Function(시그모이드 함수)"></a>Sigmoid Function(시그모이드 함수)</h3><p><img src="/images/img/posts/Deep_Learning/no3/sigmoid.JPG" alt="시그모이드 함수식"></p>
+<p>시그모이드 함수는 신경망에서 자주 사용되는 활성화 함수이다.<br>신경망에서는 활성화 함수로 시그모이드 함수를 이용하여 신호를 변환하고, 다음 뉴런에 전달한다.</p>
+<h3 id="Step-Function-계단함수"><a href="#Step-Function-계단함수" class="headerlink" title="Step Function(계단함수)"></a>Step Function(계단함수)</h3><p>기본적인 계단함수를 구현하는 코드이다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">step_function2</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>x의 값이 0보다 크면 1을 반환하고 x의 값이 0보다 작거나 같으면 0을 반환한다.</p>
+<h4 id="계단-함수-구현"><a href="#계단-함수-구현" class="headerlink" title="- 계단 함수 구현"></a>- 계단 함수 구현</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pylab <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 계단 함수</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">step_function</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> np.array(x &gt; <span class="number">0</span>, dtype=np.<span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line">x = np.arange(-<span class="number">5.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</span><br><span class="line">y = step_function(x)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;step func: &quot;</span>, y)</span><br><span class="line"></span><br><span class="line">plt.plot(x, y)</span><br><span class="line">plt.ylim(-<span class="number">0.1</span>, <span class="number">1.1</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>matplotlib를 사용하여 계단함수 그래프를 그려보았다.</p>
+<p><img src="/images/img/posts/Deep_Learning/no3/step.png" alt="step function"></p>
+<h4 id="시그모이드-함수-구현"><a href="#시그모이드-함수-구현" class="headerlink" title="- 시그모이드 함수 구현"></a>- 시그모이드 함수 구현</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pylab <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># sigmoid function</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sigmoid</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + np.exp(-x))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x = np.arange(-<span class="number">5.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</span><br><span class="line">y = sigmoid(x)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(sigmoid(x))</span><br><span class="line"></span><br><span class="line">plt.plot(x, y)</span><br><span class="line">plt.ylim(-<span class="number">0.1</span>, <span class="number">1.1</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/img/posts/Deep_Learning/no3/sigmoid_graph.png" alt="sigmoid function"></p>
+<h2 id="ReLU-Function"><a href="#ReLU-Function" class="headerlink" title="ReLU Function"></a>ReLU Function</h2><p>ReLU 함수는 입력이 0을 넘으면 입력 그대로 출력하고, 0이하이면 0을 출력하는 함수이다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pylab <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ReLU</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> np.maximum(<span class="number">0</span>, x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x = np.arange(-<span class="number">5.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</span><br><span class="line">y = ReLU(x)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(ReLU(x))</span><br><span class="line"></span><br><span class="line">plt.plot(x, y)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>numpy의 np.maximum(0, x)는 0과 x중 큰값을 반환하는 함수이다.<br><img src="/images/img/posts/Deep_Learning/no3/ReLU.png" alt="ReLU"></p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Neural-Network-%EC%8B%A0%EA%B2%BD%EB%A7%9D"><span class="toc-number">1.</span> <span class="toc-text">Neural Network(신경망)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%99%9C%EC%84%B1%ED%99%94-%ED%95%A8%EC%88%98"><span class="toc-number">2.</span> <span class="toc-text">활성화 함수</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sigmoid-Function-%EC%8B%9C%EA%B7%B8%EB%AA%A8%EC%9D%B4%EB%93%9C-%ED%95%A8%EC%88%98"><span class="toc-number">2.1.</span> <span class="toc-text">Sigmoid Function(시그모이드 함수)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-Function-%EA%B3%84%EB%8B%A8%ED%95%A8%EC%88%98"><span class="toc-number">2.2.</span> <span class="toc-text">Step Function(계단함수)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EA%B3%84%EB%8B%A8-%ED%95%A8%EC%88%98-%EA%B5%AC%ED%98%84"><span class="toc-number">2.2.1.</span> <span class="toc-text">- 계단 함수 구현</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EC%8B%9C%EA%B7%B8%EB%AA%A8%EC%9D%B4%EB%93%9C-%ED%95%A8%EC%88%98-%EA%B5%AC%ED%98%84"><span class="toc-number">2.2.2.</span> <span class="toc-text">- 시그모이드 함수 구현</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ReLU-Function"><span class="toc-number">3.</span> <span class="toc-text">ReLU Function</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&text=Deep Learning for Scratch(3)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&is_video=false&description=Deep Learning for Scratch(3)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Deep Learning for Scratch(3)&body=Check out this article: https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&title=Deep Learning for Scratch(3)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&name=Deep Learning for Scratch(3)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/07/22/2020-07-22-Deep_Learning_from_Scratch3/&t=Deep Learning for Scratch(3)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

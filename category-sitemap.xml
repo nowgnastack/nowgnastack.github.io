@@ -9,8 +9,162 @@
 
 
     <url>
+        <loc>https://nowgnastack.github.io/categories/spring-boot/</loc>
+        <lastmod>2023-07-23T15:22:21.395Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/deploy/</loc>
+        <lastmod>2023-07-23T15:22:09.818Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/database/</loc>
+        <lastmod>2023-07-23T15:22:02.748Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/vue/</loc>
+        <lastmod>2023-07-23T15:21:52.354Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/network/</loc>
+        <lastmod>2023-07-23T15:21:43.213Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/spring-boot/</loc>
+        <lastmod>2023-07-23T15:21:35.139Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/spring/</loc>
+        <lastmod>2023-07-23T15:20:52.342Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/java/</loc>
+        <lastmod>2023-07-23T15:19:51.735Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/ssafy/</loc>
+        <lastmod>2023-07-23T15:19:42.998Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/web/</loc>
+        <lastmod>2023-07-23T15:19:36.518Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/deep-learning/</loc>
+        <lastmod>2023-07-23T15:18:34.004Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/algorithm/</loc>
+        <lastmod>2023-07-23T15:17:37.112Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/git/</loc>
+        <lastmod>2023-07-23T15:14:11.332Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/machine-learning/</loc>
+        <lastmod>2023-07-23T15:13:49.241Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/%25EA%25B5%2590%25EC%259C%25A1/</loc>
+        <lastmod>2023-07-23T15:12:59.357Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/data-analytics/</loc>
+        <lastmod>2023-07-23T15:09:19.792Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/blog/</loc>
+        <lastmod>2023-07-23T15:08:01.016Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/reinforcement-learning/</loc>
+        <lastmod>2023-07-23T15:06:16.093Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/pytorch/</loc>
+        <lastmod>2023-07-23T15:05:10.899Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://nowgnastack.github.io/categories/api/</loc>
         <lastmod>2023-07-23T08:04:30.360Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/python/</loc>
+        <lastmod>2023-04-17T01:56:16.013Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/hanium/</loc>
+        <lastmod>2023-04-17T01:56:15.755Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/categories/programming/</loc>
+        <lastmod>2023-04-17T01:56:15.721Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

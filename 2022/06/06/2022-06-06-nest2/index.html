@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="nest js 3계층 구조에 대해">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NestJS 프로젝트 시작하기 With Docker(2)">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="nest js 3계층 구조에 대해">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-06-05T15:26:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.273Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="nest js">
+<meta property="article:tag" content="3 layer">
+<meta property="article:tag" content="mysql">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>NestJS 프로젝트 시작하기 With Docker(2)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/06/06/2022-06-06-aiproject1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/05/30/2022-05-30-nestjs1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&text=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&is_video=false&description=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=NestJS 프로젝트 시작하기 With Docker(2)&body=Check out this article: https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&name=NestJS 프로젝트 시작하기 With Docker(2)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&t=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nest-js-cli"><span class="toc-number">1.</span> <span class="toc-text">nest js cli</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Module"><span class="toc-number">2.</span> <span class="toc-text">Module</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Controller"><span class="toc-number">3.</span> <span class="toc-text">Controller</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service"><span class="toc-number">4.</span> <span class="toc-text">Service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0"><span class="toc-number">5.</span> <span class="toc-text">mysql 연결하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#User-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%A0%95%EC%9D%98%ED%95%98%EA%B8%B0"><span class="toc-number">5.1.</span> <span class="toc-text">User 테이블 정의하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#user-entity-ts"><span class="toc-number">5.1.1.</span> <span class="toc-text">user.entity.ts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#database-module"><span class="toc-number">5.2.</span> <span class="toc-text">database module</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#config"><span class="toc-number">5.3.</span> <span class="toc-text">config</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#default-yml"><span class="toc-number">5.3.1.</span> <span class="toc-text">default.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#development-yml"><span class="toc-number">5.3.2.</span> <span class="toc-text">development.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#production-yml"><span class="toc-number">5.3.3.</span> <span class="toc-text">production.yml</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typeormconfig-ts"><span class="toc-number">5.4.</span> <span class="toc-text">typeormconfig.ts</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#database-provider-ts"><span class="toc-number">5.4.1.</span> <span class="toc-text">database.provider.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#database-module-ts"><span class="toc-number">5.4.2.</span> <span class="toc-text">database.module.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#app-module-ts"><span class="toc-number">5.4.3.</span> <span class="toc-text">app.module.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#users-provider-ts"><span class="toc-number">5.4.4.</span> <span class="toc-text">users.provider.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#users-service-ts"><span class="toc-number">5.4.5.</span> <span class="toc-text">users.service.ts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#users-controller-ts"><span class="toc-number">5.5.</span> <span class="toc-text">users.controller.ts</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        NestJS 프로젝트 시작하기 With Docker(2)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-06-05T15:26:00.000Z" class="dt-published" itemprop="datePublished">2022-06-06</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/3-layer/" rel="tag">3 layer</a>, <a class="p-category" href="/tags/mysql/" rel="tag">mysql</a>, <a class="p-category" href="/tags/nest-js/" rel="tag">nest js</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>이번 포스트에서는 controller와 service를 생성하고 NestJS와 mysql을 연결하는 방법을 알아본다.</p>
+<h1 id="nest-js-cli"><a href="#nest-js-cli" class="headerlink" title="nest js cli"></a>nest js cli</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────┬─────────────┬──────────────────────────────────────────────┐</span><br><span class="line">│ name          │ <span class="built_in">alias</span>       │ description                                  │</span><br><span class="line">│ application   │ application │ Generate a new application workspace         │</span><br><span class="line">│ class         │ cl          │ Generate a new class                         │</span><br><span class="line">│ configuration │ config      │ Generate a CLI configuration file            │</span><br><span class="line">│ controller    │ co          │ Generate a controller declaration            │</span><br><span class="line">│ decorator     │ d           │ Generate a custom decorator                  │</span><br><span class="line">│ filter        │ f           │ Generate a filter declaration                │</span><br><span class="line">│ gateway       │ ga          │ Generate a gateway declaration               │</span><br><span class="line">│ guard         │ gu          │ Generate a guard declaration                 │</span><br><span class="line">│ interceptor   │ <span class="keyword">in</span>          │ Generate an interceptor declaration          │</span><br><span class="line">│ interface     │ interface   │ Generate an interface                        │</span><br><span class="line">│ middleware    │ mi          │ Generate a middleware declaration            │</span><br><span class="line">│ module        │ mo          │ Generate a module declaration                │</span><br><span class="line">│ pipe          │ pi          │ Generate a pipe declaration                  │</span><br><span class="line">│ provider      │ <span class="built_in">pr</span>          │ Generate a provider declaration              │</span><br><span class="line">│ resolver      │ r           │ Generate a GraphQL resolver declaration      │</span><br><span class="line">│ service       │ s           │ Generate a service declaration               │</span><br><span class="line">│ library       │ lib         │ Generate a new library within a monorepo     │</span><br><span class="line">│ sub-app       │ app         │ Generate a new application within a monorepo │</span><br><span class="line">│ resource      │ res         │ Generate a new CRUD resource                 │</span><br><span class="line">└───────────────┴─────────────┴──────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>터미널에 nest를 치면 나오는 설명이다.</p>
+<h1 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nest generate module <span class="built_in">users</span></span><br><span class="line">nest g mo <span class="built_in">users</span></span><br></pre></td></tr></table></figure>
+
+<p>users의 모듈을 위 명령으로 생성한다.</p>
+<h1 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nest generate controller <span class="built_in">users</span></span><br><span class="line">nest g co <span class="built_in">users</span></span><br></pre></td></tr></table></figure>
+
+<p>controller를 명령어로 생성할 수 있다. 위 명령어를 사용하게 되면 users.controller.ts파일과 users.controller.spec.ts 파일이 생성된다. spec파일은 여기서 설명하지 않는다.</p>
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nest generate service <span class="built_in">users</span></span><br><span class="line">nest g s <span class="built_in">users</span></span><br></pre></td></tr></table></figure>
+
+<p>위 명령어를 사용하게 되면 users service를 생성 할 수 있다. service 또한 spec 파일이 생성된다.</p>
+<h1 id="mysql-연결하기"><a href="#mysql-연결하기" class="headerlink" title="mysql 연결하기"></a>mysql 연결하기</h1><p>데이터베이스는 mysql을 사용하고 데이터베이스를 조작하는 도구는 typeorm 을 사용한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add mysql2 typeorm @nestjs/typeorm</span><br></pre></td></tr></table></figure>
+
+<h2 id="User-테이블-정의하기"><a href="#User-테이블-정의하기" class="headerlink" title="User 테이블 정의하기"></a>User 테이블 정의하기</h2><p>사용자 테이블을 간단하게 구성하고 테스트 할 것이다. user를 정의해 보자. users 폴더 안에 entities 폴더를 만들고 user.entity.ts를 생성한다.</p>
+<h3 id="user-entity-ts"><a href="#user-entity-ts" class="headerlink" title="user.entity.ts"></a>user.entity.ts</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Exclude</span> &#125; <span class="keyword">from</span> <span class="string">&quot;class-transformer&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Column</span>, <span class="title class_">Entity</span>, <span class="title class_">PrimaryGeneratedColumn</span> &#125; <span class="keyword">from</span> <span class="string">&quot;typeorm&quot;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Entity</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">Users</span> &#123;</span><br><span class="line">  @<span class="title class_">PrimaryGeneratedColumn</span>(<span class="string">&quot;increment&quot;</span>)</span><br><span class="line">  <span class="attr">id</span>: number;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">user_id</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">name</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">email</span>: string;</span><br><span class="line"></span><br><span class="line">  @<span class="title class_">Column</span>()</span><br><span class="line">  <span class="attr">password</span>: string;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>user 테이블을 정의한다. User class 위에 <code>@Entity</code> 데코레이터를 추가해서 테이블임을 명시한다. typeorm의 데코레이터로 테이블의 속성을 정의한다.</p>
+<h2 id="database-module"><a href="#database-module" class="headerlink" title="database module"></a>database module</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nest g mo database</span><br></pre></td></tr></table></figure>
+
+<p>위 명령어로 database module을 생성한다. database 폴더에 database.provider.ts를 생성한다.</p>
+<h2 id="config"><a href="#config" class="headerlink" title="config"></a>config</h2><h3 id="default-yml"><a href="#default-yml" class="headerlink" title="default.yml"></a>default.yml</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">5001</span></span><br><span class="line"></span><br><span class="line"><span class="attr">db:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&quot;mysql&quot;</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">3306</span></span><br><span class="line">  <span class="attr">database:</span> <span class="string">&quot;schema name&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jwt:</span></span><br><span class="line">  <span class="attr">expiresIn:</span> <span class="number">3600</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="development-yml"><a href="#development-yml" class="headerlink" title="development.yml"></a>development.yml</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">db:</span></span><br><span class="line">  <span class="attr">host:</span> <span class="string">&quot;34.64.45.109&quot;</span></span><br><span class="line">  <span class="attr">username:</span> <span class="string">&quot;root&quot;</span></span><br><span class="line">  <span class="attr">password:</span> <span class="string">&quot;pw&quot;</span></span><br><span class="line">  <span class="attr">synchronize:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jwt:</span></span><br><span class="line">  <span class="attr">secret:</span> <span class="string">&quot;mysecret123key&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="production-yml"><a href="#production-yml" class="headerlink" title="production.yml"></a>production.yml</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">db:</span></span><br><span class="line">  <span class="attr">synchronize:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>src&#x2F;config 폴더 안에 3개의 yml 파일을 정의한다. development와 production 환경에 대한 실행은 이후에 추가할 예정이다.</p>
+<h2 id="typeormconfig-ts"><a href="#typeormconfig-ts" class="headerlink" title="typeormconfig.ts"></a>typeormconfig.ts</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> config <span class="keyword">from</span> <span class="string">&quot;config&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dbConfig = config.<span class="title function_">get</span>(<span class="string">&quot;db&quot;</span>); <span class="comment">// db config</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">typeormGCP</span>: <span class="title class_">DataSourceOptions</span> = &#123;</span><br><span class="line">  <span class="attr">type</span>: dbConfig[<span class="string">&quot;type&quot;</span>],</span><br><span class="line">  <span class="attr">host</span>: dbConfig[<span class="string">&quot;host&quot;</span>],</span><br><span class="line">  <span class="attr">port</span>: dbConfig[<span class="string">&quot;port&quot;</span>],</span><br><span class="line">  <span class="attr">username</span>: dbConfig[<span class="string">&quot;username&quot;</span>],</span><br><span class="line">  <span class="attr">password</span>: dbConfig[<span class="string">&quot;password&quot;</span>],</span><br><span class="line">  <span class="attr">database</span>: dbConfig[<span class="string">&quot;database&quot;</span>],</span><br><span class="line">  <span class="attr">entities</span>: [<span class="string">&quot;dist/**/*.entity&#123;.ts,.js&#125;&quot;</span>],</span><br><span class="line">  <span class="attr">synchronize</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>typeorm을 사용해 데이터베이스를 정의하게 되며, dotenv 대신 config를 사용했다. config 환경 설정은 yml파일로 정의한다.</p>
+<h3 id="database-provider-ts"><a href="#database-provider-ts" class="headerlink" title="database.provider.ts"></a>database.provider.ts</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">DataSource</span> &#125; <span class="keyword">from</span> <span class="string">&quot;typeorm&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; typeormGCP, typeormLocal &#125; <span class="keyword">from</span> <span class="string">&quot;typeormconfig&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> databaseProviders = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">provide</span>: <span class="string">&quot;DATA_SOURCE&quot;</span>,</span><br><span class="line">    <span class="attr">useFactory</span>: <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> dataSource = <span class="keyword">new</span> <span class="title class_">DataSource</span>(typeormGCP);</span><br><span class="line">      <span class="keyword">return</span> dataSource.<span class="title function_">initialize</span>();</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>위 코드는 sequelize 연결을 위한 코드이다. addModels에 정의한 entity를 넣어준다. export 한 provider는 database.module.ts에서 받아준다.</p>
+<h3 id="database-module-ts"><a href="#database-module-ts" class="headerlink" title="database.module.ts"></a>database.module.ts</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@nestjs/common&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; databaseProviders &#125; <span class="keyword">from</span> <span class="string">&quot;./database.provider&quot;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Module</span>(&#123; <span class="attr">providers</span>: [...databaseProviders], <span class="attr">exports</span>: [...databaseProviders] &#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">DatabaseModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>database 모듈 코드다. 모듈에 exports가 있는데, 제공받은 클래스를 export 해 준다. 여기까지 database 모듈에 대한 정의가 끝났다.</p>
+<h3 id="app-module-ts"><a href="#app-module-ts" class="headerlink" title="app.module.ts"></a>app.module.ts</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Module</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@nestjs/common&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UsersModule</span> &#125; <span class="keyword">from</span> <span class="string">&quot;./users/users.module&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">DatabaseModule</span> &#125; <span class="keyword">from</span> <span class="string">&quot;./database/database.module&quot;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Module</span>(&#123;</span><br><span class="line">  <span class="attr">imports</span>: [<span class="title class_">UsersModule</span>, <span class="title class_">DatabaseModule</span>],</span><br><span class="line">  <span class="attr">controllers</span>: [],</span><br><span class="line">  <span class="attr">providers</span>: [],</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">AppModule</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>app 모듈에 database 모듈을 import 해준다. 위에서 생성한 users 모듈도 같이 import 한다.</p>
+<h3 id="users-provider-ts"><a href="#users-provider-ts" class="headerlink" title="users.provider.ts"></a>users.provider.ts</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">DataSource</span> &#125; <span class="keyword">from</span> <span class="string">&quot;typeorm&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Users</span> &#125; <span class="keyword">from</span> <span class="string">&quot;./users.entity&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> userProviders = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">provide</span>: <span class="string">&quot;USERS_REPOSITORY&quot;</span>,</span><br><span class="line">    <span class="attr">useFactory</span>: <span class="function">(<span class="params">dataSource: DataSource</span>) =&gt;</span> dataSource.<span class="title function_">getRepository</span>(<span class="title class_">Users</span>),</span><br><span class="line">    <span class="attr">inject</span>: [<span class="string">&quot;DATA_SOURCE&quot;</span>],</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>service의 constructor에 정의될 provider이다. provider의 이름과 사용할 entity를 명시해 준다.</p>
+<h3 id="users-service-ts"><a href="#users-service-ts" class="headerlink" title="users.service.ts"></a>users.service.ts</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Inject</span>, <span class="title class_">Injectable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Repository</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;typeorm&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; insertUserDto &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/insert.user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; saveUserDto &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/save.user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Users</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./users.entity&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; v4 <span class="keyword">as</span> uuid &#125; <span class="keyword">from</span> <span class="string">&#x27;uuid&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> bcrypt <span class="keyword">from</span> <span class="string">&#x27;bcryptjs&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; signIn &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/signin.dto&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UsersService</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">        @Inject(<span class="string">&#x27;USERS_REPOSITORY&#x27;</span>)</span></span><br><span class="line"><span class="params">        private userRepository: Repository&lt;Users&gt;,</span></span><br><span class="line"><span class="params">    </span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">create</span>(<span class="attr">userDto</span>: insertUserDto): <span class="title class_">Promise</span>&lt;<span class="title class_">Users</span>&gt; &#123;</span><br><span class="line">        <span class="comment">// 사용자 등록 register</span></span><br><span class="line">        <span class="keyword">const</span> user_id = <span class="title function_">uuid</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> salt = <span class="keyword">await</span> bcrypt.<span class="title function_">genSalt</span>();</span><br><span class="line">        <span class="keyword">const</span> hashedPassword = <span class="keyword">await</span> bcrypt.<span class="title function_">hash</span>(userDto.<span class="property">password</span>, salt);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="attr">newUser</span>: saveUserDto = &#123;</span><br><span class="line">            <span class="attr">user_id</span>: user_id,</span><br><span class="line">            <span class="attr">name</span>: userDto.<span class="property">name</span>,</span><br><span class="line">            <span class="attr">email</span>: userDto.<span class="property">email</span>,</span><br><span class="line">            <span class="attr">password</span>: hashedPassword,</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">const</span> user = <span class="variable language_">this</span>.<span class="property">userRepository</span>.<span class="title function_">save</span>(&#123; ...newUser &#125;);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>service에서는 데이터베이스에 직접 쿼리를 던진다. constructor에 데이터베이스의 provider를 정의한다. 이제UserService에서 User 테이블의 구조에 접근할 수 있다.</p>
+<h2 id="users-controller-ts"><a href="#users-controller-ts" class="headerlink" title="users.controller.ts"></a>users.controller.ts</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    <span class="title class_">Body</span>,</span><br><span class="line">    <span class="title class_">Controller</span>,</span><br><span class="line">    <span class="title class_">Get</span>,</span><br><span class="line">    <span class="title class_">HttpStatus</span>,</span><br><span class="line">    <span class="title class_">Post</span>,</span><br><span class="line">    <span class="title class_">Res</span>,</span><br><span class="line">    <span class="title class_">UseFilters</span>,</span><br><span class="line">    <span class="title class_">UsePipes</span>,</span><br><span class="line">    <span class="title class_">ValidationPipe</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/common&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ApiBody</span>, <span class="title class_">ApiResponse</span>, <span class="title class_">ApiTags</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/swagger&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">HttpExceptionFilter</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;src/exception/http-exception.filter&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; insertUserDto &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/insert.user.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; signIn &#125; <span class="keyword">from</span> <span class="string">&#x27;./dto/signin.dto&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Users</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./users.entity&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">UsersService</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./users.service&#x27;</span>;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">ApiTags</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line">@<span class="title class_">Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UsersController</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">private readonly userService: UsersService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">UseFilters</span>(<span class="title class_">HttpExceptionFilter</span>) <span class="comment">//error handle</span></span><br><span class="line">    @<span class="title class_">Post</span>(<span class="string">&#x27;registration&#x27;</span>) <span class="comment">// http method</span></span><br><span class="line">    @<span class="title class_">UsePipes</span>(<span class="title class_">ValidationPipe</span>) <span class="comment">// validation pipe</span></span><br><span class="line">    @<span class="title class_">ApiBody</span>(&#123; <span class="attr">type</span>: insertUserDto &#125;) <span class="comment">// swagger body</span></span><br><span class="line">    @<span class="title class_">ApiResponse</span>(&#123; <span class="attr">status</span>: <span class="number">200</span>, <span class="attr">description</span>: <span class="string">&#x27;user created&#x27;</span> &#125;)</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">createUser</span>(</span><br><span class="line">        @<span class="title class_">Res</span>() <span class="attr">res</span>: any,</span><br><span class="line">        @<span class="title class_">Body</span>() <span class="attr">userDto</span>: insertUserDto,</span><br><span class="line">    ): <span class="title class_">Promise</span>&lt;<span class="keyword">void</span>&gt; &#123;</span><br><span class="line">        <span class="comment">//   사용자 회원가입</span></span><br><span class="line">        <span class="keyword">const</span> user = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">create</span>(userDto);</span><br><span class="line">        res.<span class="title function_">status</span>(<span class="title class_">HttpStatus</span>.<span class="property">OK</span>).<span class="title function_">json</span>(user);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>controller에서는 라우팅 경로 정의와 client에서 넘어오는 값의 유효성 검사, api 문서 등을 정의할 수 있다. nest js의 데코레이터를 사용하게 됩니다. 자세한 동작에 대해서는 이후 포스팅에서 설명한다.</p>
+<p>nest js에서 기본적인 3계층 구조를 봤다. 이제 client의 요청에 따른 동작을 구현할 수 있다. 다음 포스팅에서는 swagger api 문서를 생성하는 방법을 알아본다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#nest-js-cli"><span class="toc-number">1.</span> <span class="toc-text">nest js cli</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Module"><span class="toc-number">2.</span> <span class="toc-text">Module</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Controller"><span class="toc-number">3.</span> <span class="toc-text">Controller</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service"><span class="toc-number">4.</span> <span class="toc-text">Service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0"><span class="toc-number">5.</span> <span class="toc-text">mysql 연결하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#User-%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%A0%95%EC%9D%98%ED%95%98%EA%B8%B0"><span class="toc-number">5.1.</span> <span class="toc-text">User 테이블 정의하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#user-entity-ts"><span class="toc-number">5.1.1.</span> <span class="toc-text">user.entity.ts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#database-module"><span class="toc-number">5.2.</span> <span class="toc-text">database module</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#config"><span class="toc-number">5.3.</span> <span class="toc-text">config</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#default-yml"><span class="toc-number">5.3.1.</span> <span class="toc-text">default.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#development-yml"><span class="toc-number">5.3.2.</span> <span class="toc-text">development.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#production-yml"><span class="toc-number">5.3.3.</span> <span class="toc-text">production.yml</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typeormconfig-ts"><span class="toc-number">5.4.</span> <span class="toc-text">typeormconfig.ts</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#database-provider-ts"><span class="toc-number">5.4.1.</span> <span class="toc-text">database.provider.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#database-module-ts"><span class="toc-number">5.4.2.</span> <span class="toc-text">database.module.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#app-module-ts"><span class="toc-number">5.4.3.</span> <span class="toc-text">app.module.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#users-provider-ts"><span class="toc-number">5.4.4.</span> <span class="toc-text">users.provider.ts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#users-service-ts"><span class="toc-number">5.4.5.</span> <span class="toc-text">users.service.ts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#users-controller-ts"><span class="toc-number">5.5.</span> <span class="toc-text">users.controller.ts</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&text=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&is_video=false&description=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=NestJS 프로젝트 시작하기 With Docker(2)&body=Check out this article: https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&title=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&name=NestJS 프로젝트 시작하기 With Docker(2)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/06/06/2022-06-06-nest2/&t=NestJS 프로젝트 시작하기 With Docker(2)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

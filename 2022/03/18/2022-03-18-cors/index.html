@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="웹 페이지에서 발생하는 CORS 이슈에 대한 포스팅입니다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cross-Origin Resource Sharing(CORS)">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="웹 페이지에서 발생하는 CORS 이슈에 대한 포스팅입니다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/assets/posting/backend/cors/cors.png">
+<meta property="article:published_time" content="2022-03-18T07:58:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.213Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="elice">
+<meta property="article:tag" content="node js">
+<meta property="article:tag" content="react js">
+<meta property="article:tag" content="cors">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/assets/posting/backend/cors/cors.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Cross-Origin Resource Sharing(CORS)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/03/21/2022-03-21-spring1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/03/15/2022-03-15-backendlayer/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&text=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&is_video=false&description=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cross-Origin Resource Sharing(CORS)&body=Check out this article: https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&name=Cross-Origin Resource Sharing(CORS)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&t=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CORS-Cross-Origin-Resouce-Sharing"><span class="toc-number">1.</span> <span class="toc-text">CORS(Cross-Origin Resouce Sharing)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#How-to-use-cors-in-Express"><span class="toc-number">2.</span> <span class="toc-text">How to use cors in Express</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-cors-with-npm"><span class="toc-number">2.1.</span> <span class="toc-text">Install cors with npm</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Cross-Origin Resource Sharing(CORS)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-18T07:58:00.000Z" class="dt-published" itemprop="datePublished">2022-03-18</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/cors/" rel="tag">cors</a>, <a class="p-category" href="/tags/elice/" rel="tag">elice</a>, <a class="p-category" href="/tags/node-js/" rel="tag">node js</a>, <a class="p-category" href="/tags/react-js/" rel="tag">react js</a>, <a class="p-category" href="/tags/web/" rel="tag">web</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/ko/docs/Web/HTTP/CORS">MDN web docs</a>를 정리하였습니다.</p>
+</blockquote>
+<h1 id="CORS-Cross-Origin-Resouce-Sharing"><a href="#CORS-Cross-Origin-Resouce-Sharing" class="headerlink" title="CORS(Cross-Origin Resouce Sharing)"></a>CORS(Cross-Origin Resouce Sharing)</h1><blockquote>
+<p>다른 도메인에서의 자원을 호출하는 행위에 제한이 없을 경우 안전하지 않습니다. <strong>CORS</strong> <br>(Cross-Origin Resource Sharing)는 이렇게 시스템 수준에서 타 도메인 간 자원 호출을 승인하거나 차단하는 것을 결정하는 것입니다. 출처:<a target="_blank" rel="noopener" href="https://developer.mozilla.org/ko/docs/Glossary/CORS">MDN</a></p>
+</blockquote>
+<p><img src="/assets/posting/backend/cors/cors.png" alt="MDN"></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/ko/docs/Web/HTTP/CORS">MDN web docs</a></p>
+<p>웹 애플리케이션은 리소스가 자신의 출처(도메인, 프로토콜, 포트)와 다를 경우 교차 출처 HTTP 요청을 하게 된다. 예를 들어 <code>http://domainA.com</code> 에서 <code>http://domainB/userlist</code>로 요청하는 경우 보안상의 이유로 브라우저가 교차 HTTP 요청을 제한한다.</p>
+<h1 id="How-to-use-cors-in-Express"><a href="#How-to-use-cors-in-Express" class="headerlink" title="How to use cors in Express"></a>How to use cors in Express</h1><h2 id="Install-cors-with-npm"><a href="#Install-cors-with-npm" class="headerlink" title="Install cors with npm"></a>Install cors with npm</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install cors --save</span><br></pre></td></tr></table></figure>
+
+<p>cors 패키지를 npm install 명령어를 사용해서 의존성에 추가해 줍니다.</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cors <span class="keyword">from</span> <span class="string">&quot;cors&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&quot;express&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// CORS 에러 방지</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">cors</span>());</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><code>App.js</code>에서 cors를 import 한 다음 위와 같이 사용한다. <code>cors</code>는 미들웨어이며, <code>cors(option)</code>으로 사용할 수도 있다.</p>
+<p>Node js와 React js로 프로젝트를 만들 때 Node js의 포트는 5001, React js의 포트는 3000을 사용하므로 <code>cors()</code>가 없을 경우 각 도메인의 포트가 다르므로 HTTP 요청 시 cors issue가 발생한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Access to XMLHttpRequest at <span class="string">&#x27;http://localhost:5001/user/login&#x27;</span></span><br><span class="line">from origin <span class="string">&#x27;http://localhost:3000&#x27;</span> has been blocked by CORS policy:</span><br><span class="line">	Response to preflight request doesn<span class="string">&#x27;t pass access control check: No &#x27;</span></span><br><span class="line">	Access-Control-Allow-Origin<span class="string">&#x27; header is present on the requested resource.</span></span><br></pre></td></tr></table></figure>
+
+<p>위 오류를 보면 <code>XMLHttpRequest</code>를 3000번 포트에서 5001번 포트로 요청이 <code>CORS</code>정책에 의해 막혔다는 내용이다. <code>App.js</code>에서 <code>app.use(cors())</code>를 추가해 주면 오류 없이 잘 동작한다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CORS-Cross-Origin-Resouce-Sharing"><span class="toc-number">1.</span> <span class="toc-text">CORS(Cross-Origin Resouce Sharing)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#How-to-use-cors-in-Express"><span class="toc-number">2.</span> <span class="toc-text">How to use cors in Express</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-cors-with-npm"><span class="toc-number">2.1.</span> <span class="toc-text">Install cors with npm</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&text=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&is_video=false&description=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cross-Origin Resource Sharing(CORS)&body=Check out this article: https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&title=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&name=Cross-Origin Resource Sharing(CORS)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/18/2022-03-18-cors/&t=Cross-Origin Resource Sharing(CORS)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="jekyll blog Chirpy 테마 적용하기이전에 사용하던 테마는 커스텀 하기 어려워 테마를 찾아보다가 Chirpy 테마를 찾았다 다른 테마와는 다르게 gh-pages를 사용한다. 처음 적용하려고 했을때 계속 오류가 발생해 애를 먹었다 테마 변경하는 순서를 정리해 보려고 한다 Repository 생성  username.github.io로 reposito">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jekyll Blog 테마 적용하기(Chirpy Theme)">
+<meta property="og:url" content="https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="jekyll blog Chirpy 테마 적용하기이전에 사용하던 테마는 커스텀 하기 어려워 테마를 찾아보다가 Chirpy 테마를 찾았다 다른 테마와는 다르게 gh-pages를 사용한다. 처음 적용하려고 했을때 계속 오류가 발생해 애를 먹었다 테마 변경하는 순서를 정리해 보려고 한다 Repository 생성  username.github.io로 reposito">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/startblog/2021_07_05_20_19_13.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/startblog/2021_07_05_20_23_35.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/startblog/2021_07_05_20_10_15.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/startblog/2021_07_05_20_27_36.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/startblog/2021_07_05_20_31_11.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/startblog/2021_07_05_20_39_44.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/startblog/2021_07_05_20_33_24.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/startblog/2021_07_05_20_44_36.png">
+<meta property="article:published_time" content="2021-07-04T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:08:01.016Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="jekyll">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/startblog/2021_07_05_20_19_13.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Jekyll Blog 테마 적용하기(Chirpy Theme)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/07/06/2021-07-06-riotgames/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/02/05/2021-02-05-inu_paper/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&text=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&is_video=false&description=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Jekyll Blog 테마 적용하기(Chirpy Theme)&body=Check out this article: https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&name=Jekyll Blog 테마 적용하기(Chirpy Theme)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&t=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#jekyll-blog-Chirpy-%ED%85%8C%EB%A7%88-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">jekyll blog Chirpy 테마 적용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Repository-%EC%83%9D%EC%84%B1"><span class="toc-number">1.1.</span> <span class="toc-text">Repository 생성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-repository-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0"><span class="toc-number">1.2.</span> <span class="toc-text">git repository 연결하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%85%8C%EB%A7%88-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EB%B0%8F-%EC%B4%88%EA%B8%B0%ED%99%94"><span class="toc-number">1.3.</span> <span class="toc-text">테마 다운로드 및 초기화</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#config-yml-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0"><span class="toc-number">1.4.</span> <span class="toc-text">_config.yml 설정하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0"><span class="toc-number">1.5.</span> <span class="toc-text">배포하기</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Jekyll Blog 테마 적용하기(Chirpy Theme)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-07-04T15:00:00.000Z" class="dt-published" itemprop="datePublished">2021-07-05</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/blog/">blog</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/blog/" rel="tag">blog</a>, <a class="p-category" href="/tags/jekyll/" rel="tag">jekyll</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="jekyll-blog-Chirpy-테마-적용하기"><a href="#jekyll-blog-Chirpy-테마-적용하기" class="headerlink" title="jekyll blog Chirpy 테마 적용하기"></a>jekyll blog Chirpy 테마 적용하기</h1><p>이전에 사용하던 테마는 커스텀 하기 어려워 테마를 찾아보다가 Chirpy 테마를 찾았다</p>
+<p>다른 테마와는 다르게 gh-pages를 사용한다.</p>
+<p>처음 적용하려고 했을때 계속 오류가 발생해 애를 먹었다</p>
+<p>테마 변경하는 순서를 정리해 보려고 한다</p>
+<h2 id="Repository-생성"><a href="#Repository-생성" class="headerlink" title="Repository 생성"></a>Repository 생성</h2><p><img src="/images/img/posts/startblog/2021_07_05_20_19_13.png" alt="/images/img/posts/startblog/2021_07_05_20_19_13.png"></p>
+<ul>
+<li>username.github.io로 repository를 생성한다.</li>
+</ul>
+<h2 id="git-repository-연결하기"><a href="#git-repository-연결하기" class="headerlink" title="git repository 연결하기"></a>git repository 연결하기</h2><p><img src="/images/img/posts/startblog/2021_07_05_20_23_35.png" alt="/images/img/posts/startblog/2021_07_05_20_23_35.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin &lt;repository url&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>원하는 위치에 생성한 repository를 연결해준다.</li>
+</ul>
+<h2 id="테마-다운로드-및-초기화"><a href="#테마-다운로드-및-초기화" class="headerlink" title="테마 다운로드 및 초기화"></a>테마 다운로드 및 초기화</h2><p><img src="/images/img/posts/startblog/2021_07_05_20_10_15.png" alt="/images/img/posts/startblog/2021_07_05_20_10_15.png"></p>
+<ul>
+<li>Download ZIP을 이용해서 테마를 다운로드 받아준 후 위에서 repository를 연결한 곳에 풀어준다.</li>
+</ul>
+<p><img src="/images/img/posts/startblog/2021_07_05_20_27_36.png" alt="/images/img/posts/startblog/2021_07_05_20_27_36.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>bundle 명령을 사용하여 필요한 종속성들을 설치해 준다</li>
+</ul>
+<p><img src="/images/img/posts/startblog/2021_07_05_20_31_11.png" alt="/images/img/posts/startblog/2021_07_05_20_31_11.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash tools/init.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>init 명령으로 초기화 해 준다</li>
+<li>init 명령은 _post 폴더에 있는 post들과 .travis.yml, docs 폴더를 삭제해 준다.</li>
+</ul>
+<h2 id="config-yml-설정하기"><a href="#config-yml-설정하기" class="headerlink" title="_config.yml 설정하기"></a>_config.yml 설정하기</h2><p><img src="/images/img/posts/startblog/2021_07_05_20_39_44.png" alt="/images/img/posts/startblog/2021_07_05_20_39_44.png"></p>
+<ul>
+<li>배포하기 전 _config.yml 파일에 url부분을 변경해줘야 한다.</li>
+<li>“https:&#x2F;&#x2F;<username>.github.io “으로 설정해 주면 된다.</li>
+</ul>
+<h2 id="배포하기"><a href="#배포하기" class="headerlink" title="배포하기"></a>배포하기</h2><p>tools 폴더에 <code>deploy.sh</code> 파일이 있어 실행해 보았지만 직접 실행 시키는 것이 아니었다. 그냥 repository에 push만 해주면 알아서 해준다.</p>
+<p><img src="/images/img/posts/startblog/2021_07_05_20_33_24.png" alt="/images/img/posts/startblog/2021_07_05_20_33_24.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash tools/run.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>run 명령은 로컬에서 블로그를 컴파일해 준다.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;initial commit&quot;</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>master branch에 push해주면 끝이다.</li>
+</ul>
+<p><img src="/images/img/posts/startblog/2021_07_05_20_44_36.png" alt="/images/img/posts/startblog/2021_07_05_20_44_36.png"></p>
+<ul>
+<li>몇분 기다리고나면 gh-pages branch가 생성된다</li>
+<li>settings → Github Pages 에서 gh-pages로 선택해줘야 블로그 주소로 들어갔을 때 정상적으로 보인다.</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#jekyll-blog-Chirpy-%ED%85%8C%EB%A7%88-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">jekyll blog Chirpy 테마 적용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Repository-%EC%83%9D%EC%84%B1"><span class="toc-number">1.1.</span> <span class="toc-text">Repository 생성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-repository-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0"><span class="toc-number">1.2.</span> <span class="toc-text">git repository 연결하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%85%8C%EB%A7%88-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C-%EB%B0%8F-%EC%B4%88%EA%B8%B0%ED%99%94"><span class="toc-number">1.3.</span> <span class="toc-text">테마 다운로드 및 초기화</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#config-yml-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0"><span class="toc-number">1.4.</span> <span class="toc-text">_config.yml 설정하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0"><span class="toc-number">1.5.</span> <span class="toc-text">배포하기</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&text=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&is_video=false&description=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Jekyll Blog 테마 적용하기(Chirpy Theme)&body=Check out this article: https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&title=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&name=Jekyll Blog 테마 적용하기(Chirpy Theme)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/07/05/2021-07-05-startblog/&t=Jekyll Blog 테마 적용하기(Chirpy Theme)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="elice 1주차 강의 정리, html과 css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML and CSS">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="elice 1주차 강의 정리, html과 css">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-15T16:30:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.094Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="elice">
+<meta property="article:tag" content="html">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>HTML and CSS</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceweek1/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/01/20/2022-01-20-handson4/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/01/04/2022-01-04-nodereact2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&text=HTML and CSS"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&is_video=false&description=HTML and CSS"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HTML and CSS&body=Check out this article: https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&name=HTML and CSS&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&t=HTML and CSS"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HTML-tag"><span class="toc-number">1.</span> <span class="toc-text">HTML tag</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.0.1.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Block-%EC%9A%94%EC%86%8C"><span class="toc-number">1.1.</span> <span class="toc-text">Block 요소</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inline-%EC%9A%94%EC%86%8C"><span class="toc-number">1.2.</span> <span class="toc-text">Inline 요소</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS"><span class="toc-number">2.</span> <span class="toc-text">CSS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%EC%84%A0%ED%83%9D%EC%9E%90"><span class="toc-number">2.1.</span> <span class="toc-text">CSS 선택자</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS%EC%9D%98-%EC%A0%81%EC%9A%A9-%EC%9A%B0%EC%84%A0-%EC%88%9C%EC%9C%84"><span class="toc-number">2.2.</span> <span class="toc-text">CSS의 적용 우선 순위</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%AA%87-%EA%B0%80%EC%A7%80-%EC%86%8D%EC%84%B1-%EC%A0%95%EB%A6%AC"><span class="toc-number">3.</span> <span class="toc-text">몇 가지 속성 정리</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-%EC%84%A0%ED%83%9D%EC%9E%90-1"><span class="toc-number">4.</span> <span class="toc-text">CSS 선택자</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98"><span class="toc-number">5.</span> <span class="toc-text">애니메이션</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%AF%B8%EB%94%94%EC%96%B4-%EC%BF%BC%EB%A6%AC%EC%99%80-viewport"><span class="toc-number">6.</span> <span class="toc-text">미디어 쿼리와 viewport</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-%EC%86%8D%EC%84%B1-%EC%83%81%EC%86%8D"><span class="toc-number">7.</span> <span class="toc-text">CSS 속성 상속</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        HTML and CSS
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-15T16:30:00.000Z" class="dt-published" itemprop="datePublished">2022-01-16</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/css/" rel="tag">css</a>, <a class="p-category" href="/tags/elice/" rel="tag">elice</a>, <a class="p-category" href="/tags/html/" rel="tag">html</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>이 포스트는 엘리스 AI 트랙 4기 강의를 듣고 정리한 내용입니다.</p>
+</blockquote>
+<p>HTML과 CSS는 웹 페이지의 화면을 구성하는 가장 기본적인 구성 요소이다. HTML은 웹 사이트에서 눈에 보이는 정보나 특정 구역을 설정할 때 사용하는 마크업 언어이다.</p>
+<p>이 포스트에서는 HTML의 태그와 CSS의 속성에 대해 알아본다.</p>
+<h1 id="HTML-tag"><a href="#HTML-tag" class="headerlink" title="HTML tag"></a>HTML tag</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>HTML의 파일 형식은 <code>fileName.html</code>이다. HTML 문서는 여러가지 태그로 구성되어 있다. <code>&lt;html&gt;</code>로 시작되며 <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>가 차례대로 온다. 위 코드는 Visual Studio Code에서 기본적으로 제공되는 구조이다.</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><main></h3><p><code>&lt;main&gt;</code>태그는 <code>&lt;body&gt;</code>요소의 주요 content를 정의할 때 사용된다. 문서에서 반복되는 내용을 포함해서는 안되며 <code>role=&quot;main&quot;</code>속성은 반드시 명시해 줘야 한다.</p>
+<h2 id="Block-요소"><a href="#Block-요소" class="headerlink" title="Block 요소"></a>Block 요소</h2><p>HTML문서에서 <code>Block</code>요소는 줄 바꿈 현상이 일어나는 태그들이다. 공간을 수정할 수 있으며, 상하 배치 작업이 가능하다. <code>&lt;h#&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;div&gt;</code>태그들이 있다.</p>
+<h2 id="Inline-요소"><a href="#Inline-요소" class="headerlink" title="Inline 요소"></a>Inline 요소</h2><p>HTML 문서에서 <code>Inline</code>요소는 x축 정렬 형태로 한 줄로 출력된다. 공간을 수정할 수 없으며, 상하 배치 작업이 불가능하다.</p>
+<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">selector &#123;</span><br><span class="line">  attribute: <span class="string">&quot;value&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>CSS</code>는 웹 페이지의 디자인에 관련된 부분을 담당하고 있다. CSS는 선택자, 속성, 속성값으로 구성된다.</p>
+<h2 id="CSS-선택자"><a href="#CSS-선택자" class="headerlink" title="CSS 선택자"></a>CSS 선택자</h2><p>CSS의 선택자는 HTML의 어떤 요소에 CSS를 입힐 것인지 정한다. 선택자는 <code>type</code>, <code>class</code>, <code>id</code>로 3가지가 존재한다. <code>Type</code>은 HTML의 태그에 해당하며, <code>class</code>는 각 HTML 태그의 클래스, <code>id</code>는 각 태그의 id로 하나의 태그에만 사용할 수 있다.</p>
+<h2 id="CSS의-적용-우선-순위"><a href="#CSS의-적용-우선-순위" class="headerlink" title="CSS의 적용 우선 순위"></a>CSS의 적용 우선 순위</h2><p>CSS를 HTML 태그에 적용할 때 우선순위가 존재한다. 같은 속성일 경우 가장 마지막에 적용한 속성값이 우선순위가 높고, 선택자가 구체적으로 작성된 경우 우선순위가 높다. 예를 들어, <code>header p &#123;&#125;</code>가 <code>p &#123;&#125;</code>보다 우선순위가 높다. 선택자에도 순서가 있는데, <code>style</code>&gt; <code>id</code>&gt; <code>class</code>&gt; <code>type</code>순으로 우선순위가 높다.</p>
+<h1 id="몇-가지-속성-정리"><a href="#몇-가지-속성-정리" class="headerlink" title="몇 가지 속성 정리"></a>몇 가지 속성 정리</h1><ul>
+<li>display: block과 inline 요소의 성격을 바꿀 때 사용한다.</li>
+<li>float: 선택된 요소를 왼쪽 끝 혹은 오른쪽 끝에 정렬 시키고자 할 때 사용한다.</li>
+<li>clear: float에 대한 속성을 제어하고자 할 때 사용된다.</li>
+<li>text-align: x축으로 정렬한다</li>
+<li>line-height: y축 정렬이 가능하다</li>
+<li>margin: border 바깥쪽에 여백을 만든다</li>
+<li>padding: border 안쪽에서 여백을 만든다. 공간이 여백을 포함한 크기로 변경되기 때문에 사용 시 유의해야 한다.</li>
+<li>border: 박스의 테두리를 꾸민다.</li>
+<li>height: 100vh : <code>vh</code>는 스크린 기준 100%를 말한다.</li>
+<li>justify-content: x축 가운데 정렬을 해준다.</li>
+<li>align-items: y축으로 가운데 정렬해 준다.</li>
+</ul>
+<h1 id="CSS-선택자-1"><a href="#CSS-선택자-1" class="headerlink" title="CSS 선택자"></a>CSS 선택자</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.notice</span> &gt; <span class="selector-tag">p</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>notice라는 클래스의 자식인 p 태그에 적용된다. <code>.notice p &#123;&#125;</code>는 notice 클래스 아래에 있는 모든 p 태그에 적용된다.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.red</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: blue <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>!important</code>는 다른 조건이 있어도 우선 순위가 되게 한다.</p>
+<h1 id="애니메이션"><a href="#애니메이션" class="headerlink" title="애니메이션"></a>애니메이션</h1><p>CSS에서는 반응형을 나타낼 수 있는데, property는 효과를 적용하고자 하는 CSS 속성을 지정하고, duration은 효과 지속 시간, delay는 효과가 발동 되기까지의 시간의 조건을 지정한다.</p>
+<h1 id="미디어-쿼리와-viewport"><a href="#미디어-쿼리와-viewport" class="headerlink" title="미디어 쿼리와 viewport"></a>미디어 쿼리와 viewport</h1><p>모바일에 대응되는 반응형 웹 사이트를 만들기 위해 사용한다. 미디어 쿼리의 <code>min-width</code>, <code>max-width</code>로 브라우저의 가로폭을 설정한다. viewport는 디지털 기기의 화면 상에 표시되는 영역을 의미한다.</p>
+<p>미디어 쿼리는 pc뿐만 아니라 모바일과 태블릿에도 대응되는 웹 사이트를 만들기 위한 것이다. 모바일에 대응되는 반응형 또는 적응형 웹 사이트를 만들 때 사용하는 CSS 구문이다.</p>
+<p>미디어 쿼리 사용 시에는 head 태그 안쪽에 viewport를 반드시 작성해야 한다. viewport는 <code>&lt;meta&gt;</code>태그에 작성된다.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>viewport는 위와 같다. <code>width=device-width</code>는 기기의 가로폭, <code>initial-scale=1.0</code>은 비율은 항상 1.0을 유지한다는 뜻이다.</p>
+<h1 id="CSS-속성-상속"><a href="#CSS-속성-상속" class="headerlink" title="CSS 속성 상속"></a>CSS 속성 상속</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.media</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: green;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">300px</span>) <span class="keyword">and</span> (<span class="attribute">max-width</span>: <span class="number">600px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.meida</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">    <span class="attribute">border</span>: solid <span class="number">10px</span> green;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>미디어 쿼리 외부 영역에 있는 CSS 속성을 상속 받는다. 위 코드는 기기 가로폭 300px 이상 600px이하가 될 경우 media 클래스의 디자인을 변경하게 된다.</p>
+<p>1주차의 내용인 HTML과 CSS 강의가 끝이 났다. 생활 코딩 강의로만 보던 이고잉님께 직접 강의를 들어 더 재밌게 강의를 들었던 것 같다. 뭔가 유명인을 본 듯한 느낌이라 신기하기도 했다. 다음 주 부터는 javascript를 배우게 된다. javascript도 잘 정리해 봐야겠다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HTML-tag"><span class="toc-number">1.</span> <span class="toc-text">HTML tag</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.0.1.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Block-%EC%9A%94%EC%86%8C"><span class="toc-number">1.1.</span> <span class="toc-text">Block 요소</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inline-%EC%9A%94%EC%86%8C"><span class="toc-number">1.2.</span> <span class="toc-text">Inline 요소</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS"><span class="toc-number">2.</span> <span class="toc-text">CSS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-%EC%84%A0%ED%83%9D%EC%9E%90"><span class="toc-number">2.1.</span> <span class="toc-text">CSS 선택자</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS%EC%9D%98-%EC%A0%81%EC%9A%A9-%EC%9A%B0%EC%84%A0-%EC%88%9C%EC%9C%84"><span class="toc-number">2.2.</span> <span class="toc-text">CSS의 적용 우선 순위</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%AA%87-%EA%B0%80%EC%A7%80-%EC%86%8D%EC%84%B1-%EC%A0%95%EB%A6%AC"><span class="toc-number">3.</span> <span class="toc-text">몇 가지 속성 정리</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-%EC%84%A0%ED%83%9D%EC%9E%90-1"><span class="toc-number">4.</span> <span class="toc-text">CSS 선택자</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98"><span class="toc-number">5.</span> <span class="toc-text">애니메이션</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%AF%B8%EB%94%94%EC%96%B4-%EC%BF%BC%EB%A6%AC%EC%99%80-viewport"><span class="toc-number">6.</span> <span class="toc-text">미디어 쿼리와 viewport</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-%EC%86%8D%EC%84%B1-%EC%83%81%EC%86%8D"><span class="toc-number">7.</span> <span class="toc-text">CSS 속성 상속</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&text=HTML and CSS"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&is_video=false&description=HTML and CSS"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HTML and CSS&body=Check out this article: https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&title=HTML and CSS"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&name=HTML and CSS&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/16/2022-01-16-eliceWeek1/&t=HTML and CSS"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

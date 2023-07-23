@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="typescript의 클래스">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Typescript Class">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="typescript의 클래스">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-28T06:09:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:16.231Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="typesctipt">
+<meta property="article:tag" content="class">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Typescript Class</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/03/31/2022-03-31-sshcolab/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/03/27/2022-03-27-typescript1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&text=Typescript Class"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&is_video=false&description=Typescript Class"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Typescript Class&body=Check out this article: https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&name=Typescript Class&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&t=Typescript Class"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OOP-Object-Oriented-Programming"><span class="toc-number">1.</span> <span class="toc-text">OOP(Object Oriented Programming)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#class-%EC%83%9D%EC%84%B1"><span class="toc-number">2.</span> <span class="toc-text">class 생성</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%A0%91%EA%B7%BC-%EC%A0%9C%EC%96%B4%EC%9E%90"><span class="toc-number">3.</span> <span class="toc-text">접근 제어자</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#public"><span class="toc-number">3.1.</span> <span class="toc-text">public</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#private"><span class="toc-number">3.2.</span> <span class="toc-text">private</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%83%81%EC%86%8D"><span class="toc-number">4.</span> <span class="toc-text">상속</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Getters%EC%99%80-Setters-readonly-static"><span class="toc-number">5.</span> <span class="toc-text">Getters와 Setters, readonly, static</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#getters-setters"><span class="toc-number">5.1.</span> <span class="toc-text">getters &amp; setters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readonly"><span class="toc-number">5.2.</span> <span class="toc-text">readonly</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#static"><span class="toc-number">5.3.</span> <span class="toc-text">static</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4"><span class="toc-number">6.</span> <span class="toc-text">추상 클래스</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4"><span class="toc-number">7.</span> <span class="toc-text">디자인 패턴</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Typescript Class
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-28T06:09:00.000Z" class="dt-published" itemprop="datePublished">2022-03-28</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/class/" rel="tag">class</a>, <a class="p-category" href="/tags/typesctipt/" rel="tag">typesctipt</a>, <a class="p-category" href="/tags/web/" rel="tag">web</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="OOP-Object-Oriented-Programming"><a href="#OOP-Object-Oriented-Programming" class="headerlink" title="OOP(Object Oriented Programming)"></a>OOP(Object Oriented Programming)</h1><p>Typescript는 객체 지향 프로그래밍(OOP)의 특징을 가지고 있다. OOP는 객체의 모임으로 컴퓨터 프로그램을 파악하려는 프로그래밍 방식이다. Typescript는 인터페이스, 상속, 정적 메서드 구현 등의 패턴을 지원한다.</p>
+<p>OOP의 장점은 프로그램의 변경을 유연하게 만든다. 개발과 유지보수가 간편하며 직관적인 코드 분석이 가능하게 한다.</p>
+<h1 id="class-생성"><a href="#class-생성" class="headerlink" title="class 생성"></a>class 생성</h1><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">say</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span> + <span class="variable language_">this</span>.<span class="property">name</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>new</code>를 사용해서 Person 클래스의 인스턴스를 생성한다. 클래스 안에서 <code>this</code>를 사용하면 클래스의 멤버를 의미하게 된다. 클래스의 멤버는 name, constructor, say()이다.</p>
+<p>Class의 요소는 <code>member</code>, <code>field</code>, <code>constructor</code>, <code>method</code>가 있다.</p>
+<h1 id="접근-제어자"><a href="#접근-제어자" class="headerlink" title="접근 제어자"></a>접근 제어자</h1><p>Typescript의 접근 제어자는 Java와 다르게 package 개념이 없어 default 접근 제어자는 존재하지 않고, <code>public</code>, <code>protected</code>, <code>private</code>가 존재한다.</p>
+<h2 id="public"><a href="#public" class="headerlink" title="public"></a>public</h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">Name: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = <span class="title class_">Name</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Animal</span>(<span class="string">&quot;Cat&quot;</span>).<span class="property">name</span>;</span><br></pre></td></tr></table></figure>
+
+<p>클래스 내에서 선언된 멤버들이 자유롭게 접근할 수 있다. typescript에서 기본 접근 제어자는 public이다.</p>
+<h2 id="private"><a href="#private" class="headerlink" title="private"></a>private</h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">parameters</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = parameters;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Animal</span>(<span class="string">&quot;cat&quot;</span>).<span class="property">name</span>;</span><br><span class="line"><span class="comment">// Property &#x27;name&#x27; is private and only accessible within class &#x27;Animal&#x27;.</span></span><br></pre></td></tr></table></figure>
+
+<p>private 접근 제어자는 멤버가 포함되어 있는 클래스 외부에서의 접근을 막는다. 위 코드의 오류를 보면 <code>name</code>이 private이기 때문에 접근을 하지 못한다고 되어 있다.</p>
+<h1 id="상속"><a href="#상속" class="headerlink" title="상속"></a>상속</h1><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Vehicle</span> &#123;</span><br><span class="line">  <span class="title function_">move</span>(<span class="params">dist: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Car move <span class="subst">$&#123;dist&#125;</span>m`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bus</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Vehicle</span> &#123;</span><br><span class="line">  <span class="title function_">getPerson</span>(<span class="params">nums: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`승객 <span class="subst">$&#123;nums&#125;</span>명을 태웠습니다 `</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bus = <span class="keyword">new</span> <span class="title class_">Bus</span>();</span><br><span class="line">bus.<span class="title function_">move</span>(<span class="number">10</span>);</span><br><span class="line">bus.<span class="title function_">getPerson</span>(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<p>상속을 이용해서 존재하는 클래스를 확장해 새로운 클래스를 생성할 수 있다. extends 키워드를 사용해서 <code>Vehicle</code>의 멤버에 접근할 수 있다. Bus는 Vehicle의 기능을 확장했으므로 <code>move()</code>와 <code>getPerson()</code>을 가진 인스턴스를 생성한다.</p>
+<h1 id="Getters와-Setters-readonly-static"><a href="#Getters와-Setters-readonly-static" class="headerlink" title="Getters와 Setters, readonly, static"></a>Getters와 Setters, readonly, static</h1><h2 id="getters-setters"><a href="#getters-setters" class="headerlink" title="getters &amp; setters"></a>getters &amp; setters</h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Persons</span> &#123;</span><br><span class="line">  <span class="comment">// &gt; 멤버 초기화 필요한것 같음</span></span><br><span class="line">  <span class="keyword">private</span> <span class="attr">_name</span>: <span class="built_in">string</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">name</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_name</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">name</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (name.<span class="property">length</span> &gt; <span class="number">10</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;name too long&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">_name</span> = name;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> persons = <span class="keyword">new</span> <span class="title class_">Persons</span>();</span><br><span class="line"></span><br><span class="line">persons.<span class="property">name</span> = <span class="string">&quot;lee&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(persons.<span class="property">name</span>);</span><br></pre></td></tr></table></figure>
+
+<p>비공개로 설정하려는 속성은 private으로 설정하고, 속성값을 읽고 수정하는 getter&#x2F;setter 함수를 사용한다.</p>
+<h2 id="readonly"><a href="#readonly" class="headerlink" title="readonly"></a>readonly</h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">age</span>: <span class="built_in">number</span> = <span class="number">20</span>;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">age: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">age</span> = age;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>읽기만 가능한 속성을 선언하기 위해 사용한다. 선언될 때나 생성자에서 값을 설정한 이후에는 값을 수정할 수 없다.</p>
+<h2 id="static"><a href="#static" class="headerlink" title="static"></a>static</h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Grid</span> &#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="title class_">Origin</span> = &#123; <span class="attr">x</span>: <span class="number">2</span>, <span class="attr">y</span>: <span class="number">5</span> &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">area</span>(<span class="params">point: &#123; x: <span class="built_in">number</span>; y: <span class="built_in">number</span> &#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> xPoint = point.<span class="property">x</span> * <span class="title class_">Grid</span>.<span class="property">Origin</span>.<span class="property">x</span>;</span><br><span class="line">    <span class="keyword">let</span> yPoint = point.<span class="property">y</span> * <span class="title class_">Grid</span>.<span class="property">Origin</span>.<span class="property">y</span>;</span><br><span class="line">    <span class="keyword">return</span> xPoint * yPoint;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>전역 멤버를 선언할 때 사용한다. 전역멤버는 객체마다 할당되지 않고 클래스의 모든 객체가 공유하는 멤버이다. <code>Grid.</code>으로 static 멤버에 접근 가능하다.</p>
+<h1 id="추상-클래스"><a href="#추상-클래스" class="headerlink" title="추상 클래스"></a>추상 클래스</h1><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Hello</span> &#123;</span><br><span class="line">  <span class="keyword">protected</span> <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">abstract</span> <span class="title function_">hello</span>(): <span class="built_in">void</span>;</span><br><span class="line">  <span class="title function_">welcome</span>(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Hi</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Hello</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">hello</span>(): <span class="built_in">void</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span> + <span class="string">&quot;hello worlds!!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> login = <span class="keyword">new</span> <span class="title class_">Hi</span>(<span class="string">&quot;lee&quot;</span>);</span><br><span class="line">login.<span class="title function_">hello</span>(); <span class="comment">// leehello worlds!!</span></span><br></pre></td></tr></table></figure>
+
+<p>추상 클래스는 다른 클래스들이 파생될 수 있는 기초 클래스이다. <code>abstract</code>키워드는 추상 클래스나 추상 메서드를 정의하는데 사용된다. 추상 메소드는 클래스에 구현되어 있지 않고, 파생된 클래스에서 구현되어야 한다.</p>
+<h1 id="디자인-패턴"><a href="#디자인-패턴" class="headerlink" title="디자인 패턴"></a>디자인 패턴</h1><p>디자인 패턴은 프로그램의 일부분을 서브 클래스로 캡슐화 해서 전체 구조를 바꾸지 않고 특정 단계의 기능을 바꾸는 것이다. 상위 클래스에서는 전체 알고리즘을 구현하고 다른 부분들은 하위 클래스에서 구현한다. 부분적으로 다른 메소드들의 코드 중복을 최소화 할 수 있다는 장점이 있다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OOP-Object-Oriented-Programming"><span class="toc-number">1.</span> <span class="toc-text">OOP(Object Oriented Programming)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#class-%EC%83%9D%EC%84%B1"><span class="toc-number">2.</span> <span class="toc-text">class 생성</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%A0%91%EA%B7%BC-%EC%A0%9C%EC%96%B4%EC%9E%90"><span class="toc-number">3.</span> <span class="toc-text">접근 제어자</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#public"><span class="toc-number">3.1.</span> <span class="toc-text">public</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#private"><span class="toc-number">3.2.</span> <span class="toc-text">private</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%83%81%EC%86%8D"><span class="toc-number">4.</span> <span class="toc-text">상속</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Getters%EC%99%80-Setters-readonly-static"><span class="toc-number">5.</span> <span class="toc-text">Getters와 Setters, readonly, static</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#getters-setters"><span class="toc-number">5.1.</span> <span class="toc-text">getters &amp; setters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#readonly"><span class="toc-number">5.2.</span> <span class="toc-text">readonly</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#static"><span class="toc-number">5.3.</span> <span class="toc-text">static</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4"><span class="toc-number">6.</span> <span class="toc-text">추상 클래스</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4"><span class="toc-number">7.</span> <span class="toc-text">디자인 패턴</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&text=Typescript Class"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&is_video=false&description=Typescript Class"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Typescript Class&body=Check out this article: https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&title=Typescript Class"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&name=Typescript Class&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/03/28/2022-03-28-typescript2/&t=Typescript Class"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

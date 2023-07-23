@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="1. Artificial Intelligence(인공지능)인공지능은 인간의 학습능력, 추론능력, 지각능력, 자연언어의 이해능력 등을 컴퓨터 프로그램으로 실현한 기술이다. 지능을 갖고 있는 기능을 갖춘 컴퓨터 시스템이며, 인간의 지능을 기계 등에 인공적으로 시연(구현)한 것이다. 일반적으로 범용 컴퓨터에 적용한다고 가정한다. 이 용어는 또한 그와 같은 지능을">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Science.Data &amp; AI 시작하기(1)">
+<meta property="og:url" content="https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="1. Artificial Intelligence(인공지능)인공지능은 인간의 학습능력, 추론능력, 지각능력, 자연언어의 이해능력 등을 컴퓨터 프로그램으로 실현한 기술이다. 지능을 갖고 있는 기능을 갖춘 컴퓨터 시스템이며, 인간의 지능을 기계 등에 인공적으로 시연(구현)한 것이다. 일반적으로 범용 컴퓨터에 적용한다고 가정한다. 이 용어는 또한 그와 같은 지능을">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-29T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-17T01:56:15.755Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="ai">
+<meta property="article:tag" content="hanium">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Data Science.Data &amp; AI 시작하기(1)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2020/06/30/2020-06-30-datascience1/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/07/05/2020-07-05-Deep_Learning_from_Scratch1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/06/17/2020-06-17-Generic_Algorithm/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&text=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&is_video=false&description=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Data Science.Data &amp; AI 시작하기(1)&body=Check out this article: https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&name=Data Science.Data &amp; AI 시작하기(1)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&t=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Artificial-Intelligence-%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5"><span class="toc-number">1.</span> <span class="toc-text">1. Artificial Intelligence(인공지능)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Machine-Learning-ML"><span class="toc-number">1.1.</span> <span class="toc-text">Machine Learning(ML)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Supervised-Learning-%EC%A7%80%EB%8F%84-%ED%95%99%EC%8A%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">- Supervised Learning(지도 학습)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Unsupervised-Learning-%EB%B9%84%EC%A7%80%EB%8F%84-%ED%95%99%EC%8A%B5"><span class="toc-number">1.1.2.</span> <span class="toc-text">- Unsupervised Learning(비지도 학습)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reinforcement-Learning-%EA%B0%95%ED%99%94-%ED%95%99%EC%8A%B5"><span class="toc-number">1.1.3.</span> <span class="toc-text">- Reinforcement Learning(강화 학습)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deep-Learning-DL"><span class="toc-number">1.2.</span> <span class="toc-text">Deep Learning(DL)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Data-Science"><span class="toc-number">2.</span> <span class="toc-text">2. Data Science</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REFERENCES"><span class="toc-number">3.</span> <span class="toc-text">REFERENCES</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Data Science.Data &amp; AI 시작하기(1)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-06-29T15:00:00.000Z" class="dt-published" itemprop="datePublished">2020-06-30</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/hanium/">hanium</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/ai/" rel="tag">ai</a>, <a class="p-category" href="/tags/hanium/" rel="tag">hanium</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="1-Artificial-Intelligence-인공지능"><a href="#1-Artificial-Intelligence-인공지능" class="headerlink" title="1. Artificial Intelligence(인공지능)"></a>1. Artificial Intelligence(인공지능)</h2><p>인공지능은 인간의 학습능력, 추론능력, 지각능력, 자연언어의 이해능력 등을 컴퓨터 프로그램으로 실현한 기술이다.</p>
+<p>지능을 갖고 있는 기능을 갖춘 컴퓨터 시스템이며, 인간의 지능을 기계 등에 인공적으로 시연(구현)한 것이다. 일반적으로 범용 컴퓨터에 적용한다고 가정한다. 이 용어는 또한 그와 같은 지능을 만들 수 있는 방법론이나 실현 가능성 등을 연구하는 과학 분야를 지칭하기도 한다.</p>
+<h3 id="Machine-Learning-ML"><a href="#Machine-Learning-ML" class="headerlink" title="Machine Learning(ML)"></a>Machine Learning(ML)</h3><h4 id="Supervised-Learning-지도-학습"><a href="#Supervised-Learning-지도-학습" class="headerlink" title="- Supervised Learning(지도 학습)"></a>- Supervised Learning(지도 학습)</h4><p><b>정답을 알려주며 학습시키는 것이다.</b></p>
+<p>기계가 학습하는데 있어서 사람이 개입하여 학습을 한다.<br>예를 들어 강아지 사진을 주고(주어진 데이터) 이 사진은 강아지(정답)야! 라고 알려주는 학습방식이다.</p>
+<p>지도 학습에는 분류(Classification)과 회귀(Regression)가 있다.</p>
+<h4 id="Unsupervised-Learning-비지도-학습"><a href="#Unsupervised-Learning-비지도-학습" class="headerlink" title="- Unsupervised Learning(비지도 학습)"></a>- Unsupervised Learning(비지도 학습)</h4><p><b>정답을 알려주지 않고 비슷한 데이터들을 군집화 하는것이다.</b></p>
+<p>사람이 개입하지 않고 기계가 스스로 학습을 한다.<br>각각 다른 동물들 사진을 비지도 학습을 시키면 어떤 동물인지는 모르지만 비슷한 그룹으로 군집화를 해준다.</p>
+<h4 id="Reinforcement-Learning-강화-학습"><a href="#Reinforcement-Learning-강화-학습" class="headerlink" title="- Reinforcement Learning(강화 학습)"></a>- Reinforcement Learning(강화 학습)</h4><p><b>상과 벌이라는 보상을 주어 벌을 최소화 하며 상을 받도록 학습하는 방식이다.</b></p>
+<p>강화 학습의 예로 네비게이션이 있다. 알파고도 강화 학습으로 학습되었다고 한다.</p>
+<h3 id="Deep-Learning-DL"><a href="#Deep-Learning-DL" class="headerlink" title="Deep Learning(DL)"></a>Deep Learning(DL)</h3><p>딥러닝은 여러 비선형 변환기법의 조합을 통해 높은 수준의 추상화를 시도하는 기계 학습 알고리즘의 집합이며, 사람의 사고방식을 컴퓨터에게 가르치는 기계학습이라고 할 수 있다.</p>
+<h2 id="2-Data-Science"><a href="#2-Data-Science" class="headerlink" title="2. Data Science"></a>2. Data Science</h2><p>딥러닝, 기계학습, 인공지능, 통계적 분석 등 대용량 데이터를 가지고 지식을 얻고 추리하기 위한 학문이다.</p>
+<p>또한 해결하려는 분야의 지식을 바탕으로 다양한 형식의 방대한 데이터의 획득, 모델링, 분석, 기계학습, 시각화 등의 과정을 통해 인간과 사회에 도움이 될 수 있는 솔루션을 만들고 지속적인 개선을 가능하게 하는 학문이다.</p>
+<ul>
+<li><p>빅데이터 사용 예시</p>
+<ul>
+<li><p>Starbucks<br>스타벅스는 매장을 내기 전 빅데이터 기반으로 교통, 주변 인구 통계, 다른 스타벅스의 위치를 분석하여 최적의 입점위치를 선정한다. 고객에게는 스타벅스 어플을 통해 소비자 정보를 수집하고, 고객의 취향에 알맞는 신메뉴를 추천하는 서비스도 제공중이라고 한다.</p>
+</li>
+<li><p>Zara<br>자라는 광고를 하지 않는다. 자라 매장은 매일 데이터 분석을 실시 한다. 모든 옷에 RFID태그가 붙어있어 고객들이 어떤 옷을 많이 사갔는지, 가장 많이 입어본 옷은 무엇인지 등의 데이터를 본사 디자이너에게 전달한다. 이런 데이터를 기반으로 새 옷을 디자인 하기때문에 1년에 단 2번의 세일로 재고관리가 가능하다는 것이다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><sub>강의 출처: <a target="_blank" rel="noopener" href="https://edu.hanium.or.kr/courses/course-v1:Squarenet+SQN101x+2020_T2/info">한이음 Microsoft Blended Learning</a></sub></p>
+<h2 id="REFERENCES"><a href="#REFERENCES" class="headerlink" title="REFERENCES"></a>REFERENCES</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://subinne.tistory.com/391">subinne</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Artificial-Intelligence-%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5"><span class="toc-number">1.</span> <span class="toc-text">1. Artificial Intelligence(인공지능)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Machine-Learning-ML"><span class="toc-number">1.1.</span> <span class="toc-text">Machine Learning(ML)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Supervised-Learning-%EC%A7%80%EB%8F%84-%ED%95%99%EC%8A%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">- Supervised Learning(지도 학습)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Unsupervised-Learning-%EB%B9%84%EC%A7%80%EB%8F%84-%ED%95%99%EC%8A%B5"><span class="toc-number">1.1.2.</span> <span class="toc-text">- Unsupervised Learning(비지도 학습)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reinforcement-Learning-%EA%B0%95%ED%99%94-%ED%95%99%EC%8A%B5"><span class="toc-number">1.1.3.</span> <span class="toc-text">- Reinforcement Learning(강화 학습)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deep-Learning-DL"><span class="toc-number">1.2.</span> <span class="toc-text">Deep Learning(DL)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Data-Science"><span class="toc-number">2.</span> <span class="toc-text">2. Data Science</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#REFERENCES"><span class="toc-number">3.</span> <span class="toc-text">REFERENCES</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&text=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&is_video=false&description=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Data Science.Data &amp; AI 시작하기(1)&body=Check out this article: https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&title=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&name=Data Science.Data &amp; AI 시작하기(1)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/06/30/2020-06-30-DataScience1/&t=Data Science.Data &amp; AI 시작하기(1)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

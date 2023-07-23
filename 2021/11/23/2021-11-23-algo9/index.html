@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="파이썬 알고리즘 인터뷰 책을 정리한 포스트 입니다.  #12 주식을 사고팔기 가장 좋은 시점한 번의 거래로 낼 수 있는 최대 이익을 산출하라 입력1prices &#x3D; [7, 1, 5, 3, 6, 4]  출력15  Brute Force 계산1234567def bruteForce(prices: list) -&gt; int:    max_price &#x3D; 0    f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="배열 (Python Algorithm Interview 7장)">
+<meta property="og:url" content="https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="파이썬 알고리즘 인터뷰 책을 정리한 포스트 입니다.  #12 주식을 사고팔기 가장 좋은 시점한 번의 거래로 낼 수 있는 최대 이익을 산출하라 입력1prices &#x3D; [7, 1, 5, 3, 6, 4]  출력15  Brute Force 계산1234567def bruteForce(prices: list) -&gt; int:    max_price &#x3D; 0    f">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter7/pic_2021-11-23_14-40-28.png">
+<meta property="article:published_time" content="2021-11-23T12:49:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:12:25.196Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/pyAlgo/chapter7/pic_2021-11-23_14-40-28.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>배열 (Python Algorithm Interview 7장)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/12/02/2021-12-02-jekyllStart/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/11/18/2021-11-18-algo8/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&text=배열 (Python Algorithm Interview 7장)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&is_video=false&description=배열 (Python Algorithm Interview 7장)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=배열 (Python Algorithm Interview 7장)&body=Check out this article: https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&name=배열 (Python Algorithm Interview 7장)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&t=배열 (Python Algorithm Interview 7장)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#12-%EC%A3%BC%EC%8B%9D%EC%9D%84-%EC%82%AC%EA%B3%A0%ED%8C%94%EA%B8%B0-%EA%B0%80%EC%9E%A5-%EC%A2%8B%EC%9D%80-%EC%8B%9C%EC%A0%90"><span class="toc-number">1.</span> <span class="toc-text">#12 주식을 사고팔기 가장 좋은 시점</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5"><span class="toc-number">1.1.</span> <span class="toc-text">입력</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%B6%9C%EB%A0%A5"><span class="toc-number">1.2.</span> <span class="toc-text">출력</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-Force-%EA%B3%84%EC%82%B0"><span class="toc-number">1.3.</span> <span class="toc-text">Brute Force 계산</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%82%B4-%ED%92%80%EC%9D%B4"><span class="toc-number">1.4.</span> <span class="toc-text">내 풀이</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%80%EC%A0%90%EA%B3%BC-%ED%98%84%EC%9E%AC-%EA%B0%92%EA%B3%BC%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EA%B3%84%EC%82%B0"><span class="toc-number">1.5.</span> <span class="toc-text">저점과 현재 값과의 차이 계산</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        배열 (Python Algorithm Interview 7장)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-11-23T12:49:00.000Z" class="dt-published" itemprop="datePublished">2021-11-23</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/algorithm/">algorithm</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/algorithm/" rel="tag">algorithm</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>파이썬 알고리즘 인터뷰 책을 정리한 포스트 입니다.</p>
+</blockquote>
+<h1 id="12-주식을-사고팔기-가장-좋은-시점"><a href="#12-주식을-사고팔기-가장-좋은-시점" class="headerlink" title="#12 주식을 사고팔기 가장 좋은 시점"></a>#12 주식을 사고팔기 가장 좋은 시점</h1><p>한 번의 거래로 낼 수 있는 최대 이익을 산출하라</p>
+<h2 id="입력"><a href="#입력" class="headerlink" title="입력"></a>입력</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prices = [<span class="number">7</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="출력"><a href="#출력" class="headerlink" title="출력"></a>출력</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Brute-Force-계산"><a href="#Brute-Force-계산" class="headerlink" title="Brute Force 계산"></a>Brute Force 계산</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">bruteForce</span>(<span class="params">prices: <span class="built_in">list</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    max_price = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i, price <span class="keyword">in</span> <span class="built_in">enumerate</span>(prices):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i, <span class="built_in">len</span>(prices)):</span><br><span class="line">            max_price = <span class="built_in">max</span>(prices[j] - price, max_price)</span><br><span class="line">    <span class="keyword">return</span> max_price</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Brute force</code>방식은 처음부터 사고 팔고를 반복해 마지막에 최대 이익을 산출하는 것이다.</li>
+<li>이 문제에서는 타임아웃으로 해결되지 않는다.</li>
+</ul>
+<h2 id="내-풀이"><a href="#내-풀이" class="headerlink" title="내 풀이"></a>내 풀이</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">maxProfit</span>(<span class="params">price: <span class="built_in">list</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    :param price: 주식 가격이 리스트로 주어진다</span></span><br><span class="line"><span class="string">    :return: 최대 이익 반환 :type: int</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    minStock = <span class="number">1000</span></span><br><span class="line">    maxStock = <span class="number">0</span></span><br><span class="line">    nowDay = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> days, prices <span class="keyword">in</span> <span class="built_in">enumerate</span>(price):</span><br><span class="line">        <span class="keyword">if</span> prices &lt; minStock <span class="keyword">and</span> nowDay &lt; days:</span><br><span class="line">            minStock = prices</span><br><span class="line">        <span class="keyword">if</span> prices &gt; maxStock <span class="keyword">and</span> nowDay &lt; days:</span><br><span class="line">            maxStock = prices</span><br><span class="line">    <span class="keyword">return</span> maxStock - minStock</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>최저점에 사서 최고점에 팔아야 하기 때문에 최대 최소값을 구해 차이로 이익을 구한다</li>
+<li>값을 구할때 날짜가 지나가면 최저점과 최고점의 의미가 없기때문에 <code>if</code>문에 날짜 조건을 걸어준다</li>
+</ul>
+<h2 id="저점과-현재-값과의-차이-계산"><a href="#저점과-현재-값과의-차이-계산" class="headerlink" title="저점과 현재 값과의 차이 계산"></a>저점과 현재 값과의 차이 계산</h2><p><img src="/images/img/posts/pyAlgo/chapter7/pic_2021-11-23_14-40-28.png" alt="스크린샷, 2021-11-23 14-40-28.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">maxProfit_low_now_val</span>(<span class="params">prices: <span class="built_in">list</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    profit = <span class="number">0</span></span><br><span class="line">    min_price = sys.maxsize</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 최솟값과 최댓값을 계속 갱신</span></span><br><span class="line">    <span class="keyword">for</span> price <span class="keyword">in</span> prices:</span><br><span class="line">        min_price = <span class="built_in">min</span>(min_price, price)</span><br><span class="line">        profit = <span class="built_in">max</span>(profit, price - min_price)</span><br><span class="line">    <span class="keyword">return</span> profit</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>그래프로 그려보면 고점과 저점을 확인할 수 있다</li>
+<li>각 날짜의 주식 가격을 탐색하면서 최솟값과 최댓값을 갱신한다</li>
+<li>갱신하면서 최대 이익을 계산한다</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#12-%EC%A3%BC%EC%8B%9D%EC%9D%84-%EC%82%AC%EA%B3%A0%ED%8C%94%EA%B8%B0-%EA%B0%80%EC%9E%A5-%EC%A2%8B%EC%9D%80-%EC%8B%9C%EC%A0%90"><span class="toc-number">1.</span> <span class="toc-text">#12 주식을 사고팔기 가장 좋은 시점</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9E%85%EB%A0%A5"><span class="toc-number">1.1.</span> <span class="toc-text">입력</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%B6%9C%EB%A0%A5"><span class="toc-number">1.2.</span> <span class="toc-text">출력</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-Force-%EA%B3%84%EC%82%B0"><span class="toc-number">1.3.</span> <span class="toc-text">Brute Force 계산</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%82%B4-%ED%92%80%EC%9D%B4"><span class="toc-number">1.4.</span> <span class="toc-text">내 풀이</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A0%80%EC%A0%90%EA%B3%BC-%ED%98%84%EC%9E%AC-%EA%B0%92%EA%B3%BC%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EA%B3%84%EC%82%B0"><span class="toc-number">1.5.</span> <span class="toc-text">저점과 현재 값과의 차이 계산</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&text=배열 (Python Algorithm Interview 7장)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&is_video=false&description=배열 (Python Algorithm Interview 7장)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=배열 (Python Algorithm Interview 7장)&body=Check out this article: https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&title=배열 (Python Algorithm Interview 7장)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&name=배열 (Python Algorithm Interview 7장)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/11/23/2021-11-23-algo9/&t=배열 (Python Algorithm Interview 7장)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="비지도 학습지도 학습은 레이블된 데이터를 이용해 학습을 진행한다. 데이터에 정답이 있는 경우이다. 이번 장에서는 데이터에 레이블을 붙일 필요 없이 알고리즘이 레이블이 없는 데이터를 바로 사용할 수 있는 비지도 학습에 대해 알아본다. 비지도 학습에는 군집(clustering), 이상치 탐지(outlier detection), 밀도 추정(density esti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="비지도 학습 (Hands-on Machine Learning Part1)">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="비지도 학습지도 학습은 레이블된 데이터를 이용해 학습을 진행한다. 데이터에 정답이 있는 경우이다. 이번 장에서는 데이터에 레이블을 붙일 필요 없이 알고리즘이 레이블이 없는 데이터를 바로 사용할 수 있는 비지도 학습에 대해 알아본다. 비지도 학습에는 군집(clustering), 이상치 탐지(outlier detection), 밀도 추정(density esti">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/blobs_plot.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/voronoi_plot.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled%201.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled%202.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled%203.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled%204.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled%205.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled%206.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled%207.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled%208.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled%209.png">
+<meta property="article:published_time" content="2022-01-20T03:24:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:13:49.241Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/handson/chapter9/Untitled.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>비지도 학습 (Hands-on Machine Learning Part1)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/01/20/2022-01-20-algo10/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/01/16/2022-01-16-eliceWeek1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&text=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&is_video=false&description=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=비지도 학습 (Hands-on Machine Learning Part1)&body=Check out this article: https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&name=비지도 학습 (Hands-on Machine Learning Part1)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&t=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B9%84%EC%A7%80%EB%8F%84-%ED%95%99%EC%8A%B5"><span class="toc-number">1.</span> <span class="toc-text">비지도 학습</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B5%B0%EC%A7%91"><span class="toc-number">2.</span> <span class="toc-text">군집</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#K-Means-k-%ED%8F%89%EA%B7%A0"><span class="toc-number">3.</span> <span class="toc-text">K-Means(k-평균)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Soft-Clustering-%EC%86%8C%ED%94%84%ED%8A%B8-%EA%B5%B0%EC%A7%91"><span class="toc-number">3.1.</span> <span class="toc-text">Soft Clustering(소프트 군집)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#K-Means-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EC%9D%98-%EB%8F%99%EC%9E%91"><span class="toc-number">3.2.</span> <span class="toc-text">K-Means 알고리즘의 동작</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%84%BC%ED%8A%B8%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%B4%88%EA%B8%B0%ED%99%94-%EB%B0%A9%EB%B2%95"><span class="toc-number">3.3.</span> <span class="toc-text">센트로이드 초기화 방법</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Minibatch-K-Means"><span class="toc-number">3.4.</span> <span class="toc-text">Minibatch K-Means</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%B5%9C%EC%A0%81%EC%9D%98-%ED%81%B4%EB%9F%AC%EC%8A%A4%ED%84%B0-%EA%B0%9C%EC%88%98-%EC%B0%BE%EA%B8%B0"><span class="toc-number">3.5.</span> <span class="toc-text">최적의 클러스터 개수 찾기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Elbow"><span class="toc-number">3.5.1.</span> <span class="toc-text">Elbow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%8B%A4%EB%A3%A8%EC%97%A3-%EC%A0%90%EC%88%98"><span class="toc-number">3.5.2.</span> <span class="toc-text">실루엣 점수</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B5%B0%EC%A7%91%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%B6%84%ED%95%A0"><span class="toc-number">3.6.</span> <span class="toc-text">군집을 이용한 이미지 분할</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B5%B0%EC%A7%91%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%A0%84%EC%B2%98%EB%A6%AC"><span class="toc-number">3.7.</span> <span class="toc-text">군집을 사용한 전처리</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B5%B0%EC%A7%91%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%A4%80%EC%A7%80%EB%8F%84-%ED%95%99%EC%8A%B5"><span class="toc-number">3.8.</span> <span class="toc-text">군집을 사용한 준지도 학습</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DBSCAN"><span class="toc-number">4.</span> <span class="toc-text">DBSCAN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%80%EC%9A%B0%EC%8B%9C%EC%95%88-%ED%98%BC%ED%95%A9-%EB%AA%A8%EB%8D%B8-GMM"><span class="toc-number">5.</span> <span class="toc-text">가우시안 혼합 모델(GMM)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EA%B3%B5%EB%B6%84%EC%82%B0-%ED%96%89%EB%A0%AC-%EC%A0%9C%EC%95%BD-%EC%A1%B0%EA%B1%B4"><span class="toc-number">5.0.1.</span> <span class="toc-text">공분산 행렬 제약 조건</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B0%80%EC%9A%B0%EC%8B%9C%EC%95%88-%ED%98%BC%ED%95%A9%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%9D%B4%EC%83%81%EC%B9%98-%ED%83%90%EC%A7%80"><span class="toc-number">5.1.</span> <span class="toc-text">가우시안 혼합을 사용한 이상치 탐지</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%B2%A0%EC%9D%B4%EC%A6%88-%EA%B0%80%EC%9A%B0%EC%8B%9C%EC%95%88-%ED%98%BC%ED%95%A9-%EB%AA%A8%EB%8D%B8"><span class="toc-number">5.2.</span> <span class="toc-text">베이즈 가우시안 혼합 모델</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        비지도 학습 (Hands-on Machine Learning Part1)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-20T03:24:00.000Z" class="dt-published" itemprop="datePublished">2022-01-20</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/machine-learning/">machine learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/machine-learning/" rel="tag">machine learning</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="비지도-학습"><a href="#비지도-학습" class="headerlink" title="비지도 학습"></a>비지도 학습</h1><p>지도 학습은 레이블된 데이터를 이용해 학습을 진행한다. 데이터에 정답이 있는 경우이다. 이번 장에서는 데이터에 레이블을 붙일 필요 없이 알고리즘이 레이블이 없는 데이터를 바로 사용할 수 있는 비지도 학습에 대해 알아본다.</p>
+<p>비지도 학습에는 군집(clustering), 이상치 탐지(outlier detection), 밀도 추정(density estimation)이 있다.</p>
+<h1 id="군집"><a href="#군집" class="headerlink" title="군집"></a>군집</h1><p>군집은 비슷한 샘플을 구별해 하나의 클러스터 또는 비슷한 샘플의 그룹으로 할당하는 작업이다. 비지도 학습 중 하나인 군집을 알아보기 위해 붓꽃 데이터 셋으로 알아볼 것이다.</p>
+<p><img src="/images/img/posts/handson/chapter9/Untitled.png" alt="Untitled"></p>
+<p>위 그래프는 각 꽃잎의 너비와 길이를 분류와 군집을 비교한 것이다. 왼쪽 그래프는 레이블이 있는 데이터로 각 붓꽃의 품종(클래스)이 잘 분류되어 있다. 오른쪽 그래프는 레이블이 없어 분류 알고리즘을 사용하지 못한다.</p>
+<p>clustering은 고객 분류, 데이터 분석, 차원 축소 기법, 이상치 탐지, 준지도 학습, 검색 엔진, 이미지 분할에 사용된다. 잘 알려진 clustering 알고리즘인 k-means와 DBSCAN을 알아보자.</p>
+<h1 id="K-Means-k-평균"><a href="#K-Means-k-평균" class="headerlink" title="K-Means(k-평균)"></a>K-Means(k-평균)</h1><p>k-평균 알고리즘은 반복을 통해 빠르고 효율적인 clustering이 가능하게 해주는 알고리즘이다.</p>
+<p><img src="/images/img/posts/handson/chapter9/blobs_plot.png" alt="blobs_plot.png"></p>
+<p>샘플 덩어리 다섯 개로 이루어진 레이블이 없는 데이터 셋이다. 이 샘플 데이터에 k-means 알고리즘을 이용해 clustering을 해 볼 것이다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans</span><br><span class="line"></span><br><span class="line">k = <span class="number">5</span></span><br><span class="line">kmeans = KMeans(n_clusters=k, random_state=<span class="number">42</span>)</span><br><span class="line">y_pred = kmeans.fit_predict(X)</span><br></pre></td></tr></table></figure>
+
+<p>k-means 알고리즘에서는 찾을 cluster의 개수 <code>k</code>를 지정해 줘야 한다. <code>fit_predict</code>로 클러스터를 구분한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; y_pred</span><br><span class="line">array([4, 0, 1, ..., 2, 1, 0], dtype=int32)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; kmeans.cluster_centers_</span><br><span class="line">array([[-2.80389616,  1.80117999],</span><br><span class="line">       [ 0.20876306,  2.25551336],</span><br><span class="line">       [-2.79290307,  2.79641063],</span><br><span class="line">       [-1.46679593,  2.28585348],</span><br><span class="line">       [-2.80037642,  1.30082566]])</span><br></pre></td></tr></table></figure>
+
+<p><code>y_pred</code>는 각 샘플에 할당된 다섯 개의 클러스터의 인덱스 중 하나의 값을 가진다. <code>cluster_centers_</code>를 출력해 보면 각 클러스터의 중심 값을 얻을 수 있다.</p>
+<p><img src="/images/img/posts/handson/chapter9/voronoi_plot.png" alt="voronoi_plot.png"></p>
+<p>k-means의 결정 경계를 보여주는 보로노이 다이어그램이다. 대부분의 샘플들이 알맞은 레이블이 부여되었지만, 일부는 잘못 부여된 것을 볼 수 있다. 이처럼 샘플을 하나의 클러스터에 할당하는 것을 hard clustering이라고 한다.</p>
+<h2 id="Soft-Clustering-소프트-군집"><a href="#Soft-Clustering-소프트-군집" class="headerlink" title="Soft Clustering(소프트 군집)"></a>Soft Clustering(소프트 군집)</h2><p>Soft clustering은 클러스터마다 샘플에 점수를 부여하는 방법이다. 점수는 샘플과 센트로이드 사이의 거리가 될 수 있다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; kmeans.transform(X_new)</span><br><span class="line">array([[2.81093633, 0.32995317, 2.9042344 , 1.49439034, 2.88633901],</span><br><span class="line">       [5.80730058, 2.80290755, 5.84739223, 4.4759332 , 5.84236351],</span><br><span class="line">       [1.21475352, 3.29399768, 0.29040966, 1.69136631, 1.71086031],</span><br><span class="line">       [0.72581411, 3.21806371, 0.36159148, 1.54808703, 1.21567622]])</span><br></pre></td></tr></table></figure>
+
+<p><code>transform()</code>은 <code>KMeans</code>클래스의 메서드로 샘플과 센트로이드 사이의 거리를 반환해 준다. 첫 번째 샘플은 첫 번째 센트로이드와 거리가 2.81이 되는 것을 알 수 있다.</p>
+<h2 id="K-Means-알고리즘의-동작"><a href="#K-Means-알고리즘의-동작" class="headerlink" title="K-Means 알고리즘의 동작"></a>K-Means 알고리즘의 동작</h2><ol>
+<li>군집의 개수 <code>k</code>지정</li>
+<li>초기 중심점 설정</li>
+<li>샘플을 군집에 할당</li>
+<li>중심점 재설정</li>
+<li>샘플을 군집에 재할당<ol>
+<li>중심점의 위치가 더 이상 변하지 않을 때까지 중심점 재설정으로 돌아간다.</li>
+</ol>
+</li>
+</ol>
+<h2 id="센트로이드-초기화-방법"><a href="#센트로이드-초기화-방법" class="headerlink" title="센트로이드 초기화 방법"></a>센트로이드 초기화 방법</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">good_init = np.array([[-<span class="number">3</span>, <span class="number">3</span>], [-<span class="number">3</span>, <span class="number">2</span>], [-<span class="number">3</span>, <span class="number">1</span>], [-<span class="number">1</span>, <span class="number">2</span>], [<span class="number">0</span>, <span class="number">2</span>]])</span><br><span class="line">kmeans = KMeans(n_clusters=<span class="number">5</span>, init=good_init, n_init=<span class="number">1</span>, random_state=<span class="number">42</span>)</span><br><span class="line">kmeans.fit(X)</span><br><span class="line">kmeans.inertia_</span><br></pre></td></tr></table></figure>
+
+<p>센트로이드 값들을 근사하게 알 수 있는 경우 <code>KMeans</code>의 <code>init</code>매개변수로 센트로이드 리스트를 사용한다.</p>
+<p>다른 방법으로 랜덤 초기화를 다르게 하여 여러 번 알고리즘을 실행한 다음 가장 좋은 솔루션을 선택하는 것이다. 랜덤 초기화 횟수는 <code>n_init</code>매개변수를 사용한다. 최적의 솔루션은 샘플과 가장 가까운 센트로이드 사이의 평균 제곱 거리가 기준이며 모델의 <code>inertia</code>(이너셔)라고 한다. <code>inertia_</code>로 이너셔의 값을 알 수 있으며, 이너셔의 값이 가장 작은 솔루션이 반환된다.</p>
+<h2 id="Minibatch-K-Means"><a href="#Minibatch-K-Means" class="headerlink" title="Minibatch K-Means"></a>Minibatch K-Means</h2><p>전체 데이터 셋을 사용해 반복하지 않고 각 반복마다 미니배치를 사용해 센트로이드를 조금씩 움직인다. 메모리에 들어가지 않는 대량의 데이터셋에 클러스터링을 적용할 수 있는 것이 장점이다.</p>
+<p><img src="/images/img/posts/handson/chapter9/Untitled%201.png" alt="Untitled"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> MiniBatchKMeans</span><br><span class="line"></span><br><span class="line">minibatch_kmeans = MiniBatchKMeans(n_clusters=<span class="number">5</span>, random_state=<span class="number">42</span>)</span><br><span class="line">minibatch_kmeans.fit(X)</span><br></pre></td></tr></table></figure>
+
+<h2 id="최적의-클러스터-개수-찾기"><a href="#최적의-클러스터-개수-찾기" class="headerlink" title="최적의 클러스터 개수 찾기"></a>최적의 클러스터 개수 찾기</h2><p>최적의 클러스터 개수를 찾기 위해서는 가장 작은 이너셔를 가지는 모델을 선택하면 될 것 같지만, 이너셔는 <code>k</code>값이 증가하면 작아지기 때문에 최적의 <code>k</code>룰 찾기 좋은 방법은 아니다.</p>
+<h3 id="Elbow"><a href="#Elbow" class="headerlink" title="Elbow"></a>Elbow</h3><p><img src="/images/img/posts/handson/chapter9/Untitled%202.png" alt="Untitled"></p>
+<p>최적의 <code>k</code>값을 찾기 위해 <code>Elbow</code>를 사용한다. <code>Elbow</code>는 이너셔 그래프를 클러스터 개수 <code>k</code>의 함수로 그렸을 때 꺾이는 지점이다. 이 그래프에서 <code>Elbow</code>는 k가 4일 때를 가리키고 있고, <code>Elbow</code>로 알 수 있는 최적의 값이다.</p>
+<h3 id="실루엣-점수"><a href="#실루엣-점수" class="headerlink" title="실루엣 점수"></a>실루엣 점수</h3><p><img src="/images/img/posts/handson/chapter9/Untitled%203.png" alt="Untitled"></p>
+<p>실루엣 점수로 최적의 <code>k</code>값을 찾을 수 있다. 실루엣 점수는 모든 샘플에 대한 실루엣 계수의 평균이다.</p>
+<p>$$<br>silhouette \ score &#x3D; (b-a)&#x2F;max(a, b)<br>$$</p>
+<ul>
+<li>a: 동일한 클러스터에 있는 다른 샘플까지 평균 거리</li>
+<li>b: 가장 가까운 클러스터까지 평균 거리</li>
+</ul>
+<p>실루엣 계수는 -1부터 1까지의 값을 가지고 1에 가까운 값일수록 클러스터 안에 잘 속해 있다는 의미이고, 0에 가까우면 클러스터 경계에 위치한다는 것이고, -1에 가까우면 잘못된 클러스터에 할당되었다는 의미다.</p>
+<p><img src="/images/img/posts/handson/chapter9/Untitled%204.png" alt="Untitled"></p>
+<p>실루엣 다이어그램은 모든 샘플의 실루엣 계수를 할당된 클러스터와 계숫값으로 정렬한 그래프이다. 클러스터마다 칼 모양의 그래프가 그려지는데 높이는 클러스터가 포함하고 있는 샘플의 개수이고, 너비는 클러스터에 포함된 샘플의 정렬된 실루엣 계수를 나타낸다. 너비가 넓을수록 성능이 좋다고 판단한다.</p>
+<h2 id="군집을-이용한-이미지-분할"><a href="#군집을-이용한-이미지-분할" class="headerlink" title="군집을 이용한 이미지 분할"></a>군집을 이용한 이미지 분할</h2><p>이미지 분할은 이미지를 segment 여러개로 분할하는 작업이다. semantic 분할에서는 동일한 종류의 물체에 속한 모든 픽셀은 같은 세그먼트에 할당된다.</p>
+<p><img src="/images/img/posts/handson/chapter9/Untitled%205.png" alt="Untitled"></p>
+<p>위 이미지는 색상 클러스터 개수에 따른 k-means를 사용해 만든 이미지 분할이다.</p>
+<h2 id="군집을-사용한-전처리"><a href="#군집을-사용한-전처리" class="headerlink" title="군집을 사용한 전처리"></a>군집을 사용한 전처리</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_digits</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line">X_digits, y_digits = load_digits(return_X_y=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 훈련 세트와 테스트 세트로 나누기</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X_digits, y_digits, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 로지스틱 회귀 모델 훈련, 테스트 세트에서 평가</span></span><br><span class="line">log_reg = LogisticRegression(multi_class=<span class="string">&quot;ovr&quot;</span>, solver=<span class="string">&quot;lbfgs&quot;</span>, max_iter=<span class="number">5000</span>, random_state=<span class="number">42</span>)</span><br><span class="line">log_reg.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">log_reg_score = log_reg.score(X_test, y_test)</span><br><span class="line">log_reg_score <span class="comment"># 0.9688888888888889</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"></span><br><span class="line"><span class="comment"># 로지스틱 회귀 파이프라인 - kmeans 전처리 추가</span></span><br><span class="line">pipeline = Pipeline([</span><br><span class="line">    (<span class="string">&quot;kmeans&quot;</span>, KMeans(n_clusters=<span class="number">50</span>, random_state=<span class="number">42</span>)),</span><br><span class="line">    (<span class="string">&quot;log_reg&quot;</span>, LogisticRegression(multi_class=<span class="string">&quot;ovr&quot;</span>, solver=<span class="string">&quot;lbfgs&quot;</span>, max_iter=<span class="number">5000</span>, random_state=<span class="number">42</span>)),</span><br><span class="line">])</span><br><span class="line">pipeline.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">pipeline_score = pipeline.score(X_test, y_test)</span><br><span class="line">pipeline_score <span class="comment"># 0.9777777777777777</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line"></span><br><span class="line">param_grid = <span class="built_in">dict</span>(kmeans__n_clusters=<span class="built_in">range</span>(<span class="number">2</span>, <span class="number">100</span>))</span><br><span class="line">grid_clf = GridSearchCV(pipeline, param_grid, cv=<span class="number">3</span>, verbose=<span class="number">2</span>)</span><br><span class="line">grid_clf.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">grid_clf.score(X_test, y_test) <span class="comment"># 0.9777777777777777</span></span><br></pre></td></tr></table></figure>
+
+<p>k-means를 전처리 단계에 사용해 로지스틱 회귀 모델을 적용한다. Mnist 데이터 셋을 사용하는데 클러스터 개수를 50개로 지정한 이유는 숫자를 쓴 방식이 모두 다르기 때문에 레이블 개수인 10개로 클러스터를 지정하는것은 좋지 않기 때문이다.</p>
+<p>GridSearchCV를 사용해 최적의 클러스터를 찾고 파이프라인에 적용하면 더 좋은 성능이 나온다.</p>
+<h2 id="군집을-사용한-준지도-학습"><a href="#군집을-사용한-준지도-학습" class="headerlink" title="군집을 사용한 준지도 학습"></a>군집을 사용한 준지도 학습</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">n_labeled = <span class="number">50</span></span><br><span class="line"></span><br><span class="line">log_reg = LogisticRegression(multi_class=<span class="string">&quot;ovr&quot;</span>, solver=<span class="string">&quot;lbfgs&quot;</span>, random_state=<span class="number">42</span>)</span><br><span class="line">log_reg.fit(X_train[:n_labeled], y_train[:n_labeled])</span><br><span class="line">log_reg.score(X_test, y_test) <span class="comment"># 0.8333333333333334</span></span><br></pre></td></tr></table></figure>
+
+<p>레이블이 없는 샘플이 많고 레이블이 있는 샘플이 적을 때 사용하는 준지도 학습에도 군집을 사용할 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">k = <span class="number">50</span></span><br><span class="line"></span><br><span class="line">kmeans = KMeans(n_clusters=k, random_state=<span class="number">42</span>)</span><br><span class="line">X_digits_dist = kmeans.fit_transform(X_train)</span><br><span class="line">representative_digit_idx = np.argmin(X_digits_dist, axis=<span class="number">0</span>)</span><br><span class="line">X_representative_digits = X_train[representative_digit_idx]</span><br><span class="line"></span><br><span class="line">y_representative_digits = np.array(</span><br><span class="line">    [<span class="number">4</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">6</span>,</span><br><span class="line">       <span class="number">9</span>, <span class="number">0</span>, <span class="number">8</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">7</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">8</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">4</span>,</span><br><span class="line">       <span class="number">7</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">log_reg = LogisticRegression(multi_class=<span class="string">&quot;ovr&quot;</span>, solver=<span class="string">&quot;lbfgs&quot;</span>, max_iter=<span class="number">5000</span>, random_state=<span class="number">42</span>)</span><br><span class="line">log_reg.fit(X_representative_digits, y_representative_digits)</span><br><span class="line">log_reg.score(X_test, y_test) <span class="comment"># 0.09555555555555556</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/img/posts/handson/chapter9/Untitled%206.png" alt="Untitled"></p>
+<p>클러스터 개수를 50개로 지정하고 각 클러스터에서 센트로이드에 가장 가까운 이미지를 찾아 레이블을 수동으로 할당한다. 할당된 레이블로 훈련하게 되면 성능이 더 올라간 것을 볼 수 있다.</p>
+<p>레이블을 동일한 클러스터에 있는 모든 샘플에 전파하는 레이블 전파를 사용하면 더 높은 성능을 얻을 수 있다.</p>
+<h1 id="DBSCAN"><a href="#DBSCAN" class="headerlink" title="DBSCAN"></a>DBSCAN</h1><ul>
+<li>알고리즘이 각 샘플에서 작은 거리인 $\epsilon$내에 샘플이 몇 개 놓여 있는지 세고 이 지역을 샘플의 $<code>\epsilon-이웃</code>$이라고 부른다.</li>
+<li>자기 자신을 포함한 $<code>\epsilon-이웃</code>$내에 적어도 <code>min_samples</code>개 샘플이 있다면 이를 <code>핵심 샘플</code>로 간주한다.</li>
+<li><code>핵심 샘플</code>의 이웃에 있는 모든 샘플은 동일한 클러스터에 속한다. 이웃에는 다른 <code>핵심 샘플</code>이 포함될 수 있다. <code>핵심 샘플</code>의 이웃은 계속해서 하나의 클러스터를 형성한다.</li>
+<li><code>핵심 샘플</code>이 아니고 이웃도 아닌 샘플은 이상치로 판단한다.</li>
+</ul>
+<p><code>DBSCAN</code>알고리즘은 모든 클러스터가 충분히 밀집되어 있고 밀집되지 않은 지역과 잘 구분될 때 좋은 성능을 낸다.</p>
+<p><img src="/images/img/posts/handson/chapter9/Untitled%207.png" alt="Untitled"></p>
+<p>$\epsilon$의 값에 따른 그래프이다. $\epsilon$의 값이 0.05인 경우 클러스터를 개수는 7개로 나타나고 많은 샘플들을 이상치로 판단했다. $\epsilon$의 값이 0.2인 경우는 이상치가 없는 완벽한 군집을 갖게 된다.</p>
+<h1 id="가우시안-혼합-모델-GMM"><a href="#가우시안-혼합-모델-GMM" class="headerlink" title="가우시안 혼합 모델(GMM)"></a>가우시안 혼합 모델(GMM)</h1><p>샘플이 파라미터가 알려지지 않은 여러 개의 혼합된 가우시안 분포에서 생성되었다고 가정하는 확률 모델이다. 하나의 가우시안 분포에서 생성된 모든 샘플은 하나의 클러스터를 생성한다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.mixture <span class="keyword">import</span> GaussianMixture</span><br><span class="line"></span><br><span class="line">gm = GaussianMixture(n_components=<span class="number">3</span>, n_init=<span class="number">10</span>, random_state=<span class="number">42</span>)</span><br><span class="line">gm.fit(X)</span><br></pre></td></tr></table></figure>
+
+<p><code>GaussianMixture</code>를 사용해 주어진 데이터 <code>X</code>가 주어졌을 때 가중치 $\phi$와 전체 분포의 파라미터 $\mu^{(1)}$에서 $\mu^{(k)}$까지와 $\Sigma^{(1)}$에서 $\Sigma^{(k)}$까지를 추정한다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; gm.weights_</span><br><span class="line">array([0.39025715, 0.40007391, 0.20966893])</span><br><span class="line">&gt;&gt;&gt; gm.means_</span><br><span class="line">array([[ 0.05131611,  0.07521837],</span><br><span class="line">       [-1.40763156,  1.42708225],</span><br><span class="line">       [ 3.39893794,  1.05928897]])</span><br><span class="line">&gt;&gt;&gt; gm.covariances_</span><br><span class="line">array([[[ 0.68799922,  0.79606357],</span><br><span class="line">        [ 0.79606357,  1.21236106]],</span><br><span class="line"></span><br><span class="line">       [[ 0.63479409,  0.72970799],</span><br><span class="line">        [ 0.72970799,  1.1610351 ]],</span><br><span class="line"></span><br><span class="line">       [[ 1.14833585, -0.03256179],</span><br><span class="line">        [-0.03256179,  0.95490931]]])</span><br></pre></td></tr></table></figure>
+
+<p>데이터를 생성하기 위해 사용한 가중치는 0.2, 0.4, 0.4이다. 이 클래스는 EM(Expectation-Maximization) 알고리즘을 사용한다. k-means와 비슷하게 클러스터 파라미터를 랜덤하게 초기화하고 수렴할 때까지 두 단계를 반복하게 된다.</p>
+<ol>
+<li>현재 클러스터 센트로이드에 가장 가까운 데이터 셋을 할당한다. (Expectaion)</li>
+<li>할당한 데이터들을 평균으로 클러스터의 중심을 다시 계산한다. (Maximization)</li>
+</ol>
+<p>가우시안 혼합 모델은 생성모델이므로 새로운 샘플을 생성하는 것도 가능하다. 특성이나 클러스터가 많거나 샘플이 적을 경우 EM 알고리즘이 최적의 솔루션이 되기 어렵다. 이를 해결하기 위해 클러스터의 모양과 방향의 범위를 제한하는 것이 필요하다. 공분산 행렬에 제약을 추가하는 방법을 사용할 수 있다.</p>
+<h3 id="공분산-행렬-제약-조건"><a href="#공분산-행렬-제약-조건" class="headerlink" title="공분산 행렬 제약 조건"></a>공분산 행렬 제약 조건</h3><ul>
+<li>full: <code>covariance_type</code>의 기본값으로 각 클러스터의 모양, 크기, 방향에 제약이 없다.</li>
+<li>spherical: 모든 클러스터가 원형이다. 지름은 다를 수 있다.(분산이 다르다)</li>
+<li>diag: 클러스터는 크기에 상관없이 어떤 타원형도 가능하다. 타원의 축은 좌표 축과 나란해야 한다.</li>
+<li>tied: 모든 클러스터가 동일한 타원모양, 크기, 방향을 가진다.</li>
+</ul>
+<h2 id="가우시안-혼합을-사용한-이상치-탐지"><a href="#가우시안-혼합을-사용한-이상치-탐지" class="headerlink" title="가우시안 혼합을 사용한 이상치 탐지"></a>가우시안 혼합을 사용한 이상치 탐지</h2><p><img src="/images/img/posts/handson/chapter9/Untitled%208.png" alt="Untitled"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">densities = gm.score_samples(X)</span><br><span class="line">density_threshold = np.percentile(densities, <span class="number">4</span>)</span><br><span class="line">anomalies = X[densities &lt; density_threshold]</span><br></pre></td></tr></table></figure>
+
+<p>보통과 많이 다른 샘플을 감지하는 것이 이상치 탐지다. 부정 거래, 결함 있는 제품 검출 등에 사용된다. 가우시안 혼합 모델을 이상치 탐지에 사용하는 방법은 밀도가 낮은 지역에 있는 모든 샘플을 이상치로 판단하는 것이다.</p>
+<p>가우시안 혼합 모델은 이상치를 포함해 모든 데이터에 맞추려고 하기 때문에 이상치를 제거한 후 정제된 데이터셋에서 다시 훈련하게 된다.</p>
+<h2 id="베이즈-가우시안-혼합-모델"><a href="#베이즈-가우시안-혼합-모델" class="headerlink" title="베이즈 가우시안 혼합 모델"></a>베이즈 가우시안 혼합 모델</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.mixture <span class="keyword">import</span> BayesianGaussianMixture</span><br><span class="line"></span><br><span class="line">bgm = BayesianGaussianMixture(n_components=<span class="number">10</span>, n_init=<span class="number">10</span>, random_state=<span class="number">42</span>)</span><br><span class="line">bgm.fit(X)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; np.round(bgm.weights_, 2)</span><br><span class="line">array([0.4 , 0.21, 0.4 , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  , 0.  ])</span><br></pre></td></tr></table></figure>
+
+<p><code>BasianGaussianMixture</code>클래스는 불필요한 클러스터의 가중치를 0에 가깝게 만든다. 클러스터 개수를 10개로 지정하고 모델을 학습한 결과 3개의 클러스터가 필요하다는 것을 확인할 수 있다. 이는 위에서 얻었던 결과와 동일하다.</p>
+<p><img src="/images/img/posts/handson/chapter9/Untitled%209.png" alt="Untitled"></p>
+<p>위 그래프는 반달 데이터셋에 <code>BassianGaussianMixture</code>를 적용한 것이다. 타원형 클러스터에 잘 동작하는 특징을 가졌기 때문에 밀도 추정은 가능하지만, 반달 모양 클러스터를 식별하는데에 실패했다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B9%84%EC%A7%80%EB%8F%84-%ED%95%99%EC%8A%B5"><span class="toc-number">1.</span> <span class="toc-text">비지도 학습</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B5%B0%EC%A7%91"><span class="toc-number">2.</span> <span class="toc-text">군집</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#K-Means-k-%ED%8F%89%EA%B7%A0"><span class="toc-number">3.</span> <span class="toc-text">K-Means(k-평균)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Soft-Clustering-%EC%86%8C%ED%94%84%ED%8A%B8-%EA%B5%B0%EC%A7%91"><span class="toc-number">3.1.</span> <span class="toc-text">Soft Clustering(소프트 군집)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#K-Means-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EC%9D%98-%EB%8F%99%EC%9E%91"><span class="toc-number">3.2.</span> <span class="toc-text">K-Means 알고리즘의 동작</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%84%BC%ED%8A%B8%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%B4%88%EA%B8%B0%ED%99%94-%EB%B0%A9%EB%B2%95"><span class="toc-number">3.3.</span> <span class="toc-text">센트로이드 초기화 방법</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Minibatch-K-Means"><span class="toc-number">3.4.</span> <span class="toc-text">Minibatch K-Means</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%B5%9C%EC%A0%81%EC%9D%98-%ED%81%B4%EB%9F%AC%EC%8A%A4%ED%84%B0-%EA%B0%9C%EC%88%98-%EC%B0%BE%EA%B8%B0"><span class="toc-number">3.5.</span> <span class="toc-text">최적의 클러스터 개수 찾기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Elbow"><span class="toc-number">3.5.1.</span> <span class="toc-text">Elbow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%8B%A4%EB%A3%A8%EC%97%A3-%EC%A0%90%EC%88%98"><span class="toc-number">3.5.2.</span> <span class="toc-text">실루엣 점수</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B5%B0%EC%A7%91%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%B6%84%ED%95%A0"><span class="toc-number">3.6.</span> <span class="toc-text">군집을 이용한 이미지 분할</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B5%B0%EC%A7%91%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%A0%84%EC%B2%98%EB%A6%AC"><span class="toc-number">3.7.</span> <span class="toc-text">군집을 사용한 전처리</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B5%B0%EC%A7%91%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%A4%80%EC%A7%80%EB%8F%84-%ED%95%99%EC%8A%B5"><span class="toc-number">3.8.</span> <span class="toc-text">군집을 사용한 준지도 학습</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DBSCAN"><span class="toc-number">4.</span> <span class="toc-text">DBSCAN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%80%EC%9A%B0%EC%8B%9C%EC%95%88-%ED%98%BC%ED%95%A9-%EB%AA%A8%EB%8D%B8-GMM"><span class="toc-number">5.</span> <span class="toc-text">가우시안 혼합 모델(GMM)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EA%B3%B5%EB%B6%84%EC%82%B0-%ED%96%89%EB%A0%AC-%EC%A0%9C%EC%95%BD-%EC%A1%B0%EA%B1%B4"><span class="toc-number">5.0.1.</span> <span class="toc-text">공분산 행렬 제약 조건</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B0%80%EC%9A%B0%EC%8B%9C%EC%95%88-%ED%98%BC%ED%95%A9%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%9D%B4%EC%83%81%EC%B9%98-%ED%83%90%EC%A7%80"><span class="toc-number">5.1.</span> <span class="toc-text">가우시안 혼합을 사용한 이상치 탐지</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%B2%A0%EC%9D%B4%EC%A6%88-%EA%B0%80%EC%9A%B0%EC%8B%9C%EC%95%88-%ED%98%BC%ED%95%A9-%EB%AA%A8%EB%8D%B8"><span class="toc-number">5.2.</span> <span class="toc-text">베이즈 가우시안 혼합 모델</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&text=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&is_video=false&description=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=비지도 학습 (Hands-on Machine Learning Part1)&body=Check out this article: https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&title=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&name=비지도 학습 (Hands-on Machine Learning Part1)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/01/20/2022-01-20-handson4/&t=비지도 학습 (Hands-on Machine Learning Part1)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

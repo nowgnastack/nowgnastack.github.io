@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="Create project1npx create-next-app@latest  npx명령어로 next js 프로젝트를 생성해 준다. 위 명령어를 실행시키고 나면 프로젝트의 이름을 입력하게 되고, 필요한 패키지들을 설치해 준다. 라이브러리, 프레임워크사용자가 필요한 기능들을 호출해 사용하는 것이 라이브러리이다. 프레임워크는 코드를 호출하는 것이다. 페이지의 이">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Next Js 강의 정리">
+<meta property="og:url" content="https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="Create project1npx create-next-app@latest  npx명령어로 next js 프로젝트를 생성해 준다. 위 명령어를 실행시키고 나면 프로젝트의 이름을 입력하게 되고, 필요한 패키지들을 설치해 준다. 라이브러리, 프레임워크사용자가 필요한 기능들을 호출해 사용하는 것이 라이브러리이다. 프레임워크는 코드를 호출하는 것이다. 페이지의 이">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/nextjs/post1/Untitled.png">
+<meta property="article:published_time" content="2021-12-29T17:50:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:12:59.351Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="nomadcoder">
+<meta property="article:tag" content="next js">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/nextjs/post1/Untitled.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Next Js 강의 정리</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/01/02/2022-01-02-nodereact1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/12/28/2021-12-28-h_mobility1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&text=Next Js 강의 정리"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&is_video=false&description=Next Js 강의 정리"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Next Js 강의 정리&body=Check out this article: https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&name=Next Js 강의 정리&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&t=Next Js 강의 정리"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Create-project"><span class="toc-number">1.</span> <span class="toc-text">Create project</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC"><span class="toc-number">2.</span> <span class="toc-text">라이브러리, 프레임워크</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%8E%98%EC%9D%B4%EC%A7%80%EC%9D%98-%EC%9D%B4%EB%A6%84"><span class="toc-number">3.</span> <span class="toc-text">페이지의 이름</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Routing"><span class="toc-number">4.</span> <span class="toc-text">Routing</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-%EC%A0%81%EC%9A%A9"><span class="toc-number">5.</span> <span class="toc-text">CSS 적용</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Style-JSX"><span class="toc-number">6.</span> <span class="toc-text">Style JSX</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#app-js"><span class="toc-number">7.</span> <span class="toc-text">_app.js</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Next Js 강의 정리
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-29T17:50:00.000Z" class="dt-published" itemprop="datePublished">2021-12-30</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/next-js/" rel="tag">next js</a>, <a class="p-category" href="/tags/nomadcoder/" rel="tag">nomadcoder</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Create-project"><a href="#Create-project" class="headerlink" title="Create project"></a>Create project</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-next-app@latest</span><br></pre></td></tr></table></figure>
+
+<p><code>npx</code>명령어로 next js 프로젝트를 생성해 준다. 위 명령어를 실행시키고 나면 프로젝트의 이름을 입력하게 되고, 필요한 패키지들을 설치해 준다.</p>
+<h1 id="라이브러리-프레임워크"><a href="#라이브러리-프레임워크" class="headerlink" title="라이브러리, 프레임워크"></a>라이브러리, 프레임워크</h1><p>사용자가 필요한 기능들을 호출해 사용하는 것이 라이브러리이다. 프레임워크는 코드를 호출하는 것이다.</p>
+<h1 id="페이지의-이름"><a href="#페이지의-이름" class="headerlink" title="페이지의 이름"></a>페이지의 이름</h1><p><img src="/images/img/posts/nextjs/post1/Untitled.png" alt="Untitled"></p>
+<p><code>pages</code>폴더에 있는 파일들은 페이지의 이름이며 url을 구성한다. <code>about.js</code>파일의 함수 <code>returnMsg</code>의 이름은 페이지 경로에 영향을 주지 않는다.</p>
+<h1 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h1><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Link</span> <span class="keyword">from</span> <span class="string">&quot;next/Link&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRouter &#125; <span class="keyword">from</span> <span class="string">&quot;next/router&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">NavBar</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> router = <span class="title function_">useRouter</span>();</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">nav</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">color:</span> <span class="attr">router.pathname</span> === <span class="string">&quot;/&quot;</span> ? &quot;<span class="attr">red</span>&quot; <span class="attr">:</span> &quot;<span class="attr">blue</span>&quot; &#125;&#125;&gt;</span>Home<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">&quot;/about&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">color:</span> <span class="attr">router.pathname</span> === <span class="string">&quot;/about&quot;</span> ? &quot;<span class="attr">red</span>&quot; <span class="attr">:</span> &quot;<span class="attr">blue</span>&quot; &#125;&#125;&gt;</span>About<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>next js</code>에서 <code>&lt;a&gt;</code>태그를 이용하려면 <code>&lt;Link&gt;</code>안에서 사용해야 한다. 위 코드 상단에 <code>Link</code> 컴포넌트가 import 되어 있다. HTML에서는 <code>&lt;a&gt;</code>태그에서 <code>href</code>속성을 사용했지만, <code>next js</code>에서는 <code>&lt;Link&gt;</code>태그에서 이동할 경로를 지정해 준다. 링크 텍스트에 스타일을 적용하려면 <code>&lt;a&gt;</code>태그에 적용해 줘야 한다.</p>
+<h1 id="CSS-적용"><a href="#CSS-적용" class="headerlink" title="CSS 적용"></a>CSS 적용</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.active</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: tomato;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.link</span> &#123;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Link</span> <span class="keyword">from</span> <span class="string">&quot;next/Link&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRouter &#125; <span class="keyword">from</span> <span class="string">&quot;next/router&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">&quot;./NavBar.module.css&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">NavBar</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> router = <span class="title function_">useRouter</span>();</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">nav</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">className</span>=<span class="string">&#123;</span>`$&#123;<span class="attr">styles.link</span>&#125;$&#123;<span class="attr">router.pathname</span> === <span class="string">&quot;/&quot;</span> ? <span class="attr">styles.active</span> <span class="attr">:</span> &quot;&quot;&#125;`&#125;&gt;</span>Home<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">&quot;/about&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">className</span>=<span class="string">&#123;[styles.link,</span> <span class="attr">router.pathname</span> === <span class="string">&quot;/about&quot;</span> ? <span class="attr">styles.active</span> <span class="attr">:</span> &quot;&quot;]<span class="attr">.join</span>(&quot; &quot;)&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">          About</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>CSS</code>파일을 이용한 스타일 적용은 적용하고 싶은 CSS 파일을 import 해주는 방법으로 사용한다.</p>
+<p><code>&lt;a&gt;</code>태그를 보면 두 개의 스타일 클래스를 지정하고 있다. 두 가지 이상의 클래스를 지정하는 방법은 <code>$&#123;&#125;</code>를 사용하는 방법과 리스트에 <code>join(&#39; &#39;)</code>을 붙여 사용한다.</p>
+<h1 id="Style-JSX"><a href="#Style-JSX" class="headerlink" title="Style JSX"></a>Style JSX</h1><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Link</span> <span class="keyword">from</span> <span class="string">&quot;next/Link&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRouter &#125; <span class="keyword">from</span> <span class="string">&quot;next/router&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">NavBar</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> router = <span class="title function_">useRouter</span>();</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">nav</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">a</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Link</span> <span class="attr">href</span>=<span class="string">&quot;/about&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">a</span>&gt;</span>About<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">style</span> <span class="attr">jsx</span>&gt;</span>&#123;`</span></span><br><span class="line"><span class="language-xml">        nav &#123;</span></span><br><span class="line"><span class="language-xml">          background-color: tomato;</span></span><br><span class="line"><span class="language-xml">        &#125;</span></span><br><span class="line"><span class="language-xml">        a &#123;</span></span><br><span class="line"><span class="language-xml">            text-decoration = none;</span></span><br><span class="line"><span class="language-xml">        &#125;</span></span><br><span class="line"><span class="language-xml">      `&#125;<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>jsx</code>에서의 스타일 지정은 <code>&lt;style jsx&gt;</code>태그로 시작된다. 이 방식은 다른 CSS 파일을 import 하지 않고 사용할 수 있다. 위 코드와 같이 사용하면 해당 파일에서만 적용된다.</p>
+<h1 id="app-js"><a href="#app-js" class="headerlink" title="_app.js"></a>_app.js</h1><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// _app js 는 가장 먼저 호출된다</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">NavBar</span> <span class="keyword">from</span> <span class="string">&quot;../components/NavBar&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">App</span>(<span class="params">&#123; Component, pageProps &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">NavBar</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Component</span> &#123;<span class="attr">...pageProps</span>&#125; /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">span</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">style</span> <span class="attr">jsx</span>&gt;</span>&#123;`</span></span><br><span class="line"><span class="language-xml">        nav &#123;</span></span><br><span class="line"><span class="language-xml">          background-color: tomato;</span></span><br><span class="line"><span class="language-xml">        &#125;</span></span><br><span class="line"><span class="language-xml">        a &#123;</span></span><br><span class="line"><span class="language-xml">            text-decoration = none;</span></span><br><span class="line"><span class="language-xml">        &#125;</span></span><br><span class="line"><span class="language-xml">      `&#125;<span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>_app.js</code>는 가장 먼저 호출되는 파일이며 <code>&lt;Component &#123;...pageProps&#125; /&gt;</code>는 다른 페이지들을 포함한다. 이 파일에서 <code>&lt;Component &#123;...pageProps&#125; /&gt;</code>를 제외한 나머지 부분은 애플리케이션의 모든 페이지에 나타나게 된다. <code>&lt;NavBar /&gt;</code>와 <code>&lt;span&gt;hello&lt;/span&gt;</code>는 모든 페이지의 위, 아래 나타난다.</p>
+<blockquote>
+<p><sub>nomadcoder의 next js 강의를 듣고 정리한 내용입니다.</sub><br><sub><a target="_blank" rel="noopener" href="https://nomadcoders.co/nextjs-fundamentals/lobby">강의 바로가기</a></sub></p>
+</blockquote>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Create-project"><span class="toc-number">1.</span> <span class="toc-text">Create project</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC"><span class="toc-number">2.</span> <span class="toc-text">라이브러리, 프레임워크</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%8E%98%EC%9D%B4%EC%A7%80%EC%9D%98-%EC%9D%B4%EB%A6%84"><span class="toc-number">3.</span> <span class="toc-text">페이지의 이름</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Routing"><span class="toc-number">4.</span> <span class="toc-text">Routing</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-%EC%A0%81%EC%9A%A9"><span class="toc-number">5.</span> <span class="toc-text">CSS 적용</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Style-JSX"><span class="toc-number">6.</span> <span class="toc-text">Style JSX</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#app-js"><span class="toc-number">7.</span> <span class="toc-text">_app.js</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&text=Next Js 강의 정리"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&is_video=false&description=Next Js 강의 정리"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Next Js 강의 정리&body=Check out this article: https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&title=Next Js 강의 정리"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&name=Next Js 강의 정리&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/12/30/2021-12-30-nextjs1/&t=Next Js 강의 정리"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

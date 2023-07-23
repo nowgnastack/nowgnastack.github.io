@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="swagger api 문서를 자동으로 생성해본다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node Js 프로젝트에서 Swagger API 문서 자동화">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="swagger api 문서를 자동으로 생성해본다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/swagger/pic1.png">
+<meta property="article:published_time" content="2022-05-13T10:04:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:18:57.396Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="node js">
+<meta property="article:tag" content="swagger">
+<meta property="article:tag" content="api">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/posting/backend/swagger/pic1.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Node Js 프로젝트에서 Swagger API 문서 자동화</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/05/30/2022-05-30-nestjs1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/05/02/2022-05-02-restapi/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&text=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&is_video=false&description=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Node Js 프로젝트에서 Swagger API 문서 자동화&body=Check out this article: https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&name=Node Js 프로젝트에서 Swagger API 문서 자동화&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&t=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#swgger%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EC%9E%90"><span class="toc-number">1.</span> <span class="toc-text">swgger를 사용해보자</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#swagger-API-%EB%AC%B8%EC%84%9C-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0"><span class="toc-number">2.</span> <span class="toc-text">swagger API 문서 자동 생성하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%84%A4%EC%B9%98"><span class="toc-number">2.1.</span> <span class="toc-text">패키지 설치</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#swagger-js"><span class="toc-number">2.2.</span> <span class="toc-text">swagger.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app-js%EC%97%90-swagger-%EB%9D%BC%EC%9A%B0%ED%8C%85-%EA%B2%BD%EB%A1%9C-%EC%A7%80%EC%A0%95"><span class="toc-number">2.3.</span> <span class="toc-text">app.js에 swagger 라우팅 경로 지정</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#router%EC%97%90-swagger-api-%EC%A0%95%EC%9D%98"><span class="toc-number">2.4.</span> <span class="toc-text">router에 swagger api 정의</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#post"><span class="toc-number">2.4.1.</span> <span class="toc-text">post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get"><span class="toc-number">2.4.2.</span> <span class="toc-text">get</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#schema-%EC%A0%95%EC%9D%98"><span class="toc-number">2.4.3.</span> <span class="toc-text">schema 정의</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">2.4.4.</span> <span class="toc-text">정리</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Node Js 프로젝트에서 Swagger API 문서 자동화
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-13T10:04:00.000Z" class="dt-published" itemprop="datePublished">2022-05-13</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/api/" rel="tag">api</a>, <a class="p-category" href="/tags/node-js/" rel="tag">node js</a>, <a class="p-category" href="/tags/swagger/" rel="tag">swagger</a>, <a class="p-category" href="/tags/web/" rel="tag">web</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="swgger를-사용해보자"><a href="#swgger를-사용해보자" class="headerlink" title="swgger를 사용해보자"></a>swgger를 사용해보자</h1><p>이전 프로젝트에서는 postman을 이용해 백엔드 api 문서를 생성했다. postman도 편하고 잘 동작하지만, swagger api를 사용해보려고 한다. yml파일을 생성해 하나의 파일에 정의하는 방식과 라우터 파일들에 직접 정의 할 수 있는 차이가 있다. swagger api 문서 자동화를 알아본다.</p>
+<h1 id="swagger-API-문서-자동-생성하기"><a href="#swagger-API-문서-자동-생성하기" class="headerlink" title="swagger API 문서 자동 생성하기"></a>swagger API 문서 자동 생성하기</h1><p>swagger api 문서를 yaml 파일에 정의해서 사용할 수 있지만, 각 라우터 코드에 정의해서 사용할 수도 있다. routes 폴더 아래의 각 라우팅 파일에 주석으로 사용하는 방법이다.</p>
+<h2 id="패키지-설치"><a href="#패키지-설치" class="headerlink" title="패키지 설치"></a>패키지 설치</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add -D swagger-jsdoc swagger-ui-express</span><br></pre></td></tr></table></figure>
+
+<p>swagger-jsdoc과 swagger-ui-express 패키지를 개발 의존성으로 설치해 준다.</p>
+<h2 id="swagger-js"><a href="#swagger-js" class="headerlink" title="swagger.js"></a>swagger.js</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> swaggerUi <span class="keyword">from</span> <span class="string">&quot;swagger-ui-express&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> swaggereJsdoc <span class="keyword">from</span> <span class="string">&quot;swagger-jsdoc&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> options = &#123;</span><br><span class="line">  <span class="attr">swaggerDefinition</span>: &#123;</span><br><span class="line">    <span class="attr">openapi</span>: <span class="string">&quot;3.0.0&quot;</span>,</span><br><span class="line">    <span class="attr">info</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&quot;Test API&quot;</span>,</span><br><span class="line">      <span class="attr">version</span>: <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">      <span class="attr">description</span>: <span class="string">&quot;Test API with express&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">basePath</span>: <span class="string">&quot;/&quot;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">apis</span>: [<span class="string">&quot;./src/routes/*.js&quot;</span>, <span class="string">&quot;./src/db/models/*.js&quot;</span>],</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> specs = <span class="title function_">swaggereJsdoc</span>(options);</span><br><span class="line"><span class="keyword">export</span> &#123; swaggerUi, specs &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>src폴더 아래에 swagger.js를 생성해 위 코드를 작성해 준다. swaggerDefinition은 swagger api 문서의 버전과 설명을 정의하고, apis는 swagger의 주석이 존재하는 경로를 정의해 준다.<br>이전과 다른 점은 swaggerDefinition에 openapi와 basePath가 추가된 것이다.</p>
+<h2 id="app-js에-swagger-라우팅-경로-지정"><a href="#app-js에-swagger-라우팅-경로-지정" class="headerlink" title="app.js에 swagger 라우팅 경로 지정"></a>app.js에 swagger 라우팅 경로 지정</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; swaggerUi, specs &#125; <span class="keyword">from</span> <span class="string">&quot;./swagger&quot;</span>;</span><br><span class="line">...</span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/swagger&quot;</span>, swaggerUi.<span class="property">serve</span>, swaggerUi.<span class="title function_">setup</span>(specs));</span><br></pre></td></tr></table></figure>
+
+<p>app.js에 swagger.js파일을 import 하고, &#x2F;swagger 경로로 swagger api 문서 자동화를 할 수 있게 정의해 준다.</p>
+<h2 id="router에-swagger-api-정의"><a href="#router에-swagger-api-정의" class="headerlink" title="router에 swagger api 정의"></a>router에 swagger api 정의</h2><h3 id="post"><a href="#post" class="headerlink" title="post"></a>post</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// routes/postRouter.js</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@swagger</span></span></span><br><span class="line"><span class="comment"> * tags:</span></span><br><span class="line"><span class="comment"> *  name: Post</span></span><br><span class="line"><span class="comment"> *  description: Post API</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">...</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@swagger</span></span></span><br><span class="line"><span class="comment"> * paths:</span></span><br><span class="line"><span class="comment"> *  /newpost:</span></span><br><span class="line"><span class="comment"> *   post:</span></span><br><span class="line"><span class="comment"> *    tags: [Post]</span></span><br><span class="line"><span class="comment"> *    summary: create new post</span></span><br><span class="line"><span class="comment"> *    requestBody:</span></span><br><span class="line"><span class="comment"> *      description: creat new post</span></span><br><span class="line"><span class="comment"> *      required: true</span></span><br><span class="line"><span class="comment"> *      content:</span></span><br><span class="line"><span class="comment"> *        application/json:</span></span><br><span class="line"><span class="comment"> *          schema:</span></span><br><span class="line"><span class="comment"> *              $ref: &#x27;#/components/schemas/Post&#x27;</span></span><br><span class="line"><span class="comment"> *    responses:</span></span><br><span class="line"><span class="comment"> *      200:</span></span><br><span class="line"><span class="comment"> *       description: 새 게시글 생성 성공!!</span></span><br><span class="line"><span class="comment"> *       content:</span></span><br><span class="line"><span class="comment"> *          application/json:</span></span><br><span class="line"><span class="comment"> *              schema:</span></span><br><span class="line"><span class="comment"> *                  type: object</span></span><br><span class="line"><span class="comment"> *                  properties:</span></span><br><span class="line"><span class="comment"> *                      status:</span></span><br><span class="line"><span class="comment"> *                          type: string</span></span><br><span class="line"><span class="comment"> *                      payload:</span></span><br><span class="line"><span class="comment"> *                          $ref: &#x27;#/components/schemas/Post&#x27;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">postRouter.<span class="title function_">post</span>(<span class="string">&quot;/newpost&quot;</span>, postController.<span class="property">addPost</span>);</span><br></pre></td></tr></table></figure>
+
+<p>requestBody 부분이 해결이 안되었었는데, schema 정의가 잘 동작하면서 해결되었다. <code>.yml</code> 파일에 작성하는 swagger 문서와 크게 다르지 않다. 주석 윗 부분에 <code>@swagger</code>를 넣어 swagger 문서인 것을 정의하고 모든 라우팅은 paths를 적어줘야 한다. 스키마 reference에 대해서는 아래에서 설명한다.</p>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// routes/postRouter.js</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@swagger</span></span></span><br><span class="line"><span class="comment"> * paths:</span></span><br><span class="line"><span class="comment"> *  /post/id/&#123;id&#125;:</span></span><br><span class="line"><span class="comment"> *   get:</span></span><br><span class="line"><span class="comment"> *      tags: [Post]</span></span><br><span class="line"><span class="comment"> *      summary: find post by post_id</span></span><br><span class="line"><span class="comment"> *      parameters:</span></span><br><span class="line"><span class="comment"> *          - name: id</span></span><br><span class="line"><span class="comment"> *            in: path</span></span><br><span class="line"><span class="comment"> *            type: string</span></span><br><span class="line"><span class="comment"> *            description: post_id</span></span><br><span class="line"><span class="comment"> *      responses:</span></span><br><span class="line"><span class="comment"> *          200:</span></span><br><span class="line"><span class="comment"> *           description: succ</span></span><br><span class="line"><span class="comment"> *           content:</span></span><br><span class="line"><span class="comment"> *              application/json:</span></span><br><span class="line"><span class="comment"> *                  schema:</span></span><br><span class="line"><span class="comment"> *                      type: object</span></span><br><span class="line"><span class="comment"> *                      properties:</span></span><br><span class="line"><span class="comment"> *                          status:</span></span><br><span class="line"><span class="comment"> *                              type: string</span></span><br><span class="line"><span class="comment"> *                          payload:</span></span><br><span class="line"><span class="comment"> *                              $ref: &#x27;#/components/schemas/Post&#x27;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">postRouter.<span class="title function_">get</span>(<span class="string">&quot;/post/id/:id&quot;</span>, postController.<span class="property">getPostByPostId</span>);</span><br></pre></td></tr></table></figure>
+
+<p>get 요청도 post와 다를게 크게 없다. 파라미터 부분이 추가되고, 나머지는 post와 다르지 않다.</p>
+<h3 id="schema-정의"><a href="#schema-정의" class="headerlink" title="schema 정의"></a>schema 정의</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// db/models/post.js</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@swagger</span></span></span><br><span class="line"><span class="comment"> * components:</span></span><br><span class="line"><span class="comment"> *  schemas:</span></span><br><span class="line"><span class="comment"> *    Post:</span></span><br><span class="line"><span class="comment"> *      type: object</span></span><br><span class="line"><span class="comment"> *      required:</span></span><br><span class="line"><span class="comment"> *          - user_id</span></span><br><span class="line"><span class="comment"> *          - week</span></span><br><span class="line"><span class="comment"> *          - tag</span></span><br><span class="line"><span class="comment"> *          - title</span></span><br><span class="line"><span class="comment"> *      properties:</span></span><br><span class="line"><span class="comment"> *          user_id:</span></span><br><span class="line"><span class="comment"> *           type: string</span></span><br><span class="line"><span class="comment"> *          week:</span></span><br><span class="line"><span class="comment"> *           type: string</span></span><br><span class="line"><span class="comment"> *          tag:</span></span><br><span class="line"><span class="comment"> *           items:</span></span><br><span class="line"><span class="comment"> *              type: string</span></span><br><span class="line"><span class="comment"> *          title:</span></span><br><span class="line"><span class="comment"> *            type: string</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="function">(<span class="params">sequelize, DataTypes</span>) =&gt;</span> &#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>schema는 위와 같이 정의한다. .yml 파일에서 정의하는 것과 동일하다. tag는 items를 가지고 있는데, items는 배열을 뜻하는 것이다. mysql에 배열이 저장되지 않지만, 요청과 응답에서 배열 형태를 사용하기 때문에 배열로 적어 두었다. schema 정의 위치는 원하는 곳에 하고 swagger.js에서 api 부분 경로만 수정해주면 된다.</p>
+<h3 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h3><p>저번 시도에서 schema가 보이지 않았던 것을 swaggerDefinition 부분에서 openapi와 basePath를 추가하는 방법으로 해결했다.</p>
+<p><img src="/images/posting/backend/swagger/pic1.png" alt="스크린샷 2022-05-18 오전 10.13.58.png"></p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#swgger%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EC%9E%90"><span class="toc-number">1.</span> <span class="toc-text">swgger를 사용해보자</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#swagger-API-%EB%AC%B8%EC%84%9C-%EC%9E%90%EB%8F%99-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0"><span class="toc-number">2.</span> <span class="toc-text">swagger API 문서 자동 생성하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%84%A4%EC%B9%98"><span class="toc-number">2.1.</span> <span class="toc-text">패키지 설치</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#swagger-js"><span class="toc-number">2.2.</span> <span class="toc-text">swagger.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app-js%EC%97%90-swagger-%EB%9D%BC%EC%9A%B0%ED%8C%85-%EA%B2%BD%EB%A1%9C-%EC%A7%80%EC%A0%95"><span class="toc-number">2.3.</span> <span class="toc-text">app.js에 swagger 라우팅 경로 지정</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#router%EC%97%90-swagger-api-%EC%A0%95%EC%9D%98"><span class="toc-number">2.4.</span> <span class="toc-text">router에 swagger api 정의</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#post"><span class="toc-number">2.4.1.</span> <span class="toc-text">post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get"><span class="toc-number">2.4.2.</span> <span class="toc-text">get</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#schema-%EC%A0%95%EC%9D%98"><span class="toc-number">2.4.3.</span> <span class="toc-text">schema 정의</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">2.4.4.</span> <span class="toc-text">정리</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&text=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&is_video=false&description=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Node Js 프로젝트에서 Swagger API 문서 자동화&body=Check out this article: https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&title=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&name=Node Js 프로젝트에서 Swagger API 문서 자동화&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/05/13/2022-05-13-swagger/&t=Node Js 프로젝트에서 Swagger API 문서 자동화"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

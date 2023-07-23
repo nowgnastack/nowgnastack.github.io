@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="결정 트리결정트리는 분류와 회귀 작업, 다중출력 작업이 가능한 머신러닝 알고리즘이다. 붓꽃 데이터셋으로 결정트리의 훈련, 시각화, 예측 방법에 대해 알아볼 것이다. 결정 트리 학습과 시각화123456789from sklearn.datasets import load_irisfrom sklearn.tree import DecisionTreeClassifieri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="결정트리 (Hands-on Machine Learning Part1)">
+<meta property="og:url" content="https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="결정 트리결정트리는 분류와 회귀 작업, 다중출력 작업이 가능한 머신러닝 알고리즘이다. 붓꽃 데이터셋으로 결정트리의 훈련, 시각화, 예측 방법에 대해 알아볼 것이다. 결정 트리 학습과 시각화123456789from sklearn.datasets import load_irisfrom sklearn.tree import DecisionTreeClassifieri">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chap6/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chap6/pic2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chap6/pic3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chap6/pic4.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chap6/pic5.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chap6/pic6.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chap6/pic7.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/handson/chap6/pic8.png">
+<meta property="article:published_time" content="2021-11-15T06:51:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:11:47.505Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="machine learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/handson/chap6/pic1.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>결정트리 (Hands-on Machine Learning Part1)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/11/18/2021-11-18-algo8/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/09/30/2021-09-30-algo7/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&text=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&is_video=false&description=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=결정트리 (Hands-on Machine Learning Part1)&body=Check out this article: https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&name=결정트리 (Hands-on Machine Learning Part1)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&t=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B2%B0%EC%A0%95-%ED%8A%B8%EB%A6%AC"><span class="toc-number">1.</span> <span class="toc-text">결정 트리</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B2%B0%EC%A0%95-%ED%8A%B8%EB%A6%AC-%ED%95%99%EC%8A%B5%EA%B3%BC-%EC%8B%9C%EA%B0%81%ED%99%94"><span class="toc-number">2.</span> <span class="toc-text">결정 트리 학습과 시각화</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%98%88%EC%B8%A1%ED%95%98%EA%B8%B0"><span class="toc-number">3.</span> <span class="toc-text">예측하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B2%B0%EC%A0%95%ED%8A%B8%EB%A6%AC%EC%9D%98-%EA%B2%B0%EC%A0%95-%EA%B2%BD%EA%B3%84"><span class="toc-number">3.1.</span> <span class="toc-text">결정트리의 결정 경계</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%ED%99%95%EB%A5%A0-%EC%B6%94%EC%A0%95"><span class="toc-number">4.</span> <span class="toc-text">클래스 확률 추정</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CART-%ED%9B%88%EB%A0%A8-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-number">5.</span> <span class="toc-text">CART 훈련 알고리즘</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B3%84%EC%82%B0-%EB%B3%B5%EC%9E%A1%EB%8F%84"><span class="toc-number">6.</span> <span class="toc-text">계산 복잡도</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%A7%80%EB%8B%88-%EB%B6%88%EC%88%9C%EB%8F%84-%EB%98%90%EB%8A%94-%EC%97%94%ED%8A%B8%EB%A1%9C%ED%94%BC"><span class="toc-number">7.</span> <span class="toc-text">지니 불순도 또는 엔트로피</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B7%9C%EC%A0%9C-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">8.</span> <span class="toc-text">규제 매개변수</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%B9%84%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EB%AA%A8%EB%8D%B8"><span class="toc-number">8.0.1.</span> <span class="toc-text">비파라미터 모델</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EB%AA%A8%EB%8D%B8"><span class="toc-number">8.0.2.</span> <span class="toc-text">파라미터 모델</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DecisionTreeClassifier%EC%9D%98-%EA%B7%9C%EC%A0%9C-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">8.1.</span> <span class="toc-text">DecisionTreeClassifier의 규제 매개변수</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pruning"><span class="toc-number">8.2.</span> <span class="toc-text">Pruning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pruning-%EB%B0%A9%EB%B2%95"><span class="toc-number">8.2.1.</span> <span class="toc-text">Pruning 방법</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%9A%8C%EA%B7%80"><span class="toc-number">9.</span> <span class="toc-text">회귀</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B6%88%EC%95%88%EC%A0%95%EC%84%B1"><span class="toc-number">10.</span> <span class="toc-text">불안정성</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        결정트리 (Hands-on Machine Learning Part1)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-11-15T06:51:00.000Z" class="dt-published" itemprop="datePublished">2021-11-15</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/machine-learning/">machine learning</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/machine-learning/" rel="tag">machine learning</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="결정-트리"><a href="#결정-트리" class="headerlink" title="결정 트리"></a>결정 트리</h1><p>결정트리는 분류와 회귀 작업, 다중출력 작업이 가능한 머신러닝 알고리즘이다.</p>
+<p>붓꽃 데이터셋으로 결정트리의 훈련, 시각화, 예측 방법에 대해 알아볼 것이다.</p>
+<h1 id="결정-트리-학습과-시각화"><a href="#결정-트리-학습과-시각화" class="headerlink" title="결정 트리 학습과 시각화"></a>결정 트리 학습과 시각화</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line"></span><br><span class="line">iris = load_iris()</span><br><span class="line">X = iris.data[:, <span class="number">2</span>:] <span class="comment"># 꽃잎 길이와 너비</span></span><br><span class="line">y = iris.target</span><br><span class="line"></span><br><span class="line">tree_clf = DecisionTreeClassifier(max_depth=<span class="number">2</span>, random_state=<span class="number">42</span>)</span><br><span class="line">tree_clf.fit(X, y)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion=&#x27;gini&#x27;,</span><br><span class="line">                       max_depth=2, max_features=None, max_leaf_nodes=None,</span><br><span class="line">                       min_impurity_decrease=0.0, min_impurity_split=None,</span><br><span class="line">                       min_samples_leaf=1, min_samples_split=2,</span><br><span class="line">                       min_weight_fraction_leaf=0.0, presort=&#x27;deprecated&#x27;,</span><br><span class="line">                       random_state=42, splitter=&#x27;best&#x27;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Decision TreeClassifier</code>를 훈련시키는 코드이다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> graphviz <span class="keyword">import</span> Source</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> export_graphviz</span><br><span class="line"></span><br><span class="line">export_graphviz(</span><br><span class="line">        tree_clf,</span><br><span class="line">        out_file=os.path.join(IMAGES_PATH, <span class="string">&quot;iris_tree.dot&quot;</span>),</span><br><span class="line">        feature_names=iris.feature_names[<span class="number">2</span>:],</span><br><span class="line">        class_names=iris.target_names,</span><br><span class="line">        rounded=<span class="literal">True</span>,</span><br><span class="line">        filled=<span class="literal">True</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">Source.from_file(os.path.join(IMAGES_PATH, <span class="string">&quot;iris_tree.dot&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>export_graphviz</code>함수를 사용해서 아래와 같이 결정 트리를 시각화 할 수 있다<br><img src="/images/img/posts/handson/chap6/pic1.png" alt="스크린샷, 2021-11-12 00-50-02.png"></li>
+</ul>
+<h1 id="예측하기"><a href="#예측하기" class="headerlink" title="예측하기"></a>예측하기</h1><p>시각화한 결정 트리를 보며 결정트리가 예측하는 순서를 살펴보자</p>
+<ol>
+<li>루트 노드에서는 꽃잎의 길이가 <code>2.45cm</code>보다 짧은지 검사한다.<ol>
+<li>참일 경우 추가적인 자식노드가 없기때문에 검사를 종료한다. 품종은 <code>Setosa</code>일 것이다.</li>
+<li>거짓일 경우 오른쪽 노드로 이동한다. (꽃잎의 길이가 <code>2.45cm</code> 보다 긴 경우)</li>
+</ol>
+</li>
+<li>다음 노드에서는 꽃잎의 너비가 <code>1.75cm</code>보다 작은지 확인한다.<ol>
+<li>참일 경우 꽃잎은 <code>Versicolor</code>일 것이다.</li>
+<li>거짓일 경우 <code>Virginica</code>일 것이다.</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>노드에서 <code>sample</code>속성은 훈련 샘플이 적용된 수를 나타낸다.</li>
+<li>노드의 <code>value</code>속성은 노드에서 각 클래스의 훈련 샘플의 수를 나타낸다.</li>
+<li>노드의 <code>gini</code>속성은 불순도를 측정한다.</li>
+</ul>
+<h2 id="결정트리의-결정-경계"><a href="#결정트리의-결정-경계" class="headerlink" title="결정트리의 결정 경계"></a>결정트리의 결정 경계</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.colors <span class="keyword">import</span> ListedColormap</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">plot_decision_boundary</span>(<span class="params">clf, X, y, axes=[<span class="number">0</span>, <span class="number">7.5</span>, <span class="number">0</span>, <span class="number">3</span>], iris=<span class="literal">True</span>, legend=<span class="literal">False</span>, plot_training=<span class="literal">True</span></span>):</span><br><span class="line">    x1s = np.linspace(axes[<span class="number">0</span>], axes[<span class="number">1</span>], <span class="number">100</span>)</span><br><span class="line">    x2s = np.linspace(axes[<span class="number">2</span>], axes[<span class="number">3</span>], <span class="number">100</span>)</span><br><span class="line">    x1, x2 = np.meshgrid(x1s, x2s)</span><br><span class="line">    X_new = np.c_[x1.ravel(), x2.ravel()]</span><br><span class="line">    y_pred = clf.predict(X_new).reshape(x1.shape)</span><br><span class="line">    custom_cmap = ListedColormap([<span class="string">&#x27;#fafab0&#x27;</span>,<span class="string">&#x27;#9898ff&#x27;</span>,<span class="string">&#x27;#a0faa0&#x27;</span>])</span><br><span class="line">    plt.contourf(x1, x2, y_pred, alpha=<span class="number">0.3</span>, cmap=custom_cmap)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> iris:</span><br><span class="line">        custom_cmap2 = ListedColormap([<span class="string">&#x27;#7d7d58&#x27;</span>,<span class="string">&#x27;#4c4c7f&#x27;</span>,<span class="string">&#x27;#507d50&#x27;</span>])</span><br><span class="line">        plt.contour(x1, x2, y_pred, cmap=custom_cmap2, alpha=<span class="number">0.8</span>)</span><br><span class="line">    <span class="keyword">if</span> plot_training:</span><br><span class="line">        plt.plot(X[:, <span class="number">0</span>][y==<span class="number">0</span>], X[:, <span class="number">1</span>][y==<span class="number">0</span>], <span class="string">&quot;yo&quot;</span>, label=<span class="string">&quot;Iris setosa&quot;</span>)</span><br><span class="line">        plt.plot(X[:, <span class="number">0</span>][y==<span class="number">1</span>], X[:, <span class="number">1</span>][y==<span class="number">1</span>], <span class="string">&quot;bs&quot;</span>, label=<span class="string">&quot;Iris versicolor&quot;</span>)</span><br><span class="line">        plt.plot(X[:, <span class="number">0</span>][y==<span class="number">2</span>], X[:, <span class="number">1</span>][y==<span class="number">2</span>], <span class="string">&quot;g^&quot;</span>, label=<span class="string">&quot;Iris virginica&quot;</span>)</span><br><span class="line">        plt.axis(axes)</span><br><span class="line">    <span class="keyword">if</span> iris:</span><br><span class="line">        plt.xlabel(<span class="string">&quot;Petal length&quot;</span>, fontsize=<span class="number">14</span>)</span><br><span class="line">        plt.ylabel(<span class="string">&quot;Petal width&quot;</span>, fontsize=<span class="number">14</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        plt.xlabel(<span class="string">r&quot;$x_1$&quot;</span>, fontsize=<span class="number">18</span>)</span><br><span class="line">        plt.ylabel(<span class="string">r&quot;$x_2$&quot;</span>, fontsize=<span class="number">18</span>, rotation=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> legend:</span><br><span class="line">        plt.legend(loc=<span class="string">&quot;lower right&quot;</span>, fontsize=<span class="number">14</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 그래프 그리기</span></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">4</span>))</span><br><span class="line">plot_decision_boundary(tree_clf, X, y)</span><br><span class="line">plt.plot([<span class="number">2.45</span>, <span class="number">2.45</span>], [<span class="number">0</span>, <span class="number">3</span>], <span class="string">&quot;k-&quot;</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.plot([<span class="number">2.45</span>, <span class="number">7.5</span>], [<span class="number">1.75</span>, <span class="number">1.75</span>], <span class="string">&quot;k--&quot;</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.plot([<span class="number">4.95</span>, <span class="number">4.95</span>], [<span class="number">0</span>, <span class="number">1.75</span>], <span class="string">&quot;k:&quot;</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.plot([<span class="number">4.85</span>, <span class="number">4.85</span>], [<span class="number">1.75</span>, <span class="number">3</span>], <span class="string">&quot;k:&quot;</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.text(<span class="number">1.40</span>, <span class="number">1.0</span>, <span class="string">&quot;Depth=0&quot;</span>, fontsize=<span class="number">15</span>)</span><br><span class="line">plt.text(<span class="number">3.2</span>, <span class="number">1.80</span>, <span class="string">&quot;Depth=1&quot;</span>, fontsize=<span class="number">13</span>)</span><br><span class="line">plt.text(<span class="number">4.05</span>, <span class="number">0.5</span>, <span class="string">&quot;(Depth=2)&quot;</span>, fontsize=<span class="number">11</span>)</span><br><span class="line"></span><br><span class="line">save_fig(<span class="string">&quot;decision_tree_decision_boundaries_plot&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/img/posts/handson/chap6/pic2.png" alt="스크린샷, 2021-11-12 03-11-00.png"></p>
+<ul>
+<li>굵은 선은 루트 노드의 결정 경계를 나타낸다.(꽃잎 길이: <code>2.45cm</code>)</li>
+<li>결정 경계 왼쪽은 <code>Setosa</code>만 존재하기때문에 나눌 수 없다.</li>
+<li>결정 경계 오른쪽은 꽃잎의 넓이로 경계가 나눠진다.</li>
+<li>결정트리의 <code>max_depth</code>를 2로 설정했으므로 더이상 나눠지지 않는다.</li>
+<li>점선은 <code>max_depth</code>를 3으로 설정했을 경우 추가로 경계가 만들어진다.</li>
+</ul>
+<h1 id="클래스-확률-추정"><a href="#클래스-확률-추정" class="headerlink" title="클래스 확률 추정"></a>클래스 확률 추정</h1><p>결정트리는 샘플에 대해 리프 노드를 탐색하고 해당 리프 노드의 클래스 <code>k</code>의 훈련 샘플의 비율을 반환한다. 결정트리는 하나의 샘플이 특정 클래스 <code>k</code>에 속할 확률을 추정할 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tree_clf.predict_proba([[<span class="number">5</span>, <span class="number">1.5</span>]])</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">array([[0.        , 0.90740741, 0.09259259]])</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">tree_clf.predict([[<span class="number">5</span>, <span class="number">1.5</span>]])</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">array([1])</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>위 코드는 길이가 <code>5cm</code>이고 너비가 <code>1.5cm</code>인 꽃잎에 대한 추정이다.</li>
+<li>리프 노드는 깊이 2에서 왼쪽 노드이며 이에 해당하는 확률을 반환한다.</li>
+<li><code>Setosa</code>는 0%, <code>Versicolor</code>는 90.7%, <code>Virginica</code>는 9.3%로 나온다.</li>
+<li>하나의 클래스를 예측한다고 하면 가장 높은 클래스인 <code>Versicolor</code>를 반환할 것이며 실제로 예측한 값도 동일하다.</li>
+</ul>
+<h1 id="CART-훈련-알고리즘"><a href="#CART-훈련-알고리즘" class="headerlink" title="CART 훈련 알고리즘"></a>CART 훈련 알고리즘</h1><p>$$ J(k<em>t, t_k) &#x3D; ({m</em>{left}} &#x2F; {m}) _ G*{left} + ({m*{right}} &#x2F; m) _ G_{right} $$</p>
+<ul>
+<li>CART(Classification and Regression Tree)알고리즘의 비용함수이다.</li>
+<li>$G_{left&#x2F;right}$는 왼쪽&#x2F;오른쪽 서브셋의 불순도이다.</li>
+<li>$m_{left&#x2F;right}$는 왼쪽&#x2F;오른쪽 서브셋의 샘플수이다.</li>
+<li>CART알고리즘은 <code>greedy algorithm</code>으로 루트 노드에서 최적의 분할을 찾는다.</li>
+<li>분할하면서 최대 깊이가 되면 중지하거나 불순도를 줄이는 분할을 찾을 수 없을 경우 종료한다.</li>
+<li><code>greedy algorithm</code>의 특징으로 인해 항상 최적의 솔루션을 보장하진 않는다.</li>
+</ul>
+<h1 id="계산-복잡도"><a href="#계산-복잡도" class="headerlink" title="계산 복잡도"></a>계산 복잡도</h1><ul>
+<li>결정트리는 균형 이진트리로 볼 수 있다.</li>
+<li>결정트리를 탐색하기 위해 $O(log_2(m))$개의 노드를 탐색해야 한다.</li>
+<li>각 노드에서 특성값 하나만 확인하기 때문에 시간복잡도는 특성 수와는 무관하게 $O(log_2(m))$로 동일하다.</li>
+<li>사이킷런에서 <code>presort=True</code>를 지정하면 데이터를 미리 정렬해서 훈련 속도를 높일 수 있다.</li>
+<li>훈련 세트가 클 경우 <code>presort</code>를 하게되면 속도가 느려질 수 있다.</li>
+</ul>
+<h1 id="지니-불순도-또는-엔트로피"><a href="#지니-불순도-또는-엔트로피" class="headerlink" title="지니 불순도 또는 엔트로피"></a>지니 불순도 또는 엔트로피</h1><p>결정트리에서는 기본적으로 지니 불순도가 사용되지만 <code>criterion</code>속성을 <code>&quot;entropy&quot;</code>로 지정하면 엔트로피 불순도를 사용할 수 있다.</p>
+<p>$$H_i &#x3D; -\Sigma_{k&#x3D;1}^{n} p_{i,k}log_2(P_{i,k}) $$</p>
+<ul>
+<li>정보이론(information theory)에서 엔트로피 식은 위와 같다.</li>
+<li>지니 불순도와 엔트로피 불순도는 비슷한 트리를 생성하고, 지니 불순도가 연산 속도가 빠르다.</li>
+<li>지니 불순도는 가장 빈도가 높은 클래스를 한쪽 가지로 고립시키는 경향이 있지만, 엔트로피는 균형을 이루는 트리를 생성한다.</li>
+</ul>
+<h1 id="규제-매개변수"><a href="#규제-매개변수" class="headerlink" title="규제 매개변수"></a>규제 매개변수</h1><p>결정 트리는 훈련 데이터에 대한 제약 사항이 없기 때문에 제한을 두지 않으면 트리가 훈련 데이터에 최대한 맞추려고 하면서 과대적합이 되기 쉽다.</p>
+<h3 id="비파라미터-모델"><a href="#비파라미터-모델" class="headerlink" title="비파라미터 모델"></a>비파라미터 모델</h3><ul>
+<li>훈련되기 전에 파라미터 수가 결정되지 않고 훈련을 진행하는 결정트리를 <code>비파라미터 모델</code>이라고 한다.</li>
+<li>모델 구조가 데이터에 맞춰져 고정되지 않고 자유로운것이 특징이다.</li>
+</ul>
+<h3 id="파라미터-모델"><a href="#파라미터-모델" class="headerlink" title="파라미터 모델"></a>파라미터 모델</h3><ul>
+<li>정의된 파라미터 수를 가지므로 모델 구조의 자유도가 제한되고 과대적합될 확률을 줄여준다.</li>
+</ul>
+<h2 id="DecisionTreeClassifier의-규제-매개변수"><a href="#DecisionTreeClassifier의-규제-매개변수" class="headerlink" title="DecisionTreeClassifier의 규제 매개변수"></a>DecisionTreeClassifier의 규제 매개변수</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tree_clf_tweaked = DecisionTreeClassifier(max_depth=<span class="number">2</span>, random_state=<span class="number">40</span>) <span class="comment"># max_depth 제한</span></span><br><span class="line">tree_clf_tweaked.fit(X, y)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>DecisionTreeClassifier</code>의 규제 매개변수로 <code>max_depth</code>를 2로 제한해서 훈련 시켜보았다.<br><img src="/images/img/posts/handson/chap6/pic3.png" alt="decision_tree_instability_plot.png"></li>
+<li>트리의 <code>depth</code>가 2로 제한되면서 트리의 깊이가 2개까지 나온다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_moons</span><br><span class="line">Xm, ym = make_moons(n_samples=<span class="number">100</span>, noise=<span class="number">0.25</span>, random_state=<span class="number">53</span>)</span><br><span class="line"></span><br><span class="line">deep_tree_clf1 = DecisionTreeClassifier(random_state=<span class="number">42</span>)</span><br><span class="line">deep_tree_clf2 = DecisionTreeClassifier(min_samples_leaf=<span class="number">4</span>, random_state=<span class="number">42</span>) <span class="comment"># leaf 수 제한</span></span><br><span class="line">deep_tree_clf1.fit(Xm, ym)</span><br><span class="line">deep_tree_clf2.fit(Xm, ym)</span><br><span class="line"></span><br><span class="line">fig, axes = plt.subplots(ncols=<span class="number">2</span>, figsize=(<span class="number">10</span>, <span class="number">4</span>), sharey=<span class="literal">True</span>)</span><br><span class="line">plt.sca(axes[<span class="number">0</span>])</span><br><span class="line">plot_decision_boundary(deep_tree_clf1, Xm, ym, axes=[-<span class="number">1.5</span>, <span class="number">2.4</span>, -<span class="number">1</span>, <span class="number">1.5</span>], iris=<span class="literal">False</span>)</span><br><span class="line">plt.title(<span class="string">&quot;No restrictions&quot;</span>, fontsize=<span class="number">16</span>)</span><br><span class="line">plt.sca(axes[<span class="number">1</span>])</span><br><span class="line">plot_decision_boundary(deep_tree_clf2, Xm, ym, axes=[-<span class="number">1.5</span>, <span class="number">2.4</span>, -<span class="number">1</span>, <span class="number">1.5</span>], iris=<span class="literal">False</span>)</span><br><span class="line">plt.title(<span class="string">&quot;min_samples_leaf = &#123;&#125;&quot;</span>.<span class="built_in">format</span>(deep_tree_clf2.min_samples_leaf), fontsize=<span class="number">14</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">save_fig(<span class="string">&quot;min_samples_leaf_plot&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/img/posts/handson/chap6/pic4.png" alt="min_samples_leaf_plot.png"></p>
+<ul>
+<li><code>mean_sample_leaf</code>의 값을 4로 제한하게 되면서 규제가 없는 경우에 비해 과대적합되지 않고 일반화가 잘 된 결과를 볼 수 있다.</li>
+</ul>
+<h2 id="Pruning"><a href="#Pruning" class="headerlink" title="Pruning"></a>Pruning</h2><p>Pruning은 제한 없이 결정 트리를 훈련시키고 불필요한 노드를 가지치기하는 알고리즘이다.</p>
+<p>결정트리의 과대적합을 해결하기위한 방법이다.</p>
+<h3 id="Pruning-방법"><a href="#Pruning-방법" class="headerlink" title="Pruning 방법"></a>Pruning 방법</h3><ol>
+<li>속성을 제한한다.<ol>
+<li>트리의 깊이, leaf node의 최대 갯수, 노드가 분할하는 최대 갯수를 제한한다.</li>
+</ol>
+</li>
+<li><code>min_sample_split</code>파라미터를 조정한다.<ol>
+<li>하나의 노드에 들어있는 최소 데이터 수를 지정한다.</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>Pruning은 과대적합을 방지하지만, 정확도가 떨어질 가능성이 있어 파라미터 설정을 잘 해줘야 한다.</li>
+<li>여러개의 결정트리를 학습하는 앙상블 기법으로 <code>Random Forest</code>가 있으며, 하나의 결정트리보다 뛰어난 성능을 보인다.</li>
+</ul>
+<h1 id="회귀"><a href="#회귀" class="headerlink" title="회귀"></a>회귀</h1><p><code>DecisionTreeRegressor</code>를 이용해서 회귀 트리를 생성할 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor</span><br><span class="line"></span><br><span class="line">tree_reg = DecisionTreeRegressor(max_depth=<span class="number">2</span>, random_state=<span class="number">42</span>)</span><br><span class="line">tree_reg.fit(X, y)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/img/posts/handson/chap6/pic5.png" alt="스크린샷, 2021-11-15 14-51-05.png"></p>
+<ul>
+<li>위 코드는 <code>max_depth</code>를 2로 지정한 회귀 트리이다.</li>
+<li>결정트리와 다른점은 각 노드에서 클래스를 예측하지 않고 값을 예측한다는 것이다.</li>
+<li>$x_1$이 0.6인 값을 예측해보면 트리에서 <code>value</code>가 0.111인 리프 노드에 도달하게된다.<br><img src="/images/img/posts/handson/chap6/pic6.png" alt="tree_regression_plot.png"></li>
+<li>위 그림은 <code>max_depth</code>가 2, 3인 경우 모델의 예측을 나타낸 것이다.</li>
+</ul>
+<p><img src="/images/img/posts/handson/chap6/pic7.png" alt="tree_regression_regularization_plot.png"></p>
+<ul>
+<li>위 그림은 규제 파라미터가 없는 경우와 <code>min_sample_leaf</code>파라미터를 10으로 지정해준 경우이다.</li>
+<li>규제가 없는 모델의 훈련은 예상대로 과대적합된 모습을 보인다.</li>
+<li>규제 파라미터를 적용한 모델은 과대적합되지 않고 잘 학습된 모습을 보인다.</li>
+</ul>
+<h1 id="불안정성"><a href="#불안정성" class="headerlink" title="불안정성"></a>불안정성</h1><p><img src="/images/img/posts/handson/chap6/pic8.png" alt="sensitivity_to_rotation_plot.png"></p>
+<ul>
+<li>결정트리는 계단 모양의 결정경계를 만들어 낸다.</li>
+<li>결정트리는 같은 데이터 셋이지만 데이터 셋의 회전에 민감하다.</li>
+<li>위 그림처럼 데이터 셋이 45도 회전된 경우 계단 모양으로 분류되어 일반화가 되지 않는 모습을 보인다.</li>
+<li>사이킷런의 훈련 알고리즘은 확률적이기 때문에 <code>random seed</code>를 지정하지 않으면 같은 데이터 셋에서도 다른 결과를 얻을 수 있다.</li>
+</ul>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B2%B0%EC%A0%95-%ED%8A%B8%EB%A6%AC"><span class="toc-number">1.</span> <span class="toc-text">결정 트리</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B2%B0%EC%A0%95-%ED%8A%B8%EB%A6%AC-%ED%95%99%EC%8A%B5%EA%B3%BC-%EC%8B%9C%EA%B0%81%ED%99%94"><span class="toc-number">2.</span> <span class="toc-text">결정 트리 학습과 시각화</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%98%88%EC%B8%A1%ED%95%98%EA%B8%B0"><span class="toc-number">3.</span> <span class="toc-text">예측하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B2%B0%EC%A0%95%ED%8A%B8%EB%A6%AC%EC%9D%98-%EA%B2%B0%EC%A0%95-%EA%B2%BD%EA%B3%84"><span class="toc-number">3.1.</span> <span class="toc-text">결정트리의 결정 경계</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%ED%99%95%EB%A5%A0-%EC%B6%94%EC%A0%95"><span class="toc-number">4.</span> <span class="toc-text">클래스 확률 추정</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CART-%ED%9B%88%EB%A0%A8-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-number">5.</span> <span class="toc-text">CART 훈련 알고리즘</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B3%84%EC%82%B0-%EB%B3%B5%EC%9E%A1%EB%8F%84"><span class="toc-number">6.</span> <span class="toc-text">계산 복잡도</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%A7%80%EB%8B%88-%EB%B6%88%EC%88%9C%EB%8F%84-%EB%98%90%EB%8A%94-%EC%97%94%ED%8A%B8%EB%A1%9C%ED%94%BC"><span class="toc-number">7.</span> <span class="toc-text">지니 불순도 또는 엔트로피</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B7%9C%EC%A0%9C-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">8.</span> <span class="toc-text">규제 매개변수</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%B9%84%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EB%AA%A8%EB%8D%B8"><span class="toc-number">8.0.1.</span> <span class="toc-text">비파라미터 모델</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EB%AA%A8%EB%8D%B8"><span class="toc-number">8.0.2.</span> <span class="toc-text">파라미터 모델</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DecisionTreeClassifier%EC%9D%98-%EA%B7%9C%EC%A0%9C-%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98"><span class="toc-number">8.1.</span> <span class="toc-text">DecisionTreeClassifier의 규제 매개변수</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pruning"><span class="toc-number">8.2.</span> <span class="toc-text">Pruning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pruning-%EB%B0%A9%EB%B2%95"><span class="toc-number">8.2.1.</span> <span class="toc-text">Pruning 방법</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%9A%8C%EA%B7%80"><span class="toc-number">9.</span> <span class="toc-text">회귀</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B6%88%EC%95%88%EC%A0%95%EC%84%B1"><span class="toc-number">10.</span> <span class="toc-text">불안정성</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&text=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&is_video=false&description=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=결정트리 (Hands-on Machine Learning Part1)&body=Check out this article: https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&title=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&name=결정트리 (Hands-on Machine Learning Part1)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2021/11/15/2021-11-15-handson3/&t=결정트리 (Hands-on Machine Learning Part1)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

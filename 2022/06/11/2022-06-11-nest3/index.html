@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="nest js 3계층 구조에 대해">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NestJS 프로젝트 시작하기 With Docker(3)">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="nest js 3계층 구조에 대해">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/nest3/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/nest3/pic2.png">
+<meta property="article:published_time" content="2022-06-10T16:33:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:19:36.518Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="swagger">
+<meta property="article:tag" content="api">
+<meta property="article:tag" content="nest js">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/posting/backend/nest3/pic1.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>NestJS 프로젝트 시작하기 With Docker(3)</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/07/10/2022-07-10-ssafy/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/06/06/2022-06-06-aiproject1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&text=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&is_video=false&description=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=NestJS 프로젝트 시작하기 With Docker(3)&body=Check out this article: https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&name=NestJS 프로젝트 시작하기 With Docker(3)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&t=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NestJS%EC%97%90%EC%84%9C-swagger-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">NestJS에서 swagger 사용하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#swagger%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%84%A4%EC%B9%98"><span class="toc-number">2.</span> <span class="toc-text">swagger를 사용하기 위한 패키지 설치</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#main-ts"><span class="toc-number">3.</span> <span class="toc-text">main.ts</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Decorator-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">Decorator 사용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#controller"><span class="toc-number">4.1.</span> <span class="toc-text">controller</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ApiBody"><span class="toc-number">4.1.1.</span> <span class="toc-text">@ApiBody()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApiResponse"><span class="toc-number">4.1.2.</span> <span class="toc-text">@ApiResponse()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DTO"><span class="toc-number">4.1.3.</span> <span class="toc-text">DTO</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        NestJS 프로젝트 시작하기 With Docker(3)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-06-10T16:33:00.000Z" class="dt-published" itemprop="datePublished">2022-06-11</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/web/">web</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/api/" rel="tag">api</a>, <a class="p-category" href="/tags/nest-js/" rel="tag">nest js</a>, <a class="p-category" href="/tags/swagger/" rel="tag">swagger</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="NestJS에서-swagger-사용하기"><a href="#NestJS에서-swagger-사용하기" class="headerlink" title="NestJS에서 swagger 사용하기"></a>NestJS에서 swagger 사용하기</h1><p>NestJS에서 swagger api 문서 생성은 아주 간편하다. NodeJS에서 swagger를 사용하려면, yaml 파일을 사용하거나 코드에 주석으로 추가해 줘야 했다.</p>
+<p>NestJS에서는 데코레이터만 사용해서 swagger api 문서를 생성할 수 있다. 정말 편하다</p>
+<h1 id="swagger를-사용하기-위한-패키지-설치"><a href="#swagger를-사용하기-위한-패키지-설치" class="headerlink" title="swagger를 사용하기 위한 패키지 설치"></a>swagger를 사용하기 위한 패키지 설치</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add @nestjs/swagger swagger-ui-express</span><br></pre></td></tr></table></figure>
+
+<p>두 패키지를 설치한다.</p>
+<h1 id="main-ts"><a href="#main-ts" class="headerlink" title="main.ts"></a>main.ts</h1><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NestFactory</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@nestjs/core&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">AppModule</span> &#125; <span class="keyword">from</span> <span class="string">&quot;./app.module&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;dotenv/config&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">DocumentBuilder</span>, <span class="title class_">SwaggerModule</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@nestjs/swagger&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Logger</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@nestjs/common&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> config <span class="keyword">from</span> <span class="string">&quot;config&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">GlobalExceptionFilter</span> &#125; <span class="keyword">from</span> <span class="string">&quot;./exception/globalexception.filter&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cookieParser <span class="keyword">from</span> <span class="string">&quot;cookie-parser&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> logger = <span class="keyword">new</span> <span class="title class_">Logger</span>();</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">await</span> <span class="title class_">NestFactory</span>.<span class="title function_">create</span>(<span class="title class_">AppModule</span>, &#123; <span class="attr">cors</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line">  app.<span class="title function_">useGlobalFilters</span>(<span class="keyword">new</span> <span class="title class_">GlobalExceptionFilter</span>());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> port = config.<span class="property">get</span>&lt;<span class="built_in">number</span>&gt;(<span class="string">&quot;server.port&quot;</span>); <span class="comment">// port config</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> swaggerConfig = <span class="keyword">new</span> <span class="title class_">DocumentBuilder</span>()</span><br><span class="line">    .<span class="title function_">setTitle</span>(<span class="string">&quot;users api test&quot;</span>)</span><br><span class="line">    .<span class="title function_">setDescription</span>(<span class="string">&quot;nest js swagger test&quot;</span>)</span><br><span class="line">    .<span class="title function_">setVersion</span>(<span class="string">&quot;1.0.0&quot;</span>)</span><br><span class="line">    .<span class="title function_">addTag</span>(<span class="string">&quot;users&quot;</span>)</span><br><span class="line">    .<span class="title function_">addBearerAuth</span>()</span><br><span class="line">    .<span class="title function_">build</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> swaggerDocs = <span class="title class_">SwaggerModule</span>.<span class="title function_">createDocument</span>(app, swaggerConfig);</span><br><span class="line">  <span class="title class_">SwaggerModule</span>.<span class="title function_">setup</span>(<span class="string">&quot;api&quot;</span>, app, swaggerDocs);</span><br><span class="line"></span><br><span class="line">  app.<span class="title function_">use</span>(<span class="title function_">cookieParser</span>());</span><br><span class="line">  <span class="keyword">await</span> app.<span class="title function_">listen</span>(port);</span><br><span class="line">  logger.<span class="title function_">log</span>(<span class="string">`application run in <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">bootstrap</span>();</span><br></pre></td></tr></table></figure>
+
+<p>swagger api 문서 적용을 위해서는 <code>main.ts</code>에 설정을 해 줘야 한다. <code>swaggerConfig</code>에 api 문서에 대한 내용을 지정해 준다. <code>SwaggerModule.setup</code>에 swagger api 문서에 접근할 수 있는 경로를 설정해 준다.</p>
+<h1 id="Decorator-사용하기"><a href="#Decorator-사용하기" class="headerlink" title="Decorator 사용하기"></a>Decorator 사용하기</h1><h2 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h2><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    <span class="title class_">ApiBearerAuth</span>,</span><br><span class="line">    <span class="title class_">ApiBody</span>,</span><br><span class="line">    <span class="title class_">ApiHeader</span>,</span><br><span class="line">    <span class="title class_">ApiResponse</span>,</span><br><span class="line">    <span class="title class_">ApiTags</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@nestjs/swagger&#x27;</span>;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">@ApiTags</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UsersController</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="keyword">readonly</span> userService: UsersService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Post</span>(<span class="string">&#x27;registration&#x27;</span>) <span class="comment">// http method</span></span><br><span class="line">    <span class="meta">@UsePipes</span>(<span class="title class_">ValidationPipe</span>) <span class="comment">// validation pipe</span></span><br><span class="line">    <span class="meta">@ApiBody</span>(&#123; <span class="attr">type</span>: insertUserDto &#125;) <span class="comment">// swagger body</span></span><br><span class="line">    <span class="meta">@ApiResponse</span>(&#123;</span><br><span class="line">        <span class="attr">status</span>: <span class="number">201</span>,</span><br><span class="line">        <span class="attr">description</span>: <span class="string">&#x27;user created&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">createUser</span>(</span><br><span class="line">        <span class="meta">@Res</span>() <span class="attr">res</span>: <span class="built_in">any</span>,</span><br><span class="line">        <span class="meta">@Body</span>() <span class="attr">userDto</span>: insertUserDto,</span><br><span class="line">    ): <span class="title class_">Promise</span>&lt;<span class="built_in">void</span>&gt; &#123;</span><br><span class="line">        <span class="comment">//   사용자 회원가입</span></span><br><span class="line">        <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">create</span>(userDto);</span><br><span class="line">        <span class="keyword">const</span> succMessage = <span class="string">&#x27;user created&#x27;</span>;</span><br><span class="line">        res.<span class="title function_">status</span>(<span class="title class_">HttpStatus</span>.<span class="property">CREATED</span>).<span class="title function_">json</span>(succMessage);</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>...</code>으로 되어 있는 부분은 코드가 생략되어 있는 부분이다.</p>
+<p>controller에서 <code>@nestjs/swagger</code>에서 데코레이터를 import 해서 사용한다. 각 controller 라우터 바로 위에 추가해 준다.</p>
+<p>@Api…로 되어 있는 것들이 swagger api 문서에 적용되는 부분이다. 위 함수에 있는 데코레이터만 간단하게 설명할 것이다.</p>
+<h3 id="ApiBody"><a href="#ApiBody" class="headerlink" title="@ApiBody()"></a>@ApiBody()</h3><p><img src="/images/posting/backend/nest3/pic1.png" alt="스크린샷 2022-06-11 오전 1.03.45.png"></p>
+<p>swagger api 문서에서 정해진 body에 값을 넣어 Post 요청을 보낼 수 있도록 할 수 있다.</p>
+<h3 id="ApiResponse"><a href="#ApiResponse" class="headerlink" title="@ApiResponse()"></a>@ApiResponse()</h3><p><img src="/images/posting/backend/nest3/pic2.png" alt="스크린샷 2022-06-11 오전 1.08.42.png"></p>
+<p>아래 Responses 부분을 보면 응답에 대한 자세한 설명을 적을 수 있다. 응답의 형태도 지정할 수 있다. 응답에 대한 지정은 DTO에 정의한다.</p>
+<h3 id="DTO"><a href="#DTO" class="headerlink" title="DTO"></a>DTO</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// user.dto.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ApiProperty</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@nestjs/swagger&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">currentUserInfo</span> &#123;</span><br><span class="line">  <span class="meta">@ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;사용자 고유 아이디&quot;</span>, <span class="attr">type</span>: <span class="title class_">String</span> &#125;)</span><br><span class="line">  <span class="attr">user_id</span>: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;사용자 이름&quot;</span>, <span class="attr">type</span>: <span class="title class_">String</span> &#125;)</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;사용자 이메일&quot;</span>, <span class="attr">type</span>: <span class="title class_">String</span> &#125;)</span><br><span class="line">  <span class="attr">email</span>: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;사용자 프로필 이미지&quot;</span>, <span class="attr">type</span>: <span class="title class_">String</span> &#125;)</span><br><span class="line">  <span class="attr">profile_image</span>: <span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;사용자 등급&quot;</span>, <span class="attr">type</span>: <span class="title class_">Number</span> &#125;)</span><br><span class="line">  <span class="attr">rating</span>: <span class="built_in">number</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ApiProperty</span>(&#123; <span class="attr">description</span>: <span class="string">&quot;사용자 경험치&quot;</span>, <span class="attr">type</span>: <span class="title class_">Number</span> &#125;)</span><br><span class="line">  <span class="attr">exp</span>: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Response에 각 필드에 @ApiProperty를 붙여준다. 설명과 type을 설정해 줄 수 있고, 다른 옵션들도 사용할 수 있다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NestJS%EC%97%90%EC%84%9C-swagger-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">1.</span> <span class="toc-text">NestJS에서 swagger 사용하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#swagger%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-%EC%9C%84%ED%95%9C-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%84%A4%EC%B9%98"><span class="toc-number">2.</span> <span class="toc-text">swagger를 사용하기 위한 패키지 설치</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#main-ts"><span class="toc-number">3.</span> <span class="toc-text">main.ts</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Decorator-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0"><span class="toc-number">4.</span> <span class="toc-text">Decorator 사용하기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#controller"><span class="toc-number">4.1.</span> <span class="toc-text">controller</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ApiBody"><span class="toc-number">4.1.1.</span> <span class="toc-text">@ApiBody()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ApiResponse"><span class="toc-number">4.1.2.</span> <span class="toc-text">@ApiResponse()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DTO"><span class="toc-number">4.1.3.</span> <span class="toc-text">DTO</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&text=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&is_video=false&description=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=NestJS 프로젝트 시작하기 With Docker(3)&body=Check out this article: https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&title=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&name=NestJS 프로젝트 시작하기 With Docker(3)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/06/11/2022-06-11-nest3/&t=NestJS 프로젝트 시작하기 With Docker(3)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="Strassen Algorithm요약선형대수학에서 슈트라센 알고리즘은 독일의 수학자 폴커 슈트라센(Volker Strassen)이 1969년에 개발한행렬 곱셈 알고리즘이다.정의에 따라 n×n 크기의 두 행렬을 곱하면 O(n3)의 시간이 소요되지만이 알고리즘은 대략 O(n2.807)의 시간이 소요된다. 알고리즘- 일반적인 행렬의 곱셈일반적으로 행렬의 곱셈은">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Strassen Algorithm">
+<meta property="og:url" content="https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="Strassen Algorithm요약선형대수학에서 슈트라센 알고리즘은 독일의 수학자 폴커 슈트라센(Volker Strassen)이 1969년에 개발한행렬 곱셈 알고리즘이다.정의에 따라 n×n 크기의 두 행렬을 곱하면 O(n3)의 시간이 소요되지만이 알고리즘은 대략 O(n2.807)의 시간이 소요된다. 알고리즘- 일반적인 행렬의 곱셈일반적으로 행렬의 곱셈은">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/img/posts/Strassen/matrixcomplex.JPG">
+<meta property="article:published_time" content="2020-04-05T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:01:17.955Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/img/posts/Strassen/matrixcomplex.JPG">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Strassen Algorithm</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2020/04/06/2020-04-06-strassen/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/04/14/2020-04-14-Greedy%20Algorithm/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&text=Strassen Algorithm"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&is_video=false&description=Strassen Algorithm"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Strassen Algorithm&body=Check out this article: https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&name=Strassen Algorithm&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&t=Strassen Algorithm"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Strassen-Algorithm"><span class="toc-number">1.</span> <span class="toc-text">Strassen Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9A%94%EC%95%BD"><span class="toc-number">1.1.</span> <span class="toc-text">요약</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-number">1.2.</span> <span class="toc-text">알고리즘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9D%B8-%ED%96%89%EB%A0%AC%EC%9D%98-%EA%B3%B1%EC%85%88"><span class="toc-number">1.2.1.</span> <span class="toc-text">- 일반적인 행렬의 곱셈</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CODE"><span class="toc-number">1.3.</span> <span class="toc-text">CODE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Strassen-Algorithm-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">- Strassen Algorithm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CODE-1"><span class="toc-number">1.4.</span> <span class="toc-text">CODE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">1.4.1.</span> <span class="toc-text">- 정리</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#REFERENCES"><span class="toc-number">1.4.2.</span> <span class="toc-text">REFERENCES</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Strassen Algorithm
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-05T15:00:00.000Z" class="dt-published" itemprop="datePublished">2020-04-06</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/algorithm/">algorithm</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/algorithm/" rel="tag">algorithm</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Strassen-Algorithm"><a href="#Strassen-Algorithm" class="headerlink" title="Strassen Algorithm"></a>Strassen Algorithm</h1><h2 id="요약"><a href="#요약" class="headerlink" title="요약"></a>요약</h2><p>선형대수학에서 슈트라센 알고리즘은 독일의 수학자 폴커 슈트라센(Volker Strassen)이 1969년에 개발한<br>행렬 곱셈 알고리즘이다.<br>정의에 따라 n×n 크기의 두 행렬을 곱하면 O(n<sup>3</sup>)의 시간이 소요되지만<br>이 알고리즘은 대략 O(n<sup>2.807</sup>)의 시간이 소요된다.</p>
+<h2 id="알고리즘"><a href="#알고리즘" class="headerlink" title="알고리즘"></a>알고리즘</h2><h3 id="일반적인-행렬의-곱셈"><a href="#일반적인-행렬의-곱셈" class="headerlink" title="- 일반적인 행렬의 곱셈"></a>- 일반적인 행렬의 곱셈</h3><p>일반적으로 행렬의 곱셈은 A(ixj) , B(kxl) 일 때 AxB 행렬의 크기는 AxB(ixl)이 된다.<br>이 글에서는 스트라센 알고리즘을 위해 정방행렬을 사용할 것이다.</p>
+<p>우리가 일반적으로 사용하는 행렬의 곱셉이다.<br>nxn 크기의 정사각 행렬을 곱하면 총 n<sup>2</sup>번의 곱셈과 (n-1)n<sup>2</sup>번의 덧셈을 한다. O(n<sup>3</sup>)의 시간이 소요된다.</p>
+<p><img src="/images/img/posts/Strassen/matrixcomplex.JPG" alt="matrix"><br><sup>이미지 출처: PPT 수식 캡쳐</sup></p>
+<p>C<sub>1,1</sub> &#x3D;<br>(A<sub>1,1</sub> x B<sub>1,1</sub> + A<sub>1,2</sub> x B<sub>2,1</sub>)</p>
+<p>C<sub>1,2</sub> &#x3D;<br>(A<sub>1,1</sub> x B<sub>1,2</sub> + A<sub>1,2</sub> x B<sub>1,2</sub>)</p>
+<p>C<sub>2,1</sub> &#x3D;<br>(A<sub>2,1</sub> x B<sub>1,1</sub> + A<sub>2,2</sub> x B<sub>2,1</sub>)</p>
+<p>C<sub>2,2</sub> &#x3D;<br>(A<sub>2,1</sub> x B<sub>1,2</sub> + A<sub>2,2</sub> x B<sub>2,2</sub>)</p>
+<h2 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">name</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="comment">/* 두 행렬 a, b */</span></span><br><span class="line">        <span class="type">int</span>[][] a = &#123; &#123; <span class="number">1</span>, <span class="number">2</span> &#125;, &#123; <span class="number">3</span>, <span class="number">4</span> &#125; &#125;;</span><br><span class="line">        <span class="type">int</span>[][] b = &#123; &#123; <span class="number">1</span>, <span class="number">2</span>, &#125;, &#123; <span class="number">3</span>, <span class="number">4</span> &#125; &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 결과값 행렬 c */</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">size</span> <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span>[][] c = <span class="keyword">new</span> <span class="title class_">int</span>[size][size];</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 두 행렬의 곱셈 */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; size; j++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">h</span> <span class="operator">=</span> <span class="number">0</span>; h &lt; size; h++) &#123;</span><br><span class="line"></span><br><span class="line">                    c[i][j] += a[i][h] * b[h][j];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* 값이 나온 각각의 값을 출력 */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; size; j++) &#123;</span><br><span class="line">                System.out.println(c[i][j] + <span class="string">&quot;&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Main */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">/* 실행 */</span></span><br><span class="line">        <span class="type">Main</span> <span class="variable">m</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Main</span>();</span><br><span class="line">        m.name();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Strassen-Algorithm-1"><a href="#Strassen-Algorithm-1" class="headerlink" title="- Strassen Algorithm"></a>- Strassen Algorithm</h3><p>스트라센 알고리즘에서 행렬의 곱셉을 더하기 연산으로 분할하여<br>각 원소를 구할 수 있는 M행렬로 표현한다.</p>
+<p>M행렬은 일곱번의 곱셈과 10번의 덧셈으로 연산으로 나타낼 수 있다.</p>
+<p>M<sub>1</sub> &#x3D; (A<sub>1,1</sub> + A<sub>2,2</sub>)(B<sub>1,1</sub> + B<sub>2,2</sub>)<br>M<sub>2</sub> &#x3D; (A<sub>2,1</sub> + A<sub>2,2</sub>)B<sub>1,1</sub><br>M<sub>3</sub> &#x3D; A<sub>1,1</sub>(B<sub>1,2</sub> - B<sub>2,2</sub>)<br>M<sub>4</sub> &#x3D; A<sub>2,2</sub> (B<sub>2,1</sub> - B<sub>1,1</sub>)<br>M<sub>5</sub> &#x3D; (A<sub>1,1</sub> + A<sub>1,2</sub>)B<sub>2,2</sub><br>M<sub>6</sub> &#x3D; (A<sub>2,1</sub> - A<sub>1,1</sub>)(B<sub>1,1</sub> + B<sub>1,2</sub>)<br>M<sub>7</sub> &#x3D; (A<sub>1,2</sub> - A<sub>2,2</sub>)(B<sub>2,1</sub> + B<sub>2,2</sub>)</p>
+<p>결과값인 C행렬은 위의 M행렬의 더하기 연산으로 이루어진다.</p>
+<p>C<sub>1,1</sub> &#x3D; M<sub>1</sub> + M<sub>4</sub> - M<sub>5</sub> + M<sub>7</sub><br>C<sub>1,2</sub> &#x3D; M<sub>3</sub> + M<sub>5</sub><br>C<sub>2,1</sub> &#x3D; M<sub>2</sub> + M<sub>4</sub><br>C<sub>2,2</sub> &#x3D; M<sub>1</sub> - M<sub>2</sub> + M<sub>3</sub> + M<sub>6</sub></p>
+<h2 id="CODE-1"><a href="#CODE-1" class="headerlink" title="CODE"></a>CODE</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Strassenpractice</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">na</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;시작&quot;</span>);</span><br><span class="line">        <span class="type">int</span>[][] a = &#123; &#123; <span class="number">1</span>, <span class="number">2</span> &#125;, &#123; <span class="number">3</span>, <span class="number">4</span> &#125; &#125;;</span><br><span class="line">        <span class="type">int</span>[][] b = &#123; &#123; <span class="number">1</span>, <span class="number">2</span> &#125;, &#123; <span class="number">3</span>, <span class="number">4</span> &#125; &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* a행렬 값 나누기 */</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">a11</span> <span class="operator">=</span> a[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">a12</span> <span class="operator">=</span> a[<span class="number">0</span>][<span class="number">1</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">a21</span> <span class="operator">=</span> a[<span class="number">1</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">a22</span> <span class="operator">=</span> a[<span class="number">1</span>][<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 값이 잘 나오는지 확인 */</span></span><br><span class="line">        System.out.println(a11);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* b행렬 값 나누기 */</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">b11</span> <span class="operator">=</span> b[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">b12</span> <span class="operator">=</span> b[<span class="number">0</span>][<span class="number">1</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">b21</span> <span class="operator">=</span> b[<span class="number">1</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">b22</span> <span class="operator">=</span> b[<span class="number">1</span>][<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 값이 잘 나오는지 확인 */</span></span><br><span class="line">        System.out.println(b11);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* m을 구하기 위한 연산 */</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">m1</span> <span class="operator">=</span> (a11 + a22) * (b11 + b22);</span><br><span class="line">        <span class="type">int</span> <span class="variable">m2</span> <span class="operator">=</span> (a21 + a22) * b11;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m3</span> <span class="operator">=</span> (a11) * (b12 - b22);</span><br><span class="line">        <span class="type">int</span> <span class="variable">m4</span> <span class="operator">=</span> a22 * (b21 - b11);</span><br><span class="line">        <span class="type">int</span> <span class="variable">m5</span> <span class="operator">=</span> (a11 + a12) * b22;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m6</span> <span class="operator">=</span> (a21 - a11) * (b11 + b12);</span><br><span class="line">        <span class="type">int</span> <span class="variable">m7</span> <span class="operator">=</span> (a12 - a22) * (b21 + b22);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 값이 잘 나오는지 확인 */</span></span><br><span class="line">        System.out.println(m1);</span><br><span class="line">        <span class="type">int</span>[][] c = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">        c[<span class="number">0</span>][<span class="number">0</span>] = m1 + m4 - m5 + m7;</span><br><span class="line">        c[<span class="number">0</span>][<span class="number">1</span>] = m3 + m5;</span><br><span class="line">        c[<span class="number">1</span>][<span class="number">0</span>] = m2 + m4;</span><br><span class="line">        c[<span class="number">1</span>][<span class="number">1</span>] = m1 - m2 + m3 + m6;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* c행렬 합치기 */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; c.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; c.length; j++) &#123;</span><br><span class="line">                System.out.println(c[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">/* Main */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">/* 실행 */</span></span><br><span class="line">       <span class="type">Strassenpractice</span> <span class="variable">sp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Strassenpractice</span>();</span><br><span class="line">        sp.na();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="정리"><a href="#정리" class="headerlink" title="- 정리"></a>- 정리</h3><p>Strassen Algorithm은 정사각 행렬만을 처리한다.<br>만약 행렬이 정사각 행렬이 아닌 경우,<br>정사각 행렬로 변형시켜줘야 한다.</p>
+<p>M행렬을 구하는 과정에서 행렬의 곱이 사용된다.<br>행렬의 곱을 스트라센 알고리즘이라고 생각하면 재귀적 호출을 통해<br>M행렬을 구할 수 있다.<br>행렬을 작은 단위로 분할하여 M행렬을 구하고 결과값 C행렬을 구할 수 있다.</p>
+<p>일반 행렬곱[O(n<sup>3</sup>)]과 스트라센 알고리즘을 이용한 행렬 곱[O(n<sup>2.807</sup>)]의 시간복잡도는 크게 차이가 많이 나는 것 같지 않아<br>보여도 nxn 정사각 행렬에서 n의 값이 커질수록 큰 차이를 보인다.</p>
+<p>스트라센 알고리즘을 코드로 구현해 보았다. 분할 정복 알고리즘에 알맞는 코드는 아니라는 생각이든다. 분할 정복 알고리즘은 값을 분할 하는것이 중요하다고 생각이 든다. 앞으로 조금 더 알고리즘 다운 코드를 짜기위해 노력해야 겠다.</p>
+<h3 id="REFERENCES"><a href="#REFERENCES" class="headerlink" title="REFERENCES"></a>REFERENCES</h3><p><a target="_blank" rel="noopener" href="https://www.sanfoundry.com/java-program-strassen-algorithm/">sanfoundry</a><br><a target="_blank" rel="noopener" href="https://loveisaround.tistory.com/entry/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EC%8A%A4%ED%8A%B8%EB%9D%BC%EC%84%BC-strassen">언제나밝음</a></p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Strassen-Algorithm"><span class="toc-number">1.</span> <span class="toc-text">Strassen Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9A%94%EC%95%BD"><span class="toc-number">1.1.</span> <span class="toc-text">요약</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-number">1.2.</span> <span class="toc-text">알고리즘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9D%B8-%ED%96%89%EB%A0%AC%EC%9D%98-%EA%B3%B1%EC%85%88"><span class="toc-number">1.2.1.</span> <span class="toc-text">- 일반적인 행렬의 곱셈</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CODE"><span class="toc-number">1.3.</span> <span class="toc-text">CODE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Strassen-Algorithm-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">- Strassen Algorithm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CODE-1"><span class="toc-number">1.4.</span> <span class="toc-text">CODE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">1.4.1.</span> <span class="toc-text">- 정리</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#REFERENCES"><span class="toc-number">1.4.2.</span> <span class="toc-text">REFERENCES</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&text=Strassen Algorithm"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&is_video=false&description=Strassen Algorithm"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Strassen Algorithm&body=Check out this article: https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&title=Strassen Algorithm"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&name=Strassen Algorithm&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/&t=Strassen Algorithm"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

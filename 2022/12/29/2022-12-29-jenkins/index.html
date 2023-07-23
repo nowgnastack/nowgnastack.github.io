@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="jenkins로 vue 프로젝트 배포하기">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins를 사용한 CI&#x2F;CD With Docker">
+<meta property="og:url" content="https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="jenkins로 vue 프로젝트 배포하기">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic1.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic2.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic3.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic4.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic5.png">
+<meta property="og:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic6.png">
+<meta property="article:published_time" content="2022-12-29T13:15:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T15:22:09.818Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="ci&#x2F;cd deploy docker jenkins">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nowgnastack.github.io/images/posting/backend/jenkins/pic1.png">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>Jenkins를 사용한 CI/CD With Docker</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/01/18/2023-01-19-springboot-env/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/12/29/2022-12-29-event_scheduler/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&text=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&is_video=false&description=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Jenkins를 사용한 CI/CD With Docker&body=Check out this article: https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&name=Jenkins를 사용한 CI/CD With Docker&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&t=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CI-CD"><span class="toc-number">1.</span> <span class="toc-text">CI&#x2F;CD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%EC%97%90-jenkins-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0"><span class="toc-number">2.</span> <span class="toc-text">docker에 jenkins 컨테이너 실행하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jenkins%EC%97%90%EC%84%9C-docker-%EC%84%A4%EC%B9%98"><span class="toc-number">3.</span> <span class="toc-text">jenkins에서 docker 설치</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-sock-%EA%B6%8C%ED%95%9C-%EB%B3%80%EA%B2%BD"><span class="toc-number">4.</span> <span class="toc-text">docker.sock 권한 변경</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0"><span class="toc-number">5.</span> <span class="toc-text">vue 프로젝트 배포하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vue-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%83%9D%EC%84%B1"><span class="toc-number">5.1.</span> <span class="toc-text">vue 프로젝트 생성</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jenkins%EC%97%90%EC%84%9C-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0"><span class="toc-number">6.</span> <span class="toc-text">jenkins에서 배포하기</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Jenkins를 사용한 CI/CD With Docker
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-12-29T13:15:00.000Z" class="dt-published" itemprop="datePublished">2022-12-29</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/deploy/">deploy</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/ci-cd-deploy-docker-jenkins/" rel="tag">ci/cd deploy docker jenkins</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="CI-CD"><a href="#CI-CD" class="headerlink" title="CI&#x2F;CD"></a>CI&#x2F;CD</h2><p>Continuous Integration과 Continuous Delivery이다. 애플리케이션 개발 단계를 자동화하여 애플리케이션 개발을 보다 짧은 주기로 고객에게 제공하는 방법이다.<br>애플리케이션 통합, 테스트, 제공, 배포에 이르는 라이프사이클 전체에 걸쳐 지속적인 자동화와 모니터링을 제공한다.</p>
+<h2 id="docker에-jenkins-컨테이너-실행하기"><a href="#docker에-jenkins-컨테이너-실행하기" class="headerlink" title="docker에 jenkins 컨테이너 실행하기"></a>docker에 jenkins 컨테이너 실행하기</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name jenkins -p 9090:8080 -p 50000:50000 -d -v /var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/var/jenkins_home -u root jenkins/jenkins:lts</span><br></pre></td></tr></table></figure>
+
+<p>위 명령을 사용해 docker에 jenkins 컨테이너를 실행한다. -v 옵션은 저장소를 공유하는 설정이다.</p>
+<h2 id="jenkins에서-docker-설치"><a href="#jenkins에서-docker-설치" class="headerlink" title="jenkins에서 docker 설치"></a>jenkins에서 docker 설치</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl https://get.docker.com/ &gt; dockerinstall &amp;&amp; <span class="built_in">chmod</span> 777 dockerinstall &amp;&amp; ./dockerinstall</span><br><span class="line"></span><br><span class="line">apt install docker-compose</span><br></pre></td></tr></table></figure>
+
+<p>jenkins에 다시 docker를 설치해 준다. curl을 사용해 설치하고 docker-compose를 사용할 경우 아래 명령어도 함께 실행한다.</p>
+<h2 id="docker-sock-권한-변경"><a href="#docker-sock-권한-변경" class="headerlink" title="docker.sock 권한 변경"></a>docker.sock 권한 변경</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chmod</span> 666 /var/run/docker.sock</span><br></pre></td></tr></table></figure>
+
+<p>docker.sock 경로 권한을 666으로 변경해 그룹 내 다른 사용자도 접근 가능하도록 설정한다.</p>
+<p><img src="/images/posting/backend/jenkins/pic1.png" alt="스크린샷 2022-12-29 오후 10.36.12.png"></p>
+<p>jenkins shell로 접근하여 실행중인 docker 컨테이너를 확인한다. 로컬에 설치된 docker의 컨테이너를 확인할 수 있다.</p>
+<h2 id="vue-프로젝트-배포하기"><a href="#vue-프로젝트-배포하기" class="headerlink" title="vue 프로젝트 배포하기"></a>vue 프로젝트 배포하기</h2><h3 id="vue-프로젝트-생성"><a href="#vue-프로젝트-생성" class="headerlink" title="vue 프로젝트 생성"></a>vue 프로젝트 생성</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create deploytest</span><br></pre></td></tr></table></figure>
+
+<p>vue 프로젝트를 생성한다. 기본 vue 프로젝트를 gitlab에 배포할 것이다.</p>
+<h2 id="jenkins에서-배포하기"><a href="#jenkins에서-배포하기" class="headerlink" title="jenkins에서 배포하기"></a>jenkins에서 배포하기</h2><p><img src="/images/posting/backend/jenkins/pic2.png" alt="스크린샷 2022-12-29 오후 10.40.07.png"></p>
+<p>프로젝트 이름은 vue_deploy로 한다.</p>
+<p><img src="/images/posting/backend/jenkins/pic3.png" alt="스크린샷 2022-12-29 오후 10.41.07.png"></p>
+<p>생성한 vue repository 경로를 추가한다.</p>
+<p><img src="/images/posting/backend/jenkins/pic4.png" alt="스크린샷 2022-12-29 오후 10.41.51.png"></p>
+<p>빌드가 발생하는 경우를 선택해 준다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker build -t vue:front .</span><br><span class="line">docker run --name vue -d -p 8080:8080 vue:front</span><br></pre></td></tr></table></figure>
+
+<p>build 설정에 Execute shell 을 선택하고 Command에 위 명령어를 넣어준다.</p>
+<p><img src="/images/posting/backend/jenkins/pic5.png" alt="스크린샷 2022-12-29 오후 10.48.21.png"></p>
+<p><img src="/images/posting/backend/jenkins/pic6.png" alt="스크린샷 2022-12-29 오후 10.49.06.png"></p>
+<p>jenkins에서 정상적으로 배포된 것을 확인할 수 있고, docker 컨테이너도 정상적으로 실행되어 페이지 접근이 잘 되는것을 볼 수 있다.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CI-CD"><span class="toc-number">1.</span> <span class="toc-text">CI&#x2F;CD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%EC%97%90-jenkins-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0"><span class="toc-number">2.</span> <span class="toc-text">docker에 jenkins 컨테이너 실행하기</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jenkins%EC%97%90%EC%84%9C-docker-%EC%84%A4%EC%B9%98"><span class="toc-number">3.</span> <span class="toc-text">jenkins에서 docker 설치</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-sock-%EA%B6%8C%ED%95%9C-%EB%B3%80%EA%B2%BD"><span class="toc-number">4.</span> <span class="toc-text">docker.sock 권한 변경</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0"><span class="toc-number">5.</span> <span class="toc-text">vue 프로젝트 배포하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vue-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%83%9D%EC%84%B1"><span class="toc-number">5.1.</span> <span class="toc-text">vue 프로젝트 생성</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jenkins%EC%97%90%EC%84%9C-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0"><span class="toc-number">6.</span> <span class="toc-text">jenkins에서 배포하기</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&text=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&is_video=false&description=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Jenkins를 사용한 CI/CD With Docker&body=Check out this article: https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&title=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&name=Jenkins를 사용한 CI/CD With Docker&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2022/12/29/2022-12-29-jenkins/&t=Jenkins를 사용한 CI/CD With Docker"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>
