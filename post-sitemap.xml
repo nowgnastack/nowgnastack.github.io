@@ -9,6 +9,14 @@
 
 
     <url>
+        <loc>https://nowgnastack.github.io/2023/07/26/lotte/</loc>
+        <lastmod>2023-07-26T09:04:04.841Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://nowgnastack.github.io/2023/01/18/2023-01-19-springboot-env/</loc>
         <lastmod>2023-07-23T16:21:41.814Z</lastmod>
         <changefreq>weekly</changefreq>
