@@ -22,9 +22,11 @@
 <meta property="og:image" content="https://nowgnastack.github.io/images/posting/ssafy/startcamp/pic6.png">
 <meta property="og:image" content="https://nowgnastack.github.io/images/posting/ssafy/startcamp/pic7.png">
 <meta property="article:published_time" content="2022-07-16T07:13:00.000Z">
-<meta property="article:modified_time" content="2023-07-23T15:19:51.735Z">
+<meta property="article:modified_time" content="2023-07-31T05:34:57.791Z">
 <meta property="article:author" content="nowgnas">
-<meta property="article:tag" content="eclipse java spring">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="spring">
+<meta property="article:tag" content="eclipse">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://nowgnastack.github.io/images/posting/ssafy/startcamp/pic1.png">    
   <link rel="shortcut icon" href="/images/favicon.ico" />
@@ -180,7 +182,7 @@
       
     <div class="article-tag">
         <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/tags/eclipse-java-spring/" rel="tag">eclipse java spring</a>
+        <a class="p-category" href="/tags/eclipse/" rel="tag">eclipse</a>, <a class="p-category" href="/tags/java/" rel="tag">java</a>, <a class="p-category" href="/tags/spring/" rel="tag">spring</a>
     </div>
 
 
@@ -198,7 +200,8 @@
 <p><img src="/images/posting/ssafy/startcamp/pic3.png" alt="스크린샷 2022-07-16 오후 3.36.53.png"></p>
 <p>STS를 설치하기 이전에는 zulu jdk를 m1용으로 설치했었다. m1용 JDK로 STS를 열려고하면 오류가 난다. STS 3 버전은 <code>x86 64-bit</code> architecture가 필요하다고 해서 zulu jdk 페이지에서 새로 받아주었다.</p>
 <h2 id="JDK-환경변수-설정하기"><a href="#JDK-환경변수-설정하기" class="headerlink" title="JDK 환경변수 설정하기"></a>JDK 환경변수 설정하기</h2><p>jdk를 설치하고 환경변수를 잡아줘야 한다. 설정파일에 환경변수를 잡아줘야 하는데 인텔 macos는 .bash_profile, m1은 .zshrc일 것이다. vi나 nano를 사용해도 좋고 vscode에서 편하게 열어서 설정하면 된다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/Library/Java/JavaVirtualMachines/&#123;jdk version&#125;/Contents/Home</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>/Library/Java/JavaVirtualMachines/<span class="token punctuation">&#123;</span>jdk version<span class="token punctuation">&#125;</span>/Contents/Home
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token variable">$JAVA_HOME</span>/bin:<span class="token environment constant">$PATH</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>설정파일을 열어 위 두 줄을 넣어준 후 <code>source ~/.zshrc</code> 명령을 터미널에 타이핑해 주면 터미널에 적용된다.</p>
 <p><img src="/images/posting/ssafy/startcamp/pic4.png" alt="스크린샷 2022-07-16 오후 3.46.42.png"></p>
