@@ -9,6 +9,22 @@
 
 
     <url>
+        <loc>https://nowgnastack.github.io/2023/08/05/singleton-builder/</loc>
+        <lastmod>2023-08-05T06:51:38.900Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://nowgnastack.github.io/2023/07/23/rest-api/</loc>
+        <lastmod>2023-08-05T06:50:03.407Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://nowgnastack.github.io/2022/07/16/2022-07-16-ssafy-startcamp/</loc>
         <lastmod>2023-07-31T05:34:57.791Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -627,14 +643,6 @@
     <url>
         <loc>https://nowgnastack.github.io/2020/04/06/2020-04-06-Strassen/</loc>
         <lastmod>2023-07-23T15:01:17.955Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/2023/07/23/rest-api/</loc>
-        <lastmod>2023-07-23T08:04:30.360Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

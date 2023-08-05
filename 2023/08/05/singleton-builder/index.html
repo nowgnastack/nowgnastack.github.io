@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <!-- so meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="google-site-verification" content="sdTAxKN3zLoy8rmPlkLzOu030Yo_stjU8dw_ufxbSoA" />
+  <meta name="description" content="Effective Java를 읽으며 정리한 내용입니다.  Builder 패턴Builder는 spring boot에서 @Builder 어노테이션으로 많이 사용했었다. 이번 글에서는 lombok에서 제공되는 어노테이션이 아닌 직접 빌더 패턴을 만들어 본다.  생성자에 매개변수가 많다면 빌더를 고려하라 - item2  점층적 생성자 패턴 - telescopin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Effective Java] 싱글턴과 빌더 패턴">
+<meta property="og:url" content="https://nowgnastack.github.io/2023/08/05/singleton-builder/index.html">
+<meta property="og:site_name" content="nowgnastack">
+<meta property="og:description" content="Effective Java를 읽으며 정리한 내용입니다.  Builder 패턴Builder는 spring boot에서 @Builder 어노테이션으로 많이 사용했었다. 이번 글에서는 lombok에서 제공되는 어노테이션이 아닌 직접 빌더 패턴을 만들어 본다.  생성자에 매개변수가 많다면 빌더를 고려하라 - item2  점층적 생성자 패턴 - telescopin">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-08-05T06:48:52.000Z">
+<meta property="article:modified_time" content="2023-08-05T06:51:38.900Z">
+<meta property="article:author" content="nowgnas">
+<meta property="article:tag" content="builder">
+<meta property="article:tag" content="lotteon">
+<meta property="article:tag" content="singleton">
+<meta property="article:tag" content="롯데e커머스">
+<meta property="article:tag" content="비트컴퓨터">
+<meta name="twitter:card" content="summary">    
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+     
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/favicon-192x192.png"
+    sizes="192x192"
+  />
+     
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    
+  <!-- title -->
+  <title>[Effective Java] 싱글턴과 빌더 패턴</title>
+  <!-- async scripts -->
+  <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS37DQYSPL"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HS37DQYSPL');
+  </script>
+
+ <!-- Umami Analytics -->
+
+
+  <!-- styles -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <!-- persian styles -->
+  
+  <!-- rss -->
+   
+  <!-- mathjax -->
+  
+  <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+     });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+    async
+  ></script>
+  
+  <!--Canonical : 유사하거나 중복된 페이지의 표준 페이지 정의-->
+  <link rel="canonical" href="https://nowgnastack.github.io/2023/08/05/singleton-builder/"/>
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="nowgnastack" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/07/26/lotte/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2023/08/05/singleton-builder/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&text=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&is_video=false&description=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[Effective Java] 싱글턴과 빌더 패턴&body=Check out this article: https://nowgnastack.github.io/2023/08/05/singleton-builder/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&name=[Effective Java] 싱글턴과 빌더 패턴&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2023/08/05/singleton-builder/&t=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Builder-%ED%8C%A8%ED%84%B4"><span class="toc-number">1.</span> <span class="toc-text">Builder 패턴</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%A0%90%EC%B8%B5%EC%A0%81-%EC%83%9D%EC%84%B1%EC%9E%90-%ED%8C%A8%ED%84%B4-telescoping-constructor-pattern"><span class="toc-number">1.1.</span> <span class="toc-text">점층적 생성자 패턴 - telescoping constructor pattern</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9E%90%EB%B0%94-%EB%B9%88%EC%A6%88-%ED%8C%A8%ED%84%B4"><span class="toc-number">1.2.</span> <span class="toc-text">자바 빈즈 패턴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%B9%8C%EB%8D%94-%ED%8C%A8%ED%84%B4"><span class="toc-number">1.3.</span> <span class="toc-text">빌더 패턴</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        [Effective Java] 싱글턴과 빌더 패턴
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">nowgnas</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-05T06:48:52.000Z" class="dt-published" itemprop="datePublished">2023-08-05</time>
+        
+      
+    </div>
+
+
+      
+<div class="article-category">
+  <i class="fa-solid fa-archive"></i>
+  <a class="category-link" href="/categories/api/">api</a>
+</div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/builder/" rel="tag">builder</a>, <a class="p-category" href="/tags/lotteon/" rel="tag">lotteon</a>, <a class="p-category" href="/tags/singleton/" rel="tag">singleton</a>, <a class="p-category" href="/tags/%EB%A1%AF%EB%8D%B0e%EC%BB%A4%EB%A8%B8%EC%8A%A4/" rel="tag">롯데e커머스</a>, <a class="p-category" href="/tags/%EB%B9%84%ED%8A%B8%EC%BB%B4%ED%93%A8%ED%84%B0/" rel="tag">비트컴퓨터</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>Effective Java를 읽으며 정리한 내용입니다.</p>
+</blockquote>
+<h2 id="Builder-패턴"><a href="#Builder-패턴" class="headerlink" title="Builder 패턴"></a>Builder 패턴</h2><p>Builder는 spring boot에서 <code>@Builder</code> 어노테이션으로 많이 사용했었다. 이번 글에서는 lombok에서 제공되는 어노테이션이 아닌 직접 빌더 패턴을 만들어 본다.</p>
+<blockquote>
+<p>생성자에 매개변수가 많다면 빌더를 고려하라 - item2</p>
+</blockquote>
+<h3 id="점층적-생성자-패턴-telescoping-constructor-pattern"><a href="#점층적-생성자-패턴-telescoping-constructor-pattern" class="headerlink" title="점층적 생성자 패턴 - telescoping constructor pattern"></a>점층적 생성자 패턴 - telescoping constructor pattern</h3><p>생성자에 필요한 매개변수가 많을 경우 매개변수 개수에 따라 생성자를 다르게 사용할 수 있다. 1개, 2개, 3개 등 개수에 따라 생성자에 사용되는 변수가 다르게 들어가게 되는데 이것을 점층적 생성자 패턴이라고 한다.</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">NutritionFacts</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> servingSize<span class="token punctuation">;</span>  <span class="token comment">// (mL, 1회 제공량)     필수</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> servings<span class="token punctuation">;</span>     <span class="token comment">// (회, 총 n회 제공량)  필수</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> calories<span class="token punctuation">;</span>     <span class="token comment">// (1회 제공량당)       선택</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> fat<span class="token punctuation">;</span>          <span class="token comment">// (g/1회 제공량)       선택</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> sodium<span class="token punctuation">;</span>       <span class="token comment">// (mg/1회 제공량)      선택</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> carbohydrate<span class="token punctuation">;</span> <span class="token comment">// (g/1회 제공량)       선택</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">NutritionFacts</span><span class="token punctuation">(</span><span class="token keyword">int</span> servingSize<span class="token punctuation">,</span> <span class="token keyword">int</span> servings<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">NutritionFacts</span><span class="token punctuation">(</span><span class="token keyword">int</span> servingSize<span class="token punctuation">,</span> <span class="token keyword">int</span> servings<span class="token punctuation">,</span> <span class="token keyword">int</span> calories<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">NutritionFacts</span><span class="token punctuation">(</span><span class="token keyword">int</span> servingSize<span class="token punctuation">,</span> <span class="token keyword">int</span> servings<span class="token punctuation">,</span> <span class="token keyword">int</span> calories<span class="token punctuation">,</span> <span class="token keyword">int</span> fat<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">NutritionFacts</span> cocaCola <span class="token operator">=</span>
+                <span class="token keyword">new</span> <span class="token class-name">NutritionFacts</span><span class="token punctuation">(</span><span class="token number">240</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>위 예시와 같이 생성자를 만들 때 매개변수를 순서대로 넣게 된다. 사용자가 설정하고 싶지 않은 값(ex. 0)까지 넣어 줘야 하는 불편함이 있고, 매개변수 개수가 많을 경우 들어가는 값의 의미를 알기 힘들다.</p>
+<h3 id="자바-빈즈-패턴"><a href="#자바-빈즈-패턴" class="headerlink" title="자바 빈즈 패턴"></a>자바 빈즈 패턴</h3><p>선택 매개변수가 많을 때 사용할 수 있는 자바 빈즈 패턴이다. 특징은 매개변수가 없는 생성자로 객체를 만든 후 setter메서드들을 호출해 원하는 매개변수의 값을 설정하는 방법이다.</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">NutritionFacts</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 매개변수들은 (기본값이 있다면) 기본값으로 초기화된다.</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> servingSize  <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// 필수; 기본값 없음</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> servings     <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// 필수; 기본값 없음</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> calories     <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> fat          <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> sodium       <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> carbohydrate <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">NutritionFacts</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
+    <span class="token comment">// Setters</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setServingSize</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>  <span class="token punctuation">&#123;</span> servingSize <span class="token operator">=</span> val<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setServings</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>     <span class="token punctuation">&#123;</span> servings <span class="token operator">=</span> val<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setCalories</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>     <span class="token punctuation">&#123;</span> calories <span class="token operator">=</span> val<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setFat</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>          <span class="token punctuation">&#123;</span> fat <span class="token operator">=</span> val<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setSodium</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>       <span class="token punctuation">&#123;</span> sodium <span class="token operator">=</span> val<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setCarbohydrate</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> carbohydrate <span class="token operator">=</span> val<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">NutritionFacts</span> cocaCola <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NutritionFacts</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cocaCola<span class="token punctuation">.</span><span class="token function">setServingSize</span><span class="token punctuation">(</span><span class="token number">240</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cocaCola<span class="token punctuation">.</span><span class="token function">setServings</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cocaCola<span class="token punctuation">.</span><span class="token function">setCalories</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cocaCola<span class="token punctuation">.</span><span class="token function">setSodium</span><span class="token punctuation">(</span><span class="token number">35</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cocaCola<span class="token punctuation">.</span><span class="token function">setCarbohydrate</span><span class="token punctuation">(</span><span class="token number">27</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>생성자를 만들고 setter로 값을 할당하는 방식으로 점층적 생성자 패턴보다 직관적인 코드가 되었다. 자바 빈즈 패턴은 객체를 생성하기 위해 여러 메서드를 호출해야 하는 불편함이 있다. 또한 객체가 완전히 생성되기 전까지는 일관성이 무너진 상태이다. 자바 빈즈 패턴은 클래스를 불변으로 만들 수 없고 *스레드 안정성을 얻으려면 개발자가 추가로 작업을 해야 한다.</p>
+<h3 id="빌더-패턴"><a href="#빌더-패턴" class="headerlink" title="빌더 패턴"></a>빌더 패턴</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">NutritionFacts</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> servingSize<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> servings<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> calories<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> fat<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> sodium<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> carbohydrate<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Builder</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 필수 매개변수</span>
+        <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> servingSize<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> servings<span class="token punctuation">;</span>
+
+        <span class="token comment">// 선택 매개변수 - 기본값으로 초기화한다.</span>
+        <span class="token keyword">private</span> <span class="token keyword">int</span> calories      <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">int</span> fat           <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">int</span> sodium        <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">int</span> carbohydrate  <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+				<span class="token keyword">public</span> <span class="token class-name">Builder</span><span class="token punctuation">(</span><span class="token keyword">int</span> servingSize<span class="token punctuation">,</span> <span class="token keyword">int</span> servings<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>servingSize <span class="token operator">=</span> servingSize<span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>servings <span class="token operator">=</span> servings<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">Builder</span> <span class="token function">calories</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            calories <span class="token operator">=</span> val<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">Builder</span> <span class="token function">fat</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            fat <span class="token operator">=</span> val<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">Builder</span> <span class="token function">sodium</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            sodium <span class="token operator">=</span> val<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">public</span> <span class="token class-name">Builder</span> <span class="token function">carbohydrate</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            carbohydrate <span class="token operator">=</span> val<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">public</span> <span class="token class-name">NutritionFacts</span> <span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">NutritionFacts</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">NutritionFacts</span><span class="token punctuation">(</span><span class="token class-name">Builder</span> builder<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        servingSize  <span class="token operator">=</span> builder<span class="token punctuation">.</span>servingSize<span class="token punctuation">;</span>
+        servings     <span class="token operator">=</span> builder<span class="token punctuation">.</span>servings<span class="token punctuation">;</span>
+        calories     <span class="token operator">=</span> builder<span class="token punctuation">.</span>calories<span class="token punctuation">;</span>
+        fat          <span class="token operator">=</span> builder<span class="token punctuation">.</span>fat<span class="token punctuation">;</span>
+        sodium       <span class="token operator">=</span> builder<span class="token punctuation">.</span>sodium<span class="token punctuation">;</span>
+        carbohydrate <span class="token operator">=</span> builder<span class="token punctuation">.</span>carbohydrate<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+		<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">NutritionFacts</span> cocaCola <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NutritionFacts<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token number">240</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">calories</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sodium</span><span class="token punctuation">(</span><span class="token number">35</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">carbohydrate</span><span class="token punctuation">(</span><span class="token number">27</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>점층적 생성자 패턴의 안정성과 자바 빈즈 패턴의 가독성을 갖춘 빌더 패턴이다. 클라이언트는 필요한 객체를 직접 만드는 대신, 필수 매개변수만으로 생성자를 호출해 빌더 객체를 얻는다. 그 후 빌더 객체가 제공하는 setter 메서드로 원하는 매개변수를 설정할 수 있다. <code>build()</code> 메서드를 호출하여 원하는 객체를 얻는다.</p>
+<p>Spring boot에서는 Builder 어노테이션으로 간편하게 사용할 수 있지만, 빌더 패턴의 구체적 동작을 알 수 있는 내용이었다.</p>
+<hr>
+<p>*스레드 안정성: 멀티 스레드 프로그래밍에서 일반적으로 함수나 변수, 혹은 객체가 여러 스레드로부터 동시에 접근이 이뤄져도 프로그램 실행에 문제가 없음을 말한다. 하나의 함수가 한 스레드로부터 호출되어 실행 중일 때, 다른 스레드가 그 함수를 호출하여 동시에 실행해도 각 스레드에서 함수 결과가 올바른 것.</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Builder-%ED%8C%A8%ED%84%B4"><span class="toc-number">1.</span> <span class="toc-text">Builder 패턴</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%A0%90%EC%B8%B5%EC%A0%81-%EC%83%9D%EC%84%B1%EC%9E%90-%ED%8C%A8%ED%84%B4-telescoping-constructor-pattern"><span class="toc-number">1.1.</span> <span class="toc-text">점층적 생성자 패턴 - telescoping constructor pattern</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9E%90%EB%B0%94-%EB%B9%88%EC%A6%88-%ED%8C%A8%ED%84%B4"><span class="toc-number">1.2.</span> <span class="toc-text">자바 빈즈 패턴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%B9%8C%EB%8D%94-%ED%8C%A8%ED%84%B4"><span class="toc-number">1.3.</span> <span class="toc-text">빌더 패턴</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://nowgnastack.github.io/2023/08/05/singleton-builder/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&text=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&is_video=false&description=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=[Effective Java] 싱글턴과 빌더 패턴&body=Check out this article: https://nowgnastack.github.io/2023/08/05/singleton-builder/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&title=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://nowgnastack.github.io/2023/08/05/singleton-builder/&name=[Effective Java] 싱글턴과 빌더 패턴&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://nowgnastack.github.io/2023/08/05/singleton-builder/&t=[Effective Java] 싱글턴과 빌더 패턴"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020-2023
+    nowgnas
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/nowgnas">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'nowgnastack/nowgnastack.github.io';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>
