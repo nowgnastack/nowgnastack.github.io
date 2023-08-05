@@ -9,8 +9,15 @@
 
 
     <url>
+        <loc>https://nowgnastack.github.io/categories/api/</loc>
+        <lastmod>2023-08-05T06:51:38.900Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://nowgnastack.github.io/categories/java/</loc>
-        <lastmod>2023-07-31T05:34:57.791Z</lastmod>
+        <lastmod>2023-08-05T06:50:03.407Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -144,13 +151,6 @@
     <url>
         <loc>https://nowgnastack.github.io/categories/pytorch/</loc>
         <lastmod>2023-07-23T15:05:10.899Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://nowgnastack.github.io/categories/api/</loc>
-        <lastmod>2023-07-23T08:04:30.360Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

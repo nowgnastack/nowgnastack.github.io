@@ -15,7 +15,7 @@
 <meta property="og:description" content="API란 무엇인가 ?API는 Application Programming Interface(애플리케이션 프로그램 인터페이스)의 줄임말입니다. API의 맥락에서 애플리케이션이라는 단어는 고유한 기능을 가진 모든 소프트웨어를 나타냅니다. 인터페이스는 두 애플리케이션 간의 서비스 계약이라고 할 수 있습니다. 이 계약은 요청과 응답을 사용하여 두 애플리케이션이 서로">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-07-23T07:31:07.000Z">
-<meta property="article:modified_time" content="2023-07-23T08:04:30.360Z">
+<meta property="article:modified_time" content="2023-08-05T06:50:03.407Z">
 <meta property="article:author" content="nowgnas">
 <meta property="article:tag" content="rest api">
 <meta property="article:tag" content="http">
@@ -166,7 +166,7 @@
       
 <div class="article-category">
   <i class="fa-solid fa-archive"></i>
-  <a class="category-link" href="/categories/api/">api</a>
+  <a class="category-link" href="/categories/java/">java</a>
 </div>
 
 
@@ -193,23 +193,31 @@
 <h3 id="Uniform-Interface"><a href="#Uniform-Interface" class="headerlink" title="Uniform Interface"></a>Uniform Interface</h3><p>인터페이스 일관성은 URI로 지정한 자원(정보)에 대한 동작이 통일되어야 하고, 사용자의 정보가 하나의 URI에 속함을 보장하는 특징이다. 특정 기술이나 언어에 종속적이지 않고 Http 프로토콜을 따르는 플랫폼에서 모두 사용 가능하다.</p>
 <h3 id="Code-On-Demand-Optional"><a href="#Code-On-Demand-Optional" class="headerlink" title="Code On Demand(Optional)"></a>Code On Demand(Optional)</h3><p>REST API는 일반적으로 정적 자원(정보)을 전송하지만, 응답에 실행 코드가 포함될 수 있다. 이 경우에 코드는 요청시에만 실행 되어야 한다.</p>
 <h2 id="REST-API-설계"><a href="#REST-API-설계" class="headerlink" title="REST API 설계"></a>REST API 설계</h2><p>REST API는 다음 규칙에 따라 설계한다.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://example.com/post   (O)</span><br><span class="line"></span><br><span class="line">http://example.com/post/  (X)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">http://example.com/post   <span class="token punctuation">(</span>O<span class="token punctuation">)</span>
+
+http://example.com/post/  <span class="token punctuation">(</span>X<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>URI는 명사를 사용하고 소문자로 작성되어야 한다.</li>
 <li>URI의 마지막에는 <code>/</code>를 포함하지 않는다.</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://example.com/post-list  (O)</span><br><span class="line"></span><br><span class="line">http://example.com/post_list  (X)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">http://example.com/post-list  <span class="token punctuation">(</span>O<span class="token punctuation">)</span>
+
+http://example.com/post_list  <span class="token punctuation">(</span>X<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>URI에는 언더바가 아닌 하이픈을 사용한다.</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://example.com/post/assets/example  (O)</span><br><span class="line"></span><br><span class="line">http://example.com/post/assets/example.png  (X)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">http://example.com/post/assets/example  <span class="token punctuation">(</span>O<span class="token punctuation">)</span>
+
+http://example.com/post/assets/example.png  <span class="token punctuation">(</span>X<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>URI에는 파일의 확장자를 표시하지 않는다.</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://example.com/post/:post-id</span><br><span class="line"></span><br><span class="line">http://example.com/post/&#123;post-id&#125;  (O)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">http://example.com/post/:post-id
+
+http://example.com/post/<span class="token punctuation">&#123;</span>post-id<span class="token punctuation">&#125;</span>  <span class="token punctuation">(</span>O<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>resource 간에 연관 관계가 있는경우 위와 같이 사용한다.</li>
